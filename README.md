@@ -1,2 +1,2 @@
 # LOROPIANA
-LOROPIANA - Progetto Manufacturing
+LOROPIANA - BTP Progetto Manufacturing

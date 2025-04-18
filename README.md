@@ -1,0 +1,2 @@
+# LOROPIANA
+LOROPIANA - Progetto Manufacturing

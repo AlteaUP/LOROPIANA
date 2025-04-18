@@ -1,0 +1,12 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+	<SelectDialog
+		id="selectShippingPointDialog"
+		title="{i18n>shippingPoints}"
+		items="{/ZZ1_I_ShippingPoint}"
+		search=".onValueHelpShippingPointSearch"
+		confirm=".onValueHelpShippingPointConfirm"
+		cancel=".onValueHelpShippingPointClose">
+		<StandardListItem
+			title="{ShippingPoint}"/>
+	</SelectDialog>
+</core:FragmentDefinition>

@@ -1,0 +1,18 @@
+{
+  "TENANT_HOST_PATTERN": "^(.*).localhost",
+  "EXTERNAL_REVERSE_PROXY": true,
+    "destinations": [
+        {
+          "name": "srv-api",
+          "url": "http://localhost:4004",
+          "forwardAuthToken": false,
+          "strictSSL": false
+        },
+        {
+          "forwardAuthToken": false,
+          "name": "ui5",
+          "strictSSL": false,
+          "url": "https://ui5.sap.com/1.130.0"
+        }
+      ]
+}

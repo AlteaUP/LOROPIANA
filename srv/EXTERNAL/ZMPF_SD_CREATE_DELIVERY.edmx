@@ -1,0 +1,605 @@
+<edmx:Edmx xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" xmlns="http://docs.oasis-open.org/odata/ns/edm" Version="4.0">
+<edmx:Reference Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_COMMUNICATION',Version='0001',SAP__Origin='LOCAL')/$value">
+<edmx:Include Namespace="com.sap.vocabularies.Communication.v1" Alias="Communication"/>
+</edmx:Reference>
+<edmx:Reference Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_PERSONALDATA',Version='0001',SAP__Origin='LOCAL')/$value">
+<edmx:Include Namespace="com.sap.vocabularies.PersonalData.v1" Alias="PersonalData"/>
+</edmx:Reference>
+<edmx:Reference Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_ANALYTICS',Version='0001',SAP__Origin='LOCAL')/$value">
+<edmx:Include Namespace="com.sap.vocabularies.Analytics.v1" Alias="Analytics"/>
+</edmx:Reference>
+<edmx:Reference Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_COMMON',Version='0001',SAP__Origin='LOCAL')/$value">
+<edmx:Include Namespace="com.sap.vocabularies.Common.v1" Alias="SAP__common"/>
+</edmx:Reference>
+<edmx:Reference Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_MEASURES',Version='0001',SAP__Origin='LOCAL')/$value">
+<edmx:Include Namespace="Org.OData.Measures.V1" Alias="SAP__measures"/>
+</edmx:Reference>
+<edmx:Reference Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_CORE',Version='0001',SAP__Origin='LOCAL')/$value">
+<edmx:Include Namespace="Org.OData.Core.V1" Alias="SAP__core"/>
+</edmx:Reference>
+<edmx:Reference Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_CAPABILITIES',Version='0001',SAP__Origin='LOCAL')/$value">
+<edmx:Include Namespace="Org.OData.Capabilities.V1" Alias="SAP__capabilities"/>
+</edmx:Reference>
+<edmx:Reference Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_AGGREGATION',Version='0001',SAP__Origin='LOCAL')/$value">
+<edmx:Include Namespace="Org.OData.Aggregation.V1" Alias="SAP__aggregation"/>
+</edmx:Reference>
+<edmx:Reference Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_VALIDATION',Version='0001',SAP__Origin='LOCAL')/$value">
+<edmx:Include Namespace="Org.OData.Validation.V1" Alias="SAP__validation"/>
+</edmx:Reference>
+<edmx:Reference Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_CODELIST',Version='0001',SAP__Origin='LOCAL')/$value">
+<edmx:Include Namespace="com.sap.vocabularies.CodeList.v1" Alias="SAP__CodeList"/>
+</edmx:Reference>
+<edmx:Reference Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_UI',Version='0001',SAP__Origin='LOCAL')/$value">
+<edmx:Include Namespace="com.sap.vocabularies.UI.v1" Alias="SAP__UI"/>
+</edmx:Reference>
+<edmx:Reference Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_HTML5',Version='0001',SAP__Origin='LOCAL')/$value">
+<edmx:Include Namespace="com.sap.vocabularies.HTML5.v1" Alias="SAP__HTML5"/>
+</edmx:Reference>
+<edmx:Reference Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_PDF',Version='0001',SAP__Origin='LOCAL')/$value">
+<edmx:Include Namespace="com.sap.vocabularies.PDF.v1" Alias="SAP__PDF"/>
+</edmx:Reference>
+<edmx:Reference Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_SESSION',Version='0001',SAP__Origin='LOCAL')/$value">
+<edmx:Include Namespace="com.sap.vocabularies.Session.v1" Alias="SAP__session"/>
+</edmx:Reference>
+<edmx:Reference Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_HIERARCHY',Version='0001',SAP__Origin='LOCAL')/$value">
+<edmx:Include Namespace="com.sap.vocabularies.Hierarchy.v1" Alias="SAP__hierarchy"/>
+</edmx:Reference>
+<edmx:DataServices>
+<Schema Namespace="com.sap.gateway.srvd.zmpf_sd_delivery_create.v0001" Alias="SAP__self">
+<Annotation Term="SAP__core.SchemaVersion" String="1.0.0"/>
+<EntityType Name="CreateDelIType">
+<Key>
+<PropertyRef Name="vstel"/>
+<PropertyRef Name="rfbel"/>
+<PropertyRef Name="rfpos"/>
+</Key>
+<Property Name="vstel" Type="Edm.String" Nullable="false" MaxLength="4"/>
+<Property Name="rfbel" Type="Edm.String" Nullable="false" MaxLength="10"/>
+<Property Name="rfpos" Type="Edm.String" Nullable="false" MaxLength="6"/>
+<Property Name="vkorg" Type="Edm.String" Nullable="false" MaxLength="4"/>
+<Property Name="vtweg" Type="Edm.String" Nullable="false" MaxLength="2"/>
+<Property Name="spart" Type="Edm.String" Nullable="false" MaxLength="2"/>
+<Property Name="lfart" Type="Edm.String" Nullable="false" MaxLength="4"/>
+<Property Name="dlvtp" Type="Edm.String" Nullable="false" MaxLength="2"/>
+<Property Name="kunwe" Type="Edm.String" Nullable="false" MaxLength="10"/>
+<Property Name="matnr" Type="Edm.String" Nullable="false" MaxLength="18"/>
+<Property Name="werks" Type="Edm.String" Nullable="false" MaxLength="4"/>
+<Property Name="wadat" Type="Edm.Date"/>
+<Property Name="lfdat" Type="Edm.Date"/>
+<Property Name="lfimg" Type="Edm.Decimal" Nullable="false" Precision="13" Scale="3"/>
+<Property Name="vrkme" Type="Edm.String" Nullable="false" MaxLength="3"/>
+<Property Name="meins" Type="Edm.String" Nullable="false" MaxLength="3"/>
+<Property Name="lgort" Type="Edm.String" Nullable="false" MaxLength="4"/>
+<Property Name="lifnr" Type="Edm.String" Nullable="false" MaxLength="10"/>
+<Property Name="bwart" Type="Edm.String" Nullable="false" MaxLength="3"/>
+<Property Name="rblvs" Type="Edm.String" Nullable="false" MaxLength="3"/>
+<Property Name="shkzg_um" Type="Edm.String" Nullable="false" MaxLength="1"/>
+<Property Name="ummat" Type="Edm.String" Nullable="false" MaxLength="18"/>
+<Property Name="umwrk" Type="Edm.String" Nullable="false" MaxLength="4"/>
+<Property Name="umlgo" Type="Edm.String" Nullable="false" MaxLength="4"/>
+<Property Name="wadat_ist" Type="Edm.Date"/>
+<Property Name="qplos" Type="Edm.String" Nullable="false" MaxLength="12"/>
+<Property Name="fobwa" Type="Edm.String" Nullable="false" MaxLength="3"/>
+<Property Name="fo_dlvtp" Type="Edm.String" Nullable="false" MaxLength="2"/>
+<Property Name="kzuml" Type="Edm.String" Nullable="false" MaxLength="1"/>
+<Property Name="lifex" Type="Edm.String" Nullable="false" MaxLength="35"/>
+<Property Name="charg" Type="Edm.String" Nullable="false" MaxLength="10"/>
+<Property Name="umcha" Type="Edm.String" Nullable="false" MaxLength="10"/>
+<Property Name="FlErr" Type="Edm.Boolean" Nullable="false"/>
+<Property Name="LogMess" Type="Edm.String" Nullable="false" MaxLength="220"/>
+<Property Name="erdat" Type="Edm.Date"/>
+<Property Name="erzet" Type="Edm.TimeOfDay" Nullable="false"/>
+<Property Name="__EntityControl" Type="com.sap.gateway.srvd.zmpf_sd_delivery_create.v0001.EntityControl"/>
+<NavigationProperty Name="parent" Type="com.sap.gateway.srvd.zmpf_sd_delivery_create.v0001.CreateDelHType" Nullable="false" Partner="DeliveryItems">
+<ReferentialConstraint Property="vstel" ReferencedProperty="vstel"/>
+</NavigationProperty>
+</EntityType>
+<EntityType Name="CreateDelHType">
+<Key>
+<PropertyRef Name="vstel"/>
+</Key>
+<Property Name="vstel" Type="Edm.String" Nullable="false" MaxLength="4"/>
+<Property Name="if_synchron" Type="Edm.String" Nullable="false" MaxLength="1"/>
+<Property Name="if_no_partner_dialog" Type="Edm.String" Nullable="false" MaxLength="1"/>
+<Property Name="no_commit" Type="Edm.String" Nullable="false" MaxLength="1"/>
+<Property Name="__CreateByAssociationControl" Type="com.sap.gateway.srvd.zmpf_sd_delivery_create.v0001.CreateDelHCbAControl"/>
+<Property Name="__EntityControl" Type="com.sap.gateway.srvd.zmpf_sd_delivery_create.v0001.EntityControl"/>
+<NavigationProperty Name="DeliveryItems" Type="Collection(com.sap.gateway.srvd.zmpf_sd_delivery_create.v0001.CreateDelIType)" Partner="parent">
+<OnDelete Action="Cascade"/>
+</NavigationProperty>
+</EntityType>
+<ComplexType Name="CreateDelHCbAControl">
+<Property Name="DeliveryItems" Type="Edm.Boolean" Nullable="false"/>
+</ComplexType>
+<ComplexType Name="EntityControl">
+<Property Name="Deletable" Type="Edm.Boolean" Nullable="false"/>
+<Property Name="Updatable" Type="Edm.Boolean" Nullable="false"/>
+</ComplexType>
+<EntityContainer Name="Container">
+<EntitySet Name="CreateDelH" EntityType="com.sap.gateway.srvd.zmpf_sd_delivery_create.v0001.CreateDelHType">
+<NavigationPropertyBinding Path="DeliveryItems" Target="CreateDelI"/>
+</EntitySet>
+<EntitySet Name="CreateDelI" EntityType="com.sap.gateway.srvd.zmpf_sd_delivery_create.v0001.CreateDelIType">
+<NavigationPropertyBinding Path="parent" Target="CreateDelH"/>
+</EntitySet>
+</EntityContainer>
+<Annotations Target="SAP__self.CreateDelIType/vstel">
+<Annotation Term="SAP__core.Computed"/>
+<Annotation Term="SAP__common.IsUpperCase"/>
+<Annotation Term="SAP__common.Label" String="Luogo sped."/>
+<Annotation Term="SAP__common.Heading" String="LgSp"/>
+<Annotation Term="SAP__common.QuickInfo" String="Luogo di spedizione / Punto di accettazione merce"/>
+</Annotations>
+<Annotations Target="SAP__self.CreateDelIType/rfbel">
+<Annotation Term="SAP__core.Computed"/>
+<Annotation Term="SAP__common.IsUpperCase"/>
+<Annotation Term="SAP__common.Label" String="Doc. di riferimento"/>
+<Annotation Term="SAP__common.Heading" String="Doc. rif."/>
+</Annotations>
+<Annotations Target="SAP__self.CreateDelIType/rfpos">
+<Annotation Term="SAP__core.Computed"/>
+<Annotation Term="SAP__common.IsDigitSequence"/>
+<Annotation Term="SAP__common.Label" String="Pos. riferimento"/>
+<Annotation Term="SAP__common.Heading" String="PosRif"/>
+<Annotation Term="SAP__common.QuickInfo" String="Posizione di riferimento"/>
+</Annotations>
+<Annotations Target="SAP__self.CreateDelIType/vkorg">
+<Annotation Term="SAP__common.IsUpperCase"/>
+<Annotation Term="SAP__common.Label" String="Org. commerciale"/>
+<Annotation Term="SAP__common.Heading" String="OrgC"/>
+<Annotation Term="SAP__common.QuickInfo" String="Organizzazione commerciale"/>
+</Annotations>
+<Annotations Target="SAP__self.CreateDelIType/vtweg">
+<Annotation Term="SAP__common.IsUpperCase"/>
+<Annotation Term="SAP__common.Label" String="Canale distribuzione"/>
+<Annotation Term="SAP__common.Heading" String="CanD"/>
+<Annotation Term="SAP__common.QuickInfo" String="Canale di distribuzione"/>
+</Annotations>
+<Annotations Target="SAP__self.CreateDelIType/spart">
+<Annotation Term="SAP__common.IsUpperCase"/>
+<Annotation Term="SAP__common.Label" String="Settore merceologico"/>
+<Annotation Term="SAP__common.Heading" String="SM"/>
+</Annotations>
+<Annotations Target="SAP__self.CreateDelIType/lfart">
+<Annotation Term="SAP__common.IsUpperCase"/>
+<Annotation Term="SAP__common.Label" String="Tipo di consegna"/>
+<Annotation Term="SAP__common.Heading" String="TpCns"/>
+</Annotations>
+<Annotations Target="SAP__self.CreateDelIType/dlvtp">
+<Annotation Term="SAP__common.IsUpperCase"/>
+<Annotation Term="SAP__common.Label" String="Categoria consegna"/>
+</Annotations>
+<Annotations Target="SAP__self.CreateDelIType/kunwe">
+<Annotation Term="SAP__common.IsUpperCase"/>
+<Annotation Term="SAP__common.Label" String="Destinatario merci"/>
+<Annotation Term="SAP__common.Heading" String="Dest.merci"/>
+</Annotations>
+<Annotations Target="SAP__self.CreateDelIType/matnr">
+<Annotation Term="SAP__common.IsUpperCase"/>
+<Annotation Term="SAP__common.Label" String="Materiale"/>
+<Annotation Term="SAP__common.QuickInfo" String="Codice materiale"/>
+</Annotations>
+<Annotations Target="SAP__self.CreateDelIType/werks">
+<Annotation Term="SAP__common.IsUpperCase"/>
+<Annotation Term="SAP__common.Label" String="Divisione"/>
+<Annotation Term="SAP__common.Heading" String="Div."/>
+</Annotations>
+<Annotations Target="SAP__self.CreateDelIType/lfimg">
+<Annotation Term="SAP__measures.Unit" Path="meins"/>
+<Annotation Term="SAP__common.Label" String="Q.tà di consegna"/>
+<Annotation Term="SAP__common.QuickInfo" String="Quantità effettiva consegnata (in unità di vendita)"/>
+</Annotations>
+<Annotations Target="SAP__self.CreateDelIType/vrkme">
+<Annotation Term="SAP__common.IsUnit"/>
+<Annotation Term="SAP__common.Label" String="UM di vendita"/>
+<Annotation Term="SAP__common.Heading" String="UM"/>
+<Annotation Term="SAP__common.QuickInfo" String="Unità di misura di vendita"/>
+</Annotations>
+<Annotations Target="SAP__self.CreateDelIType/meins">
+<Annotation Term="SAP__common.IsUnit"/>
+<Annotation Term="SAP__common.Label" String="Unità misura base"/>
+<Annotation Term="SAP__common.Heading" String="UMO"/>
+<Annotation Term="SAP__common.QuickInfo" String="Unità di misura di base"/>
+</Annotations>
+<Annotations Target="SAP__self.CreateDelIType/lgort">
+<Annotation Term="SAP__common.IsUpperCase"/>
+<Annotation Term="SAP__common.Label" String="Magazzino"/>
+<Annotation Term="SAP__common.Heading" String="Mag."/>
+</Annotations>
+<Annotations Target="SAP__self.CreateDelIType/lifnr">
+<Annotation Term="SAP__common.IsUpperCase"/>
+<Annotation Term="SAP__common.Label" String="Fornitore"/>
+<Annotation Term="SAP__common.QuickInfo" String="Numero conto del fornitore"/>
+</Annotations>
+<Annotations Target="SAP__self.CreateDelIType/bwart">
+<Annotation Term="SAP__common.IsUpperCase"/>
+<Annotation Term="SAP__common.Label" String="Tipo movimento"/>
+<Annotation Term="SAP__common.Heading" String="TMv"/>
+<Annotation Term="SAP__common.QuickInfo" String="Tipo movimento (gestione stock)"/>
+</Annotations>
+<Annotations Target="SAP__self.CreateDelIType/rblvs">
+<Annotation Term="SAP__common.IsDigitSequence"/>
+<Annotation Term="SAP__common.Label" String="Tipo mov. rif. WM"/>
+<Annotation Term="SAP__common.Heading" String="Rif"/>
+<Annotation Term="SAP__common.QuickInfo" String="Tipo movimento di riferimento per WM da movimenti materiali"/>
+</Annotations>
+<Annotations Target="SAP__self.CreateDelIType/shkzg_um">
+<Annotation Term="SAP__common.IsUpperCase"/>
+<Annotation Term="SAP__common.Label" String="ID registr. princ."/>
+<Annotation Term="SAP__common.Heading" String="ID reg. princ."/>
+<Annotation Term="SAP__common.QuickInfo" String="Indicatore: trasf. mat. stock in registrazione principale"/>
+</Annotations>
+<Annotations Target="SAP__self.CreateDelIType/ummat">
+<Annotation Term="SAP__common.IsUpperCase"/>
+<Annotation Term="SAP__common.Label" String="Mat. destinazione"/>
+<Annotation Term="SAP__common.QuickInfo" String="Materiale di destinazione/cedente"/>
+</Annotations>
+<Annotations Target="SAP__self.CreateDelIType/umwrk">
+<Annotation Term="SAP__common.IsUpperCase"/>
+<Annotation Term="SAP__common.Label" String="Div. di destinazione"/>
+<Annotation Term="SAP__common.Heading" String="Divisione"/>
+<Annotation Term="SAP__common.QuickInfo" String="Divisione di destinazione/di provenienza"/>
+</Annotations>
+<Annotations Target="SAP__self.CreateDelIType/umlgo">
+<Annotation Term="SAP__common.IsUpperCase"/>
+<Annotation Term="SAP__common.Label" String="Magazzino dest."/>
+<Annotation Term="SAP__common.Heading" String="Dest"/>
+<Annotation Term="SAP__common.QuickInfo" String="Magazzino di destinazione/di provenienza"/>
+</Annotations>
+<Annotations Target="SAP__self.CreateDelIType/qplos">
+<Annotation Term="SAP__common.IsDigitSequence"/>
+<Annotation Term="SAP__common.Label" String="Lotto di controllo"/>
+<Annotation Term="SAP__common.Heading" String="Lotto contr."/>
+<Annotation Term="SAP__common.QuickInfo" String="Numero lotto di controllo"/>
+</Annotations>
+<Annotations Target="SAP__self.CreateDelIType/fobwa">
+<Annotation Term="SAP__common.IsUpperCase"/>
+<Annotation Term="SAP__common.Label" String="Tipo movimento succ."/>
+<Annotation Term="SAP__common.Heading" String="TpMvS"/>
+<Annotation Term="SAP__common.QuickInfo" String="Tipo movimento successivo"/>
+</Annotations>
+<Annotations Target="SAP__self.CreateDelIType/fo_dlvtp">
+<Annotation Term="SAP__common.IsUpperCase"/>
+<Annotation Term="SAP__common.Label" String="Cat. consegna succ."/>
+<Annotation Term="SAP__common.QuickInfo" String="Categoria consegna succ."/>
+</Annotations>
+<Annotations Target="SAP__self.CreateDelIType/kzuml">
+<Annotation Term="SAP__common.IsUpperCase"/>
+<Annotation Term="SAP__common.Label" String="Lngh. carattere 1"/>
+<Annotation Term="SAP__common.QuickInfo" String="Campo carattere di lunghezza 1"/>
+</Annotations>
+<Annotations Target="SAP__self.CreateDelIType/charg">
+<Annotation Term="SAP__common.IsUpperCase"/>
+<Annotation Term="SAP__common.Label" String="Partita"/>
+<Annotation Term="SAP__common.QuickInfo" String="Numero partita"/>
+</Annotations>
+<Annotations Target="SAP__self.CreateDelIType/umcha">
+<Annotation Term="SAP__common.IsUpperCase"/>
+<Annotation Term="SAP__common.Label" String="Partita"/>
+<Annotation Term="SAP__common.QuickInfo" String="Numero partita"/>
+</Annotations>
+<Annotations Target="SAP__self.CreateDelIType/LogMess">
+<Annotation Term="SAP__common.IsUpperCase"/>
+<Annotation Term="SAP__common.Label" String="Testo mess."/>
+<Annotation Term="SAP__common.QuickInfo" String="Testo messaggio"/>
+</Annotations>
+<Annotations Target="SAP__self.CreateDelIType/__EntityControl">
+<Annotation Term="SAP__core.Computed"/>
+<Annotation Term="SAP__UI.HiddenFilter"/>
+<Annotation Term="SAP__UI.Hidden"/>
+</Annotations>
+<Annotations Target="SAP__self.Container/CreateDelI">
+<Annotation Term="SAP__capabilities.NavigationRestrictions">
+<Record>
+<PropertyValue Property="RestrictedProperties">
+<Collection>
+<Record>
+<PropertyValue Property="NavigationProperty" NavigationPropertyPath="parent"/>
+<PropertyValue Property="InsertRestrictions">
+<Record>
+<PropertyValue Property="Insertable" Bool="false"/>
+</Record>
+</PropertyValue>
+</Record>
+</Collection>
+</PropertyValue>
+</Record>
+</Annotation>
+<Annotation Term="SAP__capabilities.SearchRestrictions">
+<Record>
+<PropertyValue Property="Searchable" Bool="false"/>
+</Record>
+</Annotation>
+<Annotation Term="SAP__capabilities.FilterRestrictions">
+<Record>
+<PropertyValue Property="NonFilterableProperties">
+<Collection>
+<PropertyPath>__EntityControl</PropertyPath>
+</Collection>
+</PropertyValue>
+</Record>
+</Annotation>
+<Annotation Term="SAP__capabilities.SortRestrictions">
+<Record>
+<PropertyValue Property="NonSortableProperties">
+<Collection>
+<PropertyPath>__EntityControl</PropertyPath>
+</Collection>
+</PropertyValue>
+</Record>
+</Annotation>
+<Annotation Term="SAP__capabilities.ReadRestrictions">
+<Record>
+<PropertyValue Property="Readable" Bool="false"/>
+</Record>
+</Annotation>
+<Annotation Term="SAP__capabilities.InsertRestrictions">
+<Record>
+<PropertyValue Property="Insertable" Bool="false"/>
+</Record>
+</Annotation>
+<Annotation Term="SAP__capabilities.DeleteRestrictions">
+<Record>
+<PropertyValue Property="Deletable" Path="__EntityControl/Deletable"/>
+</Record>
+</Annotation>
+<Annotation Term="SAP__capabilities.UpdateRestrictions">
+<Record>
+<PropertyValue Property="Updatable" Path="__EntityControl/Updatable"/>
+<PropertyValue Property="QueryOptions">
+<Record>
+<PropertyValue Property="SelectSupported" Bool="true"/>
+</Record>
+</PropertyValue>
+</Record>
+</Annotation>
+<Annotation Term="SAP__core.OptimisticConcurrency">
+<Collection/>
+</Annotation>
+</Annotations>
+<Annotations Target="SAP__self.CreateDelIType">
+<Annotation Term="SAP__common.Label" String="Custom entity per creazione consegna POSIZIONE"/>
+</Annotations>
+<Annotations Target="SAP__self.Container">
+<Annotation Term="SAP__CodeList.UnitsOfMeasure">
+<Record>
+<PropertyValue Property="Url" String="../../../../default/iwbep/common/0001/$metadata"/>
+<PropertyValue Property="CollectionPath" String="UnitsOfMeasure"/>
+</Record>
+</Annotation>
+<Annotation Term="SAP__aggregation.ApplySupported">
+<Record>
+<PropertyValue Property="Transformations">
+<Collection>
+<String>aggregate</String>
+<String>groupby</String>
+<String>filter</String>
+</Collection>
+</PropertyValue>
+<PropertyValue Property="Rollup" EnumMember="SAP__aggregation.RollupType/None"/>
+</Record>
+</Annotation>
+<Annotation Term="SAP__common.ApplyMultiUnitBehaviorForSortingAndFiltering" Bool="true"/>
+<Annotation Term="SAP__capabilities.FilterFunctions">
+<Collection>
+<String>eq</String>
+<String>ne</String>
+<String>gt</String>
+<String>ge</String>
+<String>lt</String>
+<String>le</String>
+<String>and</String>
+<String>or</String>
+<String>contains</String>
+<String>startswith</String>
+<String>endswith</String>
+<String>any</String>
+<String>all</String>
+</Collection>
+</Annotation>
+<Annotation Term="SAP__capabilities.SupportedFormats">
+<Collection>
+<String>application/json</String>
+<String>application/pdf</String>
+</Collection>
+</Annotation>
+<Annotation Term="SAP__PDF.Features">
+<Record>
+<PropertyValue Property="DocumentDescriptionReference" String="../../../../default/iwbep/common/0001/$metadata"/>
+<PropertyValue Property="DocumentDescriptionCollection" String="MyDocumentDescriptions"/>
+<PropertyValue Property="ArchiveFormat" Bool="true"/>
+<PropertyValue Property="Border" Bool="true"/>
+<PropertyValue Property="CoverPage" Bool="true"/>
+<PropertyValue Property="FitToPage" Bool="true"/>
+<PropertyValue Property="FontName" Bool="true"/>
+<PropertyValue Property="FontSize" Bool="true"/>
+<PropertyValue Property="Margin" Bool="true"/>
+<PropertyValue Property="Padding" Bool="true"/>
+<PropertyValue Property="Signature" Bool="true"/>
+<PropertyValue Property="HeaderFooter" Bool="true"/>
+<PropertyValue Property="ResultSizeDefault" Int="20000"/>
+<PropertyValue Property="ResultSizeMaximum" Int="20000"/>
+</Record>
+</Annotation>
+<Annotation Term="SAP__capabilities.KeyAsSegmentSupported"/>
+<Annotation Term="SAP__capabilities.AsynchronousRequestsSupported"/>
+</Annotations>
+<Annotations Target="SAP__self.CreateDelHType/vstel">
+<Annotation Term="SAP__core.Computed"/>
+<Annotation Term="SAP__common.IsUpperCase"/>
+<Annotation Term="SAP__common.Label" String="Luogo sped."/>
+<Annotation Term="SAP__common.Heading" String="LgSp"/>
+<Annotation Term="SAP__common.QuickInfo" String="Luogo di spedizione / Punto di accettazione merce"/>
+</Annotations>
+<Annotations Target="SAP__self.CreateDelHType/if_synchron">
+<Annotation Term="SAP__common.IsUpperCase"/>
+<Annotation Term="SAP__common.Label" String="Lngh. carattere 1"/>
+<Annotation Term="SAP__common.QuickInfo" String="Campo carattere di lunghezza 1"/>
+</Annotations>
+<Annotations Target="SAP__self.CreateDelHType/if_no_partner_dialog">
+<Annotation Term="SAP__common.IsUpperCase"/>
+<Annotation Term="SAP__common.Label" String="Lngh. carattere 1"/>
+<Annotation Term="SAP__common.QuickInfo" String="Campo carattere di lunghezza 1"/>
+</Annotations>
+<Annotations Target="SAP__self.CreateDelHType/no_commit">
+<Annotation Term="SAP__common.IsUpperCase"/>
+<Annotation Term="SAP__common.Label" String="Lngh. carattere 1"/>
+<Annotation Term="SAP__common.QuickInfo" String="Campo carattere di lunghezza 1"/>
+</Annotations>
+<Annotations Target="SAP__self.CreateDelHType/__CreateByAssociationControl">
+<Annotation Term="SAP__core.Computed"/>
+<Annotation Term="SAP__UI.HiddenFilter"/>
+<Annotation Term="SAP__UI.Hidden"/>
+</Annotations>
+<Annotations Target="SAP__self.CreateDelHType/__EntityControl">
+<Annotation Term="SAP__core.Computed"/>
+<Annotation Term="SAP__UI.HiddenFilter"/>
+<Annotation Term="SAP__UI.Hidden"/>
+</Annotations>
+<Annotations Target="SAP__self.CreateDelHType/DeliveryItems">
+<Annotation Term="SAP__common.Composition"/>
+</Annotations>
+<Annotations Target="SAP__self.Container/CreateDelH">
+<Annotation Term="SAP__capabilities.NavigationRestrictions">
+<Record>
+<PropertyValue Property="RestrictedProperties">
+<Collection>
+<Record>
+<PropertyValue Property="NavigationProperty" NavigationPropertyPath="DeliveryItems"/>
+<PropertyValue Property="InsertRestrictions">
+<Record>
+<PropertyValue Property="Insertable" Path="__CreateByAssociationControl/DeliveryItems"/>
+</Record>
+</PropertyValue>
+</Record>
+</Collection>
+</PropertyValue>
+</Record>
+</Annotation>
+<Annotation Term="SAP__capabilities.SearchRestrictions">
+<Record>
+<PropertyValue Property="Searchable" Bool="false"/>
+</Record>
+</Annotation>
+<Annotation Term="SAP__capabilities.FilterRestrictions">
+<Record>
+<PropertyValue Property="NonFilterableProperties">
+<Collection>
+<PropertyPath>__CreateByAssociationControl</PropertyPath>
+<PropertyPath>__EntityControl</PropertyPath>
+</Collection>
+</PropertyValue>
+</Record>
+</Annotation>
+<Annotation Term="SAP__capabilities.SortRestrictions">
+<Record>
+<PropertyValue Property="NonSortableProperties">
+<Collection>
+<PropertyPath>__CreateByAssociationControl</PropertyPath>
+<PropertyPath>__EntityControl</PropertyPath>
+</Collection>
+</PropertyValue>
+</Record>
+</Annotation>
+<Annotation Term="SAP__capabilities.ReadRestrictions">
+<Record>
+<PropertyValue Property="Readable" Bool="false"/>
+</Record>
+</Annotation>
+<Annotation Term="SAP__capabilities.DeleteRestrictions">
+<Record>
+<PropertyValue Property="Deletable" Path="__EntityControl/Deletable"/>
+</Record>
+</Annotation>
+<Annotation Term="SAP__capabilities.UpdateRestrictions">
+<Record>
+<PropertyValue Property="Updatable" Path="__EntityControl/Updatable"/>
+<PropertyValue Property="QueryOptions">
+<Record>
+<PropertyValue Property="SelectSupported" Bool="true"/>
+</Record>
+</PropertyValue>
+</Record>
+</Annotation>
+<Annotation Term="SAP__core.OptimisticConcurrency">
+<Collection/>
+</Annotation>
+</Annotations>
+<Annotations Target="SAP__self.CreateDelHType">
+<Annotation Term="SAP__common.Label" String="Custom entity per creazione consegna di testata"/>
+</Annotations>
+<Annotations Target="SAP__self.CreateDelIType/wadat">
+<Annotation Term="SAP__common.Label" String="Data uscita merce"/>
+<Annotation Term="SAP__common.Heading" String="Usc.merce"/>
+</Annotations>
+<Annotations Target="SAP__self.CreateDelIType/lfdat">
+<Annotation Term="SAP__common.Label" String="Consegne (da/a)"/>
+<Annotation Term="SAP__common.Heading" String="Dt.cons."/>
+<Annotation Term="SAP__common.QuickInfo" String="Data di consegna"/>
+</Annotations>
+<Annotations Target="SAP__self.CreateDelIType/wadat_ist">
+<Annotation Term="SAP__common.Label" String="Data eff. mov. merci"/>
+<Annotation Term="SAP__common.Heading" String="Dta eff.UM"/>
+<Annotation Term="SAP__common.QuickInfo" String="Data movimento merci effettiva"/>
+</Annotations>
+<Annotations Target="SAP__self.CreateDelIType/lifex">
+<Annotation Term="SAP__common.Label" String="Ident.esterno cons."/>
+<Annotation Term="SAP__common.Heading" String="Identificatore esterno consegna"/>
+<Annotation Term="SAP__common.QuickInfo" String="Identificatore esterno della bolla di consegna"/>
+</Annotations>
+<Annotations Target="SAP__self.CreateDelIType/FlErr">
+<Annotation Term="SAP__common.Label" String="Indicatore"/>
+<Annotation Term="SAP__common.QuickInfo" String="Indicatore generale"/>
+</Annotations>
+<Annotations Target="SAP__self.CreateDelIType/erdat">
+<Annotation Term="SAP__common.Label" String="Data creazione"/>
+<Annotation Term="SAP__common.Heading" String="Data cr."/>
+<Annotation Term="SAP__common.QuickInfo" String="Data di creazione del record"/>
+</Annotations>
+<Annotations Target="SAP__self.CreateDelIType/erzet">
+<Annotation Term="SAP__common.Label" String="Ora"/>
+<Annotation Term="SAP__common.QuickInfo" String="Ora acquisizione"/>
+</Annotations>
+<Annotations Target="SAP__self.CreateDelIType/__EntityControl/Deletable">
+<Annotation Term="SAP__common.Label" String="Dyn. Method Control"/>
+<Annotation Term="SAP__common.Heading" String="Dynamic Method Control"/>
+<Annotation Term="SAP__common.QuickInfo" String="Dynamic Method Property"/>
+</Annotations>
+<Annotations Target="SAP__self.CreateDelIType/__EntityControl/Updatable">
+<Annotation Term="SAP__common.Label" String="Dyn. Method Control"/>
+<Annotation Term="SAP__common.Heading" String="Dynamic Method Control"/>
+<Annotation Term="SAP__common.QuickInfo" String="Dynamic Method Property"/>
+</Annotations>
+<Annotations Target="SAP__self.CreateDelHType/__CreateByAssociationControl/DeliveryItems">
+<Annotation Term="SAP__common.Label" String="Dynamic CbA-Control"/>
+<Annotation Term="SAP__common.Heading" String="Dynamic Create by Association Control"/>
+<Annotation Term="SAP__common.QuickInfo" String="Dynamic Create via Association Control Property"/>
+</Annotations>
+<Annotations Target="SAP__self.CreateDelHType/__EntityControl/Deletable">
+<Annotation Term="SAP__common.Label" String="Dyn. Method Control"/>
+<Annotation Term="SAP__common.Heading" String="Dynamic Method Control"/>
+<Annotation Term="SAP__common.QuickInfo" String="Dynamic Method Property"/>
+</Annotations>
+<Annotations Target="SAP__self.CreateDelHType/__EntityControl/Updatable">
+<Annotation Term="SAP__common.Label" String="Dyn. Method Control"/>
+<Annotation Term="SAP__common.Heading" String="Dynamic Method Control"/>
+<Annotation Term="SAP__common.QuickInfo" String="Dynamic Method Property"/>
+</Annotations>
+<Annotations Target="SAP__self.CreateDelHCbAControl/DeliveryItems">
+<Annotation Term="SAP__common.Label" String="Dynamic CbA-Control"/>
+<Annotation Term="SAP__common.Heading" String="Dynamic Create by Association Control"/>
+<Annotation Term="SAP__common.QuickInfo" String="Dynamic Create via Association Control Property"/>
+</Annotations>
+<Annotations Target="SAP__self.EntityControl/Deletable">
+<Annotation Term="SAP__common.Label" String="Dyn. Method Control"/>
+<Annotation Term="SAP__common.Heading" String="Dynamic Method Control"/>
+<Annotation Term="SAP__common.QuickInfo" String="Dynamic Method Property"/>
+</Annotations>
+<Annotations Target="SAP__self.EntityControl/Updatable">
+<Annotation Term="SAP__common.Label" String="Dyn. Method Control"/>
+<Annotation Term="SAP__common.Heading" String="Dynamic Method Control"/>
+<Annotation Term="SAP__common.QuickInfo" String="Dynamic Method Property"/>
+</Annotations>
+</Schema>
+</edmx:DataServices>
+</edmx:Edmx>

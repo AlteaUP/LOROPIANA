@@ -1,0 +1,136 @@
+_schema-version: 3.3.0
+ID: zsubcontracting_cockpit
+version: 1.0.0
+description: "Loro Piana CAP"
+parameters:
+  enable-parallel-deployments: true
+  deploy_mode: html5-repo
+build-parameters:
+  before-all:
+    - builder: custom
+      commands:
+        - npm ci
+        - npx cds build --production
+modules:
+  - name: zsubcontracting_cockpit-srv
+    type: nodejs
+    path: gen/srv
+    parameters:
+      instances: 1
+      buildpack: nodejs_buildpack
+    build-parameters:
+      builder: npm-ci
+    provides:
+      - name: srv-api # required by consumers of CAP services (e.g. approuter)
+        properties:
+          srv-url: ${default-url}
+    requires:
+      - name: zsubcontracting_cockpit-auth
+      # - name: zsubcontracting_cockpit-db
+      - name: zsubcontracting_cockpit-connectivity
+      - name: zsubcontracting_cockpit-destination
+
+  - name: zsubcontracting_cockpit-approuter
+    type: approuter.nodejs
+    path: app/
+    parameters:
+      keep-existing-routes: true
+      disk-quota: 2048M
+      memory: 256M
+    requires:
+      - name: srv-api
+        group: destinations
+        properties:
+          name: srv-api # must be used in xs-app.json as well
+          url: ~{srv-url}
+          forwardAuthToken: true
+      - name: zsubcontracting_cockpit-auth
+      - name: zsubcontracting_cockpit-destination
+      - name: zsubcontracting_cockpit-html5-runtime
+    provides:
+      - name: app-api
+        properties:
+          app-protocol: ${protocol}
+          app-uri: ${default-uri}
+
+  - name: zsubcontracting_cockpit-app-deployer
+    type: com.sap.application.content
+    path: app/html5-deployer
+    requires:
+      - name: zsubcontracting_cockpit-html5-repo-host
+        parameters:
+          content-target: true
+    build-parameters:
+      build-result: resources/
+      requires:
+        - name: zsubcontractingcockpitapp4
+          artifacts:
+            - zsubcontracting_cockpit_app4.zip
+          target-path: resources/
+  - name: zsubcontractingcockpitapp4
+    type: html5
+    path: app/zsubcontracting_cockpit_app4
+
+    build-parameters:
+      build-result: dist
+      builder: custom
+      commands:
+        - npm install
+        - npm run build:cf
+      supported-platforms: 
+        []
+resources:
+  - name: zsubcontracting_cockpit-auth
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: xsuaa
+      service-plan: application
+      path: ./xs-security.json
+      config:
+        xsappname: zsubcontracting_cockpit-auth
+        tenant-mode: dedicated
+
+  - name: zsubcontracting_cockpit-connectivity
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: connectivity
+      service-plan: lite
+  - name: zsubcontracting_cockpit-destination
+    type: org.cloudfoundry.managed-service
+    parameters:
+      config:
+        HTML5Runtime_enabled: false    
+        init_data:
+          instance:
+            destinations:
+            - Authentication: NoAuthentication
+              HTML5.DynamicDestination: true
+              HTML5.ForwardAuthToken: true
+              Name: srv-api
+              ProxyType: Internet
+              Type: HTTP
+              URL: ~{srv-url}
+            - Authentication: NoAuthentication
+              Name: ui5
+              ProxyType: Internet
+              Type: HTTP
+              URL: https://ui5.sap.com
+            existing_destinations_policy: update        
+      service: destination
+      service-keys:
+      - name: xagalteaup-destination-key
+      service-name: zsubcontracting_cockpit-destination
+      service-plan: lite
+
+  - name: zsubcontracting_cockpit-html5-repo-host
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: html5-apps-repo
+      service-name: zsubcontracting_cockpit-html5-repo-host
+      service-plan: app-host
+  - name: zsubcontracting_cockpit-html5-runtime
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: html5-apps-repo
+      service-name: zsubcontracting_cockpit-html5-runtime
+      service-plan: app-runtime

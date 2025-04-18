@@ -1,0 +1,54 @@
+{
+  "cds": {
+    "requires": {
+      "MM_PUR_SUBCONTRACTING_COCKPIT_SRV": {
+        "kind": "odata-v2",
+        "model": "srv/EXTERNAL/MM_PUR_SUBCONTRACTING_COCKPIT_SRV"
+      },
+      "API_MATERIAL_STOCK_SRV": {
+        "kind": "odata-v2",
+        "model": "srv/external/API_MATERIAL_STOCK_SRV"
+      },
+      "ZZ1_I_UNION_CDS": {
+        "kind": "odata-v2",
+        "model": "srv/external/ZZ1_I_UNION_CDS"
+      },
+      "OP_API_MATERIAL_DOCUMENT_SRV": {
+        "kind": "odata-v2",
+        "model": "srv/external/OP_API_MATERIAL_DOCUMENT_SRV"
+      },
+      "API_MATERIAL_DOCUMENT_SRV": {
+        "kind": "odata-v2",
+        "model": "srv/external/API_MATERIAL_DOCUMENT_SRV"
+      },
+      "ZZ1_I_COMBORDER_COMP_CDS": {
+        "kind": "odata-v2",
+        "model": "srv/external/ZZ1_I_COMBORDER_COMP_CDS"
+      },
+      "ZZ1_I_ARUN_BDBSSUMQTY_CDS": {
+        "kind": "odata-v2",
+        "model": "srv/external/ZZ1_I_ARUN_BDBSSUMQTY_CDS"
+      },
+      "ZZ1_I_ARUN_BDBSSUMQTY_CDS_CDS": {
+        "kind": "odata-v2",
+        "model": "srv/external/ZZ1_I_ARUN_BDBSSUMQTY_CDS_CDS"
+      },
+      "ZZ1_I_SUMQTYDELIVERY_T1": {
+        "kind": "odata-v2",
+        "model": "srv/external/ZZ1_I_SUMQTYDELIVERY_T1"
+      },
+      "ZZ1_I_SUMQTYDELIVERY_T_CDS": {
+        "kind": "odata-v2",
+        "model": "srv/external/ZZ1_I_SUMQTYDELIVERY_T_CDS"
+      },
+      "ZMPF_SD_CREATE_DELIVERY": {
+        "kind": "odata-v4",
+        "model": "srv/external/ZMPF_SD_CREATE_DELIVERY"
+      },
+      "ZZ1_I_SHIPPINGPOINT_CDS": {
+        "kind": "odata-v2",
+        "model": "srv/external/ZZ1_I_SHIPPINGPOINT_CDS"
+      }
+    }
+  }
+}

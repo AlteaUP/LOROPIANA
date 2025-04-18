@@ -1,0 +1,427 @@
+<edmx:Edmx xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:sap="http://www.sap.com/Protocols/SAPData" Version="1.0">
+<edmx:Reference xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Uri="http://lpappsvi.lp.corp:8000/sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_AGGREGATION',Version='0001',SAP__Origin='LOCAL')/$value">
+<edmx:Include Namespace="Org.OData.Aggregation.V1" Alias="Aggregation"/>
+</edmx:Reference>
+<edmx:Reference xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Uri="http://lpappsvi.lp.corp:8000/sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_ANALYTICS',Version='0001',SAP__Origin='LOCAL')/$value">
+<edmx:Include Namespace="com.sap.vocabularies.Analytics.v1" Alias="Analytics"/>
+</edmx:Reference>
+<edmx:Reference xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Uri="http://lpappsvi.lp.corp:8000/sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_CAPABILITIES',Version='0001',SAP__Origin='LOCAL')/$value">
+<edmx:Include Namespace="Org.OData.Capabilities.V1" Alias="Capabilities"/>
+</edmx:Reference>
+<edmx:Reference xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Uri="http://lpappsvi.lp.corp:8000/sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_CODELIST',Version='0001',SAP__Origin='LOCAL')/$value">
+<edmx:Include Namespace="com.sap.vocabularies.CodeList.v1" Alias="SAP__CodeList"/>
+</edmx:Reference>
+<edmx:Reference xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Uri="http://lpappsvi.lp.corp:8000/sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_COMMON',Version='0001',SAP__Origin='LOCAL')/$value">
+<edmx:Include Namespace="com.sap.vocabularies.Common.v1" Alias="Common"/>
+</edmx:Reference>
+<edmx:Reference xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Uri="http://lpappsvi.lp.corp:8000/sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_COMMUNICATION',Version='0001',SAP__Origin='LOCAL')/$value">
+<edmx:Include Namespace="com.sap.vocabularies.Communication.v1" Alias="Communication"/>
+</edmx:Reference>
+<edmx:Reference xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Uri="http://lpappsvi.lp.corp:8000/sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_MEASURES',Version='0001',SAP__Origin='LOCAL')/$value">
+<edmx:Include Namespace="Org.OData.Measures.V1" Alias="Measures"/>
+</edmx:Reference>
+<edmx:Reference xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Uri="http://lpappsvi.lp.corp:8000/sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_PERSONALDATA',Version='0001',SAP__Origin='LOCAL')/$value">
+<edmx:Include Namespace="com.sap.vocabularies.PersonalData.v1" Alias="PersonalData"/>
+</edmx:Reference>
+<edmx:Reference xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Uri="http://lpappsvi.lp.corp:8000/sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_UI',Version='0001',SAP__Origin='LOCAL')/$value">
+<edmx:Include Namespace="com.sap.vocabularies.UI.v1" Alias="UI"/>
+</edmx:Reference>
+<edmx:Reference xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Uri="http://lpappsvi.lp.corp:8000/sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_VALIDATION',Version='0001',SAP__Origin='LOCAL')/$value">
+<edmx:Include Namespace="Org.OData.Validation.V1" Alias="Validation"/>
+</edmx:Reference>
+<edmx:DataServices m:DataServiceVersion="2.0">
+<Schema xmlns="http://schemas.microsoft.com/ado/2008/09/edm" Namespace="API_MATERIAL_DOCUMENT_SRV" xml:lang="it" sap:schema-version="1">
+<EntityType Name="A_MaterialDocumentHeaderType" sap:label="Testata del documento" sap:content-version="1">
+<Key>
+<PropertyRef Name="MaterialDocumentYear"/>
+<PropertyRef Name="MaterialDocument"/>
+</Key>
+<Property Name="MaterialDocumentYear" Type="Edm.String" Nullable="false" MaxLength="4" sap:display-format="NonNegative" sap:label="Anno del documento materiale"/>
+<Property Name="MaterialDocument" Type="Edm.String" Nullable="false" MaxLength="10" sap:display-format="UpperCase" sap:label="Documento materiale" sap:quickinfo="Numero documento materiale"/>
+<Property Name="InventoryTransactionType" Type="Edm.String" MaxLength="2" sap:display-format="UpperCase" sap:label="Tipo operazione"/>
+<Property Name="DocumentDate" Type="Edm.DateTime" Precision="0" sap:display-format="Date" sap:label="Data documento" sap:quickinfo="Data documento nel documento"/>
+<Property Name="PostingDate" Type="Edm.DateTime" Precision="0" sap:display-format="Date" sap:label="Data registrazione" sap:quickinfo="Data di registrazione nel documento"/>
+<Property Name="CreationDate" Type="Edm.DateTime" Precision="0" sap:display-format="Date" sap:label="Data di acquisizione" sap:quickinfo="Giorno in cui è stato acquisito il documento contabile"/>
+<Property Name="CreationTime" Type="Edm.Time" Precision="0" sap:label="Ora di acquisizione"/>
+<Property Name="CreatedByUser" Type="Edm.String" MaxLength="12" sap:display-format="UpperCase" sap:label="Nome utente" sap:quickinfo="Nome dell'utente"/>
+<Property Name="MaterialDocumentHeaderText" Type="Edm.String" MaxLength="25" sap:label="Tst.test.doc." sap:quickinfo="Testo testata documento"/>
+<Property Name="ReferenceDocument" Type="Edm.String" MaxLength="16" sap:display-format="UpperCase" sap:label="Riferimento" sap:quickinfo="Numero documento di riferimento"/>
+<Property Name="VersionForPrintingSlip" Type="Edm.String" MaxLength="1" sap:display-format="UpperCase" sap:label="Versione stampa" sap:quickinfo="Versione per la stampa della bolla accompagnamento merci"/>
+<Property Name="ManualPrintIsTriggered" Type="Edm.String" MaxLength="1" sap:display-format="UpperCase" sap:label="Stampa att." sap:quickinfo="Stampa tramite controllo messaggi"/>
+<Property Name="CtrlPostgForExtWhseMgmtSyst" Type="Edm.String" MaxLength="1" sap:display-format="UpperCase" sap:label="Controllo WMS est." sap:quickinfo="Controllo registr. per WMS esterno"/>
+<Property Name="GoodsMovementCode" Type="Edm.String" MaxLength="2" sap:display-format="UpperCase" sap:label="Codice movimento merci"/>
+<NavigationProperty Name="to_MaterialDocumentItem" Relationship="API_MATERIAL_DOCUMENT_SRV.assoc_9241EE3C64DC6370D0509D8AA8DA2241" FromRole="FromRole_assoc_9241EE3C64DC6370D0509D8AA8DA2241" ToRole="ToRole_assoc_9241EE3C64DC6370D0509D8AA8DA2241"/>
+</EntityType>
+<EntityType Name="A_MaterialDocumentItemType" sap:label="Posizioni del documento" sap:content-version="1">
+<Key>
+<PropertyRef Name="MaterialDocumentYear"/>
+<PropertyRef Name="MaterialDocument"/>
+<PropertyRef Name="MaterialDocumentItem"/>
+</Key>
+<Property Name="MaterialDocumentYear" Type="Edm.String" Nullable="false" MaxLength="4" sap:display-format="NonNegative" sap:label="Anno del documento materiale"/>
+<Property Name="MaterialDocument" Type="Edm.String" Nullable="false" MaxLength="10" sap:display-format="UpperCase" sap:label="Documento materiale" sap:quickinfo="Numero documento materiale"/>
+<Property Name="MaterialDocumentItem" Type="Edm.String" Nullable="false" MaxLength="4" sap:display-format="NonNegative" sap:label="Posizione documento materiale"/>
+<Property Name="Material" Type="Edm.String" MaxLength="40" sap:display-format="UpperCase" sap:label="Materiale" sap:quickinfo="Codice materiale"/>
+<Property Name="Plant" Type="Edm.String" MaxLength="4" sap:display-format="UpperCase" sap:label="Divisione"/>
+<Property Name="StorageLocation" Type="Edm.String" MaxLength="4" sap:display-format="UpperCase" sap:label="Magazzino"/>
+<Property Name="Batch" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Partita" sap:quickinfo="Numero partita"/>
+<Property Name="GoodsMovementType" Type="Edm.String" MaxLength="3" sap:display-format="UpperCase" sap:label="Tipo movimento" sap:quickinfo="Tipo movimento (gestione stock)"/>
+<Property Name="InventoryStockType" Type="Edm.String" MaxLength="2" sap:display-format="UpperCase" sap:label="Tipo di stock" sap:quickinfo="Tipo di stock del movimento merci (identificatore stock)"/>
+<Property Name="InventoryValuationType" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Tipo valorizzazione" sap:quickinfo="Tipo di valutazione"/>
+<Property Name="InventorySpecialStockType" Type="Edm.String" MaxLength="1" sap:display-format="UpperCase" sap:label="Tipo di stock speciale"/>
+<Property Name="Supplier" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Fornitore" sap:quickinfo="Numero conto fornitore"/>
+<Property Name="Customer" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Cliente" sap:quickinfo="Numero conto cliente"/>
+<Property Name="SalesOrder" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Ordine di vendita" sap:quickinfo="Numero ordine di vendita"/>
+<Property Name="SalesOrderItem" Type="Edm.String" MaxLength="6" sap:display-format="NonNegative" sap:label="Posizione dell'ordine di vendita"/>
+<Property Name="SalesOrderScheduleLine" Type="Edm.String" MaxLength="4" sap:display-format="NonNegative" sap:label="Schedulazione dell'ordine cliente"/>
+<Property Name="PurchaseOrder" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Ordine d'acquisto" sap:quickinfo="Numero dell'ordine d'acquisto"/>
+<Property Name="PurchaseOrderItem" Type="Edm.String" MaxLength="5" sap:display-format="NonNegative" sap:label="Posizione ord. acq." sap:quickinfo="N. pos. del documento d'acquisto"/>
+<Property Name="WBSElement" Type="Edm.String" MaxLength="24" sap:display-format="UpperCase" sap:label="Elemento WBS" sap:quickinfo="Elemento della Work Breakdown Structure (elemento WBS)"/>
+<Property Name="ManufacturingOrder" Type="Edm.String" MaxLength="12" sap:display-format="UpperCase" sap:label="Ordine di produzione"/>
+<Property Name="ManufacturingOrderItem" Type="Edm.String" MaxLength="4" sap:display-format="NonNegative" sap:label="Posizione ordine di produzione"/>
+<Property Name="GoodsMovementRefDocType" Type="Edm.String" MaxLength="1" sap:display-format="UpperCase" sap:label="Tipo documento rif." sap:quickinfo="Tipo doc. riferimento movimento di merci"/>
+<Property Name="GoodsMovementReasonCode" Type="Edm.String" MaxLength="4" sap:display-format="NonNegative" sap:label="Motivo movimento"/>
+<Property Name="Delivery" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Consegna"/>
+<Property Name="DeliveryItem" Type="Edm.String" MaxLength="6" sap:display-format="NonNegative" sap:label="Pos.cons." sap:quickinfo="Posizione di consegna"/>
+<Property Name="AccountAssignmentCategory" Type="Edm.String" MaxLength="1" sap:display-format="UpperCase" sap:label="Categoria contabilizzazione"/>
+<Property Name="CostCenter" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="CdC" sap:quickinfo="Centro di costo"/>
+<Property Name="ControllingArea" Type="Edm.String" MaxLength="4" sap:display-format="UpperCase" sap:label="Controlling area"/>
+<Property Name="CostObject" Type="Edm.String" MaxLength="12" sap:display-format="UpperCase" sap:label="Oggetto di costo"/>
+<Property Name="GLAccount" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Conto Co.Ge." sap:quickinfo="Numero del conto Co.Ge."/>
+<Property Name="FunctionalArea" Type="Edm.String" MaxLength="16" sap:display-format="UpperCase" sap:label="Area funzionale"/>
+<Property Name="ProfitabilitySegment" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Segmento di profittabilità"/>
+<Property Name="ProfitCenter" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Profit center"/>
+<Property Name="MasterFixedAsset" Type="Edm.String" MaxLength="12" sap:display-format="UpperCase" sap:label="Allegato" sap:quickinfo="Numero principale cespite"/>
+<Property Name="FixedAsset" Type="Edm.String" MaxLength="4" sap:display-format="UpperCase" sap:label="Numero secondario" sap:quickinfo="Numero secondario cespite"/>
+<Property Name="MaterialBaseUnit" Type="Edm.String" MaxLength="3" sap:label="Unità misura base" sap:quickinfo="Unità di misura di base" sap:semantics="unit-of-measure"/>
+<Property Name="QuantityInBaseUnit" Type="Edm.Decimal" Precision="13" Scale="3" sap:unit="MaterialBaseUnit" sap:label="Quantità"/>
+<Property Name="EntryUnit" Type="Edm.String" MaxLength="3" sap:label="UM acquisizione" sap:quickinfo="Unità di misura di registrazione" sap:semantics="unit-of-measure"/>
+<Property Name="QuantityInEntryUnit" Type="Edm.Decimal" Precision="13" Scale="3" sap:unit="EntryUnit" sap:label="Qtà in UM acq." sap:quickinfo="Quantità in unità di misura di acquisizione"/>
+<Property Name="CompanyCodeCurrency" Type="Edm.String" MaxLength="5" sap:display-format="UpperCase" sap:label="Divisa società" sap:semantics="currency-code"/>
+<Property Name="GdsMvtExtAmtInCoCodeCrcy" Type="Edm.Decimal" Precision="14" Scale="3" sap:unit="CompanyCodeCurrency" sap:label="Imp. est. div. int." sap:quickinfo="Importo di reg. inserito esternamente in divisa interna"/>
+<Property Name="SlsPrcAmtInclVATInCoCodeCrcy" Type="Edm.Decimal" Precision="14" Scale="3" sap:unit="CompanyCodeCurrency" sap:label="Val. vend. incl. IVA" sap:quickinfo="Valore prezzi vendita inclusa IVA"/>
+<Property Name="FiscalYear" Type="Edm.String" MaxLength="4" sap:display-format="NonNegative" sap:label="Esercizio"/>
+<Property Name="FiscalYearPeriod" Type="Edm.String" MaxLength="7" sap:display-format="NonNegative" sap:label="Eserc. e per. da data di registrazione" sap:quickinfo="Eserc. per."/>
+<Property Name="FiscalYearVariant" Type="Edm.String" MaxLength="2" sap:display-format="UpperCase" sap:label="Variante esercizio"/>
+<Property Name="IssgOrRcvgMaterial" Type="Edm.String" MaxLength="40" sap:display-format="UpperCase" sap:label="Materiale di trasferimento"/>
+<Property Name="IssgOrRcvgBatch" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Partita di trasferimento"/>
+<Property Name="IssuingOrReceivingPlant" Type="Edm.String" MaxLength="4" sap:display-format="UpperCase" sap:label="Div.dest./prov." sap:quickinfo="Divisione di destinazione/di provenienza"/>
+<Property Name="IssuingOrReceivingStorageLoc" Type="Edm.String" MaxLength="4" sap:display-format="UpperCase" sap:label="Magazzino dest." sap:quickinfo="Magazzino di destinazione/di provenienza"/>
+<Property Name="IssuingOrReceivingStockType" Type="Edm.String" MaxLength="2" sap:display-format="UpperCase" sap:label="Tipo di stock in trasferimento"/>
+<Property Name="IssgOrRcvgSpclStockInd" Type="Edm.String" MaxLength="1" sap:display-format="UpperCase" sap:label="Tipo stock speciale in trasferimento"/>
+<Property Name="IssuingOrReceivingValType" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Tipo val. trasf." sap:quickinfo="Tipo di val. della partita di trasf."/>
+<Property Name="IsCompletelyDelivered" Type="Edm.Boolean" sap:label="Consegna completata" sap:quickinfo="Codice di consegna finale"/>
+<Property Name="MaterialDocumentItemText" Type="Edm.String" MaxLength="50" sap:label="Testo" sap:quickinfo="Testo posizione"/>
+<Property Name="GoodsRecipientName" Type="Edm.String" MaxLength="12" sap:label="Destinatario merci"/>
+<Property Name="UnloadingPointName" Type="Edm.String" MaxLength="25" sap:label="Punto di scarico"/>
+<Property Name="ShelfLifeExpirationDate" Type="Edm.DateTime" Precision="0" sap:display-format="Date" sap:label="Data di scadenza"/>
+<Property Name="ManufactureDate" Type="Edm.DateTime" Precision="0" sap:display-format="Date" sap:label="Data produzione"/>
+<Property Name="SerialNumbersAreCreatedAutomly" Type="Edm.Boolean" sap:label="N. serie auto." sap:quickinfo="Creare automaticamente numero di serie"/>
+<Property Name="Reservation" Type="Edm.String" MaxLength="10" sap:display-format="NonNegative" sap:label="Impegno" sap:quickinfo="Numero dell'impegno / del fabbisogno dipendente"/>
+<Property Name="ReservationItem" Type="Edm.String" MaxLength="4" sap:display-format="NonNegative" sap:label="Posizione impegno" sap:quickinfo="Numero posizione dell'impegno/dei fabbisogni dipendenti"/>
+<Property Name="ReservationIsFinallyIssued" Type="Edm.Boolean" sap:label="Imp. uscita finale" sap:quickinfo="Uscita finale per impegno"/>
+<Property Name="SpecialStockIdfgSalesOrder" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Ordine cliente" sap:quickinfo="N. ordine cliente dello stock ordine cliente valorizzato"/>
+<Property Name="SpecialStockIdfgSalesOrderItem" Type="Edm.String" MaxLength="6" sap:display-format="NonNegative" sap:label="Pos. ordine cliente" sap:quickinfo="Pos. ordine cliente dello stock ordine cliente valorizzato"/>
+<Property Name="SpecialStockIdfgWBSElement" Type="Edm.String" MaxLength="24" sap:display-format="UpperCase" sap:label="Elemento WBS" sap:quickinfo="Elemento della Work Breakdown Structure (elemento WBS)"/>
+<Property Name="IsAutomaticallyCreated" Type="Edm.String" MaxLength="1" sap:display-format="UpperCase" sap:label="Creaz. automatica" sap:quickinfo="Indicatore posizione creata automaticamente"/>
+<Property Name="MaterialDocumentLine" Type="Edm.String" MaxLength="6" sap:display-format="NonNegative" sap:label="ID riga" sap:quickinfo="Identificazione univoca della riga documento"/>
+<Property Name="MaterialDocumentParentLine" Type="Edm.String" MaxLength="6" sap:display-format="NonNegative" sap:label="Ident. riga genitore" sap:quickinfo="Identificazione della riga immediatamente superiore"/>
+<Property Name="HierarchyNodeLevel" Type="Edm.String" MaxLength="2" sap:display-format="NonNegative" sap:label="Livello gerarchia" sap:quickinfo="Livello gerarchia della riga nel documento"/>
+<Property Name="GoodsMovementIsCancelled" Type="Edm.Boolean" sap:label="Posizione annullata" sap:quickinfo="La posizione è stata annullata"/>
+<Property Name="ReversedMaterialDocumentYear" Type="Edm.String" MaxLength="4" sap:display-format="NonNegative" sap:label="Anno doc. stornato" sap:quickinfo="Anno documento materiale stornato"/>
+<Property Name="ReversedMaterialDocument" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Doc. mat. stornato" sap:quickinfo="Documento materiale stornato"/>
+<Property Name="ReversedMaterialDocumentItem" Type="Edm.String" MaxLength="4" sap:display-format="NonNegative" sap:label="Pos. doc. stornato" sap:quickinfo="Posizione documento materiale stornato"/>
+<Property Name="ReferenceDocumentFiscalYear" Type="Edm.String" MaxLength="4" sap:display-format="NonNegative" sap:label="Doc. rif. es." sap:quickinfo="Esercizio di un documento di riferimento"/>
+<Property Name="InvtryMgmtRefDocumentItem" Type="Edm.String" MaxLength="4" sap:display-format="NonNegative" sap:label="Pos. doc. di rifer." sap:quickinfo="Posizione di un documento di riferimento"/>
+<Property Name="InvtryMgmtReferenceDocument" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Doc. di riferimento" sap:quickinfo="Numero di un documento di riferimento"/>
+<Property Name="MaterialDocumentPostingType" Type="Edm.String" MaxLength="1" sap:display-format="UpperCase" sap:label="Tipo di reg." sap:quickinfo="Storno, riconsegna merci o modifica stock"/>
+<Property Name="InventoryUsabilityCode" Type="Edm.String" MaxLength="1" sap:display-format="UpperCase" sap:label="Registrazione tipo di stock di controllo"/>
+<Property Name="EWMWarehouse" Type="Edm.String" MaxLength="4" sap:display-format="UpperCase" sap:label="N. magazzino" sap:quickinfo="N. mag./complesso di magazzini"/>
+<Property Name="EWMStorageBin" Type="Edm.String" MaxLength="18" sap:display-format="UpperCase" sap:label="Ubicazione magazzino"/>
+<Property Name="DebitCreditCode" Type="Edm.String" MaxLength="1" sap:display-format="UpperCase" sap:label="Indic. dare/avere" sap:quickinfo="Indicatore dare/avere"/>
+<Property Name="CrossPlantConfigurableProduct" Type="Edm.String" MaxLength="40" sap:display-format="UpperCase" sap:label="Mat. config. gen." sap:quickinfo="Materiale configurabile gen." sap:creatable="false" sap:updatable="false"/>
+<Property Name="ProductCharacteristic1" Type="Edm.String" MaxLength="18" sap:label="Colore" sap:quickinfo="Valore caratteristica per colori in caso di varianti" sap:creatable="false" sap:updatable="false"/>
+<Property Name="ProductCharacteristic2" Type="Edm.String" MaxLength="18" sap:label="Dimensione princ." sap:quickinfo="Valore caratteristica per la dimens. princ. nelle varianti" sap:creatable="false" sap:updatable="false"/>
+<Property Name="ProductCharacteristic3" Type="Edm.String" MaxLength="18" sap:label="Seconda dimensione" sap:quickinfo="Valore caratt. per la seconda dimensione nelle varianti" sap:creatable="false" sap:updatable="false"/>
+<Property Name="ProductSeasonYear" Type="Edm.String" MaxLength="4" sap:display-format="UpperCase" sap:label="Esercizio stagionale" sap:creatable="false" sap:updatable="false"/>
+<Property Name="ProductSeason" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Stagione" sap:creatable="false" sap:updatable="false"/>
+<Property Name="ProductCollection" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Collezione" sap:quickinfo="Collezione fashion" sap:creatable="false" sap:updatable="false"/>
+<Property Name="ProductTheme" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Tema" sap:quickinfo="Tema fashion" sap:creatable="false" sap:updatable="false"/>
+<Property Name="StockSegment" Type="Edm.String" MaxLength="40" sap:display-format="UpperCase" sap:label="Segmento di stock"/>
+<Property Name="IssgOrRcvgStockSegment" Type="Edm.String" MaxLength="40" sap:display-format="UpperCase" sap:label="Segm. stock di dest." sap:quickinfo="Segmento stock di destinazione/provenienza"/>
+<NavigationProperty Name="to_MaterialDocumentHeader" Relationship="API_MATERIAL_DOCUMENT_SRV.assoc_9241EE3C64DC6370D0509D8AA8DA2241" FromRole="ToRole_assoc_9241EE3C64DC6370D0509D8AA8DA2241" ToRole="FromRole_assoc_9241EE3C64DC6370D0509D8AA8DA2241"/>
+<NavigationProperty Name="to_SerialNumbers" Relationship="API_MATERIAL_DOCUMENT_SRV.assoc_1108E069A43298B681C7DD076FEE7F8E" FromRole="FromRole_assoc_1108E069A43298B681C7DD076FEE7F8E" ToRole="ToRole_assoc_1108E069A43298B681C7DD076FEE7F8E"/>
+</EntityType>
+<EntityType Name="A_SerialNumberMaterialDocumentType" sap:label="Numeri di serie" sap:content-version="1">
+<Key>
+<PropertyRef Name="Material"/>
+<PropertyRef Name="SerialNumber"/>
+<PropertyRef Name="MaterialDocument"/>
+<PropertyRef Name="MaterialDocumentItem"/>
+<PropertyRef Name="MaterialDocumentYear"/>
+</Key>
+<Property Name="Material" Type="Edm.String" Nullable="false" MaxLength="40" sap:display-format="UpperCase" sap:label="Materiale" sap:quickinfo="Codice materiale"/>
+<Property Name="SerialNumber" Type="Edm.String" Nullable="false" MaxLength="18" sap:display-format="UpperCase" sap:label="Numero di serie"/>
+<Property Name="MaterialDocument" Type="Edm.String" Nullable="false" MaxLength="10" sap:display-format="UpperCase" sap:label="Documento materiale" sap:quickinfo="Numero documento materiale"/>
+<Property Name="MaterialDocumentItem" Type="Edm.String" Nullable="false" MaxLength="4" sap:display-format="NonNegative" sap:label="Posizione documento materiale"/>
+<Property Name="MaterialDocumentYear" Type="Edm.String" Nullable="false" MaxLength="4" sap:display-format="NonNegative" sap:label="Anno del documento materiale"/>
+<Property Name="ManufacturerSerialNumber" Type="Edm.String" MaxLength="30" sap:display-format="UpperCase" sap:label="N. serie produttore" sap:quickinfo="Numero di serie del produttore"/>
+</EntityType>
+<Association Name="assoc_1108E069A43298B681C7DD076FEE7F8E" sap:content-version="1">
+<End Type="API_MATERIAL_DOCUMENT_SRV.A_MaterialDocumentItemType" Multiplicity="1" Role="FromRole_assoc_1108E069A43298B681C7DD076FEE7F8E"/>
+<End Type="API_MATERIAL_DOCUMENT_SRV.A_SerialNumberMaterialDocumentType" Multiplicity="*" Role="ToRole_assoc_1108E069A43298B681C7DD076FEE7F8E"/>
+</Association>
+<Association Name="assoc_9241EE3C64DC6370D0509D8AA8DA2241" sap:content-version="1">
+<End Type="API_MATERIAL_DOCUMENT_SRV.A_MaterialDocumentHeaderType" Multiplicity="1" Role="FromRole_assoc_9241EE3C64DC6370D0509D8AA8DA2241">
+<OnDelete Action="Cascade"/>
+</End>
+<End Type="API_MATERIAL_DOCUMENT_SRV.A_MaterialDocumentItemType" Multiplicity="*" Role="ToRole_assoc_9241EE3C64DC6370D0509D8AA8DA2241"/>
+<ReferentialConstraint>
+<Principal Role="FromRole_assoc_9241EE3C64DC6370D0509D8AA8DA2241">
+<PropertyRef Name="MaterialDocument"/>
+<PropertyRef Name="MaterialDocumentYear"/>
+</Principal>
+<Dependent Role="ToRole_assoc_9241EE3C64DC6370D0509D8AA8DA2241">
+<PropertyRef Name="MaterialDocument"/>
+<PropertyRef Name="MaterialDocumentYear"/>
+</Dependent>
+</ReferentialConstraint>
+</Association>
+<EntityContainer Name="API_MATERIAL_DOCUMENT_SRV_Entities" m:IsDefaultEntityContainer="true" sap:message-scope-supported="true" sap:supported-formats="atom json xlsx">
+<EntitySet Name="A_MaterialDocumentHeader" EntityType="API_MATERIAL_DOCUMENT_SRV.A_MaterialDocumentHeaderType" sap:updatable="false" sap:deletable="false" sap:content-version="1"/>
+<EntitySet Name="A_MaterialDocumentItem" EntityType="API_MATERIAL_DOCUMENT_SRV.A_MaterialDocumentItemType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1"/>
+<EntitySet Name="A_SerialNumberMaterialDocument" EntityType="API_MATERIAL_DOCUMENT_SRV.A_SerialNumberMaterialDocumentType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1"/>
+<AssociationSet Name="assoc_9241EE3C64DC6370D0509D8AA8DA2241" Association="API_MATERIAL_DOCUMENT_SRV.assoc_9241EE3C64DC6370D0509D8AA8DA2241" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+<End EntitySet="A_MaterialDocumentHeader" Role="FromRole_assoc_9241EE3C64DC6370D0509D8AA8DA2241"/>
+<End EntitySet="A_MaterialDocumentItem" Role="ToRole_assoc_9241EE3C64DC6370D0509D8AA8DA2241"/>
+</AssociationSet>
+<AssociationSet Name="assoc_1108E069A43298B681C7DD076FEE7F8E" Association="API_MATERIAL_DOCUMENT_SRV.assoc_1108E069A43298B681C7DD076FEE7F8E" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+<End EntitySet="A_MaterialDocumentItem" Role="FromRole_assoc_1108E069A43298B681C7DD076FEE7F8E"/>
+<End EntitySet="A_SerialNumberMaterialDocument" Role="ToRole_assoc_1108E069A43298B681C7DD076FEE7F8E"/>
+</AssociationSet>
+<FunctionImport Name="Cancel" ReturnType="API_MATERIAL_DOCUMENT_SRV.A_MaterialDocumentHeaderType" EntitySet="A_MaterialDocumentHeader" m:HttpMethod="POST" sap:action-for="API_MATERIAL_DOCUMENT_SRV.A_MaterialDocumentHeaderType">
+<Parameter Name="MaterialDocumentYear" Type="Edm.String" Mode="In" MaxLength="4" sap:label="Eserc. doc. mat."/>
+<Parameter Name="MaterialDocument" Type="Edm.String" Mode="In" MaxLength="10" sap:label="Documento materiale"/>
+<Parameter Name="PostingDate" Type="Edm.DateTime" Mode="In" Precision="0" Nullable="true" sap:label="Data registrazione"/>
+</FunctionImport>
+<FunctionImport Name="CancelItem" ReturnType="API_MATERIAL_DOCUMENT_SRV.A_MaterialDocumentItemType" EntitySet="A_MaterialDocumentItem" m:HttpMethod="POST" sap:action-for="API_MATERIAL_DOCUMENT_SRV.A_MaterialDocumentItemType">
+<Parameter Name="MaterialDocumentYear" Type="Edm.String" Mode="In" MaxLength="4" sap:label="Eserc. doc. mat."/>
+<Parameter Name="MaterialDocument" Type="Edm.String" Mode="In" MaxLength="10" sap:label="Documento materiale"/>
+<Parameter Name="MaterialDocumentItem" Type="Edm.String" Mode="In" MaxLength="4" sap:label="Posizione doc. mat."/>
+<Parameter Name="PostingDate" Type="Edm.DateTime" Mode="In" Precision="0" Nullable="true" sap:label="Data registrazione"/>
+</FunctionImport>
+</EntityContainer>
+<Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Core.SchemaVersion" String="1.3.0"/>
+<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="API_MATERIAL_DOCUMENT_SRV.API_MATERIAL_DOCUMENT_SRV_Entities">
+<Annotation Term="Common.ApplyMultiUnitBehaviorForSortingAndFiltering" Bool="true"/>
+</Annotations>
+<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="API_MATERIAL_DOCUMENT_SRV.A_MaterialDocumentHeaderType/to_MaterialDocumentItem">
+<Annotation Term="Common.Composition"/>
+</Annotations>
+<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="API_MATERIAL_DOCUMENT_SRV.API_MATERIAL_DOCUMENT_SRV_Entities/A_MaterialDocumentHeader">
+<Annotation Term="Capabilities.NavigationRestrictions">
+<Record>
+<PropertyValue Property="RestrictedProperties">
+<Collection>
+<Record>
+<PropertyValue Property="NavigationProperty" NavigationPropertyPath="to_MaterialDocumentItem"/>
+<PropertyValue Property="InsertRestrictions">
+<Record>
+<PropertyValue Property="Insertable" Bool="false"/>
+</Record>
+</PropertyValue>
+</Record>
+</Collection>
+</PropertyValue>
+</Record>
+</Annotation>
+</Annotations>
+<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="API_MATERIAL_DOCUMENT_SRV.API_MATERIAL_DOCUMENT_SRV_Entities/A_MaterialDocumentItem">
+<Annotation Term="Capabilities.NavigationRestrictions">
+<Record>
+<PropertyValue Property="RestrictedProperties">
+<Collection>
+<Record>
+<PropertyValue Property="NavigationProperty" NavigationPropertyPath="to_MaterialDocumentHeader"/>
+<PropertyValue Property="InsertRestrictions">
+<Record>
+<PropertyValue Property="Insertable" Bool="false"/>
+</Record>
+</PropertyValue>
+</Record>
+<Record>
+<PropertyValue Property="NavigationProperty" NavigationPropertyPath="to_SerialNumbers"/>
+<PropertyValue Property="InsertRestrictions">
+<Record>
+<PropertyValue Property="Insertable" Bool="false"/>
+</Record>
+</PropertyValue>
+</Record>
+</Collection>
+</PropertyValue>
+</Record>
+</Annotation>
+</Annotations>
+<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="API_MATERIAL_DOCUMENT_SRV.A_MaterialDocumentHeaderType/CtrlPostgForExtWhseMgmtSyst">
+<Annotation Term="Common.SAPObjectNodeTypeReference" String="CtrlPostgForExtWhseMgmtSyst"/>
+</Annotations>
+<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="API_MATERIAL_DOCUMENT_SRV.A_MaterialDocumentHeaderType/GoodsMovementCode">
+<Annotation Term="Common.SAPObjectNodeTypeReference" String="GoodsMovementCode"/>
+</Annotations>
+<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="API_MATERIAL_DOCUMENT_SRV.A_MaterialDocumentHeaderType/InventoryTransactionType">
+<Annotation Term="Common.SAPObjectNodeTypeReference" String="InventoryTransactionType"/>
+</Annotations>
+<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="API_MATERIAL_DOCUMENT_SRV.A_MaterialDocumentItemType/AccountAssignmentCategory">
+<Annotation Term="Common.SAPObjectNodeTypeReference" String="AccountAssignmentCategory"/>
+</Annotations>
+<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="API_MATERIAL_DOCUMENT_SRV.A_MaterialDocumentItemType/CompanyCodeCurrency">
+<Annotation Term="Common.SAPObjectNodeTypeReference" String="Currency"/>
+</Annotations>
+<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="API_MATERIAL_DOCUMENT_SRV.A_MaterialDocumentItemType/EWMWarehouse">
+<Annotation Term="Common.SAPObjectNodeTypeReference" String="Warehouse"/>
+</Annotations>
+<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="API_MATERIAL_DOCUMENT_SRV.A_MaterialDocumentItemType/FiscalYearVariant">
+<Annotation Term="Common.SAPObjectNodeTypeReference" String="FiscalYearVariant"/>
+</Annotations>
+<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="API_MATERIAL_DOCUMENT_SRV.A_MaterialDocumentItemType/GoodsMovementReasonCode">
+<Annotation Term="Common.SAPObjectNodeTypeReference" String="GoodsMovementReason"/>
+</Annotations>
+<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="API_MATERIAL_DOCUMENT_SRV.A_MaterialDocumentItemType/GoodsMovementRefDocType">
+<Annotation Term="Common.SAPObjectNodeTypeReference" String="GoodsMovementReferenceDocType"/>
+</Annotations>
+<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="API_MATERIAL_DOCUMENT_SRV.A_MaterialDocumentItemType/GoodsMovementType">
+<Annotation Term="Common.SAPObjectNodeTypeReference" String="GoodsMovementType"/>
+</Annotations>
+<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="API_MATERIAL_DOCUMENT_SRV.A_MaterialDocumentItemType/InventorySpecialStockType">
+<Annotation Term="Common.SAPObjectNodeTypeReference" String="InventorySpecialStockType"/>
+</Annotations>
+<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="API_MATERIAL_DOCUMENT_SRV.A_MaterialDocumentItemType/InventoryStockType">
+<Annotation Term="Common.SAPObjectNodeTypeReference" String="InventoryStockType"/>
+</Annotations>
+<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="API_MATERIAL_DOCUMENT_SRV.A_MaterialDocumentItemType/InventoryUsabilityCode">
+<Annotation Term="Common.SAPObjectNodeTypeReference" String="InventoryUsabilityCode"/>
+</Annotations>
+<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="API_MATERIAL_DOCUMENT_SRV.A_MaterialDocumentItemType/InventoryValuationType">
+<Annotation Term="Common.SAPObjectNodeTypeReference" String="ProductValuationType"/>
+</Annotations>
+<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="API_MATERIAL_DOCUMENT_SRV.A_MaterialDocumentItemType/IssgOrRcvgSpclStockInd">
+<Annotation Term="Common.SAPObjectNodeTypeReference" String="InventorySpecialStockType"/>
+</Annotations>
+<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="API_MATERIAL_DOCUMENT_SRV.A_MaterialDocumentItemType/IssuingOrReceivingStockType">
+<Annotation Term="Common.SAPObjectNodeTypeReference" String="InventoryStockType"/>
+</Annotations>
+<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="API_MATERIAL_DOCUMENT_SRV.A_MaterialDocumentItemType/IssuingOrReceivingValType">
+<Annotation Term="Common.SAPObjectNodeTypeReference" String="ProductValuationType"/>
+</Annotations>
+<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="API_MATERIAL_DOCUMENT_SRV.A_MaterialDocumentItemType/MaterialDocumentPostingType">
+<Annotation Term="Common.SAPObjectNodeTypeReference" String="MaterialDocumentPostingType"/>
+</Annotations>
+<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="API_MATERIAL_DOCUMENT_SRV.A_MaterialDocumentItemType/StorageLocation">
+<Annotation Term="Common.SAPObjectNodeTypeReference" String="StorageLocation"/>
+</Annotations>
+<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="API_MATERIAL_DOCUMENT_SRV.API_MATERIAL_DOCUMENT_SRV_Entities/A_MaterialDocumentHeader">
+<Annotation Term="Capabilities.ReadRestrictions">
+<Record>
+<PropertyValue Property="Description" String="Reads information on material document header level"/>
+<PropertyValue Property="LongDescription" String="Reads material document header information to get an overview of the material document postings."/>
+<PropertyValue Property="ReadByKeyRestrictions">
+<Record>
+<PropertyValue Property="Description" String="Reads information for a specific material document header"/>
+<PropertyValue Property="LongDescription" String="Reads material document header information for a specific material document to get an overview of the material document posting."/>
+</Record>
+</PropertyValue>
+</Record>
+</Annotation>
+<Annotation Term="Capabilities.NavigationRestrictions">
+<Record>
+<PropertyValue Property="RestrictedProperties">
+<Collection>
+<Record>
+<PropertyValue Property="NavigationProperty" NavigationPropertyPath="to_MaterialDocumentItem"/>
+<PropertyValue Property="ReadRestrictions">
+<Record>
+<PropertyValue Property="Description" String="Reads information for a specific material document header and material document items"/>
+<PropertyValue Property="LongDescription" String="Reads material document header and material documents items information for a specific material document to get an overview of the material document posting."/>
+</Record>
+</PropertyValue>
+</Record>
+</Collection>
+</PropertyValue>
+</Record>
+</Annotation>
+<Annotation Term="Capabilities.InsertRestrictions">
+<Record>
+<PropertyValue Property="Description" String="Creates a material document"/>
+<PropertyValue Property="LongDescription" String="Creates a material document compost by header and item for a specific business process."/>
+</Record>
+</Annotation>
+</Annotations>
+<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="API_MATERIAL_DOCUMENT_SRV.API_MATERIAL_DOCUMENT_SRV_Entities/Cancel">
+<Annotation Term="Core.Description" String="Cancels a material document"/>
+<Annotation Term="Core.LongDescription" String="Cancels a complete material document that you specify by the material document number and year."/>
+</Annotations>
+<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="API_MATERIAL_DOCUMENT_SRV.API_MATERIAL_DOCUMENT_SRV_Entities/A_MaterialDocumentItem">
+<Annotation Term="Capabilities.ReadRestrictions">
+<Record>
+<PropertyValue Property="Description" String="Reads information on material document items level"/>
+<PropertyValue Property="LongDescription" String="Reads material document items information to get an overview of the material document postings."/>
+<PropertyValue Property="ReadByKeyRestrictions">
+<Record>
+<PropertyValue Property="Description" String="Reads information on material document items level for a specific material document"/>
+<PropertyValue Property="LongDescription" String="Reads material document items information for a specific material document and year to get an overview of the material document postings."/>
+</Record>
+</PropertyValue>
+</Record>
+</Annotation>
+</Annotations>
+<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="API_MATERIAL_DOCUMENT_SRV.API_MATERIAL_DOCUMENT_SRV_Entities/A_MaterialDocumentItem">
+<Annotation Term="Capabilities.NavigationRestrictions">
+<Record>
+<PropertyValue Property="RestrictedProperties">
+<Collection>
+<Record>
+<PropertyValue Property="NavigationProperty" NavigationPropertyPath="to_MaterialDocumentHeader"/>
+<PropertyValue Property="ReadRestrictions">
+<Record>
+<PropertyValue Property="Description" String="Reads information on material document item and header level for a specific material document item"/>
+<PropertyValue Property="LongDescription" String="Reads material document item and header information for a specific material document, year and item to get an overview of the material document posting."/>
+</Record>
+</PropertyValue>
+</Record>
+<Record>
+<PropertyValue Property="NavigationProperty" NavigationPropertyPath="to_SerialNumbers"/>
+<PropertyValue Property="ReadRestrictions">
+<Record>
+<PropertyValue Property="Description" String="Reads information on serial numbers for a specific material document item"/>
+<PropertyValue Property="LongDescription" String="Reads information on serial numbers for a specific material document item to get an overview of the posted serial numbers."/>
+</Record>
+</PropertyValue>
+</Record>
+</Collection>
+</PropertyValue>
+</Record>
+</Annotation>
+</Annotations>
+<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="API_MATERIAL_DOCUMENT_SRV.API_MATERIAL_DOCUMENT_SRV_Entities/CancelItem">
+<Annotation Term="Core.Description" String="Cancels a material document item"/>
+<Annotation Term="Core.LongDescription" String="Cancels a material document item that you specify by the material document number, year and item number."/>
+</Annotations>
+<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="API_MATERIAL_DOCUMENT_SRV.API_MATERIAL_DOCUMENT_SRV_Entities/A_SerialNumberMaterialDocument">
+<Annotation Term="Capabilities.ReadRestrictions">
+<Record>
+<PropertyValue Property="Description" String="Reads information of serial numbers on material document items level"/>
+<PropertyValue Property="LongDescription" String="Reads information of serial numbers of material document items to get an overview of the posted serial numbers."/>
+<PropertyValue Property="ReadByKeyRestrictions">
+<Record>
+<PropertyValue Property="Description" String="Reads information of serial number on material document item level for a specific material document, item, year and material"/>
+<PropertyValue Property="LongDescription" String="Reads information of serial number of a specific material document, item, year and material to get an overview of the posted serial numbers."/>
+</Record>
+</PropertyValue>
+</Record>
+</Annotation>
+</Annotations>
+<atom:link xmlns:atom="http://www.w3.org/2005/Atom" rel="self" href="http://lpappsvi.lp.corp:8000/sap/opu/odata/sap/API_MATERIAL_DOCUMENT_SRV/$metadata"/>
+<atom:link xmlns:atom="http://www.w3.org/2005/Atom" rel="latest-version" href="http://lpappsvi.lp.corp:8000/sap/opu/odata/sap/API_MATERIAL_DOCUMENT_SRV/$metadata"/>
+</Schema>
+</edmx:DataServices>
+</edmx:Edmx>

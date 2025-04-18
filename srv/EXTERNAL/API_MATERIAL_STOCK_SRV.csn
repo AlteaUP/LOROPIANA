@@ -1,0 +1,269 @@
+{
+ "meta": {
+  "creator": "cds-dk 8.7.3"
+ },
+ "$version": "2.0",
+ "definitions": {
+  "API_MATERIAL_STOCK_SRV": {
+   "kind": "service",
+   "@cds.external": true,
+   "@m.IsDefaultEntityContainer": "true",
+   "@sap.message.scope.supported": "true",
+   "@sap.supported.formats": "atom json xlsx"
+  },
+  "API_MATERIAL_STOCK_SRV.A_MaterialSerialNumber": {
+   "kind": "entity",
+   "@cds.external": true,
+   "@cds.persistence.skip": true,
+   "@sap.creatable": "false",
+   "@sap.updatable": "false",
+   "@sap.deletable": "false",
+   "@sap.content.version": "1",
+   "@sap.label": "Numeri di serie con stock materiale",
+   "elements": {
+    "Material": {
+     "key": true,
+     "type": "cds.String",
+     "length": 40,
+     "@sap.display.format": "UpperCase",
+     "@sap.label": "Materiale",
+     "@sap.quickinfo": "Codice materiale",
+     "notNull": true
+    },
+    "SerialNumber": {
+     "key": true,
+     "type": "cds.String",
+     "length": 18,
+     "@sap.display.format": "UpperCase",
+     "@sap.label": "Numero di serie",
+     "notNull": true
+    },
+    "Plant": {
+     "type": "cds.String",
+     "length": 4,
+     "@sap.display.format": "UpperCase",
+     "@sap.label": "Divisione"
+    },
+    "StorageLocation": {
+     "type": "cds.String",
+     "length": 4,
+     "@sap.display.format": "UpperCase",
+     "@sap.label": "Magazzino"
+    },
+    "InventorySpecialStockType": {
+     "type": "cds.String",
+     "length": 1,
+     "@sap.display.format": "UpperCase",
+     "@sap.label": "Stock speciale",
+     "@sap.quickinfo": "Codice stock speciale"
+    },
+    "Batch": {
+     "type": "cds.String",
+     "length": 10,
+     "@sap.display.format": "UpperCase",
+     "@sap.label": "Partita stock",
+     "@sap.quickinfo": "Numero partita"
+    },
+    "InventoryStockType": {
+     "type": "cds.String",
+     "length": 2,
+     "@sap.display.format": "UpperCase",
+     "@sap.label": "Tipo di stock",
+     "@sap.quickinfo": "Tipo stock del movimento merci (registrazione principale)"
+    },
+    "Equipment": {
+     "type": "cds.String",
+     "length": 18,
+     "@sap.display.format": "UpperCase",
+     "@sap.label": "Equipment",
+     "@sap.quickinfo": "Numero dell'equipment"
+    },
+    "to_MatlStkInAcctMod": {
+     "type": "cds.Association",
+     "target": "API_MATERIAL_STOCK_SRV.A_MatlStkInAcctMod",
+     "cardinality": {
+      "max": "*"
+     },
+     "keys": []
+    }
+   }
+  },
+  "API_MATERIAL_STOCK_SRV.A_MaterialStock": {
+   "kind": "entity",
+   "@cds.external": true,
+   "@cds.persistence.skip": true,
+   "@sap.creatable": "false",
+   "@sap.updatable": "false",
+   "@sap.deletable": "false",
+   "@sap.content.version": "1",
+   "@sap.label": "Anagrafica materiale",
+   "elements": {
+    "Material": {
+     "key": true,
+     "type": "cds.String",
+     "length": 40,
+     "@sap.display.format": "UpperCase",
+     "@sap.label": "Materiale",
+     "@sap.quickinfo": "Codice materiale",
+     "notNull": true
+    },
+    "MaterialBaseUnit": {
+     "type": "cds.String",
+     "length": 3,
+     "@sap.label": "Unità misura base",
+     "@sap.quickinfo": "Unità di misura di base",
+     "@sap.semantics": "unit-of-measure"
+    },
+    "to_MatlStkInAcctMod": {
+     "type": "cds.Association",
+     "target": "API_MATERIAL_STOCK_SRV.A_MatlStkInAcctMod",
+     "cardinality": {
+      "max": "*"
+     },
+     "keys": []
+    }
+   }
+  },
+  "API_MATERIAL_STOCK_SRV.A_MatlStkInAcctMod": {
+   "kind": "entity",
+   "@cds.external": true,
+   "@cds.persistence.skip": true,
+   "@sap.creatable": "false",
+   "@sap.updatable": "false",
+   "@sap.deletable": "false",
+   "@sap.content.version": "1",
+   "@sap.label": "Stock materiale",
+   "elements": {
+    "Material": {
+     "key": true,
+     "type": "cds.String",
+     "length": 40,
+     "@sap.display.format": "UpperCase",
+     "@sap.label": "Mat.gest. a mag.",
+     "@sap.quickinfo": "Materiale in riferimento al quale viene gestito lo stock",
+     "notNull": true
+    },
+    "Plant": {
+     "key": true,
+     "type": "cds.String",
+     "length": 4,
+     "@sap.display.format": "UpperCase",
+     "@sap.label": "Divisione",
+     "notNull": true
+    },
+    "StorageLocation": {
+     "key": true,
+     "type": "cds.String",
+     "length": 4,
+     "@sap.display.format": "UpperCase",
+     "@sap.label": "Magazzino",
+     "notNull": true
+    },
+    "Batch": {
+     "key": true,
+     "type": "cds.String",
+     "length": 10,
+     "@sap.display.format": "UpperCase",
+     "@sap.label": "Part.(ID stock)",
+     "@sap.quickinfo": "N. partita (identificatore stock)",
+     "notNull": true
+    },
+    "Supplier": {
+     "key": true,
+     "type": "cds.String",
+     "length": 10,
+     "@sap.display.format": "UpperCase",
+     "@sap.label": "Forn.(ID stock)",
+     "@sap.quickinfo": "Fornitore per stock speciale",
+     "notNull": true
+    },
+    "Customer": {
+     "key": true,
+     "type": "cds.String",
+     "length": 10,
+     "@sap.display.format": "UpperCase",
+     "@sap.label": "Cliente (ID stock)",
+     "@sap.quickinfo": "Cliente per stock speciale",
+     "notNull": true
+    },
+    "WBSElementInternalID": {
+     "key": true,
+     "type": "cds.String",
+     "length": 24,
+     "@sap.display.format": "NonNegative",
+     "@sap.label": "Elemento WBS",
+     "@sap.quickinfo": "Elemento WBS stock individuale cliente valutato",
+     "notNull": true
+    },
+    "SDDocument": {
+     "key": true,
+     "type": "cds.String",
+     "length": 10,
+     "@sap.display.format": "UpperCase",
+     "@sap.label": "Ordine cliente",
+     "@sap.quickinfo": "N. ordine cliente dello stock ordine cliente valorizzato",
+     "notNull": true
+    },
+    "SDDocumentItem": {
+     "key": true,
+     "type": "cds.String",
+     "length": 6,
+     "@sap.display.format": "NonNegative",
+     "@sap.label": "Pos. ordine cliente",
+     "@sap.quickinfo": "Pos. ordine cliente dello stock ordine cliente valorizzato",
+     "notNull": true
+    },
+    "InventorySpecialStockType": {
+     "key": true,
+     "type": "cds.String",
+     "length": 1,
+     "@sap.display.format": "UpperCase",
+     "@sap.label": "Tipo di stock speciale",
+     "notNull": true
+    },
+    "InventoryStockType": {
+     "key": true,
+     "type": "cds.String",
+     "length": 2,
+     "@sap.display.format": "UpperCase",
+     "@sap.label": "Tipo di stock",
+     "@sap.quickinfo": "Tipo di stock del movimento merci (identificatore stock)",
+     "notNull": true
+    },
+    "WBSElementExternalID": {
+     "type": "cds.String",
+     "length": 24,
+     "@sap.display.format": "UpperCase",
+     "@sap.label": "Elemento WBS",
+     "@sap.quickinfo": "Elemento WBS (editato)"
+    },
+    "MaterialBaseUnit": {
+     "type": "cds.String",
+     "length": 3,
+     "@sap.label": "Unità misura base",
+     "@sap.quickinfo": "Unità di misura di base",
+     "@sap.semantics": "unit-of-measure"
+    },
+    "MatlWrhsStkQtyInMatlBaseUnit": {
+     "type": "cds.Decimal",
+     "precision": 31,
+     "scale": 14,
+     "@sap.unit": "MaterialBaseUnit"
+    },
+    "to_MaterialSerialNumber": {
+     "type": "cds.Association",
+     "target": "API_MATERIAL_STOCK_SRV.A_MaterialSerialNumber",
+     "cardinality": {
+      "max": "*"
+     },
+     "keys": []
+    },
+    "to_MaterialStock": {
+     "type": "cds.Association",
+     "target": "API_MATERIAL_STOCK_SRV.A_MaterialStock",
+     "keys": []
+    }
+   }
+  }
+ }
+}

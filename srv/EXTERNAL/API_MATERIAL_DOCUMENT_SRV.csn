@@ -1,0 +1,856 @@
+{
+ "meta": {
+  "creator": "cds-dk 8.7.3"
+ },
+ "$version": "2.0",
+ "definitions": {
+  "API_MATERIAL_DOCUMENT_SRV": {
+   "kind": "service",
+   "@cds.external": true,
+   "@m.IsDefaultEntityContainer": "true",
+   "@sap.message.scope.supported": "true",
+   "@sap.supported.formats": "atom json xlsx"
+  },
+  "API_MATERIAL_DOCUMENT_SRV.A_MaterialDocumentHeader": {
+   "kind": "entity",
+   "@cds.external": true,
+   "@cds.persistence.skip": true,
+   "@sap.updatable": "false",
+   "@sap.deletable": "false",
+   "@sap.content.version": "1",
+   "@sap.label": "Testata del documento",
+   "elements": {
+    "MaterialDocumentYear": {
+     "key": true,
+     "type": "cds.String",
+     "length": 4,
+     "@sap.display.format": "NonNegative",
+     "@sap.label": "Anno del documento materiale",
+     "notNull": true
+    },
+    "MaterialDocument": {
+     "key": true,
+     "type": "cds.String",
+     "length": 10,
+     "@sap.display.format": "UpperCase",
+     "@sap.label": "Documento materiale",
+     "@sap.quickinfo": "Numero documento materiale",
+     "notNull": true
+    },
+    "InventoryTransactionType": {
+     "type": "cds.String",
+     "length": 2,
+     "@sap.display.format": "UpperCase",
+     "@sap.label": "Tipo operazione"
+    },
+    "DocumentDate": {
+     "type": "cds.Date",
+     "@sap.display.format": "Date",
+     "@sap.label": "Data documento",
+     "@sap.quickinfo": "Data documento nel documento"
+    },
+    "PostingDate": {
+     "type": "cds.Date",
+     "@sap.display.format": "Date",
+     "@sap.label": "Data registrazione",
+     "@sap.quickinfo": "Data di registrazione nel documento"
+    },
+    "CreationDate": {
+     "type": "cds.Date",
+     "@sap.display.format": "Date",
+     "@sap.label": "Data di acquisizione",
+     "@sap.quickinfo": "Giorno in cui è stato acquisito il documento contabile"
+    },
+    "CreationTime": {
+     "type": "cds.Time",
+     "@sap.label": "Ora di acquisizione"
+    },
+    "CreatedByUser": {
+     "type": "cds.String",
+     "length": 12,
+     "@sap.display.format": "UpperCase",
+     "@sap.label": "Nome utente",
+     "@sap.quickinfo": "Nome dell'utente"
+    },
+    "MaterialDocumentHeaderText": {
+     "type": "cds.String",
+     "length": 25,
+     "@sap.label": "Tst.test.doc.",
+     "@sap.quickinfo": "Testo testata documento"
+    },
+    "ReferenceDocument": {
+     "type": "cds.String",
+     "length": 16,
+     "@sap.display.format": "UpperCase",
+     "@sap.label": "Riferimento",
+     "@sap.quickinfo": "Numero documento di riferimento"
+    },
+    "VersionForPrintingSlip": {
+     "type": "cds.String",
+     "length": 1,
+     "@sap.display.format": "UpperCase",
+     "@sap.label": "Versione stampa",
+     "@sap.quickinfo": "Versione per la stampa della bolla accompagnamento merci"
+    },
+    "ManualPrintIsTriggered": {
+     "type": "cds.String",
+     "length": 1,
+     "@sap.display.format": "UpperCase",
+     "@sap.label": "Stampa att.",
+     "@sap.quickinfo": "Stampa tramite controllo messaggi"
+    },
+    "CtrlPostgForExtWhseMgmtSyst": {
+     "type": "cds.String",
+     "length": 1,
+     "@sap.display.format": "UpperCase",
+     "@sap.label": "Controllo WMS est.",
+     "@sap.quickinfo": "Controllo registr. per WMS esterno"
+    },
+    "GoodsMovementCode": {
+     "type": "cds.String",
+     "length": 2,
+     "@sap.display.format": "UpperCase",
+     "@sap.label": "Codice movimento merci"
+    },
+    "to_MaterialDocumentItem": {
+     "type": "cds.Composition",
+     "target": "API_MATERIAL_DOCUMENT_SRV.A_MaterialDocumentItem",
+     "cardinality": {
+      "max": "*"
+     },
+     "keys": []
+    }
+   },
+   "actions": {
+    "Cancel": {
+     "kind": "action",
+     "params": {
+      "PostingDate": {
+       "type": "cds.DateTime",
+       "@odata.Type": "Edm.DateTime",
+       "@sap.label": "Data registrazione"
+      }
+     },
+     "returns": {
+      "type": "API_MATERIAL_DOCUMENT_SRV.A_MaterialDocumentHeader"
+     }
+    }
+   }
+  },
+  "API_MATERIAL_DOCUMENT_SRV.A_MaterialDocumentItem": {
+   "kind": "entity",
+   "@cds.external": true,
+   "@cds.persistence.skip": true,
+   "@sap.creatable": "false",
+   "@sap.updatable": "false",
+   "@sap.deletable": "false",
+   "@sap.content.version": "1",
+   "@sap.label": "Posizioni del documento",
+   "elements": {
+    "MaterialDocumentYear": {
+     "key": true,
+     "type": "cds.String",
+     "length": 4,
+     "@sap.display.format": "NonNegative",
+     "@sap.label": "Anno del documento materiale",
+     "notNull": true
+    },
+    "MaterialDocument": {
+     "key": true,
+     "type": "cds.String",
+     "length": 10,
+     "@sap.display.format": "UpperCase",
+     "@sap.label": "Documento materiale",
+     "@sap.quickinfo": "Numero documento materiale",
+     "notNull": true
+    },
+    "MaterialDocumentItem": {
+     "key": true,
+     "type": "cds.String",
+     "length": 4,
+     "@sap.display.format": "NonNegative",
+     "@sap.label": "Posizione documento materiale",
+     "notNull": true
+    },
+    "Material": {
+     "type": "cds.String",
+     "length": 40,
+     "@sap.display.format": "UpperCase",
+     "@sap.label": "Materiale",
+     "@sap.quickinfo": "Codice materiale"
+    },
+    "Plant": {
+     "type": "cds.String",
+     "length": 4,
+     "@sap.display.format": "UpperCase",
+     "@sap.label": "Divisione"
+    },
+    "StorageLocation": {
+     "type": "cds.String",
+     "length": 4,
+     "@sap.display.format": "UpperCase",
+     "@sap.label": "Magazzino"
+    },
+    "Batch": {
+     "type": "cds.String",
+     "length": 10,
+     "@sap.display.format": "UpperCase",
+     "@sap.label": "Partita",
+     "@sap.quickinfo": "Numero partita"
+    },
+    "GoodsMovementType": {
+     "type": "cds.String",
+     "length": 3,
+     "@sap.display.format": "UpperCase",
+     "@sap.label": "Tipo movimento",
+     "@sap.quickinfo": "Tipo movimento (gestione stock)"
+    },
+    "InventoryStockType": {
+     "type": "cds.String",
+     "length": 2,
+     "@sap.display.format": "UpperCase",
+     "@sap.label": "Tipo di stock",
+     "@sap.quickinfo": "Tipo di stock del movimento merci (identificatore stock)"
+    },
+    "InventoryValuationType": {
+     "type": "cds.String",
+     "length": 10,
+     "@sap.display.format": "UpperCase",
+     "@sap.label": "Tipo valorizzazione",
+     "@sap.quickinfo": "Tipo di valutazione"
+    },
+    "InventorySpecialStockType": {
+     "type": "cds.String",
+     "length": 1,
+     "@sap.display.format": "UpperCase",
+     "@sap.label": "Tipo di stock speciale"
+    },
+    "Supplier": {
+     "type": "cds.String",
+     "length": 10,
+     "@sap.display.format": "UpperCase",
+     "@sap.label": "Fornitore",
+     "@sap.quickinfo": "Numero conto fornitore"
+    },
+    "Customer": {
+     "type": "cds.String",
+     "length": 10,
+     "@sap.display.format": "UpperCase",
+     "@sap.label": "Cliente",
+     "@sap.quickinfo": "Numero conto cliente"
+    },
+    "SalesOrder": {
+     "type": "cds.String",
+     "length": 10,
+     "@sap.display.format": "UpperCase",
+     "@sap.label": "Ordine di vendita",
+     "@sap.quickinfo": "Numero ordine di vendita"
+    },
+    "SalesOrderItem": {
+     "type": "cds.String",
+     "length": 6,
+     "@sap.display.format": "NonNegative",
+     "@sap.label": "Posizione dell'ordine di vendita"
+    },
+    "SalesOrderScheduleLine": {
+     "type": "cds.String",
+     "length": 4,
+     "@sap.display.format": "NonNegative",
+     "@sap.label": "Schedulazione dell'ordine cliente"
+    },
+    "PurchaseOrder": {
+     "type": "cds.String",
+     "length": 10,
+     "@sap.display.format": "UpperCase",
+     "@sap.label": "Ordine d'acquisto",
+     "@sap.quickinfo": "Numero dell'ordine d'acquisto"
+    },
+    "PurchaseOrderItem": {
+     "type": "cds.String",
+     "length": 5,
+     "@sap.display.format": "NonNegative",
+     "@sap.label": "Posizione ord. acq.",
+     "@sap.quickinfo": "N. pos. del documento d'acquisto"
+    },
+    "WBSElement": {
+     "type": "cds.String",
+     "length": 24,
+     "@sap.display.format": "UpperCase",
+     "@sap.label": "Elemento WBS",
+     "@sap.quickinfo": "Elemento della Work Breakdown Structure (elemento WBS)"
+    },
+    "ManufacturingOrder": {
+     "type": "cds.String",
+     "length": 12,
+     "@sap.display.format": "UpperCase",
+     "@sap.label": "Ordine di produzione"
+    },
+    "ManufacturingOrderItem": {
+     "type": "cds.String",
+     "length": 4,
+     "@sap.display.format": "NonNegative",
+     "@sap.label": "Posizione ordine di produzione"
+    },
+    "GoodsMovementRefDocType": {
+     "type": "cds.String",
+     "length": 1,
+     "@sap.display.format": "UpperCase",
+     "@sap.label": "Tipo documento rif.",
+     "@sap.quickinfo": "Tipo doc. riferimento movimento di merci"
+    },
+    "GoodsMovementReasonCode": {
+     "type": "cds.String",
+     "length": 4,
+     "@sap.display.format": "NonNegative",
+     "@sap.label": "Motivo movimento"
+    },
+    "Delivery": {
+     "type": "cds.String",
+     "length": 10,
+     "@sap.display.format": "UpperCase",
+     "@sap.label": "Consegna"
+    },
+    "DeliveryItem": {
+     "type": "cds.String",
+     "length": 6,
+     "@sap.display.format": "NonNegative",
+     "@sap.label": "Pos.cons.",
+     "@sap.quickinfo": "Posizione di consegna"
+    },
+    "AccountAssignmentCategory": {
+     "type": "cds.String",
+     "length": 1,
+     "@sap.display.format": "UpperCase",
+     "@sap.label": "Categoria contabilizzazione"
+    },
+    "CostCenter": {
+     "type": "cds.String",
+     "length": 10,
+     "@sap.display.format": "UpperCase",
+     "@sap.label": "CdC",
+     "@sap.quickinfo": "Centro di costo"
+    },
+    "ControllingArea": {
+     "type": "cds.String",
+     "length": 4,
+     "@sap.display.format": "UpperCase",
+     "@sap.label": "Controlling area"
+    },
+    "CostObject": {
+     "type": "cds.String",
+     "length": 12,
+     "@sap.display.format": "UpperCase",
+     "@sap.label": "Oggetto di costo"
+    },
+    "GLAccount": {
+     "type": "cds.String",
+     "length": 10,
+     "@sap.display.format": "UpperCase",
+     "@sap.label": "Conto Co.Ge.",
+     "@sap.quickinfo": "Numero del conto Co.Ge."
+    },
+    "FunctionalArea": {
+     "type": "cds.String",
+     "length": 16,
+     "@sap.display.format": "UpperCase",
+     "@sap.label": "Area funzionale"
+    },
+    "ProfitabilitySegment": {
+     "type": "cds.String",
+     "length": 10,
+     "@sap.display.format": "UpperCase",
+     "@sap.label": "Segmento di profittabilità"
+    },
+    "ProfitCenter": {
+     "type": "cds.String",
+     "length": 10,
+     "@sap.display.format": "UpperCase",
+     "@sap.label": "Profit center"
+    },
+    "MasterFixedAsset": {
+     "type": "cds.String",
+     "length": 12,
+     "@sap.display.format": "UpperCase",
+     "@sap.label": "Allegato",
+     "@sap.quickinfo": "Numero principale cespite"
+    },
+    "FixedAsset": {
+     "type": "cds.String",
+     "length": 4,
+     "@sap.display.format": "UpperCase",
+     "@sap.label": "Numero secondario",
+     "@sap.quickinfo": "Numero secondario cespite"
+    },
+    "MaterialBaseUnit": {
+     "type": "cds.String",
+     "length": 3,
+     "@sap.label": "Unità misura base",
+     "@sap.quickinfo": "Unità di misura di base",
+     "@sap.semantics": "unit-of-measure"
+    },
+    "QuantityInBaseUnit": {
+     "type": "cds.Decimal",
+     "precision": 13,
+     "scale": 3,
+     "@sap.unit": "MaterialBaseUnit",
+     "@sap.label": "Quantità"
+    },
+    "EntryUnit": {
+     "type": "cds.String",
+     "length": 3,
+     "@sap.label": "UM acquisizione",
+     "@sap.quickinfo": "Unità di misura di registrazione",
+     "@sap.semantics": "unit-of-measure"
+    },
+    "QuantityInEntryUnit": {
+     "type": "cds.Decimal",
+     "precision": 13,
+     "scale": 3,
+     "@sap.unit": "EntryUnit",
+     "@sap.label": "Qtà in UM acq.",
+     "@sap.quickinfo": "Quantità in unità di misura di acquisizione"
+    },
+    "CompanyCodeCurrency": {
+     "type": "cds.String",
+     "length": 5,
+     "@sap.display.format": "UpperCase",
+     "@sap.label": "Divisa società",
+     "@sap.semantics": "currency-code"
+    },
+    "GdsMvtExtAmtInCoCodeCrcy": {
+     "type": "cds.Decimal",
+     "precision": 14,
+     "scale": 3,
+     "@sap.unit": "CompanyCodeCurrency",
+     "@sap.label": "Imp. est. div. int.",
+     "@sap.quickinfo": "Importo di reg. inserito esternamente in divisa interna"
+    },
+    "SlsPrcAmtInclVATInCoCodeCrcy": {
+     "type": "cds.Decimal",
+     "precision": 14,
+     "scale": 3,
+     "@sap.unit": "CompanyCodeCurrency",
+     "@sap.label": "Val. vend. incl. IVA",
+     "@sap.quickinfo": "Valore prezzi vendita inclusa IVA"
+    },
+    "FiscalYear": {
+     "type": "cds.String",
+     "length": 4,
+     "@sap.display.format": "NonNegative",
+     "@sap.label": "Esercizio"
+    },
+    "FiscalYearPeriod": {
+     "type": "cds.String",
+     "length": 7,
+     "@sap.display.format": "NonNegative",
+     "@sap.label": "Eserc. e per. da data di registrazione",
+     "@sap.quickinfo": "Eserc. per."
+    },
+    "FiscalYearVariant": {
+     "type": "cds.String",
+     "length": 2,
+     "@sap.display.format": "UpperCase",
+     "@sap.label": "Variante esercizio"
+    },
+    "IssgOrRcvgMaterial": {
+     "type": "cds.String",
+     "length": 40,
+     "@sap.display.format": "UpperCase",
+     "@sap.label": "Materiale di trasferimento"
+    },
+    "IssgOrRcvgBatch": {
+     "type": "cds.String",
+     "length": 10,
+     "@sap.display.format": "UpperCase",
+     "@sap.label": "Partita di trasferimento"
+    },
+    "IssuingOrReceivingPlant": {
+     "type": "cds.String",
+     "length": 4,
+     "@sap.display.format": "UpperCase",
+     "@sap.label": "Div.dest./prov.",
+     "@sap.quickinfo": "Divisione di destinazione/di provenienza"
+    },
+    "IssuingOrReceivingStorageLoc": {
+     "type": "cds.String",
+     "length": 4,
+     "@sap.display.format": "UpperCase",
+     "@sap.label": "Magazzino dest.",
+     "@sap.quickinfo": "Magazzino di destinazione/di provenienza"
+    },
+    "IssuingOrReceivingStockType": {
+     "type": "cds.String",
+     "length": 2,
+     "@sap.display.format": "UpperCase",
+     "@sap.label": "Tipo di stock in trasferimento"
+    },
+    "IssgOrRcvgSpclStockInd": {
+     "type": "cds.String",
+     "length": 1,
+     "@sap.display.format": "UpperCase",
+     "@sap.label": "Tipo stock speciale in trasferimento"
+    },
+    "IssuingOrReceivingValType": {
+     "type": "cds.String",
+     "length": 10,
+     "@sap.display.format": "UpperCase",
+     "@sap.label": "Tipo val. trasf.",
+     "@sap.quickinfo": "Tipo di val. della partita di trasf."
+    },
+    "IsCompletelyDelivered": {
+     "type": "cds.Boolean",
+     "@sap.label": "Consegna completata",
+     "@sap.quickinfo": "Codice di consegna finale"
+    },
+    "MaterialDocumentItemText": {
+     "type": "cds.String",
+     "length": 50,
+     "@sap.label": "Testo",
+     "@sap.quickinfo": "Testo posizione"
+    },
+    "GoodsRecipientName": {
+     "type": "cds.String",
+     "length": 12,
+     "@sap.label": "Destinatario merci"
+    },
+    "UnloadingPointName": {
+     "type": "cds.String",
+     "length": 25,
+     "@sap.label": "Punto di scarico"
+    },
+    "ShelfLifeExpirationDate": {
+     "type": "cds.Date",
+     "@sap.display.format": "Date",
+     "@sap.label": "Data di scadenza"
+    },
+    "ManufactureDate": {
+     "type": "cds.Date",
+     "@sap.display.format": "Date",
+     "@sap.label": "Data produzione"
+    },
+    "SerialNumbersAreCreatedAutomly": {
+     "type": "cds.Boolean",
+     "@sap.label": "N. serie auto.",
+     "@sap.quickinfo": "Creare automaticamente numero di serie"
+    },
+    "Reservation": {
+     "type": "cds.String",
+     "length": 10,
+     "@sap.display.format": "NonNegative",
+     "@sap.label": "Impegno",
+     "@sap.quickinfo": "Numero dell'impegno / del fabbisogno dipendente"
+    },
+    "ReservationItem": {
+     "type": "cds.String",
+     "length": 4,
+     "@sap.display.format": "NonNegative",
+     "@sap.label": "Posizione impegno",
+     "@sap.quickinfo": "Numero posizione dell'impegno/dei fabbisogni dipendenti"
+    },
+    "ReservationIsFinallyIssued": {
+     "type": "cds.Boolean",
+     "@sap.label": "Imp. uscita finale",
+     "@sap.quickinfo": "Uscita finale per impegno"
+    },
+    "SpecialStockIdfgSalesOrder": {
+     "type": "cds.String",
+     "length": 10,
+     "@sap.display.format": "UpperCase",
+     "@sap.label": "Ordine cliente",
+     "@sap.quickinfo": "N. ordine cliente dello stock ordine cliente valorizzato"
+    },
+    "SpecialStockIdfgSalesOrderItem": {
+     "type": "cds.String",
+     "length": 6,
+     "@sap.display.format": "NonNegative",
+     "@sap.label": "Pos. ordine cliente",
+     "@sap.quickinfo": "Pos. ordine cliente dello stock ordine cliente valorizzato"
+    },
+    "SpecialStockIdfgWBSElement": {
+     "type": "cds.String",
+     "length": 24,
+     "@sap.display.format": "UpperCase",
+     "@sap.label": "Elemento WBS",
+     "@sap.quickinfo": "Elemento della Work Breakdown Structure (elemento WBS)"
+    },
+    "IsAutomaticallyCreated": {
+     "type": "cds.String",
+     "length": 1,
+     "@sap.display.format": "UpperCase",
+     "@sap.label": "Creaz. automatica",
+     "@sap.quickinfo": "Indicatore posizione creata automaticamente"
+    },
+    "MaterialDocumentLine": {
+     "type": "cds.String",
+     "length": 6,
+     "@sap.display.format": "NonNegative",
+     "@sap.label": "ID riga",
+     "@sap.quickinfo": "Identificazione univoca della riga documento"
+    },
+    "MaterialDocumentParentLine": {
+     "type": "cds.String",
+     "length": 6,
+     "@sap.display.format": "NonNegative",
+     "@sap.label": "Ident. riga genitore",
+     "@sap.quickinfo": "Identificazione della riga immediatamente superiore"
+    },
+    "HierarchyNodeLevel": {
+     "type": "cds.String",
+     "length": 2,
+     "@sap.display.format": "NonNegative",
+     "@sap.label": "Livello gerarchia",
+     "@sap.quickinfo": "Livello gerarchia della riga nel documento"
+    },
+    "GoodsMovementIsCancelled": {
+     "type": "cds.Boolean",
+     "@sap.label": "Posizione annullata",
+     "@sap.quickinfo": "La posizione è stata annullata"
+    },
+    "ReversedMaterialDocumentYear": {
+     "type": "cds.String",
+     "length": 4,
+     "@sap.display.format": "NonNegative",
+     "@sap.label": "Anno doc. stornato",
+     "@sap.quickinfo": "Anno documento materiale stornato"
+    },
+    "ReversedMaterialDocument": {
+     "type": "cds.String",
+     "length": 10,
+     "@sap.display.format": "UpperCase",
+     "@sap.label": "Doc. mat. stornato",
+     "@sap.quickinfo": "Documento materiale stornato"
+    },
+    "ReversedMaterialDocumentItem": {
+     "type": "cds.String",
+     "length": 4,
+     "@sap.display.format": "NonNegative",
+     "@sap.label": "Pos. doc. stornato",
+     "@sap.quickinfo": "Posizione documento materiale stornato"
+    },
+    "ReferenceDocumentFiscalYear": {
+     "type": "cds.String",
+     "length": 4,
+     "@sap.display.format": "NonNegative",
+     "@sap.label": "Doc. rif. es.",
+     "@sap.quickinfo": "Esercizio di un documento di riferimento"
+    },
+    "InvtryMgmtRefDocumentItem": {
+     "type": "cds.String",
+     "length": 4,
+     "@sap.display.format": "NonNegative",
+     "@sap.label": "Pos. doc. di rifer.",
+     "@sap.quickinfo": "Posizione di un documento di riferimento"
+    },
+    "InvtryMgmtReferenceDocument": {
+     "type": "cds.String",
+     "length": 10,
+     "@sap.display.format": "UpperCase",
+     "@sap.label": "Doc. di riferimento",
+     "@sap.quickinfo": "Numero di un documento di riferimento"
+    },
+    "MaterialDocumentPostingType": {
+     "type": "cds.String",
+     "length": 1,
+     "@sap.display.format": "UpperCase",
+     "@sap.label": "Tipo di reg.",
+     "@sap.quickinfo": "Storno, riconsegna merci o modifica stock"
+    },
+    "InventoryUsabilityCode": {
+     "type": "cds.String",
+     "length": 1,
+     "@sap.display.format": "UpperCase",
+     "@sap.label": "Registrazione tipo di stock di controllo"
+    },
+    "EWMWarehouse": {
+     "type": "cds.String",
+     "length": 4,
+     "@sap.display.format": "UpperCase",
+     "@sap.label": "N. magazzino",
+     "@sap.quickinfo": "N. mag./complesso di magazzini"
+    },
+    "EWMStorageBin": {
+     "type": "cds.String",
+     "length": 18,
+     "@sap.display.format": "UpperCase",
+     "@sap.label": "Ubicazione magazzino"
+    },
+    "DebitCreditCode": {
+     "type": "cds.String",
+     "length": 1,
+     "@sap.display.format": "UpperCase",
+     "@sap.label": "Indic. dare/avere",
+     "@sap.quickinfo": "Indicatore dare/avere"
+    },
+    "CrossPlantConfigurableProduct": {
+     "type": "cds.String",
+     "length": 40,
+     "@sap.display.format": "UpperCase",
+     "@sap.label": "Mat. config. gen.",
+     "@sap.quickinfo": "Materiale configurabile gen.",
+     "@sap.creatable": "false",
+     "@sap.updatable": "false"
+    },
+    "ProductCharacteristic1": {
+     "type": "cds.String",
+     "length": 18,
+     "@sap.label": "Colore",
+     "@sap.quickinfo": "Valore caratteristica per colori in caso di varianti",
+     "@sap.creatable": "false",
+     "@sap.updatable": "false"
+    },
+    "ProductCharacteristic2": {
+     "type": "cds.String",
+     "length": 18,
+     "@sap.label": "Dimensione princ.",
+     "@sap.quickinfo": "Valore caratteristica per la dimens. princ. nelle varianti",
+     "@sap.creatable": "false",
+     "@sap.updatable": "false"
+    },
+    "ProductCharacteristic3": {
+     "type": "cds.String",
+     "length": 18,
+     "@sap.label": "Seconda dimensione",
+     "@sap.quickinfo": "Valore caratt. per la seconda dimensione nelle varianti",
+     "@sap.creatable": "false",
+     "@sap.updatable": "false"
+    },
+    "ProductSeasonYear": {
+     "type": "cds.String",
+     "length": 4,
+     "@sap.display.format": "UpperCase",
+     "@sap.label": "Esercizio stagionale",
+     "@sap.creatable": "false",
+     "@sap.updatable": "false"
+    },
+    "ProductSeason": {
+     "type": "cds.String",
+     "length": 10,
+     "@sap.display.format": "UpperCase",
+     "@sap.label": "Stagione",
+     "@sap.creatable": "false",
+     "@sap.updatable": "false"
+    },
+    "ProductCollection": {
+     "type": "cds.String",
+     "length": 10,
+     "@sap.display.format": "UpperCase",
+     "@sap.label": "Collezione",
+     "@sap.quickinfo": "Collezione fashion",
+     "@sap.creatable": "false",
+     "@sap.updatable": "false"
+    },
+    "ProductTheme": {
+     "type": "cds.String",
+     "length": 10,
+     "@sap.display.format": "UpperCase",
+     "@sap.label": "Tema",
+     "@sap.quickinfo": "Tema fashion",
+     "@sap.creatable": "false",
+     "@sap.updatable": "false"
+    },
+    "StockSegment": {
+     "type": "cds.String",
+     "length": 40,
+     "@sap.display.format": "UpperCase",
+     "@sap.label": "Segmento di stock"
+    },
+    "IssgOrRcvgStockSegment": {
+     "type": "cds.String",
+     "length": 40,
+     "@sap.display.format": "UpperCase",
+     "@sap.label": "Segm. stock di dest.",
+     "@sap.quickinfo": "Segmento stock di destinazione/provenienza"
+    },
+    "to_MaterialDocumentHeader": {
+     "type": "cds.Association",
+     "target": "API_MATERIAL_DOCUMENT_SRV.A_MaterialDocumentHeader",
+     "keys": []
+    },
+    "to_SerialNumbers": {
+     "type": "cds.Association",
+     "target": "API_MATERIAL_DOCUMENT_SRV.A_SerialNumberMaterialDocument",
+     "cardinality": {
+      "max": "*"
+     },
+     "keys": []
+    }
+   },
+   "actions": {
+    "CancelItem": {
+     "kind": "action",
+     "params": {
+      "PostingDate": {
+       "type": "cds.DateTime",
+       "@odata.Type": "Edm.DateTime",
+       "@sap.label": "Data registrazione"
+      }
+     },
+     "returns": {
+      "type": "API_MATERIAL_DOCUMENT_SRV.A_MaterialDocumentItem"
+     }
+    }
+   }
+  },
+  "API_MATERIAL_DOCUMENT_SRV.A_SerialNumberMaterialDocument": {
+   "kind": "entity",
+   "@cds.external": true,
+   "@cds.persistence.skip": true,
+   "@sap.creatable": "false",
+   "@sap.updatable": "false",
+   "@sap.deletable": "false",
+   "@sap.content.version": "1",
+   "@sap.label": "Numeri di serie",
+   "elements": {
+    "Material": {
+     "key": true,
+     "type": "cds.String",
+     "length": 40,
+     "@sap.display.format": "UpperCase",
+     "@sap.label": "Materiale",
+     "@sap.quickinfo": "Codice materiale",
+     "notNull": true
+    },
+    "SerialNumber": {
+     "key": true,
+     "type": "cds.String",
+     "length": 18,
+     "@sap.display.format": "UpperCase",
+     "@sap.label": "Numero di serie",
+     "notNull": true
+    },
+    "MaterialDocument": {
+     "key": true,
+     "type": "cds.String",
+     "length": 10,
+     "@sap.display.format": "UpperCase",
+     "@sap.label": "Documento materiale",
+     "@sap.quickinfo": "Numero documento materiale",
+     "notNull": true
+    },
+    "MaterialDocumentItem": {
+     "key": true,
+     "type": "cds.String",
+     "length": 4,
+     "@sap.display.format": "NonNegative",
+     "@sap.label": "Posizione documento materiale",
+     "notNull": true
+    },
+    "MaterialDocumentYear": {
+     "key": true,
+     "type": "cds.String",
+     "length": 4,
+     "@sap.display.format": "NonNegative",
+     "@sap.label": "Anno del documento materiale",
+     "notNull": true
+    },
+    "ManufacturerSerialNumber": {
+     "type": "cds.String",
+     "length": 30,
+     "@sap.display.format": "UpperCase",
+     "@sap.label": "N. serie produttore",
+     "@sap.quickinfo": "Numero di serie del produttore"
+    }
+   }
+  }
+ }
+}

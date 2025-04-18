@@ -1,0 +1,346 @@
+{
+  "name": "zsubcontracting_cockpit",
+  "nameTEST": "mta-project",
+  "version": "1.0.0",
+  "description": "A simple CAP project.",
+  "repository": "<Add your repository here>",
+  "license": "UNLICENSED",
+  "private": false,
+  "dependencies": {
+    "@cap-js/hana": "^1",
+    "@sap-cloud-sdk/http-client": "^4.0.1",
+    "@sap-cloud-sdk/resilience": "^4.0.1",
+    "@sap/cds": "^8",
+    "@sap/xssec": "^4",
+    "axios": "^1.8.1",
+    "express": "^4",
+    "@cap-js/sqlite": "^1"
+  },
+  "devDependencies": {
+    "@cap-js/cds-types": "^0.9.0",
+    "@eslint/eslintrc": "^3.3.1",
+    "@eslint/js": "^9.23.0",
+    "@sap/cds-dk": "^8.8",
+    "@sap/eslint-plugin-cds": "^3.2.0",
+    "cds-launchpad-plugin": "^2.2.0",
+    "cds-plugin-ui5": "^0.12.0",
+    "globals": "^16.0.0",
+    "rimraf": "^6.0.1",
+    "simple-git": "^3.27.0",
+    "mbt": "^1.2.34"      
+  },
+  "scripts": {
+    "start": "cds-serve",
+    "cds-lint": "cds lint",
+    "update-security": "cf update-service xagalteaup-uaa -c xs-security.json",
+    "cleanup": "rm -rf node_modules && rm -rf */node_modules && rm -rf */*/node_modules",
+    "cf-apps": "cf apps",
+    "cf-html5-list-approuter-url": "cf html5-list -a zsubcontracting_cockpit -u",
+    "cf-login": "cf login -a https://api.cf.eu30.hana.ondemand.com -o 'Loro Piana S.p.A._btp-development-loro-piana-82xq0cpc' -s 'DEV-SPACE-MANUFACTURING' --sso",
+    "__comment_deploy": "Per il deploy eseguire il comando mta-build, mta-deploy, poi solo per la prima volta update-route",
+    "wpremta-build": "node scripts/check-git-status.js",
+    "build": "rimraf resources mta_archives && mbt build --mtar archive -m verbose",
+    "deploy": "cf deploy mta_archives/archive.mtar --delete-service-brokers --delete-service-keys --delete-services",
+    "mta-build": "rimraf app/html5-deployer/resources && rimraf mta_archives && mbt build -m verbose --mtar zsubcontracting -t mta_archives",
+    "wpremta-deploy": "node scripts/check-git-status.js",
+    "mta-deploy": "cf deploy mta_archives/xagalteaup.mtar",
+    "update-route": "cf map-route xagalteaup-approuter cfapps.eu20-001.hana.ondemand.com --hostname workzone-alteaup-tdd-xagent-dev-xagalteaup-approuter",
+    "upgrade-db": "cf run-task xagalteaup-srv --name 'upgrade-all' --command 'cds-mtx upgrade 'eebd84e9-8f09-45e0-a086-d7fb035c335a'' -w",
+    "cf-undeploy": "cf undeploy xagalteaup --delete-services --delete-service-keys --delete-service-brokers",
+    "__comment_hybrid": "Eseguire Bind su parte srve node con bind-srv prima",
+    "cds-bind-services-srv": "cds bind -2 zsubcontracting_cockpit-destination",
+    "cds-bind-srv": "cds bind --to-app-services xagalteaup-srv",
+    "cds-srv-hybrid-run": "cds watch --profile hybrid",
+    "approuter-hybrid-run": "npm run start-local --prefix app/",
+    "__comment_router": "Eseguire bind con default-env.json (vedi sample_default-env.json), seguire questo help per far girare approuter : https://community.sap.com/t5/technology-q-a/sap-cap-multitenancy-testing-locally-with-html5-apps-repo/qaq-p/12748234",
+    "install-router": "npm install --prefix app/",
+    "install-srv": "npm install",
+    "install-all": "yarn install-srv && yarn install-router",
+    "remove-all-modules": "find . -name \"node_modules\" -type d -prune -exec rm -rf '{}' +",
+    "remove-all-dist": "find . -name \"dist\" -type d -prune -exec rm -rf '{}' +",
+    "remove-all-package-lock.json": "find . -name \"package-lock.json\" -type f -delete",
+    "remove-.npmcache": "find . -name \".npmcache\" -type d -prune -exec rm -rf '{}' +",
+    "remove-all": "npm run remove-all-modules && npm run remove-all-dist && npm run remove-all-package-lock.json && npm run remove-.npmcache",
+    "clear-cache": "npm cache clean --force",
+    "install-DefaultEnv": "cf install-plugin https://github.com/SAP/cf-cli-defaultenv-plugin/releases/download/v1.1.1/DefaultEnv.linux64",
+    "install-html5-plugin": "cf install-plugin -r CF-Community 'html5-plugin'",
+    "watch-zsubcontracting_cockpit_app2": "cds watch --open zsubcontracting_cockpit_app2/webapp/index.html?sap-ui-xx-viewCache=false",
+    "watch-zsubcontracting_cockpit_app3": "cds watch --open zsubcontracting_cockpit_app3/webapp/index.html?sap-ui-xx-viewCache=false",
+    "watch-zsubcontracting_cockpit_app4": "cds watch --open zsubcontracting_cockpit_app4/webapp/index.html?sap-ui-xx-viewCache=false"
+  },
+  "cds": {
+    "requires": {
+      "connectivity": true,
+      "destinations": true,
+      "html5-repo": true,
+      "[hybrid]": {
+        "auth": "basic",
+        "db": {
+          "kind": "sqlite",
+          "schema_evolution": "auto"
+        }
+      },
+      "[production]": {
+        "auth": "xsuaa",
+        "db": {
+          "kind": "sqlite",
+          "schema_evolution": "auto"
+        }
+      },
+      "MM_PUR_SUBCONTRACTING_COCKPIT_SRV": {
+        "kind": "odata-v2",
+        "model": "srv/EXTERNAL/MM_PUR_SUBCONTRACTING_COCKPIT_SRV",
+        "csrf": true,
+        "csrfInBatch": true,
+        "[hybrid]": {
+          "credentials": {
+            "url": "http://lpappsvi.lp.corp:8000/sap/opu/odata/sap/MM_PUR_SUBCONTRACTING_COCKPIT_SRV",
+            "destination": "",
+            "authentication": "BasicAuthentication",
+            "username": "LILLAD",
+            "password": "LoroPiana2025!",
+            "headers": {},
+            "queries": {},
+            "sap-client": "300"
+          }
+        },
+        "[production]": {
+          "credentials": {
+            "requestTimeout": 300000,
+            "destination": "S4HANA",            
+            "url": "/sap/opu/odata/sap/MM_PUR_SUBCONTRACTING_COCKPIT_SRV"
+          }
+        }
+      },
+      "ZZ1_I_UNION_CDS": {
+        "kind": "odata-v2",
+        "model": "srv/EXTERNAL/ZZ1_ZZ1_ZZ1_I_UNION_API_CDS",
+        "csrf": true,
+        "csrfInBatch": true,
+        "[hybrid]": {
+          "credentials": {
+            "url": "http://lpappsvi.lp.corp:8000/sap/opu/odata/sap/ZZ1_ZZ1_ZZ1_I_UNION_API_CDS",
+            "destination": "",
+            "authentication": "BasicAuthentication",
+            "username": "LILLAD",
+            "password": "LoroPiana2025!",
+            "headers": {},
+            "queries": {},
+            "sap-client": "300"
+          }
+        },
+        "[production]": {
+          "credentials": {
+            "requestTimeout": 300000,
+            "destination": "S4HANA",            
+            "url": "/sap/opu/odata/sap/ZZ1_ZZ1_ZZ1_I_UNION_API_CDS"
+          }
+        }
+      },
+      "ZZ1_I_COMBORDER_COMP_CDS": {
+        "kind": "odata-v2",
+        "model": "srv/EXTERNAL/ZZ1_I_COMBORDER_COMP_CDS",
+        "csrf": true,
+        "csrfInBatch": true,
+        "[hybrid]": {
+          "credentials": {
+            "url": "http://lpappsvi.lp.corp:8000/sap/opu/odata/sap/ZZ1_I_COMBORDER_COMP_CDS",
+            "destination": "",
+            "authentication": "BasicAuthentication",
+            "username": "LILLAD",
+            "password": "LoroPiana2025!",
+            "headers": {},
+            "queries": {},
+            "sap-client": "300"
+          }
+        },
+        "[production]": {
+          "credentials": {
+            "requestTimeout": 300000,
+            "destination": "S4HANA",            
+            "url": "/sap/opu/odata/sap/ZZ1_I_COMBORDER_COMP_CDS"
+          }
+        }
+      },
+      "ZZ1_I_ARUN_BDBSSUMQTY_CDS_CDS": {
+        "kind": "odata-v2",
+        "model": "srv/EXTERNAL/ZZ1_I_ARUN_BDBSSUMQTY_CDS_CDS",
+        "csrf": true,
+        "csrfInBatch": true,
+        "[hybrid]": {
+          "credentials": {
+            "url": "http://lpappsvi.lp.corp:8000/sap/opu/odata/sap/ZZ1_I_ARUN_BDBSSUMQTY_CDS_CDS",
+            "destination": "",
+            "authentication": "BasicAuthentication",
+            "username": "LILLAD",
+            "password": "LoroPiana2025!",
+            "headers": {},
+            "queries": {},
+            "sap-client": "300"
+          }
+        },
+        "[production]": {
+          "credentials": {
+            "requestTimeout": 300000,
+            "destination": "S4HANA",            
+            "url": "/sap/opu/odata/sap/ZZ1_I_ARUN_BDBSSUMQTY_CDS_CDS"
+          }
+        }
+      },
+      "ZZ1_I_SUMQTYDELIVERY_T_CDS": {
+        "kind": "odata-v2",
+        "model": "srv/EXTERNAL/ZZ1_I_SUMQTYDELIVERY_T_CDS",
+        "csrf": true,
+        "csrfInBatch": true,
+        "[hybrid]": {
+          "credentials": {
+            "url": "http://lpappsvi.lp.corp:8000/sap/opu/odata/sap/OP_API_MATERIAL_DOCUMENT_SRV",
+            "destination": "",
+            "authentication": "BasicAuthentication",
+            "username": "LILLAD",
+            "password": "LoroPiana2025!",
+            "headers": {},
+            "queries": {},
+            "sap-client": "300"
+          }
+        },
+        "[production]": {
+          "credentials": {
+            "requestTimeout": 300000,
+            "destination": "S4HANA",            
+            "url": "/sap/opu/odata/sap/OP_API_MATERIAL_DOCUMENT_SRV"
+          }
+        } 
+      },
+      "OP_API_MATERIAL_DOCUMENT_SRV": {
+        "kind": "odata-v2",
+        "model": "srv/EXTERNAL/OP_API_MATERIAL_DOCUMENT_SRV",
+        "csrf": true,
+        "csrfInBatch": true,
+        "[hybrid]": {
+          "credentials": {
+            "url": "http://lpappsvi.lp.corp:8000/sap/opu/odata/sap/OP_API_MATERIAL_DOCUMENT_SRV",
+            "destination": "",
+            "authentication": "BasicAuthentication",
+            "username": "LILLAD",
+            "password": "LoroPiana2025!",
+            "headers": {},
+            "queries": {},
+            "sap-client": "300"
+          }
+        },
+        "[production]": {
+          "credentials": {
+            "requestTimeout": 300000,
+            "destination": "S4HANA",            
+            "url": "/sap/opu/odata/sap/OP_API_MATERIAL_DOCUMENT_SRV"
+          }
+        }        
+      },
+      "API_MATERIAL_STOCK_SRV": {
+        "kind": "odata-v2",
+        "model": "srv/EXTERNAL/API_MATERIAL_STOCK_SRV",
+        "csrf": true,
+        "csrfInBatch": true,
+        "[hybrid]": {
+          "credentials": {
+            "url": "http://lpappsvi.lp.corp:8000/sap/opu/odata/sap/API_MATERIAL_STOCK_SRV",
+            "destination": "",
+            "authentication": "BasicAuthentication",
+            "username": "LILLAD",
+            "password": "LoroPiana2025!",
+            "headers": {},
+            "queries": {},
+            "sap-client": "300"
+          }
+        },
+        "[production]": {
+          "credentials": {
+            "requestTimeout": 300000,
+            "destination": "S4HANA",            
+            "url": "/sap/opu/odata/sap/API_MATERIAL_STOCK_SRV"
+          }
+        }
+      },
+      "API_MATERIAL_DOCUMENT_SRV": {
+        "kind": "odata-v2",
+        "model": "srv/EXTERNAL/API_MATERIAL_DOCUMENT_SRV",
+        "csrf": true,
+        "csrfInBatch": true,
+        "[hybrid]": {
+          "credentials": {
+            "url": "http://lpappsvi.lp.corp:8000/sap/opu/odata/sap/API_MATERIAL_DOCUMENT_SRV",
+            "destination": "",
+            "authentication": "BasicAuthentication",
+            "username": "LILLAD",
+            "password": "LoroPiana2025!",
+            "headers": {},
+            "queries": {},
+            "sap-client": "300"
+          }
+        },
+        "[production]": {
+          "credentials": {
+            "requestTimeout": 300000,
+            "destination": "S4HANA",            
+            "url": "/sap/opu/odata/sap/API_MATERIAL_DOCUMENT_SRV"
+          }
+        }
+      },
+     "ZMPF_SD_CREATE_DELIVERY": {
+        "kind": "odata-v4",
+        "model": "srv/EXTERNAL/ZMPF_SD_CREATE_DELIVERY",
+        "csrf": true,
+        "csrfInBatch": true,
+        "[hybrid]": {
+          "credentials": {
+            "url": "http://lpappsvi.lp.corp:8000/sap/opu/odata4/sap/zmpf_sb_delivery_create/srvd/sap/zmpf_sd_delivery_create/0001",
+            "authentication": "BasicAuthentication",
+            "username": "LILLAD",
+            "password": "LoroPiana2025!",
+            "headers": {},
+            "queries": {},
+            "sap-client": "300"
+          }
+        },        
+        "[production]": {
+          "credentials": {
+            "requestTimeout": 300000,
+            "destination": "S4HANA",            
+            "url": "/sap/opu/odata4/sap/zmpf_sb_delivery_create/srvd/sap/zmpf_sd_delivery_create/0001"
+          }
+        }
+      },
+     "ZZ1_I_SHIPPINGPOINT_CDS": {
+        "kind": "odata-v2",
+        "model": "srv/EXTERNAL/ZZ1_I_SHIPPINGPOINT_CDS",
+        "csrf": true,
+        "csrfInBatch": true,
+        "[production]": {
+          "credentials": {
+            "requestTimeout": 300000,
+            "destination": "S4HANA",            
+            "url": "/sap/opu/odata/sap/ZZ1_I_SHIPPINGPOINT_CDS"
+          }
+        },
+        "[hybrid]": {
+          "credentials": {
+            "url": "http://lpappsvi.lp.corp:8000/sap/opu/odata/sap/ZZ1_I_SHIPPINGPOINT_CDS",
+            "authentication": "BasicAuthentication",
+            "username": "LILLAD",
+            "password": "LoroPiana2025!",
+            "headers": {},
+            "queries": {},
+            "sap-client": "300"
+          }
+        }
+      }         
+    }
+  },
+  "sapux": [
+    "app/zsubcontracting_cockpit_app",
+    "app/zsubcontracting_cockpit_app2",
+    "app/zsubcontracting_cockpit_app3",
+    "app/zsubcontracting_cockpit_app4"
+  ]
+}

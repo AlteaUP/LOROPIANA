@@ -1,0 +1,111 @@
+<mvc:View controllerName="zsubcontracting.cockpit.app3.zsubcontractingcockpitapp3.controller.Main"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:plugins="sap.m.plugins"
+    xmlns:columnmenu="sap.m.table.columnmenu"
+    xmlns:sap.ui.fl="sap.ui.fl"
+    xmlns:sap.ui.dt="sap.ui.dt"
+    xmlns:vm="sap.ui.fl.variants"
+    xmlns:dnd="sap.ui.core.dnd"
+    xmlns:macros="sap.fe.macros"
+    xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+    <Page id="page" title="{i18n>title}">
+        <content>
+            <Table id="documentPositionTable" items="{path: '/items'}" ariaLabelledBy="title" fixedLayout="Strict"
+		    autoPopinMode="true" growing="false" sticky="ColumnHeaders,HeaderToolbar" popinLayout="GridSmall" mode="MultiSelect">
+
+            <headerToolbar>
+                <OverflowToolbar >
+                    <Title id="title" text="{i18n>documentPositions}"/>
+                    <ToolbarSeparator/>
+                    <vm:VariantManagement id="p13nVm" for="persoTable"/>
+                    <ToolbarSpacer/>
+                    <Button icon="sap-icon://action-settings" press="openPersoDialog" tooltip="Settings"/>
+                </OverflowToolbar>
+            </headerToolbar>
+            <infoToolbar>
+                <OverflowToolbar id="filterInfo" visible="false" design="Info" active="true" press="onFilterInfoPress" >
+                    <Text id="filterInfoText" wrapping="false" text="Table filter active" />
+                    <ToolbarSpacer />
+                    <Button tooltip="Remove All Filters" icon="sap-icon://decline" type="Transparent" press="onClearFilterPress" />
+                </OverflowToolbar>
+            </infoToolbar>
+            <dependents>
+                <plugins:ColumnResizer columnResize="onColumnResize"/>
+                <columnmenu:Menu id="menu" beforeOpen="beforeOpenColumnMenu">
+                    <columnmenu:QuickSort change="onSort">
+                        <columnmenu:items>
+                            <columnmenu:QuickSortItem></columnmenu:QuickSortItem>
+                        </columnmenu:items>
+                    </columnmenu:QuickSort>
+                    <columnmenu:QuickGroup change="onGroup">
+                        <columnmenu:items>
+                            <columnmenu:QuickGroupItem></columnmenu:QuickGroupItem>
+                        </columnmenu:items>
+                    </columnmenu:QuickGroup>
+                    <columnmenu:items>
+                        <columnmenu:ActionItem icon="sap-icon://sort" label="Sort" press="onColumnHeaderItemPress"/>
+                        <columnmenu:ActionItem icon="sap-icon://group-2" label="Group" press="onColumnHeaderItemPress"/>
+                        <columnmenu:ActionItem icon="sap-icon://filter" label="Filter" press="onColumnHeaderItemPress"/>
+                        <columnmenu:ActionItem icon="sap-icon://table-column" label="Columns" press="onColumnHeaderItemPress"/>
+                    </columnmenu:items>
+                </columnmenu:Menu>
+            </dependents>
+
+            <dragDropConfig>
+                <dnd:DragDropInfo sourceAggregation="columns" targetAggregation="columns" dropPosition="Between" drop="onColumnMove"/>
+            </dragDropConfig>
+
+            <noData>
+                <IllustratedMessage/>
+            </noData>
+
+            <columns>
+                <Column app:p13nKey="firstName_col" headerMenu="menu">
+                    <header>
+                        <Text text="{i18n>documentPosition}"/>
+                    </header>
+                </Column>
+                <Column app:p13nKey="lastName_col" headerMenu="menu">
+                    <Text text="{i18n>component}"/>
+                </Column>
+                <Column app:p13nKey="city_col" headerMenu="menu">
+                    <Text text="{i18n>plant}"/>
+                </Column>
+                <Column app:p13nKey="size_col" hAlign="End" visible="true" headerMenu="menu">
+                    <Text text="{i18n>supplierName}"/>
+                </Column>
+                <!--<Column app:p13nKey="size_col" hAlign="End" visible="true" headerMenu="menu">
+                    <Text text="{i18n>shippingDate}"/>
+                </Column>-->
+                <Column app:p13nKey="size_col" hAlign="End" visible="true" headerMenu="menu">
+                    <Text text="{i18n>shippingStatus}"/>
+                </Column>
+                <Column app:p13nKey="size_col" hAlign="End" visible="true" headerMenu="menu">
+                    <Text text="{i18n>batch}"/>
+                </Column>
+                <Column app:p13nKey="size_col" hAlign="End" visible="true" headerMenu="menu">
+                    <Text text="{i18n>quantityToBeDelivered}"/>
+                </Column>
+                <Column app:p13nKey="size_col" hAlign="End" visible="true" headerMenu="menu">
+                    <Text text="{i18n>stock}"/>
+                </Column>
+            </columns>
+
+            <items>
+                <ColumnListItem>
+                    <Text text="{FormattedPurchaseOrderItem}"/>
+                    <Text text="{MaterialComponentName} - {Material}"/>
+                    <Text text="{PlantName}"/>
+                    <Text text="{SupplierName}"/>
+                    <!--<Text text="{ScheduleLineDeliveryDate}"/>-->
+                    <Text text="{ShippingStatusText}"/>
+                    <Text text="{Batch}"/>
+                    <Text text="{StillToBeDeliveredQuantity} {PurchaseOrderQuantityUnit}"/>
+                    <Text text="{StockMaterial} {StockMaterialUnitMeasure}"/>
+                </ColumnListItem>
+            </items>
+        </Table>
+        </content>
+    </Page>
+</mvc:View>

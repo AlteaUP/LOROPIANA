@@ -8,7 +8,7 @@
 |**Template Used**<br>Custom Page V4|
 |**Service Type**<br>Local Cap|
 |**Service URL**<br>http://localhost:4004/odata/v4/mm-pur-subcontracting-cockpit-srv/|
-|**Module Name**<br>zsubcontracting_cockpit_app4|
+|**Module Name**<br>zsubcontractingcockpitapp4|
 |**Application Title**<br>Subcontracting Cockpit|
 |**Namespace**<br>|
 |**UI5 Theme**<br>sap_horizon|
@@ -18,7 +18,7 @@
 |**Add Eslint configuration**<br>False|
 |**Main Entity**<br>SubcontrgCockpitDelivery|
 
-## zsubcontracting_cockpit_app4
+## zsubcontractingcockpitapp4
 
 Subcontracting Cockpit
 
@@ -26,7 +26,7 @@ Subcontracting Cockpit
 
 -   This app has been generated using the SAP Fiori tools - App Generator, as part of the SAP Fiori tools suite.  In order to launch the generated app, simply start your CAP project and navigate to the following location in your browser:
 
-http://localhost:4004/zsubcontracting_cockpit_app4/webapp/index.html
+http://localhost:4004/zsubcontractingcockpitapp4/webapp/index.html
 
 #### Pre-requisites:
 

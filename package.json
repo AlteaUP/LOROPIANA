@@ -64,9 +64,7 @@
     "clear-cache": "npm cache clean --force",
     "install-DefaultEnv": "cf install-plugin https://github.com/SAP/cf-cli-defaultenv-plugin/releases/download/v1.1.1/DefaultEnv.linux64",
     "install-html5-plugin": "cf install-plugin -r CF-Community 'html5-plugin'",
-    "watch-zsubcontracting_cockpit_app2": "cds watch --open zsubcontracting_cockpit_app2/webapp/index.html?sap-ui-xx-viewCache=false",
-    "watch-zsubcontracting_cockpit_app3": "cds watch --open zsubcontracting_cockpit_app3/webapp/index.html?sap-ui-xx-viewCache=false",
-    "watch-zsubcontracting_cockpit_app4": "cds watch --open zsubcontracting_cockpit_app4/webapp/index.html?sap-ui-xx-viewCache=false"
+    "watch-zsubcontractingcockpitapp4": "cds watch --open zsubcontractingcockpitapp4/webapp/index.html?sap-ui-xx-viewCache=false"
   },
   "cds": {
     "requires": {
@@ -341,6 +339,6 @@
     "app/zsubcontracting_cockpit_app",
     "app/zsubcontracting_cockpit_app2",
     "app/zsubcontracting_cockpit_app3",
-    "app/zsubcontracting_cockpit_app4"
+    "app/zsubcontractingcockpitapp4"
   ]
 }

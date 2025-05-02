@@ -3,4 +3,4 @@
 
 
 
-using from './zsubcontracting_cockpit_app4/annotations';
+using from './zsubcontractingcockpitapp4/annotations';

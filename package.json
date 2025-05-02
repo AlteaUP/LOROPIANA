@@ -336,9 +336,6 @@
     }
   },
   "sapux": [
-    "app/zsubcontracting_cockpit_app",
-    "app/zsubcontracting_cockpit_app2",
-    "app/zsubcontracting_cockpit_app3",
     "app/zsubcontractingcockpitapp4"
   ]
 }

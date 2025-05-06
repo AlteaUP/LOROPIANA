@@ -1,0 +1,135 @@
+{
+  "_version": "1.65.0",
+  "sap.app": {
+    "id": "zsubcontractingcockpitapp5",
+    "type": "application",
+    "i18n": "i18n/i18n.properties",
+    "applicationVersion": {
+      "version": "0.0.5"
+    },
+    "title": "{{appTitle}}",
+    "description": "{{appDescription}}",
+    "resources": "resources.json",
+    "sourceTemplate": {
+      "id": "@sap/generator-fiori:fpm",
+      "version": "1.16.3",
+      "toolsId": "ae4b1ba6-ef45-4af9-b458-aab1990c0f2c"
+    },
+    "dataSources": {
+      "mainService": {
+        "uri": "/odata/v4/catalog/",
+        "type": "OData",
+        "settings": {
+          "annotations": [],
+          "odataVersion": "4.0"
+        }
+      }
+    },
+  "crossNavigation": {
+    "inbounds": {
+      "prapp-display": {
+        "semanticObject": "zsubckpt5",
+        "action": "display",
+        "title": "Subc Cockpit New",
+        "signature": {
+          "parameters": {},
+          "additionalParameters": "allowed"
+        }
+      }
+    }
+   }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "icons": {
+      "icon": "",
+      "favIcon": "",
+      "phone": "",
+      "phone@2": "",
+      "tablet": "",
+      "tablet@2": ""
+    },
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
+  },
+  "sap.ui5": {
+    "flexEnabled": true,
+    "dependencies": {
+      "minUI5Version": "1.133.0",
+      "libs": {
+        "sap.m": {},
+        "sap.ui.core": {},
+        "sap.fe.core": {},
+        "sap.fe.macros": {}
+      }
+    },
+    "contentDensities": {
+      "compact": true,
+      "cozy": true
+    },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "zsubcontractingcockpitapp5.i18n.i18n"
+        }
+      },
+      "": {
+        "dataSource": "mainService",
+        "preload": true,
+        "settings": {
+          "operationMode": "Server",
+          "autoExpandSelect": true,
+          "earlyRequests": true
+        }
+      },
+      "@i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "uri": "i18n/i18n.properties"
+      }
+    },
+    "resources": {
+      "css": [
+        {
+          "uri": "css/style.css"
+        }
+      ]
+    },
+    "routing": {
+      "config": {},
+      "routes": [
+        {
+          "name": "C_ProcmtDocSubcontrgHierarchyMain",
+          "pattern": ":?query:",
+          "target": "C_ProcmtDocSubcontrgHierarchyMain"
+        }
+      ],
+      "targets": {
+        "C_ProcmtDocSubcontrgHierarchyMain": {
+          "type": "Component",
+          "id": "C_ProcmtDocSubcontrgHierarchyMain",
+          "name": "sap.fe.core.fpm",
+          "options": {
+            "settings": {
+              "navigation": {},
+              "contextPath": "/C_ProcmtDocSubcontrgHierarchy",
+              "viewName": "zsubcontractingcockpitapp5.ext.main.Main"
+            }
+          }
+        }
+      }
+    }
+  },
+
+  "sap.fiori": {
+    "registrationIds": [],
+      "archeType": "transactional"
+  },
+  "sap.cloud": {
+    "public": true,
+    "service": "lp.zsubcontracting_cockpit"
+  }
+}

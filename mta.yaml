@@ -80,14 +80,14 @@ modules:
     build-parameters:
       build-result: app/
       requires:
-        - name: zsubcontractingcockpitapp4
+        - name: zsubcontractingcockpitapp5
           artifacts:
-            - zsubcontractingcockpitapp4.zip
-          target-path: app/
+            - zsubcontractingcockpitapp5.zip
+          target-path: app/          
 
-  - name: zsubcontractingcockpitapp4
+  - name: zsubcontractingcockpitapp5
     type: html5
-    path: app/zsubcontractingcockpitapp4
+    path: app/zsubcontractingcockpitapp5
 
     build-parameters:
       build-result: dist
@@ -96,7 +96,7 @@ modules:
         - npm ci
         - npm run build
       supported-platforms: 
-        []
+        []        
 resources:
   - name: zsubcontracting_cockpit-auth
     type: org.cloudfoundry.managed-service

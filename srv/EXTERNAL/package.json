@@ -42,12 +42,16 @@
         "model": "srv/external/ZZ1_I_SUMQTYDELIVERY_T_CDS"
       },
       "ZMPF_SD_CREATE_DELIVERY": {
-        "kind": "odata-v4",
+        "kind": "odata",
         "model": "srv/external/ZMPF_SD_CREATE_DELIVERY"
       },
       "ZZ1_I_SHIPPINGPOINT_CDS": {
         "kind": "odata-v2",
         "model": "srv/external/ZZ1_I_SHIPPINGPOINT_CDS"
+      },
+      "ZZ1_I_UNION_SUBCONCTR_COMP_CDS": {
+        "kind": "odata-v2",
+        "model": "srv/external/ZZ1_I_UNION_SUBCONCTR_COMP_CDS"
       }
     }
   }

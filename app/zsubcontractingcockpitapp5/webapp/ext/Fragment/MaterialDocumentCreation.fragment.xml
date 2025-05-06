@@ -1,0 +1,119 @@
+<core:FragmentDefinition
+   xmlns="sap.m"
+	 xmlns:f="sap.ui.layout.form"
+   xmlns:core="sap.ui.core">
+   <Dialog
+      id="ManualAccountingDialog"
+      contentHeight="50%"
+      contentWidth="70%"
+      resizable="false"
+      type="Message"
+      state="None"
+      icon="sap-icon://it-host"
+      title="{i18n>createMaterialDocument}">
+      <content>
+        <f:SimpleForm id="SimpleFormDisplay354"
+          editable="true"
+          layout="ResponsiveGridLayout"
+          labelSpanXL="3"
+          labelSpanL="3"
+          labelSpanM="3"
+          labelSpanS="12"
+          adjustLabelSpan="false"
+          emptySpanXL="4"
+          emptySpanL="4"
+          emptySpanM="4"
+          emptySpanS="0"
+          columnsXL="1"
+          columnsL="1"
+          columnsM="1"
+          singleContainerFullSize="false" >
+          <f:content>
+            <Label text="{i18n>vstel}" />
+            <Input id="shippingPointID" value="{Vstel}" required="true" showValueHelp="true" valueHelpRequest=".onValueHelpRequestShippingPoint" />
+          </f:content>
+        </f:SimpleForm>
+      	<Table id="selectedMaterialTableId"
+          items="{
+            path: '/SelectedMaterial'
+          }">
+          <columns>
+                <Column>
+                    <Text text="{i18n>cprodOrd}"/>
+                </Column>
+                <Column>
+                    <Text text="{i18n>plant}"/>
+                </Column>
+                <Column>
+                    <Text text="{i18n>material}"/>
+                </Column>
+                <Column >
+                    <Text text="{i18n>batch}"/>
+                </Column>
+                <Column>
+                    <Text text="{i18n>stock}"/>
+                </Column>
+                <Column>
+                    <Text text="{i18n>quantityToIssue}"/>
+                </Column>
+                <Column>
+                    <Text text="{i18n>quantity}"/>
+                </Column>
+                <Column>
+                    <Text text="{i18n>totalWithdrawnQuantity}"/>
+                </Column>
+                <Column id="lgort1ID">
+                    <Text text="{i18n>lgort1}"/>
+                </Column>
+                <Column id="lgort2ID">
+                    <Text text="{i18n>lgort2}"/>
+                </Column>
+            </columns>
+          <items>
+            <ColumnListItem vAlign="Middle">
+              <cells>
+              <Input 
+                  value="{CprodOrd}" editable="false" />
+                <Input 
+                  value="{Plant}" editable="false" />
+                <Input 
+                  value="{Material}" editable="false" />
+                <Input 
+                  value="{Batch}" editable="false" />
+                <Input 
+                  value="{StockMaterial}" description="{BaseUnit}" editable="false" />
+                <Input 
+                  value="{QtyToIssue}" description="{BaseUnit}" />
+                <Input 
+                  value="{TotalConfdQtyForATPInBaseUoM}" description="{BaseUnit}" editable="false" />
+                <Input 
+                  value="{TotalWithdrawnQuantity}" description="{BaseUnit}" />
+                <Input 
+                  value="{Lgort1}" editable="false" />
+                <Input 
+                  value="{Lgort2}" editable="false" />
+              </cells>
+            </ColumnListItem>
+          </items>
+        </Table>
+      </content>
+      <beginButton>
+        <Button 
+          id="CloseManualAccountingDialog" 
+          type="Emphasized"
+          width="47.5%"
+          icon="sap-icon://decline"
+          press=".onCloseMaterialDocumentCreationDialog"
+          text="{i18n>Close}"/>
+        </beginButton>
+        <endButton>
+        <Button 
+          id="ConfirmManualAccountingDialog" 
+          type="Accept"
+          width="47.5%"
+          icon="sap-icon://accept"
+          press=".onConfirmMaterialDocumentCreationDialog"
+          text="{i18n>Create}"/>
+      </endButton>
+      </Dialog>
+</core:FragmentDefinition>

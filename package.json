@@ -48,8 +48,8 @@
     "upgrade-db": "cf run-task xagalteaup-srv --name 'upgrade-all' --command 'cds-mtx upgrade 'eebd84e9-8f09-45e0-a086-d7fb035c335a'' -w",
     "cf-undeploy": "cf undeploy xagalteaup --delete-services --delete-service-keys --delete-service-brokers",
     "__comment_hybrid": "Eseguire Bind su parte srve node con bind-srv prima",
-    "cds-bind-services-srv": "cds bind -2 zsubcontracting_cockpit-destination",
-    "cds-bind-srv": "cds bind --to-app-services xagalteaup-srv",
+    "cds-bind-services-srv": "cds bind -2 zsubcontracting_cockpit-auth-srv,zsubcontracting_cockpit-destination,zsubcontracting_cockpit-connectivity",
+    "cds-bind-srv": "cds bind --to-app-services zsubcontracting_cockpit-html5-srv",
     "cds-srv-hybrid-run": "cds watch --profile hybrid",
     "approuter-hybrid-run": "npm run start-local --prefix app/",
     "__comment_router": "Eseguire bind con default-env.json (vedi sample_default-env.json), seguire questo help per far girare approuter : https://community.sap.com/t5/technology-q-a/sap-cap-multitenancy-testing-locally-with-html5-apps-repo/qaq-p/12748234",
@@ -64,7 +64,7 @@
     "clear-cache": "npm cache clean --force",
     "install-DefaultEnv": "cf install-plugin https://github.com/SAP/cf-cli-defaultenv-plugin/releases/download/v1.1.1/DefaultEnv.linux64",
     "install-html5-plugin": "cf install-plugin -r CF-Community 'html5-plugin'",
-    "watch-zsubcontractingcockpitapp4": "cds watch --open zsubcontractingcockpitapp4/webapp/index.html?sap-ui-xx-viewCache=false"
+   "watch-zsubcontractingcockpitapp5": "cds watch --open zsubcontractingcockpitapp5/webapp/index.html?sap-ui-xx-viewCache=false"    
   },
   "cds": {
     "requires": {
@@ -72,11 +72,7 @@
       "destinations": true,
       "html5-repo": true,
       "[hybrid]": {
-        "auth": "basic",
-        "db": {
-          "kind": "sqlite",
-          "schema_evolution": "auto"
-        }
+        "auth": "dummy"
       },
       "[production]": {
         "auth": "xsuaa",
@@ -85,6 +81,13 @@
           "schema_evolution": "auto"
         }
       },
+      "[development]": {
+        "auth": "xsuaa",
+        "db": {
+          "kind": "sqlite",
+          "schema_evolution": "auto"
+        }
+      },      
       "MM_PUR_SUBCONTRACTING_COCKPIT_SRV": {
         "kind": "odata-v2",
         "model": "srv/EXTERNAL/MM_PUR_SUBCONTRACTING_COCKPIT_SRV",
@@ -210,6 +213,31 @@
           }
         } 
       },
+      "ZZ1_I_UNION_SUBCONCTR_COMP_CDS": {
+        "kind": "odata-v2",
+        "model": "srv/EXTERNAL/ZZ1_I_UNION_SUBCONCTR_COMP_CDS",
+        "csrf": true,
+        "csrfInBatch": true,
+        "[hybrid]": {
+          "credentials": {
+            "url": "http://lpappsvi.lp.corp:8000/sap/opu/odata/sap/ZZ1_I_UNION_SUBCONCTR_COMP_CDS",
+            "destination": "",
+            "authentication": "BasicAuthentication",
+            "username": "LILLAD",
+            "password": "LoroPiana2025!",
+            "headers": {},
+            "queries": {},
+            "sap-client": "300"
+          }
+        },
+        "[production]": {
+          "credentials": {
+            "requestTimeout": 300000,
+            "destination": "S4HANA",            
+            "url": "/sap/opu/odata/sap/ZZ1_I_UNION_SUBCONCTR_COMP_CDS"
+          }
+        } 
+      },            
       "OP_API_MATERIAL_DOCUMENT_SRV": {
         "kind": "odata-v2",
         "model": "srv/EXTERNAL/OP_API_MATERIAL_DOCUMENT_SRV",
@@ -312,9 +340,10 @@
      "ZZ1_I_SHIPPINGPOINT_CDS": {
         "kind": "odata-v2",
         "model": "srv/EXTERNAL/ZZ1_I_SHIPPINGPOINT_CDS",
+        "forwardAuthToken": true,
         "csrf": true,
-        "csrfInBatch": true,
-        "[production]": {
+        "csrfInBatch": true,        
+       "[production]": {
           "credentials": {
             "requestTimeout": 300000,
             "destination": "S4HANA",            
@@ -323,19 +352,23 @@
         },
         "[hybrid]": {
           "credentials": {
-            "url": "http://lpappsvi.lp.corp:8000/sap/opu/odata/sap/ZZ1_I_SHIPPINGPOINT_CDS",
-            "authentication": "BasicAuthentication",
-            "username": "LILLAD",
-            "password": "LoroPiana2025!",
-            "headers": {},
-            "queries": {},
-            "sap-client": "300"
+            "requestTimeout": 300000,
+            "destination": "S4HANA",            
+            "url": "/sap/opu/odata/sap/ZZ1_I_SHIPPINGPOINT_CDS"
           }
-        }
-      }         
+        },
+        "[development]": {
+          "credentials": {
+            "requestTimeout": 300000,
+            "destination": "S4HANA",            
+            "url": "/sap/opu/odata/sap/ZZ1_I_SHIPPINGPOINT_CDS"
+          }
+        }   
     }
-  },
+  }
+},
   "sapux": [
-    "app/zsubcontractingcockpitapp4"
+
+    "app/zsubcontractingcockpitapp5"    
   ]
 }

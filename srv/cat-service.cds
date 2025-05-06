@@ -2,17 +2,18 @@ using {LoroPianaCAP.zsubcontracting_cockpit.db.TYPES as TYPES} from '../db/TYPES
 
 using my.bookshop as my from '../db/schema';
 using { MM_PUR_SUBCONTRACTING_COCKPIT_SRV as main_service} from './EXTERNAL/MM_PUR_SUBCONTRACTING_COCKPIT_SRV';
-using { API_MATERIAL_STOCK_SRV as stock_service} from './EXTERNAL/API_MATERIAL_STOCK_SRV.csn';
+using { API_MATERIAL_STOCK_SRV as stock_service} from './EXTERNAL/API_MATERIAL_STOCK_SRV';
 //using { ZZ1_I_UNION_CDS as customCDS} from './EXTERNAL/ZZ1_I_UNION_CDS';
 using { ZZ1_I_COMBORDER_COMP_CDS as customCDS } from './EXTERNAL/ZZ1_I_COMBORDER_COMP_CDS';
 using { ZZ1_I_ARUN_BDBSSUMQTY_CDS_CDS as materialQtySumCDS } from './EXTERNAL/ZZ1_I_ARUN_BDBSSUMQTY_CDS_CDS';
-using { API_MATERIAL_DOCUMENT_SRV as material_document} from './EXTERNAL/API_MATERIAL_DOCUMENT_SRV.csn';
+using { API_MATERIAL_DOCUMENT_SRV as material_document} from './EXTERNAL/API_MATERIAL_DOCUMENT_SRV';
 using { ZZ1_I_SUMQTYDELIVERY_T_CDS as sumQtyDelivery } from './EXTERNAL/ZZ1_I_SUMQTYDELIVERY_T_CDS';
-using { ZMPF_SD_CREATE_DELIVERY as create_sd_delivery } from './EXTERNAL/ZMPF_SD_CREATE_DELIVERY.csn';
+using { ZMPF_SD_CREATE_DELIVERY as create_sd_delivery } from './EXTERNAL/ZMPF_SD_CREATE_DELIVERY';
 using { ZZ1_I_SHIPPINGPOINT_CDS as ShippingPointCDS} from './EXTERNAL/ZZ1_I_SHIPPINGPOINT_CDS';
+using { ZZ1_I_UNION_SUBCONCTR_COMP_CDS as ComponentCDS } from './EXTERNAL/ZZ1_I_UNION_SUBCONCTR_COMP_CDS';
 
-@cds.query.limit.default: 50
-@cds.query.limit.max: 50
+@cds.query.limit.default: 100
+@cds.query.limit.max: 100
 service CatalogService {
     @readonly entity Books as projection on my.Books;
 
@@ -24,18 +25,26 @@ service CatalogService {
 
     @readonly entity A_MaterialStock as projection on stock_service.A_MaterialStock;
 
+    @readonly entity ZZ1_C_PRODUCT as projection on customCDS.ZZ1_C_PRODUCT{
+        *
+    };
+
     /*@readonly entity MainCds as projection on customCDS.ZZ1_ZZ1_ZZ1_I_UNION_API{
         *,
         null as StockMaterial : Decimal,
         null as StockMaterialUnitMeasure : String,
     }*/
     @readonly entity MainCds as projection on customCDS.ZZ1_I_COMBORDER_COMP{
+        key ID,
+        @Common.Label: '{i18n>cprodOrd}'
         key CprodOrd,
         key requirementtype,
+        @Common.Label: '{i18n>material}'
         key Material,
         key OrderIntBillOfOperationsItem,
         key BillOfMaterialItemNumber_2,
         key BaseUnit,
+        @Common.Label: '{i18n>plant}'
         key Plant,
         key SortField,
         key BOMItemCategory,
@@ -60,13 +69,14 @@ service CatalogService {
         key ProductSeason,
         key ProductCollection,
         key ProductTheme,
+        @Common.Label: '{i18n>workCenter}'
         key WorkCenterInternalID,
         key WorkCenterTypeCODE_2_1,
         key ManufacturingOrderSequence,
         key ManufacturingOrderOperation,
         key ManufacturingOrderType,
         key ProductionInvtryManagedLoc,
-        key Supplier,
+        key Supplier,        
         key WorkCenter,
         key Customer,
         key BPSupplierName,
@@ -93,6 +103,8 @@ service CatalogService {
         null as IssuedProdQty: Decimal,
         null as TotMagDefault: Decimal,
         null as TotMagProd: Decimal,
+        null as SupplierWithDescription: String,
+        to_ZZ1_C_PRODUCT : Association to ZZ1_C_PRODUCT on Material = to_ZZ1_C_PRODUCT.Product,
     }
 
     @readonly entity ZZ1_I_ARUN_BDBSSUMQTY_CDS as projection on materialQtySumCDS.ZZ1_I_ARUN_BDBSSUMQTY_CDS{
@@ -115,5 +127,11 @@ service CatalogService {
 
     @readonly entity ZZ1_I_ShippingPoint as projection on ShippingPointCDS.ZZ1_I_ShippingPoint;
 
-    action CreateMaterialDocument(Record: TYPES.MaterialRecordStructure) returns String
+    @readonly entity ZZ1_I_UNION_SUBCONCTR_COMP as projection on ComponentCDS.ZZ1_I_UNION_SUBCONCTR_COMP;
+
+    action CreateDelivery(Record: many TYPES.MaterialRecord) returns String;
+
+    action CreateMaterialDocument(Record: many TYPES.MaterialCreateDocument) returns String;
+
+    action GetMaterialStock(Object: TYPES.InputStockMaterialAPI) returns many TYPES.ResponseStockMaterialAPI;
 }

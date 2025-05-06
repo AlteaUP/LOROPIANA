@@ -2,7 +2,7 @@ const { default: cds } = require("@sap/cds");
 
 const serverUrl = "https://lpappsvi.lp.corp:8001/sap/opu/odata/sap/";
 const BasicAuth = "Basic " + Buffer.from("LILLAD:LoroPiana2025!").toString("base64"); // Encode the client ID and secret as base64
-const axios = require("axios");
+//const axios = require("axios");
 const https = require('https');
 const SubcontractingManageRequire = require('./custom_modules/SubcontractingManage');
 const { equal } = require("assert");
@@ -21,12 +21,26 @@ module.exports = cds.service.impl(async function (srv) {
     const cdsSumQtyDelivery = await cds.connect.to('ZZ1_I_SUMQTYDELIVERY_T_CDS');
     const createDeliverySD = await cds.connect.to('ZMPF_SD_CREATE_DELIVERY');
     const cdsShippingPoint = await cds.connect.to('ZZ1_I_SHIPPINGPOINT_CDS');
+    const componentsPoint = await cds.connect.to('ZZ1_I_UNION_SUBCONCTR_COMP_CDS');
 
     this.on('READ', "MainCds", async request => {
 
         console.log("dentro read MainCds");
 
         console.log("TEST tempi -> Entro nel metodo "+new Date())
+
+        // rimuovo orderBy per ID
+        if(request.query.SELECT.orderBy !== null && request.query.SELECT.orderBy !== undefined){
+            if(request.query.SELECT.orderBy.length === 1){
+                if(request.query.SELECT.orderBy[0].ref[0] === 'ID'){
+                    delete request.query.SELECT.orderBy
+                }
+            } else {
+                if(request.query.SELECT.orderBy[0].ref[0] === 'ID'){
+                    request.query.SELECT.orderBy.splice(0,1)
+                }
+            }
+        }
 
         var data = await cdsView.tx(request).run(request.query);
 
@@ -366,6 +380,8 @@ module.exports = cds.service.impl(async function (srv) {
                         data[z].StockMaterialUnitMeasure = data[z].BaseUnit  
                     }
                 }
+                data[z].StockMaterial = data[z].StockMaterial.toFixed(3)
+                //data[z].SupplierWithDescription = data[z].Supplier + ' - ' + data[z].BPSupplierName
             }
 
             console.log("TEST tempi -> fine calcolo colonne "+new Date())
@@ -384,7 +400,7 @@ module.exports = cds.service.impl(async function (srv) {
                     data[u].QtyTrafficLight = Number(data[u].TotalConfdQtyForATPInBaseUoM) / (Number(data[u].TotalRequiredQuantity) - Number(data[u].TotalWithdrawnQuantity)) * 100
                 }
 
-                data[u].QtyToIssue = Number(data[u].TotalConfdQtyForATPInBaseUoM) - Number(data[u].TotalAllocQty) - Number(data[u].TotalDeliveryQty)
+                data[u].QtyToIssue = Number(data[u].TotalConfdQtyForATPInBaseUoM) - Number(data[u].TotalAllocQty) - Number(data[u].TotalDeliveryQty) - Number(data[u].TotalWithdrawnQuantity)
                 data[u].QtyToIssue = Number(data[u].QtyToIssue).toFixed(3)
             }
                 
@@ -409,13 +425,25 @@ module.exports = cds.service.impl(async function (srv) {
         return data;
     });
 
-    /*this.on("CreateMaterialDocument", async (req) => {
+    this.on('READ', "ZZ1_I_UNION_SUBCONCTR_COMP", async request => {
+        var data = await componentsPoint.tx(request).run(request.query);
+
+        return data;
+    });
+
+    this.on('READ', "ZZ1_C_PRODUCT", async request => {
+        var data = await componentsPoint.tx(request).run(request.query);
+
+        return data;
+    });
+
+    this.on("CreateMaterialDocument", async (req) => {
         console.log("Chiamata ACTION CreateMaterialDocument")
  
-        const Documents = req.data.Record.Records;
+        const Documents = req.data.Record;
 
         // Controllo che l'oggetto della request sia pieno
-        if (!req.data.Record.Records) return;
+        if (req.data.Record.length === 0) return;
 
         var documentItemArray = []
         var documentItemObject = {}
@@ -424,12 +452,15 @@ module.exports = cds.service.impl(async function (srv) {
             documentItemObject.Material = Documents[i].Material
             documentItemObject.Plant = Documents[i].Plant
             documentItemObject.Batch = Documents[i].Batch
-            documentItemObject.StorageLocation = "H1RP" // da SOSTITUIRE
-            documentItemObject.GoodsMovementType = '313'
-            documentItemObject.MaterialDocumentItemText = Documents[i].CprodOrd
-            documentItemObject.QuantityInEntryUnit = Documents[i].Quantity
-            documentItemObject.IssuingOrReceivingStorageLoc = "K1RP" // da SOSTITUIRE
+            documentItemObject.GoodsMovementType = '543'
+            documentItemObject.QuantityInEntryUnit = (Documents[i].Quantity).toString()
             documentItemObject.EntryUnit = Documents[i].UnitMeasure
+            documentItemObject.InventorySpecialStockType = 'O'
+            documentItemObject.PurchaseOrder = Documents[i].PurchaseOrder
+            documentItemObject.PurchaseOrderItem = Documents[i].PurchaseOrderItem
+            documentItemObject.Supplier = Documents[i].Supplier
+            documentItemObject.ManufacturingOrder = Documents[i].ManufacturingOrder
+            //documentItemObject.ManufacturingOrderItem = Documents[i].ManufacturingOrderOperation
             documentItemArray.push(documentItemObject)
         }
 
@@ -444,33 +475,11 @@ module.exports = cds.service.impl(async function (srv) {
             
         var payload = {
             "PostingDate": postingDate+"T00:00:00",
-            "GoodsMovementCode": "04",
-            "ReferenceDocument": Documents[0].CprodOrd,
+            //"DocumentDate": postingDate+"T00:00:00",
+            "GoodsMovementCode": "03",
+            //"ReferenceDocument": Documents[0].CprodOrd,
             "to_MaterialDocumentItem": documentItemArray
         }
-
-        
-        
-
-        var payload = {
-            "PostingDate": "2025-03-21T00:00:00",
-            "GoodsMovementCode": "04",
-            "to_MaterialDocumentItem": [
-                {
-                "Material": "MAI4168H06H",
-                "Plant": "PF10",
-                "Batch": "0000000962",
-                "StorageLocation": "H1RP",
-                "GoodsMovementType": "313",
-                "MaterialDocumentItemText": "GR Vendor XY", //-> cprodOrd
-                "QuantityInEntryUnit": "0.032", //-> TotalConfdQtyForATPInBaseUoM
-                "IssuingOrReceivingStorageLoc": "K1RP",
-                "EntryUnit": "KG"//StockMaterialUnitMeasure
-                }
-            ]
-        }
-
-        
 
         try {
 
@@ -483,15 +492,15 @@ module.exports = cds.service.impl(async function (srv) {
             console.log(error.message)
             return error.message
         }
-    })*/
+    })
 
-    this.on("CreateMaterialDocument", async (req) => {
-        console.log("Chiamata ACTION CreateMaterialDocument")
+    this.on("CreateDelivery", async (req) => {
+        console.log("Chiamata ACTION CreateDelivery")
  
-        const Documents = req.data.Record.Records;
+        const Documents = req.data.Record;
 
         // Controllo che l'oggetto della request sia pieno
-        if (!req.data.Record.Records) return;
+        if (req.data.Record.length === 0) return;
 
         var postingCurrentDate = new Date()
         var year = postingCurrentDate.getFullYear()
@@ -558,6 +567,7 @@ module.exports = cds.service.impl(async function (srv) {
                     
                 }
                 documentItemObject.lifex = DocumentsBySupplier[y][z].CprodOrd
+                //documentItemObject.kdmat = DocumentsBySupplier[y][z].CprodOrd
                 documentItemObject.charg = DocumentsBySupplier[y][z].Batch
                 documentItemObject.wadat_ist = postingDate
                 documentItemArray.push(documentItemObject)
@@ -676,6 +686,43 @@ module.exports = cds.service.impl(async function (srv) {
         }*/
     })
 
+    this.on("GetMaterialStock", async (req) => {
+
+        const apiStock = await cds.connect.to('API_MATERIAL_STOCK_SRV');
+        const { A_MaterialStock } = apiStock.entities;
+
+        let arrayDataStock = []
+
+        try {
+            var dataStock = await apiStock.run(SELECT(A_MaterialStock, material => {
+                material.to_MatlStkInAcctMod((to_MatlStkInAcctMod) => {
+                    to_MatlStkInAcctMod('*')
+                })
+        }).where({ Material: req.data.Object.Material }));
+        } catch (error) {
+            console.log(error)
+        }
+
+        if(dataStock !== undefined && dataStock !== null){
+            if(dataStock.length > 0){
+                for(var c=0; c<dataStock.length;c++){
+                    for(var f=0; f<dataStock[c].to_MatlStkInAcctMod.length; f++){
+                        if(dataStock[c].to_MatlStkInAcctMod[f].Supplier === req.data.Object.Supplier && dataStock[c].to_MatlStkInAcctMod[f].InventorySpecialStockType === 'O'){
+                            arrayDataStock.push(dataStock[c].to_MatlStkInAcctMod[f])
+                        }
+                    }   
+                }
+            }
+
+            console.log("Lunghezza arrayDataStock "+arrayDataStock.length)
+
+            console.log("TEST tempi -> fine select stock API "+new Date())
+        }
+
+        return arrayDataStock;
+
+    })
+
     this.on('READ', 'A_MaterialStock', async (req) => {
         let stockData = [];
 
@@ -698,16 +745,16 @@ module.exports = cds.service.impl(async function (srv) {
             })
         };
 
-        const stockResponse = await axios(get_config);
+        //const stockResponse = await axios(get_config);
 
         // Verifica se i dati sono stati ricevuti
-        if (stockResponse.status) {
+        /*if (stockResponse.status) {
             stockData = stockResponse.data;
 
             return stockData; // Restituisce i dati al client
         }
 
-        return "No data found.";
+        return "No data found.";*/
     })
 
 });

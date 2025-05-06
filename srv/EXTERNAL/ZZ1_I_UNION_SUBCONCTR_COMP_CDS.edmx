@@ -1,0 +1,119 @@
+<edmx:Edmx xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:sap="http://www.sap.com/Protocols/SAPData" Version="1.0">
+<edmx:Reference xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Uri="http://lpappsvi.lp.corp:8000/sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_AGGREGATION',Version='0001',SAP__Origin='LOCAL')/$value">
+<edmx:Include Namespace="Org.OData.Aggregation.V1" Alias="Aggregation"/>
+</edmx:Reference>
+<edmx:Reference xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Uri="http://lpappsvi.lp.corp:8000/sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_ANALYTICS',Version='0001',SAP__Origin='LOCAL')/$value">
+<edmx:Include Namespace="com.sap.vocabularies.Analytics.v1" Alias="Analytics"/>
+</edmx:Reference>
+<edmx:Reference xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Uri="http://lpappsvi.lp.corp:8000/sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_CAPABILITIES',Version='0001',SAP__Origin='LOCAL')/$value">
+<edmx:Include Namespace="Org.OData.Capabilities.V1" Alias="Capabilities"/>
+</edmx:Reference>
+<edmx:Reference xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Uri="http://lpappsvi.lp.corp:8000/sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_CODELIST',Version='0001',SAP__Origin='LOCAL')/$value">
+<edmx:Include Namespace="com.sap.vocabularies.CodeList.v1" Alias="SAP__CodeList"/>
+</edmx:Reference>
+<edmx:Reference xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Uri="http://lpappsvi.lp.corp:8000/sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_COMMON',Version='0001',SAP__Origin='LOCAL')/$value">
+<edmx:Include Namespace="com.sap.vocabularies.Common.v1" Alias="Common"/>
+</edmx:Reference>
+<edmx:Reference xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Uri="http://lpappsvi.lp.corp:8000/sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_COMMUNICATION',Version='0001',SAP__Origin='LOCAL')/$value">
+<edmx:Include Namespace="com.sap.vocabularies.Communication.v1" Alias="Communication"/>
+</edmx:Reference>
+<edmx:Reference xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Uri="http://lpappsvi.lp.corp:8000/sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_MEASURES',Version='0001',SAP__Origin='LOCAL')/$value">
+<edmx:Include Namespace="Org.OData.Measures.V1" Alias="Measures"/>
+</edmx:Reference>
+<edmx:Reference xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Uri="http://lpappsvi.lp.corp:8000/sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_PERSONALDATA',Version='0001',SAP__Origin='LOCAL')/$value">
+<edmx:Include Namespace="com.sap.vocabularies.PersonalData.v1" Alias="PersonalData"/>
+</edmx:Reference>
+<edmx:Reference xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Uri="http://lpappsvi.lp.corp:8000/sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_UI',Version='0001',SAP__Origin='LOCAL')/$value">
+<edmx:Include Namespace="com.sap.vocabularies.UI.v1" Alias="UI"/>
+</edmx:Reference>
+<edmx:Reference xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Uri="http://lpappsvi.lp.corp:8000/sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_VALIDATION',Version='0001',SAP__Origin='LOCAL')/$value">
+<edmx:Include Namespace="Org.OData.Validation.V1" Alias="Validation"/>
+</edmx:Reference>
+<edmx:DataServices m:DataServiceVersion="2.0">
+<Schema xmlns="http://schemas.microsoft.com/ado/2008/09/edm" Namespace="ZZ1_I_UNION_SUBCONCTR_COMP_CDS" xml:lang="it" sap:schema-version="1">
+<EntityType Name="ZZ1_I_UNION_SUBCONCTR_COMPType" sap:label="ZZ1_I_UNION_SUBCONCTR_COMP_T1" sap:content-version="1">
+<Key>
+<PropertyRef Name="Reservation"/>
+<PropertyRef Name="ReservationItem"/>
+<PropertyRef Name="RecordType"/>
+</Key>
+<Property Name="Reservation" Type="Edm.String" Nullable="false" MaxLength="10" sap:display-format="NonNegative" sap:required-in-filter="false" sap:label="Impegno" sap:quickinfo="Numero dell'impegno / del fabbisogno dipendente"/>
+<Property Name="ReservationItem" Type="Edm.String" Nullable="false" MaxLength="4" sap:display-format="NonNegative" sap:required-in-filter="false" sap:label="Posizione impegno"/>
+<Property Name="RecordType" Type="Edm.String" Nullable="false" MaxLength="1" sap:display-format="UpperCase" sap:required-in-filter="false" sap:label="Tipo di record impegno"/>
+<Property Name="TotalAllocQty" Type="Edm.Decimal" Precision="13" Scale="3" sap:required-in-filter="false" sap:unit="BaseUnit" sap:label="TotalAllocQty"/>
+<Property Name="Supplier" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:required-in-filter="false" sap:label="Fornitore" sap:quickinfo="Numero conto del fornitore"/>
+<Property Name="OrderInternalID" Type="Edm.String" MaxLength="10" sap:display-format="NonNegative" sap:required-in-filter="false" sap:label="ID interno ordine" sap:quickinfo="ID interno dell'ordine"/>
+<Property Name="OrderOperationInternalID" Type="Edm.String" MaxLength="8" sap:display-format="NonNegative" sap:required-in-filter="false" sap:label="ID int. operazione" sap:quickinfo="Identificatore interno di un'operazione o attività"/>
+<Property Name="ManufacturingOrderOperation" Type="Edm.String" MaxLength="4" sap:display-format="UpperCase" sap:required-in-filter="false" sap:label="Operazione" sap:quickinfo="Operazione ordine di produzione"/>
+<Property Name="ManufacturingOrderSequence" Type="Edm.String" MaxLength="6" sap:display-format="UpperCase" sap:required-in-filter="false" sap:label="Sequenza" sap:quickinfo="Sequenza ordine di produzione"/>
+<Property Name="WorkCenterTypeCODE_2_1" Type="Edm.String" MaxLength="2" sap:display-format="UpperCase" sap:required-in-filter="false" sap:label="Tipo di centro di lavoro"/>
+<Property Name="WorkCenterInternalID" Type="Edm.String" MaxLength="8" sap:display-format="NonNegative" sap:required-in-filter="false" sap:label="Int. centro lav." sap:quickinfo="ID interno centro di lavoro"/>
+<Property Name="OrderIntBillOfOperationsItem" Type="Edm.String" MaxLength="8" sap:display-format="NonNegative" sap:required-in-filter="false" sap:label="Contatore" sap:quickinfo="Contatore generale dell'ordine"/>
+<Property Name="CprodOrd" Type="Edm.String" MaxLength="12" sap:display-format="UpperCase" sap:required-in-filter="false" sap:label="Ord. prod. combinato" sap:quickinfo="Ordine prod. principale comb."/>
+<Property Name="FshMprodOrd" Type="Edm.String" MaxLength="12" sap:display-format="UpperCase" sap:required-in-filter="false" sap:label="Ordine prod. princ." sap:quickinfo="Numero ordine di produzione principale"/>
+<Property Name="ProductTheme" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:required-in-filter="false" sap:label="Tema" sap:quickinfo="Tema fashion"/>
+<Property Name="ProductCollection" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:required-in-filter="false" sap:label="Collezione" sap:quickinfo="Collezione fashion"/>
+<Property Name="ProductSeason" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:required-in-filter="false" sap:label="Stagione"/>
+<Property Name="MasterProductionOrder" Type="Edm.String" MaxLength="12" sap:display-format="UpperCase" sap:required-in-filter="false" sap:label="Ordine prod. princ." sap:quickinfo="Numero ordine di produzione principale"/>
+<Property Name="ProductSeasonYear" Type="Edm.String" MaxLength="4" sap:display-format="UpperCase" sap:required-in-filter="false" sap:label="Esercizio stagionale"/>
+<Property Name="ProductionUnit" Type="Edm.String" MaxLength="3" sap:required-in-filter="false" sap:label="Unità di produzione" sap:quickinfo="Unità di misura di produzione" sap:semantics="unit-of-measure"/>
+<Property Name="requirementtype" Type="Edm.String" MaxLength="2" sap:display-format="UpperCase" sap:required-in-filter="false" sap:label="Tipo di fabbisogno"/>
+<Property Name="PurchaseOrder" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:required-in-filter="false" sap:label="Documento d'acquisto"/>
+<Property Name="PurchaseOrderItem" Type="Edm.String" MaxLength="5" sap:display-format="NonNegative" sap:required-in-filter="false" sap:label="Posizione del documento d'acquisto"/>
+<Property Name="PurchaseOrderScheduleLine" Type="Edm.String" MaxLength="4" sap:display-format="NonNegative" sap:required-in-filter="false" sap:label="Schedulazione" sap:quickinfo="Contatore sched."/>
+<Property Name="BaseUnit" Type="Edm.String" MaxLength="3" sap:required-in-filter="false" sap:label="Unità misura base" sap:quickinfo="Unità di misura di base" sap:semantics="unit-of-measure"/>
+<Property Name="Material" Type="Edm.String" MaxLength="40" sap:display-format="UpperCase" sap:required-in-filter="false" sap:label="Materiale" sap:quickinfo="Codice materiale"/>
+<Property Name="RequiredQuantity" Type="Edm.Decimal" Precision="13" Scale="3" sap:required-in-filter="false" sap:unit="BaseUnit" sap:label="Quantità fabbisogno"/>
+<Property Name="WithdrawnQuantity" Type="Edm.Decimal" Precision="13" Scale="3" sap:required-in-filter="false" sap:unit="BaseUnit" sap:label="Quantità prelevata"/>
+<Property Name="RequirementDate" Type="Edm.DateTime" Precision="0" sap:display-format="Date" sap:required-in-filter="false" sap:label="Data fabbisogno" sap:quickinfo="Data fabbisogno componente materiale"/>
+<Property Name="RequirementTime" Type="Edm.Time" Precision="0" sap:required-in-filter="false" sap:label="Ora fabbisogno" sap:quickinfo="Ora fabbisogno del componente del materiale"/>
+<Property Name="Plant" Type="Edm.String" MaxLength="4" sap:display-format="UpperCase" sap:required-in-filter="false" sap:label="Divisione"/>
+<Property Name="LatestRequirementDate" Type="Edm.DateTime" Precision="0" sap:display-format="Date" sap:required-in-filter="false" sap:label="Data dell'ultimo fabbisogno"/>
+<Property Name="BillOfMaterialItemNumber_2" Type="Edm.String" MaxLength="4" sap:display-format="UpperCase" sap:required-in-filter="false" sap:label="Numero di posizione distinta base"/>
+<Property Name="SortField" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:required-in-filter="false" sap:label="Crit. class." sap:quickinfo="Criterio di classificazione"/>
+<Property Name="BOMItemCategory" Type="Edm.String" MaxLength="1" sap:display-format="UpperCase" sap:required-in-filter="false" sap:label="Cat. pos .dist. base" sap:quickinfo="Categoria di posizione distinta base"/>
+<Property Name="MaterialComponentIsPhantomItem" Type="Edm.Boolean" sap:required-in-filter="false" sap:label="Posizione dummy" sap:quickinfo="Indicatore posizione dummy"/>
+<Property Name="IsBulkMaterialComponent" Type="Edm.Boolean" sap:required-in-filter="false" sap:label="Merce sfusa" sap:quickinfo="Indicatore: merce sfusa"/>
+<Property Name="InventorySpecialStockValnType" Type="Edm.String" MaxLength="1" sap:display-format="UpperCase" sap:required-in-filter="false" sap:label="Tipo di valutazione stock speciale" sap:quickinfo="Tipo di valutazione stock inventario speciale"/>
+<Property Name="InventorySpecialStockType" Type="Edm.String" MaxLength="1" sap:display-format="UpperCase" sap:required-in-filter="false" sap:label="Tp. stock speciale" sap:quickinfo="Tipo di stock inventario speciale"/>
+<Property Name="ReservationIsFinallyIssued" Type="Edm.Boolean" sap:required-in-filter="false" sap:label="Prel. fin." sap:quickinfo="Prelievo finale dell'impegno"/>
+<Property Name="EntryUnit" Type="Edm.String" MaxLength="3" sap:required-in-filter="false" sap:label="UM acquisizione" sap:quickinfo="Unità di misura di registrazione" sap:semantics="unit-of-measure"/>
+<Property Name="QuantityInEntryUnit" Type="Edm.Decimal" Precision="13" Scale="3" sap:required-in-filter="false" sap:unit="EntryUnit" sap:label="Quantità" sap:quickinfo="Quantità in unità di misura di acquisizione"/>
+<Property Name="MaterialQtyToBaseQtyNmrtr" Type="Edm.Decimal" Precision="5" Scale="0" sap:required-in-filter="false" sap:label="Contatore" sap:quickinfo="Contatore per la conversione in unità di mis. di base"/>
+<Property Name="MaterialQtyToBaseQtyDnmntr" Type="Edm.Decimal" Precision="5" Scale="0" sap:required-in-filter="false" sap:label="Denominatore" sap:quickinfo="Denom. per la conversione in unità di misura di base"/>
+<Property Name="ComponentScrapInPercent" Type="Edm.Decimal" Precision="5" Scale="2" sap:required-in-filter="false" sap:label="Scarto comp. (%)" sap:quickinfo="Scarto del componente in percentuale"/>
+<Property Name="OperationScrapInPercent" Type="Edm.Decimal" Precision="5" Scale="2" sap:required-in-filter="false" sap:label="Scarto oper. in %" sap:quickinfo="Scarto operazione"/>
+<Property Name="ConfdQtyForATPInBaseUoM" Type="Edm.Decimal" Precision="15" Scale="3" sap:required-in-filter="false" sap:unit="BaseUnit" sap:label="Qtà per contr. disp." sap:quickinfo="Quantità confermata per contr. disponibilità in UMM"/>
+<Property Name="LeadTimeOffset" Type="Edm.Decimal" Precision="3" Scale="0" sap:required-in-filter="false" sap:label="Scostamento nel lead time"/>
+<Property Name="StorageLocation" Type="Edm.String" MaxLength="4" sap:display-format="UpperCase" sap:required-in-filter="false" sap:label="Magazzino"/>
+<Property Name="ProductionSupplyArea" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:required-in-filter="false" sap:label="Area di approvvigionamento produzione"/>
+<Property Name="Batch" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:required-in-filter="false" sap:label="Partita" sap:quickinfo="Numero partita"/>
+<Property Name="BOMItemDescription" Type="Edm.String" MaxLength="40" sap:required-in-filter="false" sap:label="Testo posizione" sap:quickinfo="Testo posizione distinta base (riga 1)"/>
+<Property Name="BOMItemText2" Type="Edm.String" MaxLength="40" sap:required-in-filter="false" sap:label="Testo posizione 2" sap:quickinfo="Testo posizione distinta base (riga 2)"/>
+<Property Name="PurchasingDocumentDeletionCode" Type="Edm.String" MaxLength="1" sap:display-format="UpperCase" sap:required-in-filter="false" sap:label="Codice canc." sap:quickinfo="Indicatore di cancellazione nel documento acquisti"/>
+<Property Name="ManufacturingOrder" Type="Edm.String" MaxLength="12" sap:display-format="UpperCase" sap:required-in-filter="false" sap:label="Ordine di produzione" sap:quickinfo="ID ordine di produzione"/>
+<Property Name="ManufacturingOrderText" Type="Edm.String" MaxLength="40" sap:required-in-filter="false" sap:label="Testo ordine" sap:quickinfo="Testo ordine di produzione"/>
+<Property Name="ManufacturingOrderType" Type="Edm.String" MaxLength="4" sap:display-format="UpperCase" sap:required-in-filter="false" sap:label="Tipo di ordine"/>
+<Property Name="IsMarkedForDeletion" Type="Edm.Boolean" sap:required-in-filter="false" sap:label="Flag di canc." sap:quickinfo="Flag di cancellazione"/>
+<Property Name="MaterialComponentIsMissing" Type="Edm.Boolean" sap:required-in-filter="false" sap:label="Parte mancante"/>
+<Property Name="CreationDate" Type="Edm.DateTime" Precision="0" sap:display-format="Date" sap:required-in-filter="false" sap:label="Data di cr. ordine" sap:quickinfo="Data di creazione ordine"/>
+<Property Name="CreatedByUser" Type="Edm.String" MaxLength="12" sap:display-format="UpperCase" sap:required-in-filter="false" sap:label="Autore" sap:quickinfo="Nome autore acquisizione"/>
+<Property Name="Product" Type="Edm.String" MaxLength="40" sap:display-format="UpperCase" sap:required-in-filter="false" sap:label="Prodotto" sap:quickinfo="Codice prodotto"/>
+<Property Name="MfgOrderPlannedStartDate" Type="Edm.DateTime" Precision="0" sap:display-format="Date" sap:required-in-filter="false" sap:label="Data inizio pian." sap:quickinfo="Data inizio pianificata per ordine di produzione"/>
+<Property Name="CompanyCode" Type="Edm.String" MaxLength="4" sap:display-format="UpperCase" sap:required-in-filter="false" sap:label="Società"/>
+<Property Name="MfgOrderScheduledStartDate" Type="Edm.DateTime" Precision="0" sap:display-format="Date" sap:required-in-filter="false" sap:label="Data inizio sched." sap:quickinfo="Data inizio schedulata per ordine di produzione"/>
+<Property Name="MfgOrderConfirmedEndDate" Type="Edm.DateTime" Precision="0" sap:display-format="Date" sap:required-in-filter="false" sap:label="Data fine confermata" sap:quickinfo="Data di fine confermata ordine di produzione"/>
+<Property Name="MfgOrderScheduledEndDate" Type="Edm.DateTime" Precision="0" sap:display-format="Date" sap:required-in-filter="false" sap:label="Data fine schedulata" sap:quickinfo="Data fine schedulata per ordine di produzione"/>
+</EntityType>
+<EntityContainer Name="ZZ1_I_UNION_SUBCONCTR_COMP_CDS_Entities" m:IsDefaultEntityContainer="true" sap:message-scope-supported="true" sap:supported-formats="atom json xlsx">
+<EntitySet Name="ZZ1_I_UNION_SUBCONCTR_COMP" EntityType="ZZ1_I_UNION_SUBCONCTR_COMP_CDS.ZZ1_I_UNION_SUBCONCTR_COMPType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1"/>
+</EntityContainer>
+<Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Core.SchemaVersion" String="1.0.0"/>
+<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="ZZ1_I_UNION_SUBCONCTR_COMP_CDS.ZZ1_I_UNION_SUBCONCTR_COMP_CDS_Entities">
+<Annotation Term="Common.ApplyMultiUnitBehaviorForSortingAndFiltering" Bool="true"/>
+</Annotations>
+<atom:link xmlns:atom="http://www.w3.org/2005/Atom" rel="self" href="http://lpappsvi.lp.corp:8000/sap/opu/odata/sap/ZZ1_I_UNION_SUBCONCTR_COMP_CDS/$metadata"/>
+<atom:link xmlns:atom="http://www.w3.org/2005/Atom" rel="latest-version" href="http://lpappsvi.lp.corp:8000/sap/opu/odata/sap/ZZ1_I_UNION_SUBCONCTR_COMP_CDS/$metadata"/>
+</Schema>
+</edmx:DataServices>
+</edmx:Edmx>

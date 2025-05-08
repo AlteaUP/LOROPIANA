@@ -72,7 +72,7 @@
       "destinations": true,
       "html5-repo": true,
       "[hybrid]": {
-        "auth": "dummy"
+        "auth": "xsuaa"
       },
       "[production]": {
         "auth": "xsuaa",
@@ -81,11 +81,25 @@
           "schema_evolution": "auto"
         }
       },
-      "[development]": {
-        "auth": "xsuaa",
-        "db": {
-          "kind": "sqlite",
-          "schema_evolution": "auto"
+      "ZZ1_I_SHIPPINGPOINT_CDS": {
+        "kind": "odata",
+        "model": "srv/EXTERNAL/ZZ1_I_SHIPPINGPOINT_CDS",
+        "forwardAuthToken": true,
+        "csrf": true,
+        "csrfInBatch": true,   
+        "[hybrid]": {
+          "credentials": {
+            "requestTimeout": 300000,
+            "destination": "S4HANA",            
+            "path": "/sap/opu/odata/sap/ZZ1_I_SHIPPINGPOINT_CDS"  
+          }
+        },             
+       "[production]": {
+          "credentials": {
+            "requestTimeout": 300000,
+            "destination": "S4HANA",            
+            "path": "/sap/opu/odata/sap/ZZ1_I_SHIPPINGPOINT_CDS"
+          }
         }
       },      
       "MM_PUR_SUBCONTRACTING_COCKPIT_SRV": {
@@ -95,21 +109,16 @@
         "csrfInBatch": true,
         "[hybrid]": {
           "credentials": {
-            "url": "http://lpappsvi.lp.corp:8000/sap/opu/odata/sap/MM_PUR_SUBCONTRACTING_COCKPIT_SRV",
-            "destination": "",
-            "authentication": "BasicAuthentication",
-            "username": "LILLAD",
-            "password": "LoroPiana2025!",
-            "headers": {},
-            "queries": {},
-            "sap-client": "300"
+            "requestTimeout": 300000,
+            "destination": "S4HANA",            
+            "path": "/sap/opu/odata/sap/MM_PUR_SUBCONTRACTING_COCKPIT_SRV"
           }
         },
         "[production]": {
           "credentials": {
             "requestTimeout": 300000,
             "destination": "S4HANA",            
-            "url": "/sap/opu/odata/sap/MM_PUR_SUBCONTRACTING_COCKPIT_SRV"
+            "path": "/sap/opu/odata/sap/MM_PUR_SUBCONTRACTING_COCKPIT_SRV"
           }
         }
       },
@@ -120,21 +129,16 @@
         "csrfInBatch": true,
         "[hybrid]": {
           "credentials": {
-            "url": "http://lpappsvi.lp.corp:8000/sap/opu/odata/sap/ZZ1_ZZ1_ZZ1_I_UNION_API_CDS",
-            "destination": "",
-            "authentication": "BasicAuthentication",
-            "username": "LILLAD",
-            "password": "LoroPiana2025!",
-            "headers": {},
-            "queries": {},
-            "sap-client": "300"
+            "requestTimeout": 300000,
+            "destination": "S4HANA",            
+            "path": "/sap/opu/odata/sap/ZZ1_ZZ1_ZZ1_I_UNION_API_CDS"
           }
         },
         "[production]": {
           "credentials": {
             "requestTimeout": 300000,
             "destination": "S4HANA",            
-            "url": "/sap/opu/odata/sap/ZZ1_ZZ1_ZZ1_I_UNION_API_CDS"
+            "path": "/sap/opu/odata/sap/ZZ1_ZZ1_ZZ1_I_UNION_API_CDS"
           }
         }
       },
@@ -145,21 +149,16 @@
         "csrfInBatch": true,
         "[hybrid]": {
           "credentials": {
-            "url": "http://lpappsvi.lp.corp:8000/sap/opu/odata/sap/ZZ1_I_COMBORDER_COMP_CDS",
-            "destination": "",
-            "authentication": "BasicAuthentication",
-            "username": "LILLAD",
-            "password": "LoroPiana2025!",
-            "headers": {},
-            "queries": {},
-            "sap-client": "300"
+            "requestTimeout": 300000,
+            "destination": "S4HANA",            
+            "path": "/sap/opu/odata/sap/ZZ1_I_COMBORDER_COMP_CDS"
           }
         },
         "[production]": {
           "credentials": {
             "requestTimeout": 300000,
             "destination": "S4HANA",            
-            "url": "/sap/opu/odata/sap/ZZ1_I_COMBORDER_COMP_CDS"
+            "path": "/sap/opu/odata/sap/ZZ1_I_COMBORDER_COMP_CDS"
           }
         }
       },
@@ -170,21 +169,16 @@
         "csrfInBatch": true,
         "[hybrid]": {
           "credentials": {
-            "url": "http://lpappsvi.lp.corp:8000/sap/opu/odata/sap/ZZ1_I_ARUN_BDBSSUMQTY_CDS_CDS",
-            "destination": "",
-            "authentication": "BasicAuthentication",
-            "username": "LILLAD",
-            "password": "LoroPiana2025!",
-            "headers": {},
-            "queries": {},
-            "sap-client": "300"
+            "requestTimeout": 300000,
+            "destination": "S4HANA",            
+            "path": "/sap/opu/odata/sap/ZZ1_I_ARUN_BDBSSUMQTY_CDS_CDS"
           }
         },
         "[production]": {
           "credentials": {
             "requestTimeout": 300000,
             "destination": "S4HANA",            
-            "url": "/sap/opu/odata/sap/ZZ1_I_ARUN_BDBSSUMQTY_CDS_CDS"
+            "path": "/sap/opu/odata/sap/ZZ1_I_ARUN_BDBSSUMQTY_CDS_CDS"
           }
         }
       },
@@ -195,21 +189,16 @@
         "csrfInBatch": true,
         "[hybrid]": {
           "credentials": {
-            "url": "http://lpappsvi.lp.corp:8000/sap/opu/odata/sap/OP_API_MATERIAL_DOCUMENT_SRV",
-            "destination": "",
-            "authentication": "BasicAuthentication",
-            "username": "LILLAD",
-            "password": "LoroPiana2025!",
-            "headers": {},
-            "queries": {},
-            "sap-client": "300"
+            "requestTimeout": 300000,
+            "destination": "S4HANA",            
+            "path": "/sap/opu/odata/sap/OP_API_MATERIAL_DOCUMENT_SRV"
           }
-        },
+        }, 
         "[production]": {
           "credentials": {
             "requestTimeout": 300000,
             "destination": "S4HANA",            
-            "url": "/sap/opu/odata/sap/OP_API_MATERIAL_DOCUMENT_SRV"
+            "path": "/sap/opu/odata/sap/OP_API_MATERIAL_DOCUMENT_SRV"
           }
         } 
       },
@@ -220,21 +209,16 @@
         "csrfInBatch": true,
         "[hybrid]": {
           "credentials": {
-            "url": "http://lpappsvi.lp.corp:8000/sap/opu/odata/sap/ZZ1_I_UNION_SUBCONCTR_COMP_CDS",
-            "destination": "",
-            "authentication": "BasicAuthentication",
-            "username": "LILLAD",
-            "password": "LoroPiana2025!",
-            "headers": {},
-            "queries": {},
-            "sap-client": "300"
+            "requestTimeout": 300000,
+            "destination": "S4HANA",            
+            "path": "/sap/opu/odata/sap/ZZ1_I_UNION_SUBCONCTR_COMP_CDS"
           }
-        },
+        }, 
         "[production]": {
           "credentials": {
             "requestTimeout": 300000,
             "destination": "S4HANA",            
-            "url": "/sap/opu/odata/sap/ZZ1_I_UNION_SUBCONCTR_COMP_CDS"
+            "path": "/sap/opu/odata/sap/ZZ1_I_UNION_SUBCONCTR_COMP_CDS"
           }
         } 
       },            
@@ -245,21 +229,16 @@
         "csrfInBatch": true,
         "[hybrid]": {
           "credentials": {
-            "url": "http://lpappsvi.lp.corp:8000/sap/opu/odata/sap/OP_API_MATERIAL_DOCUMENT_SRV",
-            "destination": "",
-            "authentication": "BasicAuthentication",
-            "username": "LILLAD",
-            "password": "LoroPiana2025!",
-            "headers": {},
-            "queries": {},
-            "sap-client": "300"
+            "requestTimeout": 300000,
+            "destination": "S4HANA",            
+            "path": "/sap/opu/odata/sap/OP_API_MATERIAL_DOCUMENT_SRV"
           }
-        },
+        },  
         "[production]": {
           "credentials": {
             "requestTimeout": 300000,
             "destination": "S4HANA",            
-            "url": "/sap/opu/odata/sap/OP_API_MATERIAL_DOCUMENT_SRV"
+            "path": "/sap/opu/odata/sap/OP_API_MATERIAL_DOCUMENT_SRV"
           }
         }        
       },
@@ -270,21 +249,16 @@
         "csrfInBatch": true,
         "[hybrid]": {
           "credentials": {
-            "url": "http://lpappsvi.lp.corp:8000/sap/opu/odata/sap/API_MATERIAL_STOCK_SRV",
-            "destination": "",
-            "authentication": "BasicAuthentication",
-            "username": "LILLAD",
-            "password": "LoroPiana2025!",
-            "headers": {},
-            "queries": {},
-            "sap-client": "300"
+            "requestTimeout": 300000,
+            "destination": "S4HANA",            
+            "path": "/sap/opu/odata/sap/API_MATERIAL_STOCK_SRV"
           }
         },
         "[production]": {
           "credentials": {
             "requestTimeout": 300000,
             "destination": "S4HANA",            
-            "url": "/sap/opu/odata/sap/API_MATERIAL_STOCK_SRV"
+            "path": "/sap/opu/odata/sap/API_MATERIAL_STOCK_SRV"
           }
         }
       },
@@ -295,21 +269,16 @@
         "csrfInBatch": true,
         "[hybrid]": {
           "credentials": {
-            "url": "http://lpappsvi.lp.corp:8000/sap/opu/odata/sap/API_MATERIAL_DOCUMENT_SRV",
-            "destination": "",
-            "authentication": "BasicAuthentication",
-            "username": "LILLAD",
-            "password": "LoroPiana2025!",
-            "headers": {},
-            "queries": {},
-            "sap-client": "300"
+            "requestTimeout": 300000,
+            "destination": "S4HANA",            
+            "path": "/sap/opu/odata/sap/API_MATERIAL_DOCUMENT_SRV"
           }
         },
         "[production]": {
           "credentials": {
             "requestTimeout": 300000,
             "destination": "S4HANA",            
-            "url": "/sap/opu/odata/sap/API_MATERIAL_DOCUMENT_SRV"
+            "path": "/sap/opu/odata/sap/API_MATERIAL_DOCUMENT_SRV"
           }
         }
       },
@@ -320,55 +289,22 @@
         "csrfInBatch": true,
         "[hybrid]": {
           "credentials": {
-            "url": "http://lpappsvi.lp.corp:8000/sap/opu/odata4/sap/zmpf_sb_delivery_create/srvd/sap/zmpf_sd_delivery_create/0001",
-            "authentication": "BasicAuthentication",
-            "username": "LILLAD",
-            "password": "LoroPiana2025!",
-            "headers": {},
-            "queries": {},
-            "sap-client": "300"
+            "requestTimeout": 300000,
+            "destination": "S4HANA",            
+            "path": "/sap/opu/odata4/sap/zmpf_sb_delivery_create/srvd/sap/zmpf_sd_delivery_create/0001"
           }
         },        
         "[production]": {
           "credentials": {
             "requestTimeout": 300000,
             "destination": "S4HANA",            
-            "url": "/sap/opu/odata4/sap/zmpf_sb_delivery_create/srvd/sap/zmpf_sd_delivery_create/0001"
+            "path": "/sap/opu/odata4/sap/zmpf_sb_delivery_create/srvd/sap/zmpf_sd_delivery_create/0001"
           }
         }
-      },
-     "ZZ1_I_SHIPPINGPOINT_CDS": {
-        "kind": "odata-v2",
-        "model": "srv/EXTERNAL/ZZ1_I_SHIPPINGPOINT_CDS",
-        "forwardAuthToken": true,
-        "csrf": true,
-        "csrfInBatch": true,        
-       "[production]": {
-          "credentials": {
-            "requestTimeout": 300000,
-            "destination": "S4HANA",            
-            "url": "/sap/opu/odata/sap/ZZ1_I_SHIPPINGPOINT_CDS"
-          }
-        },
-        "[hybrid]": {
-          "credentials": {
-            "requestTimeout": 300000,
-            "destination": "S4HANA",            
-            "url": "/sap/opu/odata/sap/ZZ1_I_SHIPPINGPOINT_CDS"
-          }
-        },
-        "[development]": {
-          "credentials": {
-            "requestTimeout": 300000,
-            "destination": "S4HANA",            
-            "url": "/sap/opu/odata/sap/ZZ1_I_SHIPPINGPOINT_CDS"
-          }
-        }   
-    }
+      }   
   }
 },
   "sapux": [
-
     "app/zsubcontractingcockpitapp5"    
   ]
 }

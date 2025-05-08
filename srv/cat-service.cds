@@ -135,3 +135,8 @@ service CatalogService {
 
     action GetMaterialStock(Object: TYPES.InputStockMaterialAPI) returns many TYPES.ResponseStockMaterialAPI;
 }
+
+annotate CatalogService with @requires :
+[
+    'authenticated-user'
+];

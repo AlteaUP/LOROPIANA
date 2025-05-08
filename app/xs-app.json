@@ -1,5 +1,5 @@
 {
-  "authenticationMethod": "none",
+  "authenticationMethod": "route",
   "routes": [
     {
       "source": "^/app/(.*)$",
@@ -17,7 +17,7 @@
       "target": "/odata/$1",
       "destination": "srv-api",
       "authenticationType": "xsuaa",
-      "csrfProtection": false
+      "csrfProtection": true
     }
   ]
 }

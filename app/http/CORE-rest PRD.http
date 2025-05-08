@@ -8,7 +8,7 @@
 # GET TOKEN - GET
 # @name getToken
 GET {{tokenUrl}}/?grant_type=client_credentials&response_type=token
-Authorization: Basic c2ItenN1YmNvbnRyYWN0aW5nX2NvY2twaXQtYXV0aC1zcnYhdDIxNjkyOjMyM2Y4MmI1LTEzOGYtNGE3Ny1hZmQ5LWQ5NTkwODBmNWNlMCRRbWtYY0xwdk1kRzU2OHZXRloyc2QxXzFMa2VvM3lhaTFhY21oTk5ESlFBPQ==
+Authorization: Basic c2ItenN1YmNvbnRyYWN0aW5nX2NvY2twaXQtYXV0aC1zcnYhdDIxNjkyOjMzYzU5ODEwLWMyYmItNGFkMC05ZGU0LWI3MDNjZDYwNjU2NCRySTluN1VTNTRlXzNvUUZ2bDVOYXZFY01ucUMzOG40cWgtVGZIaDdxTVU0PQ==
 
 ###
 @tokenValue = {{getToken.response.body.access_token}}
@@ -33,7 +33,7 @@ Authorization: Bearer {{tokenValue}}
 ### ------------------------------------------------------------------------
 # TEST SERVER DEV 
 # Authorization: Bearer {{tokenValue}} (sotto content type)
-GET {{serverDEV}}/odata/v4/catalog/ZZ1_I_ShippingPoint
+GET {{serverLocal}}/odata/v4/catalog/ZZ1_I_ShippingPoint
 Authorization: Bearer {{tokenValue}}
 
 ### ------------------------------------------------------------------------

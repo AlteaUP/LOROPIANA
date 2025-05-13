@@ -31,6 +31,8 @@
           <f:content>
             <Label text="{i18n>vstel}" />
             <Input id="shippingPointID" value="{Vstel}" required="true" showValueHelp="true" valueHelpRequest=".onValueHelpRequestShippingPoint" />
+            <Label text="{i18n>plannedGoodsMovDate}" />
+            <DatePicker id="WadakID" value="{Wadak}" />
           </f:content>
         </f:SimpleForm>
       	<Table id="selectedMaterialTableId"
@@ -47,11 +49,8 @@
                 <Column>
                     <Text text="{i18n>material}"/>
                 </Column>
-                <Column >
-                    <Text text="{i18n>batch}"/>
-                </Column>
                 <Column>
-                    <Text text="{i18n>stock}"/>
+                    <Text text="{i18n>batch}"/>
                 </Column>
                 <Column>
                     <Text text="{i18n>quantityToIssue}"/>
@@ -60,13 +59,16 @@
                     <Text text="{i18n>quantity}"/>
                 </Column>
                 <Column>
-                    <Text text="{i18n>totalWithdrawnQuantity}"/>
+                    <Text text="{i18n>qtyToBeConsumed}"/>
                 </Column>
                 <Column id="lgort1ID">
                     <Text text="{i18n>lgort1}"/>
                 </Column>
                 <Column id="lgort2ID">
                     <Text text="{i18n>lgort2}"/>
+                </Column>
+                <Column id="supplierID">
+                    <Text text="{i18n>supplier}"/>
                 </Column>
             </columns>
           <items>
@@ -81,8 +83,6 @@
                 <Input 
                   value="{Batch}" editable="false" />
                 <Input 
-                  value="{StockMaterial}" description="{BaseUnit}" editable="false" />
-                <Input 
                   value="{QtyToIssue}" description="{BaseUnit}" />
                 <Input 
                   value="{TotalConfdQtyForATPInBaseUoM}" description="{BaseUnit}" editable="false" />
@@ -92,6 +92,8 @@
                   value="{Lgort1}" editable="false" />
                 <Input 
                   value="{Lgort2}" editable="false" />
+                <Input 
+                  value="{Supplier}" editable="true" />
               </cells>
             </ColumnListItem>
           </items>

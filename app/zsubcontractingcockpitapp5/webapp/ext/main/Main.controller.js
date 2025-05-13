@@ -51,9 +51,15 @@ sap.ui.define(
                 mBindingParams.collectionBindingInfo.events = {
                     "dataReceived" : function(oEvent){
                         var aReceivedData = oEvent.getParameter('data');
+                        // gestione errore
+                        if(oEvent.mParameters.error !== undefined && oEvent.mParameters.error !== null){
+                            oController.openDialogMessageText(oEvent.mParameters.error.message , "E");
+                        }
                         },
                         //More event handling can be done here
                 };
+
+                //delete mBindingParams.collectionBindingInfo.parameters.$$getKeepAliveContext
             },
 
             onCreateMaterialDocuments: function(oEvent) {
@@ -136,11 +142,19 @@ sap.ui.define(
 
                     var dataToSend = []
                     var dataToSendObject = {}
+                    var objectToCreateMaterialDocument = {}
+                    var arrayToCreateMaterialDocument = []
+                    var found543 = false
                     for(var i=0; i<this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial.length; i++){
                         if(this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].requirementtype === "BB" && this.byId("ManualAccountingDialog").data("buttonPressed") === "factory"){ //&& this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].InventorySpecialStockType === 'O'){
                             //543
-
-                            var qtyInserted = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].QtyToIssue
+                            found543 = true
+                            var qtyInserted = ''
+                            if(this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].QtyToIssue !== "" && this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].QtyToIssue !== null && this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].QtyToIssue !== undefined && Number(this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].QtyToIssue > 0)){
+                                qtyInserted = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].QtyToIssue
+                            } else {
+                                qtyInserted = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].TotalWithdrawnQuantity
+                            }
 
                             // recupero array dei componenti
                             const oModel = oController.getView().getModel();
@@ -171,15 +185,15 @@ sap.ui.define(
                                 //oBusyDialog.close();
 
                                 // calcolo array da passare all'API di creazione documento materiale
-                                let objectToCreateMaterialDocument = {}
-                                let arrayToCreateMaterialDocument = []
+                                //let objectToCreateMaterialDocument = {}
+                                //let arrayToCreateMaterialDocument = []
                                 var totalQty = 0
-                                var remainingQty = 0
+                                var remainingQty = qtyInserted
                                 for(var y=0; y<arrayComponents.length; y++){
                                     if(totalQty <= Number(qtyInserted)){
                                         let qty = Number(arrayComponents[y].RequiredQuantity - arrayComponents[y].WithdrawnQuantity)
                                         for(var z=0; z<arrayStock.length; z++){    
-                                            if(qty > 0 && totalQty <= Number(qtyInserted)){                                    
+                                            if(qty > 0 && totalQty <= Number(qtyInserted) && Number(remainingQty) > 0){                                    
                                                 if(qty < Number(arrayStock[z].MatlWrhsStkQtyInMatlBaseUnit) && qty < Number(qtyInserted)){
                                                     objectToCreateMaterialDocument = {}
                                                     //objectToCreateMaterialDocument.Reservation = arrayComponents[y].Reservation
@@ -216,7 +230,9 @@ sap.ui.define(
                                                         } else {
                                                             objectToCreateMaterialDocument.Batch = arrayStock[z].Batch
                                                         }
-                                                        if(totalQty >= Number(arrayStock[z].MatlWrhsStkQtyInMatlBaseUnit)){
+                                                        if(Number(qtyInserted) <= Number(arrayStock[z].MatlWrhsStkQtyInMatlBaseUnit)){
+                                                            objectToCreateMaterialDocument.Quantity = qtyInserted
+                                                        } else if(totalQty >= Number(arrayStock[z].MatlWrhsStkQtyInMatlBaseUnit)){
                                                             objectToCreateMaterialDocument.Quantity = remainingQty                                                            
                                                         } else {
                                                             objectToCreateMaterialDocument.Quantity = Number(arrayStock[z].MatlWrhsStkQtyInMatlBaseUnit)
@@ -237,7 +253,8 @@ sap.ui.define(
                                                         remainingQty = Number(qtyInserted) - totalQty
                                                     }
                                                 }
-                                                if(Number(remainingQty) === 0){
+                                                // modifica DL - 07/05/2025, aggiungo controllo su array con almeno 1 elemento
+                                                if(Number(remainingQty) === 0 && arrayToCreateMaterialDocument.length > 0){
                                                     break
                                                 }
                                             }
@@ -249,23 +266,6 @@ sap.ui.define(
 
                                 console.log("finito di creare array")
 
-                                // chiamata API di creazione documento materiale
-                                const oModel3 = oController.getView().getModel();
-                                var oBindingContext2 = oModel3.bindContext("/CreateMaterialDocument(...)");
-
-                                await oBindingContext2.setParameter("Record", 
-                                    arrayToCreateMaterialDocument
-                                );
-                                oBindingContext2.execute().then((oResult) => {
-                                    oBusyDialog.close();
-                                    // TODO - gestione errore
-                                    //alert("Material Document Created!")
-                                    oController.openDialogMessageText("", "I");
-                                }).catch((oError) => {
-                                    oBusyDialog.close();
-                                    // TODO - gestione errore
-                                    oController.openDialogMessageText("", "E");
-                                });
                                 
                             }).catch((oError) => {
                                 oBusyDialog.close();
@@ -305,6 +305,10 @@ sap.ui.define(
                                 }
                                 dataToSendObject.Lfart = "ZHOD"
                             }
+                            dataToSendObject.Wadak = this.byId("WadakID").getValue()
+                            dataToSendObject.StorageLocation = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].StorageLocation
+                            dataToSendObject.AvaibilityQtyProdStorage = (this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].AvaibilityQtyProdStorage).toString()
+                            dataToSendObject.AvaibilityQtyDefaultStorage = (this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].AvaibilityQtyDefaultStorage).toString()
                             dataToSend.push(dataToSendObject)
                         }
                     }
@@ -349,19 +353,86 @@ sap.ui.define(
 
                         }
                     });*/
+
+                    // chiamata API di creazione documento materiale
+                    const oModel3 = oController.getView().getModel();
+                    var oBindingContext2 = oModel3.bindContext("/CreateMaterialDocument(...)");
+
+                    await oBindingContext2.setParameter("Record", 
+                        arrayToCreateMaterialDocument
+                    );
+
+                    if(arrayToCreateMaterialDocument.length > 0){
+                        oBindingContext2.execute().then((oResult) => {
+                            oBusyDialog.close();
+                            // TODO - gestione errore
+                            //alert("Material Document Created!")
+                            oController.openDialogMessageText("", "I");
+                        }).catch((oError) => {
+                            oBusyDialog.close();
+                            // TODO - gestione errore
+                            oController.openDialogMessageText(oError.error.message, "E");
+                            return
+                        });
+                    } else {
+                        if(found543){ 
+                            //MessageToast.show(oController.getResourceBundle().getText("noDataToSendforMaterialDocument"))
+                            oController.openDialogMessageText(oController.getResourceBundle().getText("noDataToSendforMaterialDocument"), "E");
+                        }
+                    }
+
+                    // modifica DL - 12/05/2025 - aggiungo controllo su Stock > 0, altrimenti non creiamo delivery
+                    var noDeliveryCreation = false
+                    if(this.byId("ManualAccountingDialog").data("buttonPressed") === "factory"){
+                        for(var s=0; s<dataToSend.length; s++){
+                            if(Number(dataToSend[s].AvaibilityQtyProdStorage) === 0){
+                                noDeliveryCreation = true
+                                break
+                            }
+                        }
+                    } else {
+                        for(var s=0; s<dataToSend.length; s++){
+                            if(Number(dataToSend[s].AvaibilityQtyDefaultStorage) === 0){
+                                noDeliveryCreation = true
+                                break
+                            }
+                        }
+                    }
+                    // modifica DL - 12/05/2025 - aggiungo controllo su Stock > 0, altrimenti non creiamo delivery - FINE
+
                     const oModel = oController.getView().getModel();
-                    const oBindingContext3 = oModel.bindContext("/CreateDelivery(...)");
+                    var oBindingContext3 = oModel.bindContext("/CreateDelivery(...)");
 
                     oBindingContext3.setParameter("Record", 
                         dataToSend
                     );
-                    oBindingContext3.execute().then((oResult) => {
+
+                    if(dataToSend.length > 0 && !noDeliveryCreation){
+                        if(!noDeliveryCreation){
+                            oBindingContext3.execute().then((oResult) => {
+                                var oContext = oBindingContext3.getBoundContext();                                 
+                                oBusyDialog.close();
+                                if(oContext.getObject().value.DeliveryItems !== undefined){
+                                    if(oContext.getObject().value.DeliveryItems[0].FlErr){
+                                        oController.openDialogMessageText(oContext.getObject().value.DeliveryItems[0].LogMess, "E");
+                                    } else {
+                                        oController.openDialogMessageText("", "I");
+                                    }
+                                } else {
+                                    oController.openDialogMessageText(oContext.getObject().value, "E");
+                                }
+                            }).catch((oError) => {
+                                oBusyDialog.close();
+                                oController.openDialogMessageText(oError.error.message, "E");
+                            });
+                        } else {
+                           oController.openDialogMessageText(oController.getResourceBundle().getText("noStockNoDelivery"), "E"); 
+                        }
+                    } else {
+                        //MessageToast.show(oController.getResourceBundle().getText("noDataToSend"))
+                        oController.openDialogMessageText(oController.getResourceBundle().getText("noDataToSend"), "E");
                         oBusyDialog.close();
-                        oController.openDialogMessageText("", "I");
-                    }).catch((oError) => {
-                        oBusyDialog.close();
-                        oController.openDialogMessageText("", "E");
-                    });
+                    }
 
                     oController.pManualNumberingDialog.close();
                 } else {

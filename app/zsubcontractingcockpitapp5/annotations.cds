@@ -1,16 +1,15 @@
 using from '../../srv/cat-service';
 
 annotate CatalogService.MainCds with @(
-    UI.SelectionFields #SF : [Material, CprodOrd, Plant, WorkCenterInternalID],
+    //UI.Aggregation.ApplySupported: {
+    //    UI.GroupableProperties: [
+    //    CprodOrd,
+    //    Material,
+    //    Supplier
+    //    ]
+    //},
+    UI.SelectionFields #SF : [Material, CprodOrd, Plant, WorkCenterInternalID, ManufacturingOrderType],
     UI.PresentationVariant : {    
-        SortOrder     : [{
-                Descending: true,
-                Property  : CprodOrd,
-            }, 
-        ],
-        GroupBy : [
-            Supplier
-        ],
         Visualizations: ['@UI.LineItem#tableMacro']
     },
     UI.DataPoint #radialChart : { 
@@ -68,8 +67,53 @@ annotate CatalogService.MainCds with @(
         },
         {
             $Type: 'UI.DataField',
+            Value: TotalRequiredQuantity,
+            Label: '{i18n>totReqQty}',
+            ![@HTML5.CssDefaults] : {
+                width : '5rem',
+            },
+        },
+        {
+            $Type : 'UI.DataFieldForAnnotation',
+            Target : '@UI.Chart#radialChart',
+            Label   : '{i18n>radialChart}',
+        },
+                {
+            $Type: 'UI.DataField',
+            Value: TotalConfdQtyForATPInBaseUoM,
+            Label: 'TotalConfdQtyForATPInBaseUoM',
+            ![@HTML5.CssDefaults] : {
+                width : '5rem',
+            },
+        },
+        {
+            $Type : 'UI.DataField',
+            Value: QtyToIssue,
+            Label: '{i18n>qtyToIssue}',
+            ![@HTML5.CssDefaults] : {
+                width : '5rem',
+            },
+        },
+                {
+            $Type : 'UI.DataField',
+            Value: TotalDeliveryQty,
+            Label: '{i18n>totalDelQty}',
+            ![@HTML5.CssDefaults] : {
+                width : '5rem',
+            },
+        },
+        {
+            $Type: 'UI.DataField',
+            Value: TotalWithdrawnQuantity,
+            Label: '{i18n>totalWithdrawnQuantity}',
+            ![@HTML5.CssDefaults] : {
+                width : '5rem',
+            },
+        },
+        {
+            $Type: 'UI.DataField',
             Value: StockMaterial,
-            Label: 'StockMaterial',
+            Label: '{i18n>stockMaterial}',
             ![@HTML5.CssDefaults] : {
                 width : '5rem',
             },
@@ -77,7 +121,7 @@ annotate CatalogService.MainCds with @(
         {
             $Type: 'UI.DataField',
             Value: StockMaterialUnitMeasure,
-            Label: 'StockMaterialUnitMeasure',
+            Label: '{i18n>stockMaterialUnitMeasure}',
             ![@HTML5.CssDefaults] : {
                 width : '3rem',
             },
@@ -99,50 +143,13 @@ annotate CatalogService.MainCds with @(
             },
         },
         {
-            $Type : 'UI.DataFieldForAnnotation',
-            Target : '@UI.Chart#radialChart',
-            Label   : '{i18n>radialChart}',
-        },
-        {
-            $Type : 'UI.DataField',
-            Value: QtyToIssue,
-            Label: '{i18n>qtyToIssue}',
-            ![@HTML5.CssDefaults] : {
-                width : '5rem',
-            },
-        },
-        {
-            $Type : 'UI.DataField',
-            Value: TotalDeliveryQty,
-            Label: '{i18n>totalDelQty}',
-            ![@HTML5.CssDefaults] : {
-                width : '5rem',
-            },
-        },
-        {
             $Type: 'UI.DataField',
             Value: TotalQuantityInEntryUnit,
             Label: 'TotalQuantityInEntryUnit',
             ![@HTML5.CssDefaults] : {
                 width : '5rem',
             },
-        },
-        {
-            $Type: 'UI.DataField',
-            Value: TotalRequiredQuantity,
-            Label: '{i18n>totReqQty}',
-            ![@HTML5.CssDefaults] : {
-                width : '5rem',
-            },
-        },
-        {
-            $Type: 'UI.DataField',
-            Value: TotalWithdrawnQuantity,
-            Label: 'TotalWithdrawnQuantity',
-            ![@HTML5.CssDefaults] : {
-                width : '5rem',
-            },
-        },
+        },        
         {
             $Type: 'UI.DataField',
             Value: Lgort1,
@@ -201,14 +208,6 @@ annotate CatalogService.MainCds with @(
         },
         {
             $Type: 'UI.DataField',
-            Value: TotalConfdQtyForATPInBaseUoM,
-            Label: 'TotalConfdQtyForATPInBaseUoM',
-            ![@HTML5.CssDefaults] : {
-                width : '5rem',
-            },
-        },
-        {
-            $Type: 'UI.DataField',
             Value: TotalProdAllocQty,
             Label: 'TotalProdAllocQty',
             ![@HTML5.CssDefaults] : {
@@ -244,21 +243,18 @@ annotate CatalogService.MainCds with @(
             Value: requirementtype,
             Label: '{i18n>requirementtype}',
             ![@UI.Hidden],
-        }
-        /*{
+        },
+        {
             $Type: 'UI.DataField',
             Value: Supplier,
             Label: '{i18n>supplier}',
             ![@HTML5.CssDefaults] : {
                 width : '5rem',
             },
-        }*/
+        }
     ]
 );
-annotate CatalogService.MainCds with {
-    Material @Common.Text : {
-        $value : to_ZZ1_C_PRODUCT.Product_Text,
-        ![@UI.TextArrangement] : #TextLast
-    }
-};
+
+
+
 

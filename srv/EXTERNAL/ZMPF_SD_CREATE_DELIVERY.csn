@@ -1,543 +1,559 @@
 {
- "meta": {
-  "creator": "cds-dk 8.7.3"
- },
- "$version": "2.0",
- "definitions": {
-  "ZMPF_SD_CREATE_DELIVERY.CreateDelHCbAControl": {
-   "kind": "type",
-   "@cds.external": true,
-   "elements": {
-    "DeliveryItems": {
-     "type": "cds.Boolean",
-     "notNull": true,
-     "@Common.Label": "Dynamic CbA-Control",
-     "@Common.Heading": "Dynamic Create by Association Control",
-     "@Common.QuickInfo": "Dynamic Create via Association Control Property"
-    }
-   }
-  },
-  "ZMPF_SD_CREATE_DELIVERY.EntityControl": {
-   "kind": "type",
-   "@cds.external": true,
-   "elements": {
-    "Deletable": {
-     "type": "cds.Boolean",
-     "notNull": true,
-     "@Common.Label": "Dyn. Method Control",
-     "@Common.Heading": "Dynamic Method Control",
-     "@Common.QuickInfo": "Dynamic Method Property"
+    "meta": {
+     "creator": "cds-dk 8.7.3"
     },
-    "Updatable": {
-     "type": "cds.Boolean",
-     "notNull": true,
-     "@Common.Label": "Dyn. Method Control",
-     "@Common.Heading": "Dynamic Method Control",
-     "@Common.QuickInfo": "Dynamic Method Property"
-    }
-   }
-  },
-  "ZMPF_SD_CREATE_DELIVERY": {
-   "kind": "service",
-   "@cds.external": true,
-   "@CodeList.UnitsOfMeasure": {
-    "Url": "../../../../default/iwbep/common/0001/$metadata",
-    "CollectionPath": "UnitsOfMeasure"
-   },
-   "@Aggregation.ApplySupported": {
-    "Transformations": [
-     "aggregate",
-     "groupby",
-     "filter"
-    ],
-    "Rollup": {
-     "#": "None"
-    }
-   },
-   "@Common.ApplyMultiUnitBehaviorForSortingAndFiltering": true,
-   "@Capabilities.FilterFunctions": [
-    "eq",
-    "ne",
-    "gt",
-    "ge",
-    "lt",
-    "le",
-    "and",
-    "or",
-    "contains",
-    "startswith",
-    "endswith",
-    "any",
-    "all"
-   ],
-   "@Capabilities.SupportedFormats": [
-    "application/json",
-    "application/pdf"
-   ],
-   "@PDF.Features": {
-    "DocumentDescriptionReference": "../../../../default/iwbep/common/0001/$metadata",
-    "DocumentDescriptionCollection": "MyDocumentDescriptions",
-    "ArchiveFormat": true,
-    "Border": true,
-    "CoverPage": true,
-    "FitToPage": true,
-    "FontName": true,
-    "FontSize": true,
-    "Margin": true,
-    "Padding": true,
-    "Signature": true,
-    "HeaderFooter": true,
-    "ResultSizeDefault": 20000,
-    "ResultSizeMaximum": 20000
-   },
-   "@Capabilities.KeyAsSegmentSupported": true,
-   "@Capabilities.AsynchronousRequestsSupported": true
-  },
-  "ZMPF_SD_CREATE_DELIVERY.CreateDelH": {
-   "kind": "entity",
-   "@cds.external": true,
-   "@cds.persistence.skip": true,
-   "elements": {
-    "vstel": {
-     "key": true,
-     "type": "cds.String",
-     "length": 4,
-     "notNull": true,
-     "@Core.Computed": true,
-     "@Common.IsUpperCase": true,
-     "@Common.Label": "Luogo sped.",
-     "@Common.Heading": "LgSp",
-     "@Common.QuickInfo": "Luogo di spedizione / Punto di accettazione merce"
-    },
-    "if_synchron": {
-     "type": "cds.String",
-     "length": 1,
-     "notNull": true,
-     "@Common.IsUpperCase": true,
-     "@Common.Label": "Lngh. carattere 1",
-     "@Common.QuickInfo": "Campo carattere di lunghezza 1"
-    },
-    "if_no_partner_dialog": {
-     "type": "cds.String",
-     "length": 1,
-     "notNull": true,
-     "@Common.IsUpperCase": true,
-     "@Common.Label": "Lngh. carattere 1",
-     "@Common.QuickInfo": "Campo carattere di lunghezza 1"
-    },
-    "no_commit": {
-     "type": "cds.String",
-     "length": 1,
-     "notNull": true,
-     "@Common.IsUpperCase": true,
-     "@Common.Label": "Lngh. carattere 1",
-     "@Common.QuickInfo": "Campo carattere di lunghezza 1"
-    },
-    "__CreateByAssociationControl": {
-     "type": "ZMPF_SD_CREATE_DELIVERY.CreateDelHCbAControl",
-     "@Core.Computed": true,
-     "@UI.HiddenFilter": true,
-     "@UI.Hidden": true,
-     "@Common.Label": "Dynamic CbA-Control",
-     "@Common.Heading": "Dynamic Create by Association Control",
-     "@Common.QuickInfo": "Dynamic Create via Association Control Property"
-    },
-    "__EntityControl": {
-     "type": "ZMPF_SD_CREATE_DELIVERY.EntityControl",
-     "@Core.Computed": true,
-     "@UI.HiddenFilter": true,
-     "@UI.Hidden": true,
-     "@Common.Label": "Dyn. Method Control",
-     "@Common.Heading": "Dynamic Method Control",
-     "@Common.QuickInfo": "Dynamic Method Property"
-    },
-    "DeliveryItems": {
-     "type": "cds.Composition",
-     "target": "ZMPF_SD_CREATE_DELIVERY.CreateDelI",
-     "cardinality": {
-      "max": "*"
-     },
-     "keys": [],
-     "@Common.Composition": true
-    }
-   },
-   "@Common.Label": "Custom entity per creazione consegna di testata",
-   "@Capabilities.NavigationRestrictions.RestrictedProperties": [
-    {
-     "NavigationProperty": {
-      "=": "DeliveryItems"
-     },
-     "InsertRestrictions": {
-      "Insertable": {
-       "=": "__CreateByAssociationControl/DeliveryItems"
+    "$version": "2.0",
+    "definitions": {
+     "ZMPF_SD_CREATE_DELIVERY.CreateDelHCbAControl": {
+      "kind": "type",
+      "@cds.external": true,
+      "elements": {
+       "DeliveryItems": {
+        "type": "cds.Boolean",
+        "notNull": true,
+        "@Common.Label": "Dynamic CbA-Control",
+        "@Common.Heading": "Dynamic Create by Association Control",
+        "@Common.QuickInfo": "Dynamic Create via Association Control Property"
+       }
       }
+     },
+     "ZMPF_SD_CREATE_DELIVERY.EntityControl": {
+      "kind": "type",
+      "@cds.external": true,
+      "elements": {
+       "Deletable": {
+        "type": "cds.Boolean",
+        "notNull": true,
+        "@Common.Label": "Dyn. Method Control",
+        "@Common.Heading": "Dynamic Method Control",
+        "@Common.QuickInfo": "Dynamic Method Property"
+       },
+       "Updatable": {
+        "type": "cds.Boolean",
+        "notNull": true,
+        "@Common.Label": "Dyn. Method Control",
+        "@Common.Heading": "Dynamic Method Control",
+        "@Common.QuickInfo": "Dynamic Method Property"
+       }
+      }
+     },
+     "ZMPF_SD_CREATE_DELIVERY": {
+      "kind": "service",
+      "@cds.external": true,
+      "@CodeList.UnitsOfMeasure": {
+       "Url": "../../../../default/iwbep/common/0001/$metadata",
+       "CollectionPath": "UnitsOfMeasure"
+      },
+      "@Aggregation.ApplySupported": {
+       "Transformations": [
+        "aggregate",
+        "groupby",
+        "filter"
+       ],
+       "Rollup": {
+        "#": "None"
+       }
+      },
+      "@Common.ApplyMultiUnitBehaviorForSortingAndFiltering": true,
+      "@Capabilities.FilterFunctions": [
+       "eq",
+       "ne",
+       "gt",
+       "ge",
+       "lt",
+       "le",
+       "and",
+       "or",
+       "contains",
+       "startswith",
+       "endswith",
+       "any",
+       "all"
+      ],
+      "@Capabilities.SupportedFormats": [
+       "application/json",
+       "application/pdf"
+      ],
+      "@PDF.Features": {
+       "DocumentDescriptionReference": "../../../../default/iwbep/common/0001/$metadata",
+       "DocumentDescriptionCollection": "MyDocumentDescriptions",
+       "ArchiveFormat": true,
+       "Border": true,
+       "CoverPage": true,
+       "FitToPage": true,
+       "FontName": true,
+       "FontSize": true,
+       "Margin": true,
+       "Padding": true,
+       "Signature": true,
+       "HeaderFooter": true,
+       "ResultSizeDefault": 20000,
+       "ResultSizeMaximum": 20000
+      },
+      "@Capabilities.KeyAsSegmentSupported": true,
+      "@Capabilities.AsynchronousRequestsSupported": true
+     },
+     "ZMPF_SD_CREATE_DELIVERY.CreateDelH": {
+      "kind": "entity",
+      "@cds.external": true,
+      "@cds.persistence.skip": true,
+      "elements": {
+       "vstel": {
+        "key": true,
+        "type": "cds.String",
+        "length": 4,
+        "notNull": true,
+        "@Core.Computed": true,
+        "@Common.IsUpperCase": true,
+        "@Common.Label": "Luogo sped.",
+        "@Common.Heading": "LgSp",
+        "@Common.QuickInfo": "Luogo di spedizione / Punto di accettazione merce"
+       },
+       "if_synchron": {
+        "type": "cds.String",
+        "length": 1,
+        "notNull": true,
+        "@Common.IsUpperCase": true,
+        "@Common.Label": "Lngh. carattere 1",
+        "@Common.QuickInfo": "Campo carattere di lunghezza 1"
+       },
+       "if_no_partner_dialog": {
+        "type": "cds.String",
+        "length": 1,
+        "notNull": true,
+        "@Common.IsUpperCase": true,
+        "@Common.Label": "Lngh. carattere 1",
+        "@Common.QuickInfo": "Campo carattere di lunghezza 1"
+       },
+       "no_commit": {
+        "type": "cds.String",
+        "length": 1,
+        "notNull": true,
+        "@Common.IsUpperCase": true,
+        "@Common.Label": "Lngh. carattere 1",
+        "@Common.QuickInfo": "Campo carattere di lunghezza 1"
+       },
+       "__CreateByAssociationControl": {
+        "type": "ZMPF_SD_CREATE_DELIVERY.CreateDelHCbAControl",
+        "@Core.Computed": true,
+        "@UI.HiddenFilter": true,
+        "@UI.Hidden": true,
+        "@Common.Label": "Dynamic CbA-Control",
+        "@Common.Heading": "Dynamic Create by Association Control",
+        "@Common.QuickInfo": "Dynamic Create via Association Control Property"
+       },
+       "__EntityControl": {
+        "type": "ZMPF_SD_CREATE_DELIVERY.EntityControl",
+        "@Core.Computed": true,
+        "@UI.HiddenFilter": true,
+        "@UI.Hidden": true,
+        "@Common.Label": "Dyn. Method Control",
+        "@Common.Heading": "Dynamic Method Control",
+        "@Common.QuickInfo": "Dynamic Method Property"
+       },
+       "DeliveryItems": {
+        "type": "cds.Composition",
+        "target": "ZMPF_SD_CREATE_DELIVERY.CreateDelI",
+        "cardinality": {
+         "max": "*"
+        },
+        "keys": [],
+        "@Common.Composition": true
+       }
+      },
+      "@Common.Label": "Custom entity per creazione consegna di testata",
+      "@Capabilities.NavigationRestrictions.RestrictedProperties": [
+       {
+        "NavigationProperty": {
+         "=": "DeliveryItems"
+        },
+        "InsertRestrictions": {
+         "Insertable": {
+          "=": "__CreateByAssociationControl/DeliveryItems"
+         }
+        }
+       }
+      ],
+      "@Capabilities.SearchRestrictions.Searchable": false,
+      "@Capabilities.FilterRestrictions.NonFilterableProperties": [
+       "__CreateByAssociationControl",
+       "__EntityControl"
+      ],
+      "@Capabilities.SortRestrictions.NonSortableProperties": [
+       "__CreateByAssociationControl",
+       "__EntityControl"
+      ],
+      "@Capabilities.ReadRestrictions.Readable": false,
+      "@Capabilities.DeleteRestrictions.Deletable": {
+       "=": "__EntityControl/Deletable"
+      },
+      "@Capabilities.UpdateRestrictions.Updatable": {
+       "=": "__EntityControl/Updatable"
+      },
+      "@Capabilities.UpdateRestrictions.QueryOptions.SelectSupported": true
+     },
+     "ZMPF_SD_CREATE_DELIVERY.CreateDelI": {
+      "kind": "entity",
+      "@cds.external": true,
+      "@cds.persistence.skip": true,
+      "elements": {
+       "vstel": {
+        "key": true,
+        "type": "cds.String",
+        "length": 4,
+        "notNull": true,
+        "@Core.Computed": true,
+        "@Common.IsUpperCase": true,
+        "@Common.Label": "Luogo sped.",
+        "@Common.Heading": "LgSp",
+        "@Common.QuickInfo": "Luogo di spedizione / Punto di accettazione merce"
+       },
+       "rfbel": {
+        "key": true,
+        "type": "cds.String",
+        "length": 10,
+        "notNull": true,
+        "@Core.Computed": true,
+        "@Common.IsUpperCase": true,
+        "@Common.Label": "Doc. di riferimento",
+        "@Common.Heading": "Doc. rif."
+       },
+       "rfpos": {
+        "key": true,
+        "type": "cds.String",
+        "length": 6,
+        "notNull": true,
+        "@Core.Computed": true,
+        "@Common.IsDigitSequence": true,
+        "@Common.Label": "Pos. riferimento",
+        "@Common.Heading": "PosRif",
+        "@Common.QuickInfo": "Posizione di riferimento"
+       },
+       "vkorg": {
+        "type": "cds.String",
+        "length": 4,
+        "notNull": true,
+        "@Common.IsUpperCase": true,
+        "@Common.Label": "Org. commerciale",
+        "@Common.Heading": "OrgC",
+        "@Common.QuickInfo": "Organizzazione commerciale"
+       },
+       "vtweg": {
+        "type": "cds.String",
+        "length": 2,
+        "notNull": true,
+        "@Common.IsUpperCase": true,
+        "@Common.Label": "Canale distribuzione",
+        "@Common.Heading": "CanD",
+        "@Common.QuickInfo": "Canale di distribuzione"
+       },
+       "spart": {
+        "type": "cds.String",
+        "length": 2,
+        "notNull": true,
+        "@Common.IsUpperCase": true,
+        "@Common.Label": "Settore merceologico",
+        "@Common.Heading": "SM"
+       },
+       "lfart": {
+        "type": "cds.String",
+        "length": 4,
+        "notNull": true,
+        "@Common.IsUpperCase": true,
+        "@Common.Label": "Tipo di consegna",
+        "@Common.Heading": "TpCns"
+       },
+       "dlvtp": {
+        "type": "cds.String",
+        "length": 2,
+        "notNull": true,
+        "@Common.IsUpperCase": true,
+        "@Common.Label": "Categoria consegna"
+       },
+       "kunwe": {
+        "type": "cds.String",
+        "length": 10,
+        "notNull": true,
+        "@Common.IsUpperCase": true,
+        "@Common.Label": "Destinatario merci",
+        "@Common.Heading": "Dest.merci"
+       },
+       "matnr": {
+        "type": "cds.String",
+        "length": 18,
+        "notNull": true,
+        "@Common.IsUpperCase": true,
+        "@Common.Label": "Materiale",
+        "@Common.QuickInfo": "Codice materiale"
+       },
+       "werks": {
+        "type": "cds.String",
+        "length": 4,
+        "notNull": true,
+        "@Common.IsUpperCase": true,
+        "@Common.Label": "Divisione",
+        "@Common.Heading": "Div."
+       },
+       "wadat": {
+        "type": "cds.Date",
+        "@Common.Label": "Data uscita merce",
+        "@Common.Heading": "Usc.merce"
+       },
+       "lfdat": {
+        "type": "cds.Date",
+        "@Common.Label": "Consegne (da/a)",
+        "@Common.Heading": "Dt.cons.",
+        "@Common.QuickInfo": "Data di consegna"
+       },
+       "lfimg": {
+        "type": "cds.Decimal",
+        "precision": 13,
+        "scale": 3,
+        "notNull": true,
+        "@Measures.Unit": {
+         "=": "meins"
+        },
+        "@Common.Label": "Q.tà di consegna",
+        "@Common.QuickInfo": "Quantità effettiva consegnata (in unità di vendita)"
+       },
+       "vrkme": {
+        "type": "cds.String",
+        "length": 3,
+        "notNull": true,
+        "@Common.IsUnit": true,
+        "@Common.Label": "UM di vendita",
+        "@Common.Heading": "UM",
+        "@Common.QuickInfo": "Unità di misura di vendita"
+       },
+       "meins": {
+        "type": "cds.String",
+        "length": 3,
+        "notNull": true,
+        "@Common.IsUnit": true,
+        "@Common.Label": "Unità misura base",
+        "@Common.Heading": "UMO",
+        "@Common.QuickInfo": "Unità di misura di base"
+       },
+       "lgort": {
+        "type": "cds.String",
+        "length": 4,
+        "notNull": true,
+        "@Common.IsUpperCase": true,
+        "@Common.Label": "Magazzino",
+        "@Common.Heading": "Mag."
+       },
+       "lifnr": {
+        "type": "cds.String",
+        "length": 10,
+        "notNull": true,
+        "@Common.IsUpperCase": true,
+        "@Common.Label": "Fornitore",
+        "@Common.QuickInfo": "Numero conto del fornitore"
+       },
+       "bwart": {
+        "type": "cds.String",
+        "length": 3,
+        "notNull": true,
+        "@Common.IsUpperCase": true,
+        "@Common.Label": "Tipo movimento",
+        "@Common.Heading": "TMv",
+        "@Common.QuickInfo": "Tipo movimento (gestione stock)"
+       },
+       "rblvs": {
+        "type": "cds.String",
+        "length": 3,
+        "notNull": true,
+        "@Common.IsDigitSequence": true,
+        "@Common.Label": "Tipo mov. rif. WM",
+        "@Common.Heading": "Rif",
+        "@Common.QuickInfo": "Tipo movimento di riferimento per WM da movimenti materiali"
+       },
+       "shkzg_um": {
+        "type": "cds.String",
+        "length": 1,
+        "notNull": true,
+        "@Common.IsUpperCase": true,
+        "@Common.Label": "ID registr. princ.",
+        "@Common.Heading": "ID reg. princ.",
+        "@Common.QuickInfo": "Indicatore: trasf. mat. stock in registrazione principale"
+       },
+       "ummat": {
+        "type": "cds.String",
+        "length": 18,
+        "notNull": true,
+        "@Common.IsUpperCase": true,
+        "@Common.Label": "Mat. destinazione",
+        "@Common.QuickInfo": "Materiale di destinazione/cedente"
+       },
+       "umwrk": {
+        "type": "cds.String",
+        "length": 4,
+        "notNull": true,
+        "@Common.IsUpperCase": true,
+        "@Common.Label": "Div. di destinazione",
+        "@Common.Heading": "Divisione",
+        "@Common.QuickInfo": "Divisione di destinazione/di provenienza"
+       },
+       "umlgo": {
+        "type": "cds.String",
+        "length": 4,
+        "notNull": true,
+        "@Common.IsUpperCase": true,
+        "@Common.Label": "Magazzino dest.",
+        "@Common.Heading": "Dest",
+        "@Common.QuickInfo": "Magazzino di destinazione/di provenienza"
+       },
+       "wadat_ist": {
+        "type": "cds.Date",
+        "@Common.Label": "Data eff. mov. merci",
+        "@Common.Heading": "Dta eff.UM",
+        "@Common.QuickInfo": "Data movimento merci effettiva"
+       },
+       "qplos": {
+        "type": "cds.String",
+        "length": 12,
+        "notNull": true,
+        "@Common.IsDigitSequence": true,
+        "@Common.Label": "Lotto di controllo",
+        "@Common.Heading": "Lotto contr.",
+        "@Common.QuickInfo": "Numero lotto di controllo"
+       },
+       "fobwa": {
+        "type": "cds.String",
+        "length": 3,
+        "notNull": true,
+        "@Common.IsUpperCase": true,
+        "@Common.Label": "Tipo movimento succ.",
+        "@Common.Heading": "TpMvS",
+        "@Common.QuickInfo": "Tipo movimento successivo"
+       },
+       "fo_dlvtp": {
+        "type": "cds.String",
+        "length": 2,
+        "notNull": true,
+        "@Common.IsUpperCase": true,
+        "@Common.Label": "Cat. consegna succ.",
+        "@Common.QuickInfo": "Categoria consegna succ."
+       },
+       "kzuml": {
+        "type": "cds.String",
+        "length": 1,
+        "notNull": true,
+        "@Common.IsUpperCase": true,
+        "@Common.Label": "Lngh. carattere 1",
+        "@Common.QuickInfo": "Campo carattere di lunghezza 1"
+       },
+       "lifex": {
+        "type": "cds.String",
+        "length": 35,
+        "notNull": true,
+        "@Common.Label": "Ident.esterno cons.",
+        "@Common.Heading": "Identificatore esterno consegna",
+        "@Common.QuickInfo": "Identificatore esterno della bolla di consegna"
+       },
+       "charg": {
+        "type": "cds.String",
+        "length": 10,
+        "notNull": true,
+        "@Common.IsUpperCase": true,
+        "@Common.Label": "Partita",
+        "@Common.QuickInfo": "Numero partita"
+       },
+       "umcha": {
+        "type": "cds.String",
+        "length": 10,
+        "notNull": true,
+        "@Common.IsUpperCase": true,
+        "@Common.Label": "Partita",
+        "@Common.QuickInfo": "Numero partita"
+       },
+       "FlErr": {
+        "type": "cds.Boolean",
+        "notNull": true,
+        "@Common.Label": "Indicatore",
+        "@Common.QuickInfo": "Indicatore generale"
+       },
+       "LogMess": {
+        "type": "cds.String",
+        "length": 220,
+        "notNull": true,
+        "@Common.IsUpperCase": true,
+        "@Common.Label": "Testo mess.",
+        "@Common.QuickInfo": "Testo messaggio"
+       },
+       "erdat": {
+        "type": "cds.Date",
+        "@Common.Label": "Data creazione",
+        "@Common.Heading": "Data cr.",
+        "@Common.QuickInfo": "Data di creazione del record"
+       },
+       "erzet": {
+        "type": "cds.Time",
+        "notNull": true,
+        "@Common.Label": "Ora",
+        "@Common.QuickInfo": "Ora acquisizione"
+       },
+       "vbeln": {
+        "type": "cds.String",
+        "length": 10,
+        "notNull": true,
+        "@Common.IsUpperCase": true,
+        "@Common.Label": "Consegna"
+       },
+       "kdmat": {
+        "type": "cds.String",
+        "length": 35,
+        "notNull": true,
+        "@Common.IsUpperCase": true,
+        "@Common.Label": "Materiale cliente",
+        "@Common.Heading": "Materiale del cliente",
+        "@Common.QuickInfo": "Materiale del cliente"
+       },
+       "__EntityControl": {
+        "type": "ZMPF_SD_CREATE_DELIVERY.EntityControl",
+        "@Core.Computed": true,
+        "@UI.HiddenFilter": true,
+        "@UI.Hidden": true,
+        "@Common.Label": "Dyn. Method Control",
+        "@Common.Heading": "Dynamic Method Control",
+        "@Common.QuickInfo": "Dynamic Method Property"
+       },
+       "parent": {
+        "type": "cds.Association",
+        "target": "ZMPF_SD_CREATE_DELIVERY.CreateDelH",
+        "cardinality": {
+         "max": 1
+        },
+        "keys": []
+       }
+      },
+      "@Common.Label": "Custom entity per creazione consegna POSIZIONE",
+      "@Capabilities.NavigationRestrictions.RestrictedProperties": [
+       {
+        "NavigationProperty": {
+         "=": "parent"
+        },
+        "InsertRestrictions": {
+         "Insertable": false
+        }
+       }
+      ],
+      "@Capabilities.SearchRestrictions.Searchable": false,
+      "@Capabilities.FilterRestrictions.NonFilterableProperties": [
+       "__EntityControl"
+      ],
+      "@Capabilities.SortRestrictions.NonSortableProperties": [
+       "__EntityControl"
+      ],
+      "@Capabilities.ReadRestrictions.Readable": false,
+      "@Capabilities.InsertRestrictions.Insertable": false,
+      "@Capabilities.DeleteRestrictions.Deletable": {
+       "=": "__EntityControl/Deletable"
+      },
+      "@Capabilities.UpdateRestrictions.Updatable": {
+       "=": "__EntityControl/Updatable"
+      },
+      "@Capabilities.UpdateRestrictions.QueryOptions.SelectSupported": true
      }
     }
-   ],
-   "@Capabilities.SearchRestrictions.Searchable": false,
-   "@Capabilities.FilterRestrictions.NonFilterableProperties": [
-    "__CreateByAssociationControl",
-    "__EntityControl"
-   ],
-   "@Capabilities.SortRestrictions.NonSortableProperties": [
-    "__CreateByAssociationControl",
-    "__EntityControl"
-   ],
-   "@Capabilities.ReadRestrictions.Readable": false,
-   "@Capabilities.DeleteRestrictions.Deletable": {
-    "=": "__EntityControl/Deletable"
-   },
-   "@Capabilities.UpdateRestrictions.Updatable": {
-    "=": "__EntityControl/Updatable"
-   },
-   "@Capabilities.UpdateRestrictions.QueryOptions.SelectSupported": true
-  },
-  "ZMPF_SD_CREATE_DELIVERY.CreateDelI": {
-   "kind": "entity",
-   "@cds.external": true,
-   "@cds.persistence.skip": true,
-   "elements": {
-    "vstel": {
-     "key": true,
-     "type": "cds.String",
-     "length": 4,
-     "notNull": true,
-     "@Core.Computed": true,
-     "@Common.IsUpperCase": true,
-     "@Common.Label": "Luogo sped.",
-     "@Common.Heading": "LgSp",
-     "@Common.QuickInfo": "Luogo di spedizione / Punto di accettazione merce"
-    },
-    "rfbel": {
-     "key": true,
-     "type": "cds.String",
-     "length": 10,
-     "notNull": true,
-     "@Core.Computed": true,
-     "@Common.IsUpperCase": true,
-     "@Common.Label": "Doc. di riferimento",
-     "@Common.Heading": "Doc. rif."
-    },
-    "rfpos": {
-     "key": true,
-     "type": "cds.String",
-     "length": 6,
-     "notNull": true,
-     "@Core.Computed": true,
-     "@Common.IsDigitSequence": true,
-     "@Common.Label": "Pos. riferimento",
-     "@Common.Heading": "PosRif",
-     "@Common.QuickInfo": "Posizione di riferimento"
-    },
-    "vkorg": {
-     "type": "cds.String",
-     "length": 4,
-     "notNull": true,
-     "@Common.IsUpperCase": true,
-     "@Common.Label": "Org. commerciale",
-     "@Common.Heading": "OrgC",
-     "@Common.QuickInfo": "Organizzazione commerciale"
-    },
-    "vtweg": {
-     "type": "cds.String",
-     "length": 2,
-     "notNull": true,
-     "@Common.IsUpperCase": true,
-     "@Common.Label": "Canale distribuzione",
-     "@Common.Heading": "CanD",
-     "@Common.QuickInfo": "Canale di distribuzione"
-    },
-    "spart": {
-     "type": "cds.String",
-     "length": 2,
-     "notNull": true,
-     "@Common.IsUpperCase": true,
-     "@Common.Label": "Settore merceologico",
-     "@Common.Heading": "SM"
-    },
-    "lfart": {
-     "type": "cds.String",
-     "length": 4,
-     "notNull": true,
-     "@Common.IsUpperCase": true,
-     "@Common.Label": "Tipo di consegna",
-     "@Common.Heading": "TpCns"
-    },
-    "dlvtp": {
-     "type": "cds.String",
-     "length": 2,
-     "notNull": true,
-     "@Common.IsUpperCase": true,
-     "@Common.Label": "Categoria consegna"
-    },
-    "kunwe": {
-     "type": "cds.String",
-     "length": 10,
-     "notNull": true,
-     "@Common.IsUpperCase": true,
-     "@Common.Label": "Destinatario merci",
-     "@Common.Heading": "Dest.merci"
-    },
-    "matnr": {
-     "type": "cds.String",
-     "length": 18,
-     "notNull": true,
-     "@Common.IsUpperCase": true,
-     "@Common.Label": "Materiale",
-     "@Common.QuickInfo": "Codice materiale"
-    },
-    "werks": {
-     "type": "cds.String",
-     "length": 4,
-     "notNull": true,
-     "@Common.IsUpperCase": true,
-     "@Common.Label": "Divisione",
-     "@Common.Heading": "Div."
-    },
-    "wadat": {
-     "type": "cds.Date",
-     "@Common.Label": "Data uscita merce",
-     "@Common.Heading": "Usc.merce"
-    },
-    "lfdat": {
-     "type": "cds.Date",
-     "@Common.Label": "Consegne (da/a)",
-     "@Common.Heading": "Dt.cons.",
-     "@Common.QuickInfo": "Data di consegna"
-    },
-    "lfimg": {
-     "type": "cds.Decimal",
-     "precision": 13,
-     "scale": 3,
-     "notNull": true,
-     "@Measures.Unit": {
-      "=": "meins"
-     },
-     "@Common.Label": "Q.tà di consegna",
-     "@Common.QuickInfo": "Quantità effettiva consegnata (in unità di vendita)"
-    },
-    "vrkme": {
-     "type": "cds.String",
-     "length": 3,
-     "notNull": true,
-     "@Common.IsUnit": true,
-     "@Common.Label": "UM di vendita",
-     "@Common.Heading": "UM",
-     "@Common.QuickInfo": "Unità di misura di vendita"
-    },
-    "meins": {
-     "type": "cds.String",
-     "length": 3,
-     "notNull": true,
-     "@Common.IsUnit": true,
-     "@Common.Label": "Unità misura base",
-     "@Common.Heading": "UMO",
-     "@Common.QuickInfo": "Unità di misura di base"
-    },
-    "lgort": {
-     "type": "cds.String",
-     "length": 4,
-     "notNull": true,
-     "@Common.IsUpperCase": true,
-     "@Common.Label": "Magazzino",
-     "@Common.Heading": "Mag."
-    },
-    "lifnr": {
-     "type": "cds.String",
-     "length": 10,
-     "notNull": true,
-     "@Common.IsUpperCase": true,
-     "@Common.Label": "Fornitore",
-     "@Common.QuickInfo": "Numero conto del fornitore"
-    },
-    "bwart": {
-     "type": "cds.String",
-     "length": 3,
-     "notNull": true,
-     "@Common.IsUpperCase": true,
-     "@Common.Label": "Tipo movimento",
-     "@Common.Heading": "TMv",
-     "@Common.QuickInfo": "Tipo movimento (gestione stock)"
-    },
-    "rblvs": {
-     "type": "cds.String",
-     "length": 3,
-     "notNull": true,
-     "@Common.IsDigitSequence": true,
-     "@Common.Label": "Tipo mov. rif. WM",
-     "@Common.Heading": "Rif",
-     "@Common.QuickInfo": "Tipo movimento di riferimento per WM da movimenti materiali"
-    },
-    "shkzg_um": {
-     "type": "cds.String",
-     "length": 1,
-     "notNull": true,
-     "@Common.IsUpperCase": true,
-     "@Common.Label": "ID registr. princ.",
-     "@Common.Heading": "ID reg. princ.",
-     "@Common.QuickInfo": "Indicatore: trasf. mat. stock in registrazione principale"
-    },
-    "ummat": {
-     "type": "cds.String",
-     "length": 18,
-     "notNull": true,
-     "@Common.IsUpperCase": true,
-     "@Common.Label": "Mat. destinazione",
-     "@Common.QuickInfo": "Materiale di destinazione/cedente"
-    },
-    "umwrk": {
-     "type": "cds.String",
-     "length": 4,
-     "notNull": true,
-     "@Common.IsUpperCase": true,
-     "@Common.Label": "Div. di destinazione",
-     "@Common.Heading": "Divisione",
-     "@Common.QuickInfo": "Divisione di destinazione/di provenienza"
-    },
-    "umlgo": {
-     "type": "cds.String",
-     "length": 4,
-     "notNull": true,
-     "@Common.IsUpperCase": true,
-     "@Common.Label": "Magazzino dest.",
-     "@Common.Heading": "Dest",
-     "@Common.QuickInfo": "Magazzino di destinazione/di provenienza"
-    },
-    "wadat_ist": {
-     "type": "cds.Date",
-     "@Common.Label": "Data eff. mov. merci",
-     "@Common.Heading": "Dta eff.UM",
-     "@Common.QuickInfo": "Data movimento merci effettiva"
-    },
-    "qplos": {
-     "type": "cds.String",
-     "length": 12,
-     "notNull": true,
-     "@Common.IsDigitSequence": true,
-     "@Common.Label": "Lotto di controllo",
-     "@Common.Heading": "Lotto contr.",
-     "@Common.QuickInfo": "Numero lotto di controllo"
-    },
-    "fobwa": {
-     "type": "cds.String",
-     "length": 3,
-     "notNull": true,
-     "@Common.IsUpperCase": true,
-     "@Common.Label": "Tipo movimento succ.",
-     "@Common.Heading": "TpMvS",
-     "@Common.QuickInfo": "Tipo movimento successivo"
-    },
-    "fo_dlvtp": {
-     "type": "cds.String",
-     "length": 2,
-     "notNull": true,
-     "@Common.IsUpperCase": true,
-     "@Common.Label": "Cat. consegna succ.",
-     "@Common.QuickInfo": "Categoria consegna succ."
-    },
-    "kzuml": {
-     "type": "cds.String",
-     "length": 1,
-     "notNull": true,
-     "@Common.IsUpperCase": true,
-     "@Common.Label": "Lngh. carattere 1",
-     "@Common.QuickInfo": "Campo carattere di lunghezza 1"
-    },
-    "lifex": {
-     "type": "cds.String",
-     "length": 35,
-     "notNull": true,
-     "@Common.Label": "Ident.esterno cons.",
-     "@Common.Heading": "Identificatore esterno consegna",
-     "@Common.QuickInfo": "Identificatore esterno della bolla di consegna"
-    },
-    "charg": {
-     "type": "cds.String",
-     "length": 10,
-     "notNull": true,
-     "@Common.IsUpperCase": true,
-     "@Common.Label": "Partita",
-     "@Common.QuickInfo": "Numero partita"
-    },
-    "umcha": {
-     "type": "cds.String",
-     "length": 10,
-     "notNull": true,
-     "@Common.IsUpperCase": true,
-     "@Common.Label": "Partita",
-     "@Common.QuickInfo": "Numero partita"
-    },
-    "FlErr": {
-     "type": "cds.Boolean",
-     "notNull": true,
-     "@Common.Label": "Indicatore",
-     "@Common.QuickInfo": "Indicatore generale"
-    },
-    "LogMess": {
-     "type": "cds.String",
-     "length": 220,
-     "notNull": true,
-     "@Common.IsUpperCase": true,
-     "@Common.Label": "Testo mess.",
-     "@Common.QuickInfo": "Testo messaggio"
-    },
-    "erdat": {
-     "type": "cds.Date",
-     "@Common.Label": "Data creazione",
-     "@Common.Heading": "Data cr.",
-     "@Common.QuickInfo": "Data di creazione del record"
-    },
-    "erzet": {
-     "type": "cds.Time",
-     "notNull": true,
-     "@Common.Label": "Ora",
-     "@Common.QuickInfo": "Ora acquisizione"
-    },
-    "__EntityControl": {
-     "type": "ZMPF_SD_CREATE_DELIVERY.EntityControl",
-     "@Core.Computed": true,
-     "@UI.HiddenFilter": true,
-     "@UI.Hidden": true,
-     "@Common.Label": "Dyn. Method Control",
-     "@Common.Heading": "Dynamic Method Control",
-     "@Common.QuickInfo": "Dynamic Method Property"
-    },
-    "parent": {
-     "type": "cds.Association",
-     "target": "ZMPF_SD_CREATE_DELIVERY.CreateDelH",
-     "cardinality": {
-      "max": 1
-     },
-     "keys": []
-    }
-   },
-   "@Common.Label": "Custom entity per creazione consegna POSIZIONE",
-   "@Capabilities.NavigationRestrictions.RestrictedProperties": [
-    {
-     "NavigationProperty": {
-      "=": "parent"
-     },
-     "InsertRestrictions": {
-      "Insertable": false
-     }
-    }
-   ],
-   "@Capabilities.SearchRestrictions.Searchable": false,
-   "@Capabilities.FilterRestrictions.NonFilterableProperties": [
-    "__EntityControl"
-   ],
-   "@Capabilities.SortRestrictions.NonSortableProperties": [
-    "__EntityControl"
-   ],
-   "@Capabilities.ReadRestrictions.Readable": false,
-   "@Capabilities.InsertRestrictions.Insertable": false,
-   "@Capabilities.DeleteRestrictions.Deletable": {
-    "=": "__EntityControl/Deletable"
-   },
-   "@Capabilities.UpdateRestrictions.Updatable": {
-    "=": "__EntityControl/Updatable"
-   },
-   "@Capabilities.UpdateRestrictions.QueryOptions.SelectSupported": true
-  }
- }
-}
+   }

@@ -43,13 +43,20 @@ module.exports = cds.service.impl(async function (srv) {
         }
 
         var data = await cdsView.tx(request).run(request.query);
+        //var data = await cdsView.tx(request).run(SELECT.from(cdsView));
+
+        // modifica 09/05/2025 - elimino record con combined order vuoto
+        data = data.filter(item => item.CprodOrd !== "");
 
         // elimino record con requirementtype = 'BB' and supplier empty
-        for(var g=0; g<data.length; g++){
+        /*for(var g=0; g<data.length; g++){
             if(data[g].requirementtype === 'BB' && data[g].Supplier === ''){
                 data.splice(g,1)
             }
-        }
+        }*/
+        data = data.filter(item => {
+            return !(item.requirementtype === 'BB' && item.Supplier === '');
+        });
 
         console.log("data length "+data.length)
 
@@ -125,9 +132,9 @@ module.exports = cds.service.impl(async function (srv) {
             // aggrego per batch
             if(dataBDBS !== null && dataBDBS !== undefined){
                 if(dataBDBS.length > 0){
-                    var dataBDBSByBatch = dataBDBS.reduce((acc, { Batch, TotalAllocQty, StorageLocation }) => {
-                        acc[Batch] = acc[Batch] || { Batch, TotalAllocQty: 0, StorageLocation };
-                        acc[Batch].TotalAllocQty += Number(TotalAllocQty);
+                    var dataBDBSByBatch = dataBDBS.reduce((acc, { Batch, TotalAllocQty, StorageLocation, Material }) => {
+                        acc[Batch+Material] = acc[Batch+Material] || { Batch, TotalAllocQty: 0, StorageLocation, Material };
+                        acc[Batch+Material].TotalAllocQty += Number(TotalAllocQty);
                         return acc;  
                     }, {});
                 }
@@ -140,11 +147,11 @@ module.exports = cds.service.impl(async function (srv) {
                         var objectBatch = {}
                         var objectdataBDBS = {}
                         objectdataBDBS = arrayDataQtyBdbs.find((o) => o.Batch === dataBDBS[j].Batch);
-                        if(dataBDBSByBatch[dataBDBS[j].Batch] !== undefined && objectdataBDBS === undefined){
+                        if(dataBDBSByBatch[dataBDBS[j].Batch+dataBDBS[j].Material] !== undefined && objectdataBDBS === undefined){
                             objectBatch.Batch = dataBDBS[j].Batch
                             objectBatch.Material = dataBDBS[j].Material
-                            objectBatch.TotalAllocQty = dataBDBSByBatch[dataBDBS[j].Batch].TotalAllocQty
-                            objectBatch.StorageLocation = dataBDBSByBatch[dataBDBS[j].Batch].StorageLocation
+                            objectBatch.TotalAllocQty = dataBDBSByBatch[dataBDBS[j].Batch+dataBDBS[j].Material].TotalAllocQty
+                            objectBatch.StorageLocation = dataBDBSByBatch[dataBDBS[j].Batch+dataBDBS[j].Material].StorageLocation
                             arrayDataQtyBdbs.push(objectBatch)
                         }
 
@@ -170,9 +177,9 @@ module.exports = cds.service.impl(async function (srv) {
             // aggrego per batch
             if(dataSumQtyDelivery !== null && dataSumQtyDelivery !== undefined){
                 if(dataSumQtyDelivery.length > 0){
-                    var dataSumQtyDeliveryByBatch = dataSumQtyDelivery.reduce((acc, { Batch, TotDeliveryQty, StorLoc }) => {
-                        acc[Batch] = acc[Batch] || { Batch, TotDeliveryQty: 0, StorLoc };
-                        acc[Batch].TotDeliveryQty += Number(TotDeliveryQty);
+                    var dataSumQtyDeliveryByBatch = dataSumQtyDelivery.reduce((acc, { Batch, TotDeliveryQty, StorLoc, Material }) => {
+                        acc[Batch+Material] = acc[Batch+Material] || { Batch, TotDeliveryQty: 0, StorLoc, Material };
+                        acc[Batch+Material].TotDeliveryQty += Number(TotDeliveryQty);
                         return acc;  
                     }, {});
                 }
@@ -185,11 +192,11 @@ module.exports = cds.service.impl(async function (srv) {
                         var objectSumQtyDelivery = {}
                         var objectdataSumQtyDelivery = {}
                         objectdataSumQtyDelivery = arrayDataSumQtyDelivery.find((o) => o.Batch === dataSumQtyDelivery[s].Batch);
-                        if(dataSumQtyDeliveryByBatch[dataSumQtyDelivery[s].Batch] !== undefined && objectdataSumQtyDelivery === undefined){
+                        if(dataSumQtyDeliveryByBatch[dataSumQtyDelivery[s].Batch+dataSumQtyDelivery[s].Material] !== undefined && objectdataSumQtyDelivery === undefined){
                             objectSumQtyDelivery.Batch = dataSumQtyDelivery[s].Batch
                             objectSumQtyDelivery.Material = dataSumQtyDelivery[s].Material
-                            objectSumQtyDelivery.TotDeliveryQty = dataSumQtyDeliveryByBatch[dataSumQtyDelivery[s].Batch].TotDeliveryQty
-                            objectSumQtyDelivery.StorageLocation = dataSumQtyDeliveryByBatch[dataSumQtyDelivery[s].Batch].StorLoc
+                            objectSumQtyDelivery.TotDeliveryQty = dataSumQtyDeliveryByBatch[dataSumQtyDelivery[s].Batch+dataSumQtyDelivery[s].Material].TotDeliveryQty
+                            objectSumQtyDelivery.StorageLocation = dataSumQtyDeliveryByBatch[dataSumQtyDelivery[s].Batch+dataSumQtyDelivery[s].Material].StorLoc
                             arrayDataSumQtyDelivery.push(objectSumQtyDelivery)
                         }
 
@@ -332,10 +339,10 @@ module.exports = cds.service.impl(async function (srv) {
                         for(var v=0; v<arrayStockOrderWithoutBatchAvaibilityStockO.length; v++){
                             sumStockAvaibilityStockO = Number(sumStockAvaibilityStockO) + Number(arrayStockOrderWithoutBatchAvaibilityStockO[v].MatlWrhsStkQtyInMatlBaseUnit)
                         }
-                        if(objectDataQtyBdbs !== undefined && objectDataQtyBdbs !== null && objectDataQtyBdbs !== ""){
-                            data[z].StockMaterial =  Number(sumStock) - Number(objectDataQtyBdbs.TotalAllocQty) + Number(data[z].TotalDefaultAllocQty)
-                            data[z].TotalAllocQtyCustom = Number(objectDataQtyBdbs.TotalAllocQty)
-                            data[z].AvaibilityQtyDefaultStorage = Number(sumStockAvaibility) - Number(objectDataQtyBdbs.TotalAllocQty) + Number(data[z].TotalDefaultAllocQty)                            
+                        if(objectDataQtyBdbsLgort1 !== undefined && objectDataQtyBdbsLgort1 !== null && objectDataQtyBdbsLgort1 !== ""){
+                            data[z].StockMaterial =  Number(sumStock) - Number(objectDataQtyBdbsLgort1.TotalAllocQty) + Number(data[z].TotalDefaultAllocQty)
+                            data[z].TotalAllocQtyCustom = Number(objectDataQtyBdbsLgort1.TotalAllocQty)
+                            data[z].AvaibilityQtyDefaultStorage = Number(sumStockAvaibility) - Number(objectDataQtyBdbsLgort1.TotalAllocQty) + Number(data[z].TotalDefaultAllocQty)                            
                         } else {
                             data[z].StockMaterial =  Number(sumStock) + Number(data[z].TotalDefaultAllocQty)
                             data[z].TotalAllocQtyCustom = 0
@@ -381,6 +388,10 @@ module.exports = cds.service.impl(async function (srv) {
                     }
                 }
                 data[z].StockMaterial = data[z].StockMaterial.toFixed(3)
+                // DL - 29/04/2025: modifico campo Prod Storage con fornitore in caso di lavorazione esterna
+                if(data[z].requirementtype === 'BB'){
+                    data[z].Lgort2 = data[z].Supplier
+                }
                 //data[z].SupplierWithDescription = data[z].Supplier + ' - ' + data[z].BPSupplierName
             }
 
@@ -475,7 +486,7 @@ module.exports = cds.service.impl(async function (srv) {
             
         var payload = {
             "PostingDate": postingDate+"T00:00:00",
-            //"DocumentDate": postingDate+"T00:00:00",
+            //"DocumentDate": "2025-04-22T00:00:00",
             "GoodsMovementCode": "03",
             //"ReferenceDocument": Documents[0].CprodOrd,
             "to_MaterialDocumentItem": documentItemArray
@@ -484,8 +495,11 @@ module.exports = cds.service.impl(async function (srv) {
         try {
 
             console.log("SUCCESSO!")
+
+            let callCreate = apiMaterialDocumentCreate.tx(req).post("/A_MaterialDocumentHeader", payload)        
+            console.log("Risultato chiamata " + JSON.stringify(callCreate))  
             
-            return apiMaterialDocumentCreate.tx(req).post("/A_MaterialDocumentHeader", payload)                 
+            //return apiMaterialDocumentCreate.tx(req).post("/A_MaterialDocumentHeader", payload)                 
 
         } catch (error) {
 
@@ -524,10 +538,13 @@ module.exports = cds.service.impl(async function (srv) {
         var documentItemArray = []
         var documentItemObject = {}
         var vstel = ""
+        var lfdat = ""
+        var lfdatFormatted = ""
         for(var y=0; y<DocumentsBySupplier.length; y++){
             documentItemArray = []
             for(var z=0; z<DocumentsBySupplier[y].length; z++){
                 vstel = DocumentsBySupplier[0][0].Vstel
+                lfdat = DocumentsBySupplier[0][0].Wadak                
                 documentItemObject = {}
                 documentItemObject.rfbel = "1"
                 documentItemObject.rfpos = z.toString()
@@ -539,7 +556,13 @@ module.exports = cds.service.impl(async function (srv) {
                 documentItemObject.matnr = DocumentsBySupplier[y][z].Material
                 documentItemObject.werks = DocumentsBySupplier[y][z].Plant
                 documentItemObject.wadat = postingDate
-                documentItemObject.lfdat = postingDate
+                if(lfdat !== null && lfdat !== undefined && lfdat !== ""){
+                    var yearLfdat = "20"+lfdat.split("/")[2]
+                    lfdatFormatted = yearLfdat + "-" + lfdat.split("/")[1] + "-" + lfdat.split("/")[0]
+                    documentItemObject.lfdat = lfdatFormatted
+                } else {
+                    documentItemObject.lfdat = postingDate
+                }
                 documentItemObject.lfimg = Number(DocumentsBySupplier[y][z].Quantity)
                 documentItemObject.vrkme = DocumentsBySupplier[y][z].UnitMeasure
                 documentItemObject.meins = DocumentsBySupplier[y][z].UnitMeasure
@@ -550,7 +573,7 @@ module.exports = cds.service.impl(async function (srv) {
                     documentItemObject.shkzg_um = "1"
                     documentItemObject.ummat = DocumentsBySupplier[y][z].Material
                     documentItemObject.umwrk = DocumentsBySupplier[y][z].Plant
-                    documentItemObject.umlgo = "K1RP" // da SOSTITUIRE con StorageLocation
+                    documentItemObject.umlgo = DocumentsBySupplier[y][z].StorageLocation //"K1RP" 
                     if(DocumentsBySupplier[y][z].Bwart === '313'){
                         documentItemObject.fobwa = "315"
                     }              
@@ -566,10 +589,27 @@ module.exports = cds.service.impl(async function (srv) {
                     documentItemObject.lifnr = DocumentsBySupplier[y][z].Supplier
                     
                 }
-                documentItemObject.lifex = DocumentsBySupplier[y][z].CprodOrd
-                //documentItemObject.kdmat = DocumentsBySupplier[y][z].CprodOrd
+                //documentItemObject.lifex = DocumentsBySupplier[y][z].CprodOrd
+                documentItemObject.kdmat = DocumentsBySupplier[y][z].CprodOrd
                 documentItemObject.charg = DocumentsBySupplier[y][z].Batch
                 documentItemObject.wadat_ist = postingDate
+                /*if(DocumentsBySupplier[y][z].Wadak !== undefined && DocumentsBySupplier[y][z].Wadak !== null && DocumentsBySupplier[y][z].Wadak !== ""){
+                    var goodMovDate = DocumentsBySupplier[y][z].Wadak
+                    var goodMovDateSplit = goodMovDate.split("/")
+
+                    var yearGM = "20" + goodMovDateSplit[2]
+                    var monthGM = goodMovDateSplit[1]
+                    if(Number(monthGM) < 10){
+                        monthGM = '0' + Number(monthGM)
+                    }
+                    var dayGM = goodMovDateSplit[0]
+                    if(Number(dayGM) < 10){
+                        dayGM = '0' + Number(dayGM)
+                    }        
+                    goodMovDate = yearGM.toString() + '-' + monthGM.toString() + '-' + dayGM.toString()
+
+                    documentItemObject.wadat_ist = goodMovDate
+                }*/
                 documentItemArray.push(documentItemObject)
             }
 
@@ -582,11 +622,12 @@ module.exports = cds.service.impl(async function (srv) {
                           
                 let callCreate = await createDeliverySD.tx(req).post("/CreateDelH", payload)     
                 console.log("Risultato chiamata " + JSON.stringify(callCreate))    
+                return callCreate
     
             } catch (error) {
     
                 console.log(error.message)
-                //return error.message
+                return error.message
             }
         }
 

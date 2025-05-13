@@ -12,8 +12,8 @@ using { ZMPF_SD_CREATE_DELIVERY as create_sd_delivery } from './EXTERNAL/ZMPF_SD
 using { ZZ1_I_SHIPPINGPOINT_CDS as ShippingPointCDS} from './EXTERNAL/ZZ1_I_SHIPPINGPOINT_CDS';
 using { ZZ1_I_UNION_SUBCONCTR_COMP_CDS as ComponentCDS } from './EXTERNAL/ZZ1_I_UNION_SUBCONCTR_COMP_CDS';
 
-@cds.query.limit.default: 100
-@cds.query.limit.max: 100
+@cds.query.limit.default: 500
+@cds.query.limit.max: 500
 service CatalogService {
     @readonly entity Books as projection on my.Books;
 
@@ -74,6 +74,7 @@ service CatalogService {
         key WorkCenterTypeCODE_2_1,
         key ManufacturingOrderSequence,
         key ManufacturingOrderOperation,
+        @Common.Label: '{i18n>manufacturingOrderType}'
         key ManufacturingOrderType,
         key ProductionInvtryManagedLoc,
         key Supplier,        
@@ -136,7 +137,7 @@ service CatalogService {
     action GetMaterialStock(Object: TYPES.InputStockMaterialAPI) returns many TYPES.ResponseStockMaterialAPI;
 }
 
-annotate CatalogService with @requires :
+/*annotate CatalogService with @requires :
 [
     'authenticated-user'
-];
+];*/

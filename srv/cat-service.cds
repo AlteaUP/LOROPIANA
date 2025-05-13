@@ -35,7 +35,7 @@ service CatalogService {
         null as StockMaterialUnitMeasure : String,
     }*/
     @readonly entity MainCds as projection on customCDS.ZZ1_I_COMBORDER_COMP{
-        key ID,
+        //key ID,
         @Common.Label: '{i18n>cprodOrd}'
         key CprodOrd,
         key requirementtype,

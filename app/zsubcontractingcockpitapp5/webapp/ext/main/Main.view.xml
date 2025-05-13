@@ -1,12 +1,13 @@
 <mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns:table="sap.fe.macros.table" xmlns="sap.m" xmlns:macros="sap.fe.macros" xmlns:html="http://www.w3.org/1999/xhtml" controllerName="zsubcontractingcockpitapp5.ext.main.Main">
-    <Page id="Main" title="{i18n>MainTitle}" enableScrolling="true">
+    <Page id="Main" title="{i18n>MainTitle}">
         <content>
             <macros:FilterBar metaPath="/MainCds/@com.sap.vocabularies.UI.v1.SelectionFields#SF" id="FilterBar"/>
-            <macros:Table id="TableOrderId" type="GridTable" beforeRebindTable=".loadTableData" metaPath="/MainCds/@com.sap.vocabularies.UI.v1.LineItem#tableMacro" filterBar="FilterBar" rowCount="20" rowCountMode="Auto" header="Materials" enableFullScreen="true" selectionMode="Multi" variantManagement="Page">
+            <macros:Table id="TableOrderId" type="ResponsiveTable" beforeRebindTable=".loadTableData" metaPath="/MainCds/@com.sap.vocabularies.UI.v1.LineItem#tableMacro" filterBar="FilterBar" rowCount="20" rowCountMode="Fixed" header="Materials" selectionMode="Multi" variantManagement="Control">
                 <macros:actions>
                     <table:Action id="createMaterialFromFactoryID" key="customAction" text="{i18n>CreateMaterialDocumentsFromFactory}" press=".onCreateMaterialDocuments" placement="After" requiresSelection="true"/>
                     <table:Action id="createMaterialFromHUBID" key="customAction2" text="{i18n>CreateMaterialDocumentsFromHUB}" press=".onCreateMaterialDocuments" placement="After" requiresSelection="true"/>
                 </macros:actions>
+                <rowCount/>
             </macros:Table>
         </content>
     </Page>

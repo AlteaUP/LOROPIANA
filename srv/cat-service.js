@@ -392,7 +392,7 @@ module.exports = cds.service.impl(async function (srv) {
                 if(data[z].requirementtype === 'BB'){
                     data[z].Lgort2 = data[z].Supplier
                 }
-                //data[z].SupplierWithDescription = data[z].Supplier + ' - ' + data[z].BPSupplierName
+                data[z].SupplierWithDescription = data[z].Supplier + ' - ' + data[z].BPSupplierName
             }
 
             console.log("TEST tempi -> fine calcolo colonne "+new Date())

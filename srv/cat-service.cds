@@ -104,6 +104,7 @@ service CatalogService {
         null as IssuedProdQty: Decimal,
         null as TotMagDefault: Decimal,
         null as TotMagProd: Decimal,
+        @Common.Label: '{i18n>supplier}'
         null as SupplierWithDescription: String,
         to_ZZ1_C_PRODUCT : Association to ZZ1_C_PRODUCT on Material = to_ZZ1_C_PRODUCT.Product,
     }

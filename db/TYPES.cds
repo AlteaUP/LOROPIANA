@@ -16,6 +16,9 @@ type MaterialRecord : {
     Lfart           : String;
     Customer        : String;
     Supplier        : String;
+    Wadak           : String;
+    AvaibilityQtyDefaultStorage : String;
+    AvaibilityQtyProdStorage    : String;
 }
 
 type MaterialCreateDocument : {
@@ -38,7 +41,8 @@ type MaterialCreateDocument : {
     PurchaseOrderItem : String;
     MasterProductionOrder : String;
     ManufacturingOrder : String;
-    ManufacturingOrderOperation : String;
+    ManufacturingOrderOperation: String;
+    //Wadak : String;
 }
 
 type MaterialRecordStructure : {

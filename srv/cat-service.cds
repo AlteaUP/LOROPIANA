@@ -11,6 +11,8 @@ using { ZZ1_I_SUMQTYDELIVERY_T_CDS as sumQtyDelivery } from './EXTERNAL/ZZ1_I_SU
 using { ZMPF_SD_CREATE_DELIVERY as create_sd_delivery } from './EXTERNAL/ZMPF_SD_CREATE_DELIVERY';
 using { ZZ1_I_SHIPPINGPOINT_CDS as ShippingPointCDS} from './EXTERNAL/ZZ1_I_SHIPPINGPOINT_CDS';
 using { ZZ1_I_UNION_SUBCONCTR_COMP_CDS as ComponentCDS } from './EXTERNAL/ZZ1_I_UNION_SUBCONCTR_COMP_CDS';
+using { ZZ1_I_WORKCENTERTXT_CDS as WorkCenterCDS } from './EXTERNAL/ZZ1_I_WORKCENTERTXT_CDS';
+using { ZZ1_I_PLANTTXT_CDS as PlantCDS } from './EXTERNAL/ZZ1_I_PLANTTXT_CDS';
 
 @cds.query.limit.default: 500
 @cds.query.limit.max: 500
@@ -25,9 +27,7 @@ service CatalogService {
 
     @readonly entity A_MaterialStock as projection on stock_service.A_MaterialStock;
 
-    @readonly entity ZZ1_C_PRODUCT as projection on customCDS.ZZ1_C_PRODUCT{
-        *
-    };
+    @readonly entity ZZ1_C_PRODUCT as projection on customCDS.ZZ1_C_PRODUCT;
 
     /*@readonly entity MainCds as projection on customCDS.ZZ1_ZZ1_ZZ1_I_UNION_API{
         *,
@@ -128,6 +128,10 @@ service CatalogService {
     @readonly entity CreateDelH as projection on create_sd_delivery.CreateDelH;
 
     @readonly entity ZZ1_I_ShippingPoint as projection on ShippingPointCDS.ZZ1_I_ShippingPoint;
+
+    @readonly entity ZZ1_I_WORKCENTERTXT as projection on WorkCenterCDS.ZZ1_I_WORKCENTERTXT;
+    
+    @readonly entity ZZ1_I_PLANTTXT as projection on PlantCDS.ZZ1_I_PLANTTXT;
 
     @readonly entity ZZ1_I_UNION_SUBCONCTR_COMP as projection on ComponentCDS.ZZ1_I_UNION_SUBCONCTR_COMP;
 

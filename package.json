@@ -101,7 +101,49 @@
             "path": "/sap/opu/odata/sap/ZZ1_I_SHIPPINGPOINT_CDS"
           }
         }
-      },      
+      },    
+      "ZZ1_I_WORKCENTERTXT_CDS": {
+        "kind": "odata",
+        "model": "srv/EXTERNAL/ZZ1_I_WORKCENTERTXT_CDS",
+        "forwardAuthToken": true,
+        "csrf": true,
+        "csrfInBatch": true,   
+        "[hybrid]": {
+          "credentials": {
+            "requestTimeout": 300000,
+            "destination": "S4HANA",            
+            "path": "/sap/opu/odata/sap/ZZ1_I_WORKCENTERTXT_CDS"  
+          }
+        },             
+       "[production]": {
+          "credentials": {
+            "requestTimeout": 300000,
+            "destination": "S4HANA",            
+            "path": "/sap/opu/odata/sap/ZZ1_I_WORKCENTERTXT_CDS"
+          }
+        }
+      },  
+      "ZZ1_I_PLANTTXT_CDS": {
+        "kind": "odata",
+        "model": "srv/EXTERNAL/ZZ1_I_PLANTTXT_CDS",
+        "forwardAuthToken": true,
+        "csrf": true,
+        "csrfInBatch": true,   
+        "[hybrid]": {
+          "credentials": {
+            "requestTimeout": 300000,
+            "destination": "S4HANA",            
+            "path": "/sap/opu/odata/sap/ZZ1_I_PLANTTXT_CDS"  
+          }
+        },             
+       "[production]": {
+          "credentials": {
+            "requestTimeout": 300000,
+            "destination": "S4HANA",            
+            "path": "/sap/opu/odata/sap/ZZ1_I_PLANTTXT_CDS"
+          }
+        }
+      },
       "MM_PUR_SUBCONTRACTING_COCKPIT_SRV": {
         "kind": "odata-v2",
         "model": "srv/EXTERNAL/MM_PUR_SUBCONTRACTING_COCKPIT_SRV",

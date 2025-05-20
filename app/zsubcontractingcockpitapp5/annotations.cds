@@ -255,6 +255,48 @@ annotate CatalogService.MainCds with @(
     ]
 );
 
+annotate CatalogService.MainCds with {
+    Plant @(Common.ValueList : {
+            $Type : 'Common.ValueListType',
+            CollectionPath : 'ZZ1_I_PLANTTXT',
+            Parameters : [
+                {
+                    $Type : 'Common.ValueListParameterInOut',
+                    LocalDataProperty : Plant,
+                    ValueListProperty : 'Plant',
+                },
+                {
+                    $Type: 'Common.ValueListParameterDisplayOnly',
+                    ValueListProperty: 'PlantName'
+                }
+            ],
+            Label : 'Plant',
+        },
+        Common.ValueListWithFixedValues : false
+)};
+
+annotate CatalogService.MainCds with {
+    WorkCenterInternalID @(Common.ValueList : {
+            $Type : 'Common.ValueListType',
+            CollectionPath : 'ZZ1_I_WORKCENTERTXT',
+            Parameters : [
+                {
+                    $Type : 'Common.ValueListParameterInOut',
+                    LocalDataProperty : WorkCenterInternalID,
+                    ValueListProperty : 'WorkCenter',
+                },
+                {
+                    $Type: 'Common.ValueListParameterDisplayOnly',
+                    ValueListProperty: 'WorkCenterText'
+                }
+            ],
+            Label : 'WorkCenter',
+        },
+        Common.ValueListWithFixedValues : false
+)};
+
+
+
 
 
 

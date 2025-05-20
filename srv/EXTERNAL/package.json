@@ -52,7 +52,20 @@
       "ZZ1_I_UNION_SUBCONCTR_COMP_CDS": {
         "kind": "odata-v2",
         "model": "srv/external/ZZ1_I_UNION_SUBCONCTR_COMP_CDS"
+      },
+      "ZZ1_I_WORKCENTERTXT_CDS": {
+        "kind": "odata-v2",
+        "model": "srv/external/ZZ1_I_WORKCENTERTXT_CDS"
+      },
+      "ZZ1_I_PLANTTXT_CDS": {
+        "kind": "odata-v2",
+        "model": "srv/external/ZZ1_I_PLANTTXT_CDS"
       }
     }
+  },
+  "dependencies": {
+    "@sap-cloud-sdk/connectivity": "^3",
+    "@sap-cloud-sdk/http-client": "^3",
+    "@sap-cloud-sdk/resilience": "^3"
   }
 }

@@ -21,6 +21,8 @@ module.exports = cds.service.impl(async function (srv) {
     const cdsSumQtyDelivery = await cds.connect.to('ZZ1_I_SUMQTYDELIVERY_T_CDS');
     const createDeliverySD = await cds.connect.to('ZMPF_SD_CREATE_DELIVERY');
     const cdsShippingPoint = await cds.connect.to('ZZ1_I_SHIPPINGPOINT_CDS');
+    const cdsWorkCenter = await cds.connect.to('ZZ1_I_WORKCENTERTXT_CDS');
+    const cdsPlant = await cds.connect.to('ZZ1_I_PLANTTXT_CDS');
     const componentsPoint = await cds.connect.to('ZZ1_I_UNION_SUBCONCTR_COMP_CDS');
 
     this.on('READ', "MainCds", async request => {
@@ -431,7 +433,22 @@ module.exports = cds.service.impl(async function (srv) {
 
     });*/
     this.on('READ', "ZZ1_I_ShippingPoint", async request => {
+        request.query.SELECT.count = false
         var data = await cdsShippingPoint.tx(request).run(request.query);
+
+        return data;
+    });
+
+    this.on('READ', "ZZ1_I_WORKCENTERTXT", async request => {
+        request.query.SELECT.count = false
+        var data = await cdsWorkCenter.tx(request).run(request.query);
+
+        return data;
+    });
+
+    this.on('READ', "ZZ1_I_PLANTTXT", async request => {
+        request.query.SELECT.count = false
+        var data = await cdsPlant.tx(request).run(request.query);
 
         return data;
     });

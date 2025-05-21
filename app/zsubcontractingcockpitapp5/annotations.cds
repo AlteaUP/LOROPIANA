@@ -81,7 +81,7 @@ annotate CatalogService.MainCds with @(
                 {
             $Type: 'UI.DataField',
             Value: TotalConfdQtyForATPInBaseUoM,
-            Label: 'TotalConfdQtyForATPInBaseUoM',
+            Label: '{18n>totalConfdQtyForATPInBaseUoM}',
             ![@HTML5.CssDefaults] : {
                 width : '5rem',
             },
@@ -217,7 +217,7 @@ annotate CatalogService.MainCds with @(
         {
             $Type: 'UI.DataField',
             Value: IssuedDefQty,
-            Label: 'IssuedDefQty',
+            Label: '{i18n>issuedDefQty}',
             ![@HTML5.CssDefaults] : {
                 width : '5rem',
             },
@@ -225,7 +225,7 @@ annotate CatalogService.MainCds with @(
         {
             $Type: 'UI.DataField',
             Value: IssuedProdQty,
-            Label: 'IssuedProdQty',
+            Label: '{i18n>issuedProdQty}',
             ![@HTML5.CssDefaults] : {
                 width : '5rem',
             },

@@ -29,26 +29,35 @@ module.exports = cds.service.impl(async function (srv) {
 
         console.log("dentro read MainCds");
 
-        console.log("TEST tempi -> Entro nel metodo "+new Date())
+        console.log("TEST tempi -> Entro nel metodo " + new Date())
 
         // rimuovo orderBy per ID
-        if(request.query.SELECT.orderBy !== null && request.query.SELECT.orderBy !== undefined){
-            if(request.query.SELECT.orderBy.length === 1){
-                if(request.query.SELECT.orderBy[0].ref[0] === 'ID'){
+        if (request.query.SELECT.orderBy !== null && request.query.SELECT.orderBy !== undefined) {
+            if (request.query.SELECT.orderBy.length === 1) {
+                if (request.query.SELECT.orderBy[0].ref[0] === 'ID') {
                     delete request.query.SELECT.orderBy
                 }
             } else {
-                if(request.query.SELECT.orderBy[0].ref[0] === 'ID'){
-                    request.query.SELECT.orderBy.splice(0,1)
+                if (request.query.SELECT.orderBy[0].ref[0] === 'ID') {
+                    request.query.SELECT.orderBy.splice(0, 1)
                 }
             }
         }
 
+        // modifica DL - 21/05/2025 - elimino record con combined order vuoto
+        if(request.query.SELECT.where !== null && request.query.SELECT.where !== undefined){
+            request.query.SELECT.where.push('and')
+            request.query.SELECT.where.push({ref: ['CprodOrd']})
+            request.query.SELECT.where.push('<>')
+            request.query.SELECT.where.push({val: ''})
+        }
+        // modifica DL - 21/05/2025 - elimino record con combined order vuoto - FINE
+
         var data = await cdsView.tx(request).run(request.query);
         //var data = await cdsView.tx(request).run(SELECT.from(cdsView));
 
-        // modifica 09/05/2025 - elimino record con combined order vuoto
-        data = data.filter(item => item.CprodOrd !== "");
+        // modifica 09/05/2025 - elimino record con combined order vuoto, spostata logica sopra
+        //data = data.filter(item => item.CprodOrd !== "");
 
         // elimino record con requirementtype = 'BB' and supplier empty
         /*for(var g=0; g<data.length; g++){
@@ -60,10 +69,10 @@ module.exports = cds.service.impl(async function (srv) {
             return !(item.requirementtype === 'BB' && item.Supplier === '');
         });
 
-        console.log("data length "+data.length)
+        console.log("data length " + data.length)
 
-        if(Object.prototype.toString.call(data) === '[object Array]') {
-            
+        if (Object.prototype.toString.call(data) === '[object Array]') {
+
             let dataSingleMaterial = []
             let arrayDataStock = []
             let arrayDataQtyBdbsTotDefAllocQty = []
@@ -73,365 +82,368 @@ module.exports = cds.service.impl(async function (srv) {
 
             var dataMaterial = []
 
-            // creo array dei materiali
-            dataSingleMaterial = data.reduce((unique, o) => {
-                if(!unique.some(obj => obj.Material === o.Material)) {
-                    unique.push(o);
+            if (Number(data.length) > 0) {
+
+                // creo array dei materiali
+                dataSingleMaterial = data.reduce((unique, o) => {
+                    if (!unique.some(obj => obj.Material === o.Material)) {
+                        unique.push(o);
+                    }
+                    return unique;
+                }, []);
+
+                for (var e = 0; e < dataSingleMaterial.length; e++) {
+                    dataMaterial.push(dataSingleMaterial[e].Material)
                 }
-                return unique;
-            },[]);
 
-            for(var e=0; e<dataSingleMaterial.length;e++){
-                dataMaterial.push(dataSingleMaterial[e].Material)
-            }
+                console.log("dataMaterial lunghezza " + dataMaterial.length)
 
-            console.log("dataMaterial lunghezza "+dataMaterial.length)
+                //console.log("dataSingleMaterial "+JSON.stringify(dataSingleMaterial))
+                console.log("dataMaterial " + JSON.stringify(dataMaterial))
 
-            //console.log("dataSingleMaterial "+JSON.stringify(dataSingleMaterial))
-            console.log("dataMaterial "+JSON.stringify(dataMaterial))
+                const { A_MaterialStock } = apiStock.entities;
+                const { ZZ1_I_ARUN_BDBSSUMQTY_CDS } = cdsMaterialQtyDbdsSum.entities;
+                const { ZZ1_I_SUMQTYDELIVERY_T } = cdsSumQtyDelivery.entities;
 
-            const { A_MaterialStock } = apiStock.entities;
-            const { ZZ1_I_ARUN_BDBSSUMQTY_CDS } = cdsMaterialQtyDbdsSum.entities;
-            const { ZZ1_I_SUMQTYDELIVERY_T } = cdsSumQtyDelivery.entities;
+                console.log("TEST tempi -> inizio select stock API " + new Date())
 
-            console.log("TEST tempi -> inizio select stock API "+new Date())
+                try {
+                    var dataStock = await apiStock.run(SELECT(A_MaterialStock, material => {
+                        material.to_MatlStkInAcctMod((to_MatlStkInAcctMod) => {
+                            to_MatlStkInAcctMod('*')
+                        })
+                    }).where({ Material: { in: dataMaterial } }));
+                } catch (error) {
+                    console.log(error)
+                }
 
-            try {
-                var dataStock = await apiStock.run(SELECT(A_MaterialStock, material => {
-                    material.to_MatlStkInAcctMod((to_MatlStkInAcctMod) => {
-                        to_MatlStkInAcctMod('*')
-                    })
-                }).where({ Material: { in: dataMaterial }}));
-            } catch (error) {
-                console.log(error)
-            }
+                if (dataStock !== undefined && dataStock !== null) {
+                    if (dataStock.length > 0) {
+                        for (var c = 0; c < dataStock.length; c++) {
+                            for (var f = 0; f < dataStock[c].to_MatlStkInAcctMod.length; f++) {
+                                arrayDataStock.push(dataStock[c].to_MatlStkInAcctMod[f])
+                            }
+                        }
+                    }
 
-            if(dataStock !== undefined && dataStock !== null){
-                if(dataStock.length > 0){
-                    for(var c=0; c<dataStock.length;c++){
-                        for(var f=0; f<dataStock[c].to_MatlStkInAcctMod.length; f++){
-                            arrayDataStock.push(dataStock[c].to_MatlStkInAcctMod[f])
-                        }   
+                    console.log("Lunghezza arrayDataStock " + arrayDataStock.length)
+
+                    console.log("TEST tempi -> fine select stock API " + new Date())
+                }
+
+                //console.log("Multiple Stock "+JSON.stringify(dataStock))
+
+                // recupero quantità dal servizio BDBS
+                try {
+                    var dataBDBS = await cdsMaterialQtyDbdsSum.run(SELECT(ZZ1_I_ARUN_BDBSSUMQTY_CDS).where({ Material: { in: dataMaterial } }).limit(100));
+                } catch (error) {
+                    console.log(error)
+                }
+
+                console.log("TEST tempi -> fine prima lettura BDBS " + new Date())
+
+                // aggrego per batch
+                if (dataBDBS !== null && dataBDBS !== undefined) {
+                    if (dataBDBS.length > 0) {
+                        var dataBDBSByBatch = dataBDBS.reduce((acc, { Batch, TotalAllocQty, StorageLocation, Material }) => {
+                            acc[Batch + Material] = acc[Batch + Material] || { Batch, TotalAllocQty: 0, StorageLocation, Material };
+                            acc[Batch + Material].TotalAllocQty += Number(TotalAllocQty);
+                            return acc;
+                        }, {});
+                    }
+
+                    // creo array per batch + record con batch vuoto e sommma delle quantità
+                    if (dataBDBS.length > 0) {
+                        var sum = 0
+                        var object = {}
+                        for (var j = 0; j < dataBDBS.length; j++) {
+                            var objectBatch = {}
+                            var objectdataBDBS = {}
+                            objectdataBDBS = arrayDataQtyBdbs.find((o) => o.Batch === dataBDBS[j].Batch);
+                            if (dataBDBSByBatch[dataBDBS[j].Batch + dataBDBS[j].Material] !== undefined && objectdataBDBS === undefined) {
+                                objectBatch.Batch = dataBDBS[j].Batch
+                                objectBatch.Material = dataBDBS[j].Material
+                                objectBatch.TotalAllocQty = dataBDBSByBatch[dataBDBS[j].Batch + dataBDBS[j].Material].TotalAllocQty
+                                objectBatch.StorageLocation = dataBDBSByBatch[dataBDBS[j].Batch + dataBDBS[j].Material].StorageLocation
+                                arrayDataQtyBdbs.push(objectBatch)
+                            }
+
+                            sum = Number(sum) + Number(dataBDBS[j].TotalAllocQty)
+                        }
+                        object.Batch = ""
+                        object.Material = dataBDBS[0].Material
+                        object.TotalAllocQty = sum.toFixed(3)
+                        arrayDataQtyBdbs.push(object)
                     }
                 }
 
-                console.log("Lunghezza arrayDataStock "+arrayDataStock.length)
+                console.log("arrayDataQtyBdbs lunghezza " + arrayDataQtyBdbs.length)
 
-                console.log("TEST tempi -> fine select stock API "+new Date())
-            }
-
-            //console.log("Multiple Stock "+JSON.stringify(dataStock))
-
-            // recupero quantità dal servizio BDBS
-            try {
-                var dataBDBS = await cdsMaterialQtyDbdsSum.run(SELECT(ZZ1_I_ARUN_BDBSSUMQTY_CDS).where({ Material: { in: dataMaterial }}).limit(100));
-            } catch (error) {
-                console.log(error)
-            } 
-
-            console.log("TEST tempi -> fine prima lettura BDBS "+new Date())
-
-            // aggrego per batch
-            if(dataBDBS !== null && dataBDBS !== undefined){
-                if(dataBDBS.length > 0){
-                    var dataBDBSByBatch = dataBDBS.reduce((acc, { Batch, TotalAllocQty, StorageLocation, Material }) => {
-                        acc[Batch+Material] = acc[Batch+Material] || { Batch, TotalAllocQty: 0, StorageLocation, Material };
-                        acc[Batch+Material].TotalAllocQty += Number(TotalAllocQty);
-                        return acc;  
-                    }, {});
+                try {
+                    var dataSumQtyDelivery = await cdsSumQtyDelivery.run(SELECT(ZZ1_I_SUMQTYDELIVERY_T).where({ Material: { in: dataMaterial } }).limit(100));
+                } catch (error) {
+                    console.log(error)
                 }
 
-                // creo array per batch + record con batch vuoto e sommma delle quantità
-                if(dataBDBS.length > 0){
-                    var sum = 0
-                    var object = {}
-                    for(var j=0; j<dataBDBS.length; j++){
-                        var objectBatch = {}
-                        var objectdataBDBS = {}
-                        objectdataBDBS = arrayDataQtyBdbs.find((o) => o.Batch === dataBDBS[j].Batch);
-                        if(dataBDBSByBatch[dataBDBS[j].Batch+dataBDBS[j].Material] !== undefined && objectdataBDBS === undefined){
-                            objectBatch.Batch = dataBDBS[j].Batch
-                            objectBatch.Material = dataBDBS[j].Material
-                            objectBatch.TotalAllocQty = dataBDBSByBatch[dataBDBS[j].Batch+dataBDBS[j].Material].TotalAllocQty
-                            objectBatch.StorageLocation = dataBDBSByBatch[dataBDBS[j].Batch+dataBDBS[j].Material].StorageLocation
-                            arrayDataQtyBdbs.push(objectBatch)
-                        }
+                console.log("TEST tempi -> fine prima lettura SUMQTYDELIVERY " + new Date())
 
-                        sum = Number(sum) + Number(dataBDBS[j].TotalAllocQty)
+                // aggrego per batch
+                if (dataSumQtyDelivery !== null && dataSumQtyDelivery !== undefined) {
+                    if (dataSumQtyDelivery.length > 0) {
+                        var dataSumQtyDeliveryByBatch = dataSumQtyDelivery.reduce((acc, { Batch, TotDeliveryQty, StorLoc, Material }) => {
+                            acc[Batch + Material] = acc[Batch + Material] || { Batch, TotDeliveryQty: 0, StorLoc, Material };
+                            acc[Batch + Material].TotDeliveryQty += Number(TotDeliveryQty);
+                            return acc;
+                        }, {});
                     }
-                    object.Batch = ""
-                    object.Material = dataBDBS[0].Material
-                    object.TotalAllocQty = sum.toFixed(3)
-                    arrayDataQtyBdbs.push(object)
-                }
-            }
 
-            console.log("arrayDataQtyBdbs lunghezza "+arrayDataQtyBdbs.length)
+                    // creo array per batch + record con batch vuoto e sommma delle quantità
+                    if (dataSumQtyDelivery.length > 0) {
+                        sum = 0
+                        object = {}
+                        for (var s = 0; s < dataSumQtyDelivery.length; s++) {
+                            var objectSumQtyDelivery = {}
+                            var objectdataSumQtyDelivery = {}
+                            objectdataSumQtyDelivery = arrayDataSumQtyDelivery.find((o) => o.Batch === dataSumQtyDelivery[s].Batch);
+                            if (dataSumQtyDeliveryByBatch[dataSumQtyDelivery[s].Batch + dataSumQtyDelivery[s].Material] !== undefined && objectdataSumQtyDelivery === undefined) {
+                                objectSumQtyDelivery.Batch = dataSumQtyDelivery[s].Batch
+                                objectSumQtyDelivery.Material = dataSumQtyDelivery[s].Material
+                                objectSumQtyDelivery.TotDeliveryQty = dataSumQtyDeliveryByBatch[dataSumQtyDelivery[s].Batch + dataSumQtyDelivery[s].Material].TotDeliveryQty
+                                objectSumQtyDelivery.StorageLocation = dataSumQtyDeliveryByBatch[dataSumQtyDelivery[s].Batch + dataSumQtyDelivery[s].Material].StorLoc
+                                arrayDataSumQtyDelivery.push(objectSumQtyDelivery)
+                            }
 
-            try {
-                var dataSumQtyDelivery = await cdsSumQtyDelivery.run(SELECT(ZZ1_I_SUMQTYDELIVERY_T).where({ Material: { in: dataMaterial }}).limit(100));
-            } catch (error) {
-                console.log(error)
-            } 
-
-            console.log("TEST tempi -> fine prima lettura SUMQTYDELIVERY "+new Date())
-
-            // aggrego per batch
-            if(dataSumQtyDelivery !== null && dataSumQtyDelivery !== undefined){
-                if(dataSumQtyDelivery.length > 0){
-                    var dataSumQtyDeliveryByBatch = dataSumQtyDelivery.reduce((acc, { Batch, TotDeliveryQty, StorLoc, Material }) => {
-                        acc[Batch+Material] = acc[Batch+Material] || { Batch, TotDeliveryQty: 0, StorLoc, Material };
-                        acc[Batch+Material].TotDeliveryQty += Number(TotDeliveryQty);
-                        return acc;  
-                    }, {});
-                }
-
-                // creo array per batch + record con batch vuoto e sommma delle quantità
-                if(dataSumQtyDelivery.length > 0){
-                    sum = 0
-                    object = {}
-                    for(var s=0; s<dataSumQtyDelivery.length; s++){
-                        var objectSumQtyDelivery = {}
-                        var objectdataSumQtyDelivery = {}
-                        objectdataSumQtyDelivery = arrayDataSumQtyDelivery.find((o) => o.Batch === dataSumQtyDelivery[s].Batch);
-                        if(dataSumQtyDeliveryByBatch[dataSumQtyDelivery[s].Batch+dataSumQtyDelivery[s].Material] !== undefined && objectdataSumQtyDelivery === undefined){
-                            objectSumQtyDelivery.Batch = dataSumQtyDelivery[s].Batch
-                            objectSumQtyDelivery.Material = dataSumQtyDelivery[s].Material
-                            objectSumQtyDelivery.TotDeliveryQty = dataSumQtyDeliveryByBatch[dataSumQtyDelivery[s].Batch+dataSumQtyDelivery[s].Material].TotDeliveryQty
-                            objectSumQtyDelivery.StorageLocation = dataSumQtyDeliveryByBatch[dataSumQtyDelivery[s].Batch+dataSumQtyDelivery[s].Material].StorLoc
-                            arrayDataSumQtyDelivery.push(objectSumQtyDelivery)
+                            sum = Number(sum) + Number(dataSumQtyDelivery[s].TotDeliveryQty)
                         }
-
-                        sum = Number(sum) + Number(dataSumQtyDelivery[s].TotDeliveryQty)
+                        object.Batch = ""
+                        object.Material = dataSumQtyDelivery[0].Material
+                        object.TotDeliveryQty = sum.toFixed(3)
+                        arrayDataSumQtyDelivery.push(object)
                     }
-                    object.Batch = ""
-                    object.Material = dataSumQtyDelivery[0].Material
-                    object.TotDeliveryQty = sum.toFixed(3)
-                    arrayDataSumQtyDelivery.push(object)
                 }
-            }
 
-            //console.log("arrayDataQtyBdbsTotDefAllocQty "+JSON.stringify(arrayDataQtyBdbs))
-            //console.log("arrayDataQtyBdbsTotDefAllocQty length "+arrayDataQtyBdbs.length)
+                //console.log("arrayDataQtyBdbsTotDefAllocQty "+JSON.stringify(arrayDataQtyBdbs))
+                //console.log("arrayDataQtyBdbsTotDefAllocQty length "+arrayDataQtyBdbs.length)
 
-            console.log("Lunghezza arrayDataStock "+arrayDataStock.length)
+                console.log("Lunghezza arrayDataStock " + arrayDataStock.length)
 
-            console.log("TEST tempi -> inizio a calcolare colonne "+new Date())
-            
-            // integro dati dello stock nell'array principale
-            var objectDataQtyBdbs = {}
-            var objectDataQtyBdbsLgort1 = {}
-            var objectDataQtyBdbsLgort2 = {}
-            var objectDataQtyStock = {}
-            var objectDataQtyStockAvaibility = {}
-            var objectDataQtyStockAvaibilityLgort2 = {}
-            var objectDataQtyStockAvaibilityStockO = {}
-            var objectDataSumQtyDeliveryLgort1 = {}
-            var objectDataSumQtyDeliveryLgort2 = {}
-            var arrayStockOrderWithoutBatch = []
-            var arrayStockOrderWithoutBatchAvaibility = []
-            var arrayStockOrderWithoutBatchAvaibilityLgort2 = []
-            var arrayStockOrderWithoutBatchAvaibilityStockO = []
-            var sumStock = 0
-            var sumStockAvaibility = 0
-            var sumStockAvaibilityLgort2 = 0
-            var sumStockAvaibilityStockO = 0
-            for(var z = 0; z < data.length; z++){
-                objectDataQtyBdbs = {}
-                objectDataQtyBdbsLgort1 = {}
-                objectDataQtyBdbsLgort2 = {}
-                objectDataSumQtyDeliveryLgort1 = {}
-                objectDataSumQtyDeliveryLgort2 = {}
-                objectDataQtyStock = {}
-                arrayStockOrderWithoutBatch = []
-                sumStock = 0
-                sumStockAvaibility = 0
-                sumStockAvaibilityLgort2 = 0
-                sumStockAvaibilityStockO = 0
-                if(data[z].Batch !== ''){
-                    objectDataQtyBdbs = arrayDataQtyBdbs.find((o) => o.Material === data[z].Material && o.Batch === data[z].Batch);
-                    objectDataQtyBdbsLgort1 = arrayDataQtyBdbs.find((o) => o.Material === data[z].Material && o.Batch === data[z].Batch && o.StorageLocation === data[z].Lgort1);
-                    objectDataQtyBdbsLgort2 = arrayDataQtyBdbs.find((o) => o.Material === data[z].Material && o.Batch === data[z].Batch && o.StorageLocation === data[z].Lgort2);
-                    objectDataSumQtyDeliveryLgort1 = arrayDataSumQtyDelivery.find((o) => o.Material === data[z].Material && o.Batch === data[z].Batch && o.StorageLocation === data[z].Lgort1);
-                    objectDataSumQtyDeliveryLgort2 = arrayDataSumQtyDelivery.find((o) => o.Material === data[z].Material && o.Batch === data[z].Batch && o.StorageLocation === data[z].Lgort2);
-                    objectDataQtyStock = arrayDataStock.find((o) => o.Material === data[z].Material && o.Batch === data[z].Batch);
-                    objectDataQtyStockAvaibility = arrayDataStock.find((o) => o.Material === data[z].Material && o.Batch === data[z].Batch && o.Plant === data[z].Plant && o.StorageLocation === data[z].Lgort1);
-                    objectDataQtyStockAvaibilityLgort2  = arrayDataStock.find((o) => o.Material === data[z].Material && o.Batch === data[z].Batch && o.Plant === data[z].Plant && o.StorageLocation === data[z].Lgort2);
-                    objectDataQtyStockAvaibilityStockO  = arrayDataStock.find((o) => o.Material === data[z].Material && o.Batch === data[z].Batch && o.Plant && o.Supplier === data[z].Supplier && o.InventorySpecialStockType === 'O');
-                    if(objectDataQtyBdbs !== undefined && objectDataQtyStockAvaibility !== undefined){
-                        if(objectDataQtyStock !== null && objectDataQtyStock !== undefined){
-                            data[z].StockMaterial = Number(objectDataQtyStock.MatlWrhsStkQtyInMatlBaseUnit) - Number(objectDataQtyBdbs.TotalAllocQty) + Number(data[z].TotalDefaultAllocQty)
-                        }
-                        data[z].TotalAllocQtyCustom = Number(objectDataQtyBdbs.TotalAllocQty)
-                        if(objectDataQtyBdbs !== undefined && objectDataQtyBdbs !== null){
-                            data[z].AvaibilityQtyDefaultStorage = Number(objectDataQtyStockAvaibility.MatlWrhsStkQtyInMatlBaseUnit) - Number(objectDataQtyBdbs.TotalAllocQty) + Number(data[z].TotalDefaultAllocQty)                         
+                console.log("TEST tempi -> inizio a calcolare colonne " + new Date())
+
+                // integro dati dello stock nell'array principale
+                var objectDataQtyBdbs = {}
+                var objectDataQtyBdbsLgort1 = {}
+                var objectDataQtyBdbsLgort2 = {}
+                var objectDataQtyStock = {}
+                var objectDataQtyStockAvaibility = {}
+                var objectDataQtyStockAvaibilityLgort2 = {}
+                var objectDataQtyStockAvaibilityStockO = {}
+                var objectDataSumQtyDeliveryLgort1 = {}
+                var objectDataSumQtyDeliveryLgort2 = {}
+                var arrayStockOrderWithoutBatch = []
+                var arrayStockOrderWithoutBatchAvaibility = []
+                var arrayStockOrderWithoutBatchAvaibilityLgort2 = []
+                var arrayStockOrderWithoutBatchAvaibilityStockO = []
+                var sumStock = 0
+                var sumStockAvaibility = 0
+                var sumStockAvaibilityLgort2 = 0
+                var sumStockAvaibilityStockO = 0
+                for (var z = 0; z < data.length; z++) {
+                    objectDataQtyBdbs = {}
+                    objectDataQtyBdbsLgort1 = {}
+                    objectDataQtyBdbsLgort2 = {}
+                    objectDataSumQtyDeliveryLgort1 = {}
+                    objectDataSumQtyDeliveryLgort2 = {}
+                    objectDataQtyStock = {}
+                    arrayStockOrderWithoutBatch = []
+                    sumStock = 0
+                    sumStockAvaibility = 0
+                    sumStockAvaibilityLgort2 = 0
+                    sumStockAvaibilityStockO = 0
+                    if (data[z].Batch !== '') {
+                        objectDataQtyBdbs = arrayDataQtyBdbs.find((o) => o.Material === data[z].Material && o.Batch === data[z].Batch);
+                        objectDataQtyBdbsLgort1 = arrayDataQtyBdbs.find((o) => o.Material === data[z].Material && o.Batch === data[z].Batch && o.StorageLocation === data[z].Lgort1);
+                        objectDataQtyBdbsLgort2 = arrayDataQtyBdbs.find((o) => o.Material === data[z].Material && o.Batch === data[z].Batch && o.StorageLocation === data[z].Lgort2);
+                        objectDataSumQtyDeliveryLgort1 = arrayDataSumQtyDelivery.find((o) => o.Material === data[z].Material && o.Batch === data[z].Batch && o.StorageLocation === data[z].Lgort1);
+                        objectDataSumQtyDeliveryLgort2 = arrayDataSumQtyDelivery.find((o) => o.Material === data[z].Material && o.Batch === data[z].Batch && o.StorageLocation === data[z].Lgort2);
+                        objectDataQtyStock = arrayDataStock.find((o) => o.Material === data[z].Material && o.Batch === data[z].Batch);
+                        objectDataQtyStockAvaibility = arrayDataStock.find((o) => o.Material === data[z].Material && o.Batch === data[z].Batch && o.Plant === data[z].Plant && o.StorageLocation === data[z].Lgort1);
+                        objectDataQtyStockAvaibilityLgort2 = arrayDataStock.find((o) => o.Material === data[z].Material && o.Batch === data[z].Batch && o.Plant === data[z].Plant && o.StorageLocation === data[z].Lgort2);
+                        objectDataQtyStockAvaibilityStockO = arrayDataStock.find((o) => o.Material === data[z].Material && o.Batch === data[z].Batch && o.Plant && o.Supplier === data[z].Supplier && o.InventorySpecialStockType === 'O');
+                        if (objectDataQtyBdbs !== undefined && objectDataQtyStockAvaibility !== undefined) {
+                            if (objectDataQtyStock !== null && objectDataQtyStock !== undefined) {
+                                data[z].StockMaterial = Number(objectDataQtyStock.MatlWrhsStkQtyInMatlBaseUnit) - Number(objectDataQtyBdbs.TotalAllocQty) + Number(data[z].TotalDefaultAllocQty)
+                            }
+                            data[z].TotalAllocQtyCustom = Number(objectDataQtyBdbs.TotalAllocQty)
+                            if (objectDataQtyBdbs !== undefined && objectDataQtyBdbs !== null) {
+                                data[z].AvaibilityQtyDefaultStorage = Number(objectDataQtyStockAvaibility.MatlWrhsStkQtyInMatlBaseUnit) - Number(objectDataQtyBdbs.TotalAllocQty) + Number(data[z].TotalDefaultAllocQty)
+                            } else {
+                                data[z].AvaibilityQtyDefaultStorage = Number(objectDataQtyStockAvaibility.MatlWrhsStkQtyInMatlBaseUnit) + Number(data[z].TotalDefaultAllocQty)
+                            }
                         } else {
-                            data[z].AvaibilityQtyDefaultStorage = Number(objectDataQtyStockAvaibility.MatlWrhsStkQtyInMatlBaseUnit) + Number(data[z].TotalDefaultAllocQty)                         
+                            if (objectDataQtyStock !== null && objectDataQtyStock !== undefined) {
+                                data[z].StockMaterial = Number(objectDataQtyStock.MatlWrhsStkQtyInMatlBaseUnit) + Number(data[z].TotalDefaultAllocQty)
+                            }
                         }
-                    } else {
-                        if(objectDataQtyStock !== null && objectDataQtyStock !== undefined){
-                            data[z].StockMaterial = Number(objectDataQtyStock.MatlWrhsStkQtyInMatlBaseUnit) + Number(data[z].TotalDefaultAllocQty)
-                        }
-                    }                    
-                    if(data[z].requirementtype === 'AR'){
-                        if(objectDataQtyBdbsLgort2 !== null && objectDataQtyBdbsLgort2 !== undefined){
-                            data[z].AvaibilityQtyProdStorage = Number(objectDataQtyStockAvaibilityLgort2.MatlWrhsStkQtyInMatlBaseUnit) - Number(objectDataQtyBdbsLgort2.TotalAllocQty) + Number(data[z].TotalProdAllocQty) 
-                            data[z].AvaibilityQtyProdStorage = data[z].AvaibilityQtyProdStorage.toFixed(3)
-                        } else {
-                            if(objectDataQtyStockAvaibilityLgort2 !== null && objectDataQtyStockAvaibilityLgort2 !== undefined){
-                                data[z].AvaibilityQtyProdStorage = Number(objectDataQtyStockAvaibilityLgort2.MatlWrhsStkQtyInMatlBaseUnit) + Number(data[z].TotalProdAllocQty) 
+                        if (data[z].requirementtype === 'AR') {
+                            if (objectDataQtyBdbsLgort2 !== null && objectDataQtyBdbsLgort2 !== undefined) {
+                                data[z].AvaibilityQtyProdStorage = Number(objectDataQtyStockAvaibilityLgort2.MatlWrhsStkQtyInMatlBaseUnit) - Number(objectDataQtyBdbsLgort2.TotalAllocQty) + Number(data[z].TotalProdAllocQty)
                                 data[z].AvaibilityQtyProdStorage = data[z].AvaibilityQtyProdStorage.toFixed(3)
                             } else {
-                                data[z].AvaibilityQtyProdStorage = Number(data[z].TotalProdAllocQty) 
+                                if (objectDataQtyStockAvaibilityLgort2 !== null && objectDataQtyStockAvaibilityLgort2 !== undefined) {
+                                    data[z].AvaibilityQtyProdStorage = Number(objectDataQtyStockAvaibilityLgort2.MatlWrhsStkQtyInMatlBaseUnit) + Number(data[z].TotalProdAllocQty)
+                                    data[z].AvaibilityQtyProdStorage = data[z].AvaibilityQtyProdStorage.toFixed(3)
+                                } else {
+                                    data[z].AvaibilityQtyProdStorage = Number(data[z].TotalProdAllocQty)
+                                    data[z].AvaibilityQtyProdStorage = data[z].AvaibilityQtyProdStorage.toFixed(3)
+                                }
+                            }
+                        } else {
+                            // BB
+                            if (objectDataQtyStockAvaibilityStockO !== null && objectDataQtyStockAvaibilityStockO !== undefined) {
+                                data[z].AvaibilityQtyProdStorage = Number(objectDataQtyStockAvaibilityStockO.MatlWrhsStkQtyInMatlBaseUnit)
                                 data[z].AvaibilityQtyProdStorage = data[z].AvaibilityQtyProdStorage.toFixed(3)
                             }
                         }
-                    } else {
-                        // BB
-                        if(objectDataQtyStockAvaibilityStockO !== null && objectDataQtyStockAvaibilityStockO !== undefined){
-                            data[z].AvaibilityQtyProdStorage = Number(objectDataQtyStockAvaibilityStockO.MatlWrhsStkQtyInMatlBaseUnit)
-                            data[z].AvaibilityQtyProdStorage = data[z].AvaibilityQtyProdStorage.toFixed(3)
-                        }
-                    }
-                    if(data[z].AvaibilityQtyProdStorage === "" || data[z].AvaibilityQtyProdStorage === null || data[z].AvaibilityQtyProdStorage === undefined){
-                        data[z].AvaibilityQtyProdStorage = 0
-                    }
-                                        
-                    if(objectDataSumQtyDeliveryLgort1 !== null && objectDataSumQtyDeliveryLgort1 !== undefined){
-                        data[z].IssuedDefQty = Number(objectDataSumQtyDeliveryLgort1.TotDeliveryQty)
-                    } else {
-                        data[z].IssuedDefQty = 0
-                    }
-                    if(objectDataSumQtyDeliveryLgort2 !== null && objectDataSumQtyDeliveryLgort2 !== undefined){
-                        data[z].IssuedProdQty = Number(objectDataSumQtyDeliveryLgort2.TotDeliveryQty)
-                    } else {
-                        data[z].IssuedProdQty = 0
-                    }
-                    if(objectDataQtyBdbsLgort1 !== null && objectDataQtyBdbsLgort1 !== undefined){
-                        data[z].TotMagDefault = Number(objectDataQtyBdbsLgort1.TotalAllocQty)
-                    } else {
-                        data[z].TotMagDefault = 0
-                    }
-                    if(objectDataQtyBdbsLgort2 !== null && objectDataQtyBdbsLgort2 !== undefined){
-                        data[z].TotMagProd = Number(objectDataQtyBdbsLgort2.TotalAllocQty)
-                    } else {
-                        data[z].TotMagProd = 0
-                    }
-                    data[z].StockMaterialUnitMeasure = data[z].BaseUnit  
-                } else {
-                    objectDataQtyBdbs = arrayDataQtyBdbs.find((o) => o.Material === data[z].Material && o.Batch === '');
-                    objectDataQtyBdbsLgort1 = arrayDataQtyBdbs.find((o) => o.Material === data[z].Material && o.StorageLocation === data[z].Lgort1);
-                    objectDataQtyBdbsLgort2 = arrayDataQtyBdbs.find((o) => o.Material === data[z].Material && o.StorageLocation === data[z].Lgort2);
-                    objectDataSumQtyDeliveryLgort1 = arrayDataSumQtyDelivery.find((o) => o.Material === data[z].Material && o.StorageLocation === data[z].Lgort1);
-                    objectDataSumQtyDeliveryLgort2 = arrayDataSumQtyDelivery.find((o) => o.Material === data[z].Material && o.StorageLocation === data[z].Lgort2);
-                    arrayStockOrderWithoutBatch = arrayDataStock.filter(obj => obj.Material === data[z].Material)
-                    arrayStockOrderWithoutBatchAvaibility = arrayDataStock.filter(obj => obj.Material === data[z].Material && obj.Plant === data[z].Plant && obj.StorageLocation === data[z].Lgort1)
-                    arrayStockOrderWithoutBatchAvaibilityLgort2 = arrayDataStock.filter(obj => obj.Material === data[z].Material && obj.Plant === data[z].Plant && obj.StorageLocation === data[z].Lgort2)
-                    arrayStockOrderWithoutBatchAvaibilityStockO  = arrayDataStock.filter(obj => obj.Material === data[z].Material && obj.Plant === data[z].Plant && obj.Supplier === data[z].Supplier && obj.InventorySpecialStockType === 'O');
-                    if(arrayStockOrderWithoutBatch.length > 0){
-                        for(var t=0; t<arrayStockOrderWithoutBatch.length; t++){
-                            sumStock = Number(sumStock) + Number(arrayStockOrderWithoutBatch[t].MatlWrhsStkQtyInMatlBaseUnit)
-                        }
-                        for(var x=0; x<arrayStockOrderWithoutBatchAvaibility.length; x++){
-                            sumStockAvaibility = Number(sumStockAvaibility) + Number(arrayStockOrderWithoutBatchAvaibility[x].MatlWrhsStkQtyInMatlBaseUnit)
-                        }
-                        for(var q=0; q<arrayStockOrderWithoutBatchAvaibilityLgort2.length; q++){
-                            sumStockAvaibilityLgort2 = Number(sumStockAvaibilityLgort2) + Number(arrayStockOrderWithoutBatchAvaibilityLgort2[q].MatlWrhsStkQtyInMatlBaseUnit)
-                        }
-                        for(var v=0; v<arrayStockOrderWithoutBatchAvaibilityStockO.length; v++){
-                            sumStockAvaibilityStockO = Number(sumStockAvaibilityStockO) + Number(arrayStockOrderWithoutBatchAvaibilityStockO[v].MatlWrhsStkQtyInMatlBaseUnit)
-                        }
-                        if(objectDataQtyBdbsLgort1 !== undefined && objectDataQtyBdbsLgort1 !== null && objectDataQtyBdbsLgort1 !== ""){
-                            data[z].StockMaterial =  Number(sumStock) - Number(objectDataQtyBdbsLgort1.TotalAllocQty) + Number(data[z].TotalDefaultAllocQty)
-                            data[z].TotalAllocQtyCustom = Number(objectDataQtyBdbsLgort1.TotalAllocQty)
-                            data[z].AvaibilityQtyDefaultStorage = Number(sumStockAvaibility) - Number(objectDataQtyBdbsLgort1.TotalAllocQty) + Number(data[z].TotalDefaultAllocQty)                            
-                        } else {
-                            data[z].StockMaterial =  Number(sumStock) + Number(data[z].TotalDefaultAllocQty)
-                            data[z].TotalAllocQtyCustom = 0
-                            data[z].AvaibilityQtyDefaultStorage = Number(sumStockAvaibility) + Number(data[z].TotalDefaultAllocQty) 
-                        }                             
-                        if(data[z].requirementtype === 'AR'){
-                            if(objectDataQtyBdbsLgort2 !== null && objectDataQtyBdbsLgort2 !== undefined){
-                                data[z].AvaibilityQtyProdStorage = Number(sumStockAvaibilityLgort2) - Number(objectDataQtyBdbsLgort2.TotalAllocQty) + Number(data[z].TotalProdAllocQty)                  
-                                data[z].AvaibilityQtyProdStorage = data[z].AvaibilityQtyProdStorage.toFixed(3)
-                            } else {
-                                data[z].AvaibilityQtyProdStorage = Number(sumStockAvaibilityLgort2) + Number(data[z].TotalProdAllocQty)                  
-                                data[z].AvaibilityQtyProdStorage = data[z].AvaibilityQtyProdStorage.toFixed(3)
-                            }
-                        } else {
-                            data[z].AvaibilityQtyProdStorage = Number(sumStockAvaibilityStockO)
-                            data[z].AvaibilityQtyProdStorage = data[z].AvaibilityQtyProdStorage.toFixed(3)
-                        }
-                        if(data[z].AvaibilityQtyProdStorage === "" || data[z].AvaibilityQtyProdStorage === null || data[z].AvaibilityQtyProdStorage === undefined){
+                        if (data[z].AvaibilityQtyProdStorage === "" || data[z].AvaibilityQtyProdStorage === null || data[z].AvaibilityQtyProdStorage === undefined) {
                             data[z].AvaibilityQtyProdStorage = 0
                         }
-                        
-                        if(objectDataSumQtyDeliveryLgort1 !== null && objectDataSumQtyDeliveryLgort1 !== undefined){
+
+                        if (objectDataSumQtyDeliveryLgort1 !== null && objectDataSumQtyDeliveryLgort1 !== undefined) {
                             data[z].IssuedDefQty = Number(objectDataSumQtyDeliveryLgort1.TotDeliveryQty)
                         } else {
-                            data[z].IssuedDefQty = 0 
+                            data[z].IssuedDefQty = 0
                         }
-                        if(objectDataSumQtyDeliveryLgort2 !== null && objectDataSumQtyDeliveryLgort2 !== undefined){
+                        if (objectDataSumQtyDeliveryLgort2 !== null && objectDataSumQtyDeliveryLgort2 !== undefined) {
                             data[z].IssuedProdQty = Number(objectDataSumQtyDeliveryLgort2.TotDeliveryQty)
                         } else {
                             data[z].IssuedProdQty = 0
                         }
-                        if(objectDataQtyBdbsLgort1 !== null && objectDataQtyBdbsLgort1 !== undefined){
+                        if (objectDataQtyBdbsLgort1 !== null && objectDataQtyBdbsLgort1 !== undefined) {
                             data[z].TotMagDefault = Number(objectDataQtyBdbsLgort1.TotalAllocQty)
                         } else {
                             data[z].TotMagDefault = 0
                         }
-                        if(objectDataQtyBdbsLgort2 !== null && objectDataQtyBdbsLgort2 !== undefined){
+                        if (objectDataQtyBdbsLgort2 !== null && objectDataQtyBdbsLgort2 !== undefined) {
                             data[z].TotMagProd = Number(objectDataQtyBdbsLgort2.TotalAllocQty)
                         } else {
                             data[z].TotMagProd = 0
                         }
-                        data[z].StockMaterialUnitMeasure = data[z].BaseUnit  
+                        data[z].StockMaterialUnitMeasure = data[z].BaseUnit
+                    } else {
+                        objectDataQtyBdbs = arrayDataQtyBdbs.find((o) => o.Material === data[z].Material && o.Batch === '');
+                        objectDataQtyBdbsLgort1 = arrayDataQtyBdbs.find((o) => o.Material === data[z].Material && o.StorageLocation === data[z].Lgort1);
+                        objectDataQtyBdbsLgort2 = arrayDataQtyBdbs.find((o) => o.Material === data[z].Material && o.StorageLocation === data[z].Lgort2);
+                        objectDataSumQtyDeliveryLgort1 = arrayDataSumQtyDelivery.find((o) => o.Material === data[z].Material && o.StorageLocation === data[z].Lgort1);
+                        objectDataSumQtyDeliveryLgort2 = arrayDataSumQtyDelivery.find((o) => o.Material === data[z].Material && o.StorageLocation === data[z].Lgort2);
+                        arrayStockOrderWithoutBatch = arrayDataStock.filter(obj => obj.Material === data[z].Material)
+                        arrayStockOrderWithoutBatchAvaibility = arrayDataStock.filter(obj => obj.Material === data[z].Material && obj.Plant === data[z].Plant && obj.StorageLocation === data[z].Lgort1)
+                        arrayStockOrderWithoutBatchAvaibilityLgort2 = arrayDataStock.filter(obj => obj.Material === data[z].Material && obj.Plant === data[z].Plant && obj.StorageLocation === data[z].Lgort2)
+                        arrayStockOrderWithoutBatchAvaibilityStockO = arrayDataStock.filter(obj => obj.Material === data[z].Material && obj.Plant === data[z].Plant && obj.Supplier === data[z].Supplier && obj.InventorySpecialStockType === 'O');
+                        if (arrayStockOrderWithoutBatch.length > 0) {
+                            for (var t = 0; t < arrayStockOrderWithoutBatch.length; t++) {
+                                sumStock = Number(sumStock) + Number(arrayStockOrderWithoutBatch[t].MatlWrhsStkQtyInMatlBaseUnit)
+                            }
+                            for (var x = 0; x < arrayStockOrderWithoutBatchAvaibility.length; x++) {
+                                sumStockAvaibility = Number(sumStockAvaibility) + Number(arrayStockOrderWithoutBatchAvaibility[x].MatlWrhsStkQtyInMatlBaseUnit)
+                            }
+                            for (var q = 0; q < arrayStockOrderWithoutBatchAvaibilityLgort2.length; q++) {
+                                sumStockAvaibilityLgort2 = Number(sumStockAvaibilityLgort2) + Number(arrayStockOrderWithoutBatchAvaibilityLgort2[q].MatlWrhsStkQtyInMatlBaseUnit)
+                            }
+                            for (var v = 0; v < arrayStockOrderWithoutBatchAvaibilityStockO.length; v++) {
+                                sumStockAvaibilityStockO = Number(sumStockAvaibilityStockO) + Number(arrayStockOrderWithoutBatchAvaibilityStockO[v].MatlWrhsStkQtyInMatlBaseUnit)
+                            }
+                            if (objectDataQtyBdbsLgort1 !== undefined && objectDataQtyBdbsLgort1 !== null && objectDataQtyBdbsLgort1 !== "") {
+                                data[z].StockMaterial = Number(sumStock) - Number(objectDataQtyBdbsLgort1.TotalAllocQty) + Number(data[z].TotalDefaultAllocQty)
+                                data[z].TotalAllocQtyCustom = Number(objectDataQtyBdbsLgort1.TotalAllocQty)
+                                data[z].AvaibilityQtyDefaultStorage = Number(sumStockAvaibility) - Number(objectDataQtyBdbsLgort1.TotalAllocQty) + Number(data[z].TotalDefaultAllocQty)
+                            } else {
+                                data[z].StockMaterial = Number(sumStock) + Number(data[z].TotalDefaultAllocQty)
+                                data[z].TotalAllocQtyCustom = 0
+                                data[z].AvaibilityQtyDefaultStorage = Number(sumStockAvaibility) + Number(data[z].TotalDefaultAllocQty)
+                            }
+                            if (data[z].requirementtype === 'AR') {
+                                if (objectDataQtyBdbsLgort2 !== null && objectDataQtyBdbsLgort2 !== undefined) {
+                                    data[z].AvaibilityQtyProdStorage = Number(sumStockAvaibilityLgort2) - Number(objectDataQtyBdbsLgort2.TotalAllocQty) + Number(data[z].TotalProdAllocQty)
+                                    data[z].AvaibilityQtyProdStorage = data[z].AvaibilityQtyProdStorage.toFixed(3)
+                                } else {
+                                    data[z].AvaibilityQtyProdStorage = Number(sumStockAvaibilityLgort2) + Number(data[z].TotalProdAllocQty)
+                                    data[z].AvaibilityQtyProdStorage = data[z].AvaibilityQtyProdStorage.toFixed(3)
+                                }
+                            } else {
+                                data[z].AvaibilityQtyProdStorage = Number(sumStockAvaibilityStockO)
+                                data[z].AvaibilityQtyProdStorage = data[z].AvaibilityQtyProdStorage.toFixed(3)
+                            }
+                            if (data[z].AvaibilityQtyProdStorage === "" || data[z].AvaibilityQtyProdStorage === null || data[z].AvaibilityQtyProdStorage === undefined) {
+                                data[z].AvaibilityQtyProdStorage = 0
+                            }
+
+                            if (objectDataSumQtyDeliveryLgort1 !== null && objectDataSumQtyDeliveryLgort1 !== undefined) {
+                                data[z].IssuedDefQty = Number(objectDataSumQtyDeliveryLgort1.TotDeliveryQty)
+                            } else {
+                                data[z].IssuedDefQty = 0
+                            }
+                            if (objectDataSumQtyDeliveryLgort2 !== null && objectDataSumQtyDeliveryLgort2 !== undefined) {
+                                data[z].IssuedProdQty = Number(objectDataSumQtyDeliveryLgort2.TotDeliveryQty)
+                            } else {
+                                data[z].IssuedProdQty = 0
+                            }
+                            if (objectDataQtyBdbsLgort1 !== null && objectDataQtyBdbsLgort1 !== undefined) {
+                                data[z].TotMagDefault = Number(objectDataQtyBdbsLgort1.TotalAllocQty)
+                            } else {
+                                data[z].TotMagDefault = 0
+                            }
+                            if (objectDataQtyBdbsLgort2 !== null && objectDataQtyBdbsLgort2 !== undefined) {
+                                data[z].TotMagProd = Number(objectDataQtyBdbsLgort2.TotalAllocQty)
+                            } else {
+                                data[z].TotMagProd = 0
+                            }
+                            data[z].StockMaterialUnitMeasure = data[z].BaseUnit
+                        }
                     }
+                    data[z].StockMaterial = data[z].StockMaterial.toFixed(3)
+                    // DL - 29/04/2025: modifico campo Prod Storage con fornitore in caso di lavorazione esterna
+                    if (data[z].requirementtype === 'BB') {
+                        data[z].Lgort2 = data[z].Supplier
+                    }
+                    data[z].SupplierWithDescription = data[z].Supplier + ' - ' + data[z].BPSupplierName
                 }
-                data[z].StockMaterial = data[z].StockMaterial.toFixed(3)
-                // DL - 29/04/2025: modifico campo Prod Storage con fornitore in caso di lavorazione esterna
-                if(data[z].requirementtype === 'BB'){
-                    data[z].Lgort2 = data[z].Supplier
+
+                console.log("TEST tempi -> fine calcolo colonne " + new Date())
+
+                console.log("TEST tempi -> inizio calcolo semaforo " + new Date())
+
+                for (var u = 0; u < data.length; u++) {
+                    if (Number(data[u].TotalConfdQtyForATPInBaseUoM) === 0) {
+                        data[u].QtyTrafficLightStatus = 1 //red
+                        data[u].QtyTrafficLight = 100
+                    } else if (Number(data[u].TotalConfdQtyForATPInBaseUoM) !== (Number(data[u].TotalRequiredQuantity) - Number(data[u].TotalWithdrawnQuantity))) {
+                        data[u].QtyTrafficLightStatus = 2 //orange
+                        data[u].QtyTrafficLight = Number(data[u].TotalConfdQtyForATPInBaseUoM) / (Number(data[u].TotalRequiredQuantity) - Number(data[u].TotalWithdrawnQuantity)) * 100
+                    } else {
+                        data[u].QtyTrafficLightStatus = 3  //green
+                        data[u].QtyTrafficLight = Number(data[u].TotalConfdQtyForATPInBaseUoM) / (Number(data[u].TotalRequiredQuantity) - Number(data[u].TotalWithdrawnQuantity)) * 100
+                    }
+
+                    data[u].QtyToIssue = Number(data[u].TotalConfdQtyForATPInBaseUoM) - Number(data[u].TotalAllocQty) - Number(data[u].TotalDeliveryQty) - Number(data[u].TotalWithdrawnQuantity)
+                    data[u].QtyToIssue = Number(data[u].QtyToIssue).toFixed(3)
                 }
-                data[z].SupplierWithDescription = data[z].Supplier + ' - ' + data[z].BPSupplierName
+
+                console.log("dati stock " + arrayDataStock.length)
+
+                console.log("TEST tempi -> fine calcolo semaforo " + new Date())
             }
-
-            console.log("TEST tempi -> fine calcolo colonne "+new Date())
-
-            console.log("TEST tempi -> inizio calcolo semaforo "+new Date())
-
-           for(var u = 0; u < data.length; u++){
-                if(Number(data[u].TotalConfdQtyForATPInBaseUoM) === 0){
-                    data[u].QtyTrafficLightStatus = 1 //red
-                    data[u].QtyTrafficLight = 100
-                } else if(Number(data[u].TotalConfdQtyForATPInBaseUoM) !== (Number(data[u].TotalRequiredQuantity) - Number(data[u].TotalWithdrawnQuantity))){
-                    data[u].QtyTrafficLightStatus = 2 //orange
-                    data[u].QtyTrafficLight = Number(data[u].TotalConfdQtyForATPInBaseUoM) / (Number(data[u].TotalRequiredQuantity) - Number(data[u].TotalWithdrawnQuantity)) * 100
-                } else {
-                    data[u].QtyTrafficLightStatus = 3  //green
-                    data[u].QtyTrafficLight = Number(data[u].TotalConfdQtyForATPInBaseUoM) / (Number(data[u].TotalRequiredQuantity) - Number(data[u].TotalWithdrawnQuantity)) * 100
-                }
-
-                data[u].QtyToIssue = Number(data[u].TotalConfdQtyForATPInBaseUoM) - Number(data[u].TotalAllocQty) - Number(data[u].TotalDeliveryQty) - Number(data[u].TotalWithdrawnQuantity)
-                data[u].QtyToIssue = Number(data[u].QtyToIssue).toFixed(3)
-            }
-                
-            console.log("dati stock "+arrayDataStock.length)
-
-            console.log("TEST tempi -> fine calcolo semaforo "+new Date())
         }
 
-        console.log("dati finali length "+data.length)
-        
+        console.log("dati finali length " + data.length)
+
         return data
     });
 
-   /*this.on("ZZ1_I_ShippingPoint", async (req) => {
-        return await cdsShippingPoint.tx(req).run(req.query);
-        await cdsView.tx(request).run(request.query);
-
-    });*/
+    /*this.on("ZZ1_I_ShippingPoint", async (req) => {
+         return await cdsShippingPoint.tx(req).run(req.query);
+         await cdsView.tx(request).run(request.query);
+ 
+     });*/
     this.on('READ', "ZZ1_I_ShippingPoint", async request => {
         request.query.SELECT.count = false
         var data = await cdsShippingPoint.tx(request).run(request.query);
@@ -467,7 +479,7 @@ module.exports = cds.service.impl(async function (srv) {
 
     this.on("CreateMaterialDocument", async (req) => {
         console.log("Chiamata ACTION CreateMaterialDocument")
- 
+
         const Documents = req.data.Record;
 
         // Controllo che l'oggetto della request sia pieno
@@ -475,7 +487,7 @@ module.exports = cds.service.impl(async function (srv) {
 
         var documentItemArray = []
         var documentItemObject = {}
-        for(var i=0; i<Documents.length; i++){
+        for (var i = 0; i < Documents.length; i++) {
             documentItemObject = {}
             documentItemObject.Material = Documents[i].Material
             documentItemObject.Plant = Documents[i].Plant
@@ -495,14 +507,14 @@ module.exports = cds.service.impl(async function (srv) {
         var postingCurrentDate = new Date()
         var year = postingCurrentDate.getFullYear()
         var month = postingCurrentDate.getMonth() + 1
-        if(month < 10){
+        if (month < 10) {
             month = '0' + month.toString()
         }
         var day = postingCurrentDate.getDate()
         var postingDate = year.toString() + '-' + month.toString() + '-' + day.toString()
-            
+
         var payload = {
-            "PostingDate": postingDate+"T00:00:00",
+            "PostingDate": postingDate + "T00:00:00",
             //"DocumentDate": "2025-04-22T00:00:00",
             "GoodsMovementCode": "03",
             //"ReferenceDocument": Documents[0].CprodOrd,
@@ -513,9 +525,9 @@ module.exports = cds.service.impl(async function (srv) {
 
             console.log("SUCCESSO!")
 
-            let callCreate = apiMaterialDocumentCreate.tx(req).post("/A_MaterialDocumentHeader", payload)        
-            console.log("Risultato chiamata " + JSON.stringify(callCreate))  
-            
+            let callCreate = apiMaterialDocumentCreate.tx(req).post("/A_MaterialDocumentHeader", payload)
+            console.log("Risultato chiamata " + JSON.stringify(callCreate))
+
             //return apiMaterialDocumentCreate.tx(req).post("/A_MaterialDocumentHeader", payload)                 
 
         } catch (error) {
@@ -527,7 +539,7 @@ module.exports = cds.service.impl(async function (srv) {
 
     this.on("CreateDelivery", async (req) => {
         console.log("Chiamata ACTION CreateDelivery")
- 
+
         const Documents = req.data.Record;
 
         // Controllo che l'oggetto della request sia pieno
@@ -536,32 +548,32 @@ module.exports = cds.service.impl(async function (srv) {
         var postingCurrentDate = new Date()
         var year = postingCurrentDate.getFullYear()
         var month = postingCurrentDate.getMonth() + 1
-        if(month < 10){
+        if (month < 10) {
             month = '0' + month.toString()
         }
         var day = postingCurrentDate.getDate()
-        if(day < 10){
+        if (day < 10) {
             day = '0' + day.toString()
-        }        
+        }
         var postingDate = year.toString() + '-' + month.toString() + '-' + day.toString()
-        
+
         // raggruppo risultati per Supplier
-        let DocumentsBySupplier = Object.values(Documents.reduce((acc,curr)=> {
-            if(!acc[curr.Supplier])acc[curr.Supplier]=[];
+        let DocumentsBySupplier = Object.values(Documents.reduce((acc, curr) => {
+            if (!acc[curr.Supplier]) acc[curr.Supplier] = [];
             acc[curr.Supplier].push(curr)
             return acc;
-        },{}))
+        }, {}))
 
         var documentItemArray = []
         var documentItemObject = {}
         var vstel = ""
         var lfdat = ""
         var lfdatFormatted = ""
-        for(var y=0; y<DocumentsBySupplier.length; y++){
+        for (var y = 0; y < DocumentsBySupplier.length; y++) {
             documentItemArray = []
-            for(var z=0; z<DocumentsBySupplier[y].length; z++){
+            for (var z = 0; z < DocumentsBySupplier[y].length; z++) {
                 vstel = DocumentsBySupplier[0][0].Vstel
-                lfdat = DocumentsBySupplier[0][0].Wadak                
+                lfdat = DocumentsBySupplier[0][0].Wadak
                 documentItemObject = {}
                 documentItemObject.rfbel = "1"
                 documentItemObject.rfpos = z.toString()
@@ -573,8 +585,8 @@ module.exports = cds.service.impl(async function (srv) {
                 documentItemObject.matnr = DocumentsBySupplier[y][z].Material
                 documentItemObject.werks = DocumentsBySupplier[y][z].Plant
                 documentItemObject.wadat = postingDate
-                if(lfdat !== null && lfdat !== undefined && lfdat !== ""){
-                    var yearLfdat = "20"+lfdat.split("/")[2]
+                if (lfdat !== null && lfdat !== undefined && lfdat !== "") {
+                    var yearLfdat = "20" + lfdat.split("/")[2]
                     lfdatFormatted = yearLfdat + "-" + lfdat.split("/")[1] + "-" + lfdat.split("/")[0]
                     documentItemObject.lfdat = lfdatFormatted
                 } else {
@@ -583,17 +595,17 @@ module.exports = cds.service.impl(async function (srv) {
                 documentItemObject.lfimg = Number(DocumentsBySupplier[y][z].Quantity)
                 documentItemObject.vrkme = DocumentsBySupplier[y][z].UnitMeasure
                 documentItemObject.meins = DocumentsBySupplier[y][z].UnitMeasure
-                documentItemObject.lgort = DocumentsBySupplier[y][z].Lgort            
+                documentItemObject.lgort = DocumentsBySupplier[y][z].Lgort
                 documentItemObject.bwart = DocumentsBySupplier[y][z].Bwart
                 documentItemObject.rblvs = DocumentsBySupplier[y][z].Bwart
-                if(DocumentsBySupplier[y][z].Bwart === '313' || DocumentsBySupplier[y][z].Bwart === '311'){
+                if (DocumentsBySupplier[y][z].Bwart === '313' || DocumentsBySupplier[y][z].Bwart === '311') {
                     documentItemObject.shkzg_um = "1"
                     documentItemObject.ummat = DocumentsBySupplier[y][z].Material
                     documentItemObject.umwrk = DocumentsBySupplier[y][z].Plant
                     documentItemObject.umlgo = DocumentsBySupplier[y][z].StorageLocation //"K1RP" 
-                    if(DocumentsBySupplier[y][z].Bwart === '313'){
+                    if (DocumentsBySupplier[y][z].Bwart === '313') {
                         documentItemObject.fobwa = "315"
-                    }              
+                    }
                     documentItemObject.fo_dlvtp = "ID"
                     documentItemObject.kzuml = "X"
                     documentItemObject.dlvtp = "OD"
@@ -604,7 +616,7 @@ module.exports = cds.service.impl(async function (srv) {
                     // 541
                     documentItemObject.kunwe = DocumentsBySupplier[y][z].Customer
                     documentItemObject.lifnr = DocumentsBySupplier[y][z].Supplier
-                    
+
                 }
                 //documentItemObject.lifex = DocumentsBySupplier[y][z].CprodOrd
                 documentItemObject.kdmat = DocumentsBySupplier[y][z].CprodOrd
@@ -634,21 +646,21 @@ module.exports = cds.service.impl(async function (srv) {
                 "vstel": vstel,
                 "DeliveryItems": documentItemArray
             }
-    
+
             try {
-                          
-                let callCreate = await createDeliverySD.tx(req).post("/CreateDelH", payload)     
-                console.log("Risultato chiamata " + JSON.stringify(callCreate))    
+
+                let callCreate = await createDeliverySD.tx(req).post("/CreateDelH", payload)
+                console.log("Risultato chiamata " + JSON.stringify(callCreate))
                 return callCreate
-    
+
             } catch (error) {
-    
+
                 console.log(error.message)
                 return error.message
             }
         }
 
-        return 
+        return
 
         /*var documentItemArray = []
         var documentItemObject = {}
@@ -727,21 +739,21 @@ module.exports = cds.service.impl(async function (srv) {
             "fo_dlvtp": "ID",
             "kzuml": "X"}]
         }*/
-       /*
-        var payload = {
-            "vstel": vstel,
-            "DeliveryItems": documentItemArray
-        }
-
-        try {
-                      
-            return createDeliverySD.tx(req).post("/CreateDelH", payload)         
-
-        } catch (error) {
-
-            console.log(error.message)
-            return error.message
-        }*/
+        /*
+         var payload = {
+             "vstel": vstel,
+             "DeliveryItems": documentItemArray
+         }
+ 
+         try {
+                       
+             return createDeliverySD.tx(req).post("/CreateDelH", payload)         
+ 
+         } catch (error) {
+ 
+             console.log(error.message)
+             return error.message
+         }*/
     })
 
     this.on("GetMaterialStock", async (req) => {
@@ -756,25 +768,25 @@ module.exports = cds.service.impl(async function (srv) {
                 material.to_MatlStkInAcctMod((to_MatlStkInAcctMod) => {
                     to_MatlStkInAcctMod('*')
                 })
-        }).where({ Material: req.data.Object.Material }));
+            }).where({ Material: req.data.Object.Material }));
         } catch (error) {
             console.log(error)
         }
 
-        if(dataStock !== undefined && dataStock !== null){
-            if(dataStock.length > 0){
-                for(var c=0; c<dataStock.length;c++){
-                    for(var f=0; f<dataStock[c].to_MatlStkInAcctMod.length; f++){
-                        if(dataStock[c].to_MatlStkInAcctMod[f].Supplier === req.data.Object.Supplier && dataStock[c].to_MatlStkInAcctMod[f].InventorySpecialStockType === 'O'){
+        if (dataStock !== undefined && dataStock !== null) {
+            if (dataStock.length > 0) {
+                for (var c = 0; c < dataStock.length; c++) {
+                    for (var f = 0; f < dataStock[c].to_MatlStkInAcctMod.length; f++) {
+                        if (dataStock[c].to_MatlStkInAcctMod[f].Supplier === req.data.Object.Supplier && dataStock[c].to_MatlStkInAcctMod[f].InventorySpecialStockType === 'O') {
                             arrayDataStock.push(dataStock[c].to_MatlStkInAcctMod[f])
                         }
-                    }   
+                    }
                 }
             }
 
-            console.log("Lunghezza arrayDataStock "+arrayDataStock.length)
+            console.log("Lunghezza arrayDataStock " + arrayDataStock.length)
 
-            console.log("TEST tempi -> fine select stock API "+new Date())
+            console.log("TEST tempi -> fine select stock API " + new Date())
         }
 
         return arrayDataStock;
@@ -784,11 +796,11 @@ module.exports = cds.service.impl(async function (srv) {
     this.on('READ', 'A_MaterialStock', async (req) => {
         let stockData = [];
 
-         // Set the configuration options for the GET request to the destination service
-         var material = 'MAE31745'
-         const get_config = {
+        // Set the configuration options for the GET request to the destination service
+        var material = 'MAE31745'
+        const get_config = {
             method: "GET",
-            url: serverUrl + "API_MATERIAL_STOCK_SRV/A_MaterialStock('"+ material +"')/to_MatlStkInAcctMod",
+            url: serverUrl + "API_MATERIAL_STOCK_SRV/A_MaterialStock('" + material + "')/to_MatlStkInAcctMod",
             headers: {
                 "content-type": "application/json",
                 Authorization: BasicAuth, // Encode the client ID and secret as base64
@@ -798,7 +810,7 @@ module.exports = cds.service.impl(async function (srv) {
                 $format: "json",
                 $filter: ``,
             },
-            httpsAgent: new https.Agent({  
+            httpsAgent: new https.Agent({
                 rejectUnauthorized: false  // Ignora il certificato non valido (solo per sviluppo)
             })
         };

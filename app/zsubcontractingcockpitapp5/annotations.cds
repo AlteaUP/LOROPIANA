@@ -81,7 +81,7 @@ annotate CatalogService.MainCds with @(
                 {
             $Type: 'UI.DataField',
             Value: TotalConfdQtyForATPInBaseUoM,
-            Label: '{18n>totalConfdQtyForATPInBaseUoM}',
+            Label: '{i18n>totalConfdQtyForATPInBaseUoM}',
             ![@HTML5.CssDefaults] : {
                 width : '5rem',
             },

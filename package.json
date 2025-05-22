@@ -144,6 +144,48 @@
           }
         }
       },
+      "ZZ1_I_COMBORDMATCHCODE_CDS": {
+        "kind": "odata",
+        "model": "srv/EXTERNAL/ZZ1_I_COMBORDMATCHCODE_CDS",
+        "forwardAuthToken": true,
+        "csrf": true,
+        "csrfInBatch": true,   
+        "[hybrid]": {
+          "credentials": {
+            "requestTimeout": 300000,
+            "destination": "S4HANA",            
+            "path": "/sap/opu/odata/sap/ZZ1_I_COMBORDMATCHCODE_CDS"  
+          }
+        },             
+       "[production]": {
+          "credentials": {
+            "requestTimeout": 300000,
+            "destination": "S4HANA",            
+            "path": "/sap/opu/odata/sap/ZZ1_I_COMBORDMATCHCODE_CDS"
+          }
+        }
+      },
+      "ZZ1_I_PRODTYPEMATCHCOD_CDS": {
+        "kind": "odata",
+        "model": "srv/EXTERNAL/ZZ1_I_PRODTYPEMATCHCOD_CDS",
+        "forwardAuthToken": true,
+        "csrf": true,
+        "csrfInBatch": true,   
+        "[hybrid]": {
+          "credentials": {
+            "requestTimeout": 300000,
+            "destination": "S4HANA",            
+            "path": "/sap/opu/odata/sap/ZZ1_I_PRODTYPEMATCHCOD_CDS"  
+          }
+        },             
+       "[production]": {
+          "credentials": {
+            "requestTimeout": 300000,
+            "destination": "S4HANA",            
+            "path": "/sap/opu/odata/sap/ZZ1_I_PRODTYPEMATCHCOD_CDS"
+          }
+        }
+      },
       "MM_PUR_SUBCONTRACTING_COCKPIT_SRV": {
         "kind": "odata-v2",
         "model": "srv/EXTERNAL/MM_PUR_SUBCONTRACTING_COCKPIT_SRV",

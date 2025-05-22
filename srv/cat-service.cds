@@ -13,6 +13,8 @@ using { ZZ1_I_SHIPPINGPOINT_CDS as ShippingPointCDS} from './EXTERNAL/ZZ1_I_SHIP
 using { ZZ1_I_UNION_SUBCONCTR_COMP_CDS as ComponentCDS } from './EXTERNAL/ZZ1_I_UNION_SUBCONCTR_COMP_CDS';
 using { ZZ1_I_WORKCENTERTXT_CDS as WorkCenterCDS } from './EXTERNAL/ZZ1_I_WORKCENTERTXT_CDS';
 using { ZZ1_I_PLANTTXT_CDS as PlantCDS } from './EXTERNAL/ZZ1_I_PLANTTXT_CDS';
+using { ZZ1_I_PRODTYPEMATCHCOD_CDS as ProdTypeCDS } from './EXTERNAL/ZZ1_I_PRODTYPEMATCHCOD_CDS';
+using { ZZ1_I_COMBORDMATCHCODE_CDS as CombOrderCDS } from './EXTERNAL/ZZ1_I_COMBORDMATCHCODE_CDS';
 
 @cds.query.limit.default: 500
 @cds.query.limit.max: 500
@@ -132,6 +134,10 @@ service CatalogService {
     @readonly entity ZZ1_I_WORKCENTERTXT as projection on WorkCenterCDS.ZZ1_I_WORKCENTERTXT;
     
     @readonly entity ZZ1_I_PLANTTXT as projection on PlantCDS.ZZ1_I_PLANTTXT;
+    
+    @readonly entity ZZ1_I_PRODTYPEMATCHCOD as projection on ProdTypeCDS.ZZ1_I_PRODTYPEMATCHCOD;
+
+    @readonly entity ZZ1_I_COMBORDMATCHCODE as projection on CombOrderCDS.ZZ1_I_COMBORDMATCHCODE;
 
     @readonly entity ZZ1_I_UNION_SUBCONCTR_COMP as projection on ComponentCDS.ZZ1_I_UNION_SUBCONCTR_COMP;
 

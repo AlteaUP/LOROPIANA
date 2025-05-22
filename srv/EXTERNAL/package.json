@@ -60,6 +60,14 @@
       "ZZ1_I_PLANTTXT_CDS": {
         "kind": "odata-v2",
         "model": "srv/external/ZZ1_I_PLANTTXT_CDS"
+      },
+      "ZZ1_I_COMBORDMATCHCODE_CDS": {
+        "kind": "odata-v2",
+        "model": "srv/external/ZZ1_I_COMBORDMATCHCODE_CDS"
+      },
+      "ZZ1_I_PRODTYPEMATCHCOD_CDS": {
+        "kind": "odata-v2",
+        "model": "srv/external/ZZ1_I_PRODTYPEMATCHCOD_CDS"
       }
     }
   },

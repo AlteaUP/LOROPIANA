@@ -270,7 +270,7 @@ annotate CatalogService.MainCds with {
                     ValueListProperty: 'PlantName'
                 }
             ],
-            Label : 'Plant',
+            Label : '{i18n>plant}',
         },
         Common.ValueListWithFixedValues : false
 )};
@@ -290,7 +290,39 @@ annotate CatalogService.MainCds with {
                     ValueListProperty: 'WorkCenterText'
                 }
             ],
-            Label : 'WorkCenter',
+            Label : '{i18n>cprodOrd}',
+        },
+        Common.ValueListWithFixedValues : false
+)};
+
+annotate CatalogService.MainCds with {
+    CprodOrd @(Common.ValueList : {
+            $Type : 'Common.ValueListType',
+            CollectionPath : 'ZZ1_I_COMBORDMATCHCODE',
+            Parameters : [
+                {
+                    $Type : 'Common.ValueListParameterInOut',
+                    LocalDataProperty : CprodOrd,
+                    ValueListProperty : 'CprodOrd',
+                }
+            ],
+            Label : '{i18n>combOrder}',
+        },
+        Common.ValueListWithFixedValues : false
+)};
+
+annotate CatalogService.MainCds with {
+    ManufacturingOrderType @(Common.ValueList : {
+            $Type : 'Common.ValueListType',
+            CollectionPath : 'ZZ1_I_PRODTYPEMATCHCOD',
+            Parameters : [
+                {
+                    $Type : 'Common.ValueListParameterInOut',
+                    LocalDataProperty : ManufacturingOrderType,
+                    ValueListProperty : 'ManufacturingOrderType',
+                }
+            ],
+            Label : '{i18n>cprodOrd}',
         },
         Common.ValueListWithFixedValues : false
 )};

@@ -1,4 +1,4 @@
-/* checksum : 655b39c7e5ec6728a3c2419888884621 */
+/* checksum : fc6ad6d527b8aca32f9dfbbf73b51d32 */
 @cds.external : true
 @m.IsDefaultEntityContainer : 'true'
 @sap.message.scope.supported : 'true'
@@ -15,18 +15,8 @@ service ZZ1_I_COMBORDMATCHCODE_CDS {};
 entity ZZ1_I_COMBORDMATCHCODE_CDS.ZZ1_I_COMBORDMATCHCODE {
   @sap.display.format : 'UpperCase'
   @sap.required.in.filter : 'false'
-  @sap.label : 'Ordine di produzione'
-  @sap.quickinfo : 'ID ordine di produzione'
-  key ManufacturingOrder : String(12) not null;
-  @sap.display.format : 'UpperCase'
-  @sap.required.in.filter : 'false'
-  @sap.label : 'Ordine prod. princ.'
-  @sap.quickinfo : 'Numero ordine di produzione principale'
-  FshMprodOrd : String(12);
-  @sap.display.format : 'UpperCase'
-  @sap.required.in.filter : 'false'
   @sap.label : 'Ord. prod. combinato'
   @sap.quickinfo : 'Ordine prod. principale comb.'
-  CprodOrd : String(12);
+  key CprodOrd : String(12) not null;
 };
 

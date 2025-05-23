@@ -1,4 +1,4 @@
-/* checksum : 430b347280b9a9569fb4e3ceccecbeb1 */
+/* checksum : 36d5321f98469a564817d761d86f7d74 */
 @cds.external : true
 @m.IsDefaultEntityContainer : 'true'
 @sap.message.scope.supported : 'true'
@@ -11,16 +11,12 @@ service ZZ1_I_PRODTYPEMATCHCOD_CDS {};
 @sap.updatable : 'false'
 @sap.deletable : 'false'
 @sap.content.version : '1'
-@sap.label : 'ZZ1_I_PRODTYPEMATCHCODE'
+@sap.label : 'ZZ1_I_PRODTYPEMATCHCOD'
 entity ZZ1_I_PRODTYPEMATCHCOD_CDS.ZZ1_I_PRODTYPEMATCHCOD {
   @sap.display.format : 'UpperCase'
   @sap.required.in.filter : 'false'
-  @sap.label : 'Ordine di produzione'
-  @sap.quickinfo : 'ID ordine di produzione'
-  key ManufacturingOrder : String(12) not null;
-  @sap.display.format : 'UpperCase'
-  @sap.required.in.filter : 'false'
   @sap.label : 'Tipo di ordine'
-  ManufacturingOrderType : String(4);
+  @sap.quickinfo : 'Tipo di ordine di produzione'
+  key ManufacturingOrderType : String(4) not null;
 };
 

@@ -414,7 +414,13 @@ sap.ui.define(
                                 oBusyDialog.close();
                                 if(oContext.getObject().value.DeliveryItems !== undefined){
                                     if(oContext.getObject().value.DeliveryItems[0].FlErr){
-                                        oController.openDialogMessageText(oContext.getObject().value.DeliveryItems[0].LogMess, "E");
+                                        // modifica DL - 26/05/2025 - espongo delivery
+                                        if(oContext.getObject().value.DeliveryItems[oContext.getObject().value.DeliveryItems.length-1].vbeln !== ""){
+                                            var vbeln = oContext.getObject().value.DeliveryItems[oContext.getObject().value.DeliveryItems.length-1].vbeln
+                                            oController.openDialogMessageText(oController.getResourceBundle().getText("delivery") + " " + vbeln + " " + oController.getResourceBundle().getText("created"), "I");
+                                        } else {
+                                            oController.openDialogMessageText(oContext.getObject().value.DeliveryItems[0].LogMess, "E");
+                                        }
                                     } else {
                                         oController.openDialogMessageText("", "I");
                                     }

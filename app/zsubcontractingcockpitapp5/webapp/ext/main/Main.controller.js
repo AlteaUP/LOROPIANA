@@ -368,6 +368,7 @@ sap.ui.define(
                             // TODO - gestione errore
                             //alert("Material Document Created!")
                             oController.openDialogMessageText("", "I");
+                            oController.byId("TableOrderId").getModel().refresh()
                         }).catch((oError) => {
                             oBusyDialog.close();
                             // TODO - gestione errore
@@ -418,11 +419,13 @@ sap.ui.define(
                                         if(oContext.getObject().value.DeliveryItems[oContext.getObject().value.DeliveryItems.length-1].vbeln !== ""){
                                             var vbeln = oContext.getObject().value.DeliveryItems[oContext.getObject().value.DeliveryItems.length-1].vbeln
                                             oController.openDialogMessageText(oController.getResourceBundle().getText("delivery") + " " + vbeln + " " + oController.getResourceBundle().getText("created"), "I");
+                                            oController.byId("TableOrderId").getModel().refresh()
                                         } else {
                                             oController.openDialogMessageText(oContext.getObject().value.DeliveryItems[0].LogMess, "E");
                                         }
                                     } else {
                                         oController.openDialogMessageText("", "I");
+                                        oController.byId("TableOrderId").getModel().refresh()
                                     }
                                 } else {
                                     oController.openDialogMessageText(oContext.getObject().value, "E");

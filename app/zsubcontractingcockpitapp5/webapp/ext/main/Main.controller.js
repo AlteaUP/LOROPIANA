@@ -110,6 +110,9 @@ sap.ui.define(
                             selectedMaterialArray[i].QtyToIssue = 0
                         }
                     }
+                    selectedMaterialArray[i].QtyToIssue = this.parseAndFormatNumber(selectedMaterialArray[i].QtyToIssue);
+                    selectedMaterialArray[i].TotalConfdQtyForATPInBaseUoM = this.parseAndFormatNumber(selectedMaterialArray[i].TotalConfdQtyForATPInBaseUoM);
+                    selectedMaterialArray[i].TotalWithdrawnQuantity = this.parseAndFormatNumber(selectedMaterialArray[i].TotalWithdrawnQuantity);
                 }
 
                 if(found543){
@@ -124,6 +127,27 @@ sap.ui.define(
                 oModel.setData({ SelectedMaterial: selectedMaterialArray})
                 oTable.setModel(oModel);                
                 
+            },
+
+            parseAndFormatNumber: function(input) {
+                if (typeof input !== "string") return "";
+            
+                // Rimuove i punti usati come separatori delle migliaia
+                const cleaned = input.replace(/\,/g, '');
+            
+                // Sostituisce la virgola decimale con il punto
+                const normalized = cleaned.replace(',', '.');
+            
+                // Converte in numero
+                const num = parseFloat(normalized);
+            
+                if (isNaN(num)) return "";
+            
+                // Format secondo lo stile italiano
+                return num.toLocaleString('it-IT', {
+                  minimumFractionDigits: num % 1 !== 0 ? 2 : 0,
+                  maximumFractionDigits: 20
+                });
             },
 
             zeroPad: function(num, totDigit) {

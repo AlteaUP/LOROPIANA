@@ -4,8 +4,8 @@
    xmlns:core="sap.ui.core">
    <Dialog
       id="ManualAccountingDialog"
-      contentHeight="50%"
-      contentWidth="70%"
+      contentHeight="60%"
+      contentWidth="90%"
       resizable="false"
       type="Message"
       state="None"

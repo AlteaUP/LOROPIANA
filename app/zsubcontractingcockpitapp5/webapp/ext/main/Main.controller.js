@@ -113,6 +113,7 @@ sap.ui.define(
                     selectedMaterialArray[i].QtyToIssue = this.parseAndFormatNumber(selectedMaterialArray[i].QtyToIssue);
                     selectedMaterialArray[i].TotalConfdQtyForATPInBaseUoM = this.parseAndFormatNumber(selectedMaterialArray[i].TotalConfdQtyForATPInBaseUoM);
                     selectedMaterialArray[i].TotalWithdrawnQuantity = this.parseAndFormatNumber(selectedMaterialArray[i].TotalWithdrawnQuantity);
+                    selectedMaterialArray[i].QtyToIssueOriginal = selectedMaterialArray[i].QtyToIssue
                 }
 
                 if(found543){
@@ -331,9 +332,57 @@ sap.ui.define(
                             }
                             dataToSendObject.Wadak = this.byId("WadakID").getValue()
                             dataToSendObject.StorageLocation = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].StorageLocation
-                            dataToSendObject.AvaibilityQtyProdStorage = (this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].AvaibilityQtyProdStorage).toString()
-                            dataToSendObject.AvaibilityQtyDefaultStorage = (this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].AvaibilityQtyDefaultStorage).toString()
+                            if(this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].AvaibilityQtyProdStorage !== null && this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].AvaibilityQtyProdStorage !== undefined){
+                            // and is not undefined (using the variable 'u' to represent undefined).
+                                dataToSendObject.AvaibilityQtyProdStorage = (this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].AvaibilityQtyProdStorage).toString()
+                            }
+                            if(this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].AvaibilityQtyDefaultStorage !== undefined && this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].AvaibilityQtyDefaultStorage !== null){
+                                dataToSendObject.AvaibilityQtyDefaultStorage = (this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].AvaibilityQtyDefaultStorage).toString()
+                            }
+                            dataToSendObject.Kdmat = dataToSendObject.CprodOrd
                             dataToSend.push(dataToSendObject)
+                            // modifica DL - 27/05/2025 - se quantità da sperdire supera disponibilità, allora appendo nuovo record
+                            /*if(this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].QtyToIssue > this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].QtyToIssueOriginal){
+                                dataToSendObject = {}
+                                dataToSendObject.QtyToIssue = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].QtyToIssue - this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].QtyToIssueOriginal
+                                dataToSendObject.Kdmat = ""
+                                dataToSendObject.Material = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].Material
+                                dataToSendObject.Batch = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].Batch
+                                dataToSendObject.Stock = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].StockMaterial
+                                dataToSendObject.Quantity = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].QtyToIssue
+                                dataToSendObject.CprodOrd = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].CprodOrd
+                                dataToSendObject.CprodOrd = oController.zeroPad(dataToSendObject.CprodOrd, 12)
+                                dataToSendObject.UnitMeasure = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].EntryUnit
+                                dataToSendObject.Plant = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].Plant
+                                dataToSendObject.WorkCenterInternalID = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].WorkCenterInternalID
+                                if(this.byId("ManualAccountingDialog").data("buttonPressed") === "HUB"){
+                                    dataToSendObject.Lgort = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].Lgort1
+                                } else {
+                                    dataToSendObject.Lgort = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].Lgort2
+                                }                    
+                                dataToSendObject.Vstel = this.byId("shippingPointID").getValue()
+                                dataToSendObject.Supplier = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].Supplier
+                                if(this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].requirementtype === "BB"){
+                                    dataToSendObject.Bwart = "541"
+                                    dataToSendObject.Lfart = "LB"
+                                    dataToSendObject.Customer = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].Customer
+                                    dataToSendObject.Supplier = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].Supplier
+                                } else {
+                                    if(this.byId("ManualAccountingDialog").data("buttonPressed") === "HUB"){
+                                        dataToSendObject.Bwart = "313"
+                                    } else {
+                                        // pulsante Factory
+                                        dataToSendObject.Bwart = "311"
+                                    }
+                                    dataToSendObject.Lfart = "ZHOD"
+                                }
+                                dataToSendObject.Wadak = this.byId("WadakID").getValue()
+                                dataToSendObject.StorageLocation = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].StorageLocation
+                                dataToSendObject.AvaibilityQtyProdStorage = (this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].AvaibilityQtyProdStorage).toString()
+                                dataToSendObject.AvaibilityQtyDefaultStorage = (this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].AvaibilityQtyDefaultStorage).toString()
+                                dataToSend.push(dataToSendObject)
+                            }
+                            // modifica DL - 27/05/2025 - se quantità da sperdire supera disponibilità, allora appendo nuovo record - FINE*/
                         }
                     }
 

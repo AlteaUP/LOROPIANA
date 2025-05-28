@@ -19,6 +19,7 @@ type MaterialRecord : {
     Wadak           : String;
     AvaibilityQtyDefaultStorage : String;
     AvaibilityQtyProdStorage    : String;
+    //Kdmat           : String;
 }
 
 type MaterialCreateDocument : {

@@ -56,6 +56,9 @@
                     <Text text="{i18n>quantityToIssue}"/>
                 </Column>
                 <Column>
+                    <Text text="{i18n>quantityToIssue}" visible="false"/>
+                </Column>
+                <Column>
                     <Text text="{i18n>quantity}"/>
                 </Column>
                 <Column>
@@ -84,6 +87,8 @@
                   value="{Batch}" editable="false" />
                 <Input 
                   value="{QtyToIssue}" description="{BaseUnit}" />
+                <Input 
+                  value="{QtyToIssueOriginal}" description="{BaseUnit}" visible="false" />
                 <Input 
                   value="{TotalConfdQtyForATPInBaseUoM}" description="{BaseUnit}" editable="false" />
                 <Input 

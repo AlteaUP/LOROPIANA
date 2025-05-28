@@ -635,6 +635,7 @@ module.exports = cds.service.impl(async function (srv) {
 
                 }
                 //documentItemObject.lifex = DocumentsBySupplier[y][z].CprodOrd
+                //documentItemObject.kdmat = DocumentsBySupplier[y][z].Kdmat //DocumentsBySupplier[y][z].CprodOrd
                 documentItemObject.kdmat = DocumentsBySupplier[y][z].CprodOrd
                 documentItemObject.charg = DocumentsBySupplier[y][z].Batch
                 documentItemObject.wadat_ist = postingDate

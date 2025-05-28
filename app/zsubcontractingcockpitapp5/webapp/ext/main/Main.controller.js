@@ -385,7 +385,11 @@ sap.ui.define(
                                 }
                                 // aggiorno quantità precedente
                                 var lengthDataToSend = dataToSend.length
-                                dataToSend[lengthDataToSend-1].Quantity = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].QtyToIssueOriginal
+                                if(this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].QtyToIssueOriginal !== undefined && this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].QtyToIssueOriginal !== null && this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].QtyToIssueOriginal !== ""){
+                                    dataToSend[lengthDataToSend-1].Quantity = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].QtyToIssueOriginal
+                                } else {
+                                    dataToSend[lengthDataToSend-1].Quantity = "0"
+                                }                                
                                 dataToSend.push(dataToSendObject)                                
                             }
                             // modifica DL - 28/05/2025 - se quantità da sperdire supera disponibilità, allora appendo nuovo record - FINE

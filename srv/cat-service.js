@@ -52,6 +52,11 @@ module.exports = cds.service.impl(async function (srv) {
             request.query.SELECT.where.push({ref: ['CprodOrd']})
             request.query.SELECT.where.push('<>')
             request.query.SELECT.where.push({val: ''})
+        } else {
+            request.query.SELECT.where = []
+            request.query.SELECT.where.push({ref: ['CprodOrd']})
+            request.query.SELECT.where.push('<>')
+            request.query.SELECT.where.push({val: ''})
         }
         // modifica DL - 21/05/2025 - elimino record con combined order vuoto - FINE
 

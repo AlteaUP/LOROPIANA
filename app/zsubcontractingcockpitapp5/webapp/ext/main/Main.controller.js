@@ -341,15 +341,14 @@ sap.ui.define(
                             }
                             dataToSendObject.Kdmat = dataToSendObject.CprodOrd
                             dataToSend.push(dataToSendObject)
-                            // modifica DL - 27/05/2025 - se quantità da sperdire supera disponibilità, allora appendo nuovo record
-                            /*if(this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].QtyToIssue > this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].QtyToIssueOriginal){
+                            // modifica DL - 28/05/2025 - se quantità da sperdire supera disponibilità, allora appendo nuovo record
+                            if(Number(this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].QtyToIssue) > Number(this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].QtyToIssueOriginal)){
                                 dataToSendObject = {}
-                                dataToSendObject.QtyToIssue = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].QtyToIssue - this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].QtyToIssueOriginal
                                 dataToSendObject.Kdmat = ""
                                 dataToSendObject.Material = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].Material
                                 dataToSendObject.Batch = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].Batch
                                 dataToSendObject.Stock = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].StockMaterial
-                                dataToSendObject.Quantity = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].QtyToIssue
+                                dataToSendObject.Quantity = (this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].QtyToIssue - this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].QtyToIssueOriginal).toString()
                                 dataToSendObject.CprodOrd = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].CprodOrd
                                 dataToSendObject.CprodOrd = oController.zeroPad(dataToSendObject.CprodOrd, 12)
                                 dataToSendObject.UnitMeasure = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].EntryUnit
@@ -378,11 +377,18 @@ sap.ui.define(
                                 }
                                 dataToSendObject.Wadak = this.byId("WadakID").getValue()
                                 dataToSendObject.StorageLocation = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].StorageLocation
-                                dataToSendObject.AvaibilityQtyProdStorage = (this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].AvaibilityQtyProdStorage).toString()
-                                dataToSendObject.AvaibilityQtyDefaultStorage = (this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].AvaibilityQtyDefaultStorage).toString()
-                                dataToSend.push(dataToSendObject)
+                                if(this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].AvaibilityQtyProdStorage !== null && this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].AvaibilityQtyProdStorage !== undefined){
+                                    dataToSendObject.AvaibilityQtyProdStorage = (this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].AvaibilityQtyProdStorage).toString()
+                                }
+                                if(this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].AvaibilityQtyDefaultStorage !== undefined && this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].AvaibilityQtyDefaultStorage !== null){
+                                    dataToSendObject.AvaibilityQtyDefaultStorage = (this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].AvaibilityQtyDefaultStorage).toString()
+                                }
+                                // aggiorno quantità precedente
+                                var lengthDataToSend = dataToSend.length
+                                dataToSend[lengthDataToSend-1].Quantity = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].QtyToIssueOriginal
+                                dataToSend.push(dataToSendObject)                                
                             }
-                            // modifica DL - 27/05/2025 - se quantità da sperdire supera disponibilità, allora appendo nuovo record - FINE*/
+                            // modifica DL - 28/05/2025 - se quantità da sperdire supera disponibilità, allora appendo nuovo record - FINE
                         }
                     }
 
@@ -484,20 +490,26 @@ sap.ui.define(
                     if(dataToSend.length > 0 && !noDeliveryCreation){
                         if(!noDeliveryCreation){
                             oBindingContext3.execute().then((oResult) => {
-                                var oContext = oBindingContext3.getBoundContext();                                 
+                                var oContext = oBindingContext3.getBoundContext(); 
+                                var vbeln;                                
                                 oBusyDialog.close();
                                 if(oContext.getObject().value.DeliveryItems !== undefined){
                                     if(oContext.getObject().value.DeliveryItems[0].FlErr){
                                         // modifica DL - 26/05/2025 - espongo delivery
                                         if(oContext.getObject().value.DeliveryItems[oContext.getObject().value.DeliveryItems.length-1].vbeln !== ""){
-                                            var vbeln = oContext.getObject().value.DeliveryItems[oContext.getObject().value.DeliveryItems.length-1].vbeln
+                                            vbeln = oContext.getObject().value.DeliveryItems[oContext.getObject().value.DeliveryItems.length-1].vbeln
                                             oController.openDialogMessageText(oController.getResourceBundle().getText("delivery") + " " + vbeln + " " + oController.getResourceBundle().getText("created"), "I");
                                             oController.byId("TableOrderId").getModel().refresh()
                                         } else {
                                             oController.openDialogMessageText(oContext.getObject().value.DeliveryItems[0].LogMess, "E");
                                         }
                                     } else {
-                                        oController.openDialogMessageText("", "I");
+                                        if(oContext.getObject().value.DeliveryItems[oContext.getObject().value.DeliveryItems.length-1].vbeln !== ""){
+                                            vbeln = oContext.getObject().value.DeliveryItems[oContext.getObject().value.DeliveryItems.length-1].vbeln
+                                            oController.openDialogMessageText(oController.getResourceBundle().getText("delivery") + " " + vbeln + " " + oController.getResourceBundle().getText("created"), "I");
+                                        } else {
+                                            oController.openDialogMessageText("", "I");
+                                        }
                                         oController.byId("TableOrderId").getModel().refresh()
                                     }
                                 } else {
@@ -505,7 +517,11 @@ sap.ui.define(
                                 }
                             }).catch((oError) => {
                                 oBusyDialog.close();
-                                oController.openDialogMessageText(oError.error.message, "E");
+                                if(oError.error !== undefined && oError.error !== null){
+                                    oController.openDialogMessageText(oError.error.message, "E");
+                                } else {
+                                    oController.openDialogMessageText(oError, "E");
+                                }
                             });
                         } else {
                            oController.openDialogMessageText(oController.getResourceBundle().getText("noStockNoDelivery"), "E"); 

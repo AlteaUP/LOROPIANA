@@ -8,7 +8,7 @@ annotate CatalogService.MainCds with @(
     //    Supplier
     //    ]
     //},
-    UI.SelectionFields #SF : [Material, CprodOrd, Plant, WorkCenterInternalID, ManufacturingOrderType],
+    UI.SelectionFields #SF : [Material, CprodOrd, Plant, WorkCenter, ManufacturingOrderType],
     UI.PresentationVariant : {    
         Visualizations: ['@UI.LineItem#tableMacro']
     },
@@ -276,13 +276,13 @@ annotate CatalogService.MainCds with {
 )};
 
 annotate CatalogService.MainCds with {
-    WorkCenterInternalID @(Common.ValueList : {
+    WorkCenter @(Common.ValueList : {
             $Type : 'Common.ValueListType',
             CollectionPath : 'ZZ1_I_WORKCENTERTXT',
             Parameters : [
                 {
                     $Type : 'Common.ValueListParameterInOut',
-                    LocalDataProperty : WorkCenterInternalID,
+                    LocalDataProperty : WorkCenter,
                     ValueListProperty : 'WorkCenter',
                 },
                 {

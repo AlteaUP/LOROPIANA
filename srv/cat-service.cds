@@ -71,7 +71,6 @@ service CatalogService {
         key ProductSeason,
         key ProductCollection,
         key ProductTheme,
-        @Common.Label: '{i18n>workCenter}'
         key WorkCenterInternalID,
         key WorkCenterTypeCODE_2_1,
         key ManufacturingOrderSequence,
@@ -79,7 +78,8 @@ service CatalogService {
         @Common.Label: '{i18n>manufacturingOrderType}'
         key ManufacturingOrderType,
         key ProductionInvtryManagedLoc,
-        key Supplier,        
+        key Supplier,   
+        @Common.Label: '{i18n>workCenter}'     
         key WorkCenter,
         key Customer,
         key BPSupplierName,

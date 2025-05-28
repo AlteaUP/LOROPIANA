@@ -1,4 +1,4 @@
-/* checksum : 49dbc46ccc2f512bf5fd60a44a016d95 */
+/* checksum : f1ea509c63171b2f0c0af2a90dac6c2d */
 @cds.external : true
 @m.IsDefaultEntityContainer : 'true'
 @sap.message.scope.supported : 'true'
@@ -1601,6 +1601,14 @@ entity ZZ1_I_COMBORDER_COMP_CDS.ZZ1_I_COMBORDER_COMP {
   @sap.quickinfo : 'Tipo di stock inventario speciale'
   InventorySpecialStockType : String(1);
   @sap.aggregation.role : 'dimension'
+  @sap.required.in.filter : 'false'
+  @sap.label : 'StockSegment'
+  StockSegment : String(1);
+  @sap.aggregation.role : 'dimension'
+  @sap.required.in.filter : 'false'
+  @sap.label : 'RequirementSegment'
+  RequirementSegment : String(1);
+  @sap.aggregation.role : 'dimension'
   @sap.display.format : 'Date'
   @sap.required.in.filter : 'false'
   @sap.label : 'minRequirementDate'
@@ -1665,6 +1673,10 @@ entity ZZ1_I_COMBORDER_COMP_CDS.ZZ1_I_COMBORDER_COMP {
   @sap.unit : 'EntryUnit'
   @sap.label : 'TotalProdAllocQty'
   TotalProdAllocQty : Decimal(13, 3);
+  @sap.required.in.filter : 'false'
+  @sap.label : 'Product Description'
+  @sap.quickinfo : 'Descrizione prodotto'
+  ProductDescription_1 : String(40);
   to_ZZ1_C_PRODUCT : Association to many ZZ1_I_COMBORDER_COMP_CDS.ZZ1_C_PRODUCT {  };
 };
 

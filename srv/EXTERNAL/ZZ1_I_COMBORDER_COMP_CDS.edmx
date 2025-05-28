@@ -438,6 +438,8 @@
 <Property Name="Lgort2" Type="Edm.String" MaxLength="4" sap:aggregation-role="dimension" sap:required-in-filter="false" sap:label="Testo di lunghezza 4"/>
 <Property Name="Lgort3" Type="Edm.String" MaxLength="4" sap:aggregation-role="dimension" sap:required-in-filter="false" sap:label="Testo di lunghezza 4"/>
 <Property Name="InventorySpecialStockType" Type="Edm.String" MaxLength="1" sap:aggregation-role="dimension" sap:display-format="UpperCase" sap:required-in-filter="false" sap:label="Tp. stock speciale" sap:quickinfo="Tipo di stock inventario speciale"/>
+<Property Name="StockSegment" Type="Edm.String" MaxLength="1" sap:aggregation-role="dimension" sap:required-in-filter="false" sap:label="StockSegment"/>
+<Property Name="RequirementSegment" Type="Edm.String" MaxLength="1" sap:aggregation-role="dimension" sap:required-in-filter="false" sap:label="RequirementSegment"/>
 <Property Name="minRequirementDate" Type="Edm.DateTime" Precision="0" sap:aggregation-role="dimension" sap:display-format="Date" sap:required-in-filter="false" sap:label="minRequirementDate"/>
 <Property Name="minRequirementTime" Type="Edm.Time" Precision="0" sap:aggregation-role="dimension" sap:required-in-filter="false" sap:label="minRequirementTime"/>
 <Property Name="minLatestRequirementDate" Type="Edm.DateTime" Precision="0" sap:aggregation-role="dimension" sap:display-format="Date" sap:required-in-filter="false" sap:label="minLatestRequirementDate"/>
@@ -451,6 +453,7 @@
 <Property Name="TotalDeliveryQty" Type="Edm.Decimal" Precision="13" Scale="3" sap:aggregation-role="dimension" sap:required-in-filter="false" sap:unit="EntryUnit" sap:label="TotalDeliveryQty"/>
 <Property Name="TotalDefaultAllocQty" Type="Edm.Decimal" Precision="13" Scale="3" sap:aggregation-role="dimension" sap:required-in-filter="false" sap:unit="EntryUnit" sap:label="TotalDefaultAllocQty"/>
 <Property Name="TotalProdAllocQty" Type="Edm.Decimal" Precision="13" Scale="3" sap:aggregation-role="dimension" sap:required-in-filter="false" sap:unit="EntryUnit" sap:label="TotalProdAllocQty"/>
+<Property Name="ProductDescription_1" Type="Edm.String" MaxLength="40" sap:required-in-filter="false" sap:label="Product Description" sap:quickinfo="Descrizione prodotto"/>
 <NavigationProperty Name="to_ZZ1_C_PRODUCT" Relationship="ZZ1_I_COMBORDER_COMP_CDS.assoc_6FF85B105E51509E22160A4B6E5B5FF3" FromRole="FromRole_assoc_6FF85B105E51509E22160A4B6E5B5FF3" ToRole="ToRole_assoc_6FF85B105E51509E22160A4B6E5B5FF3"/>
 </EntityType>
 <Association Name="assoc_4DF4949EC9B667ED5EBEFD66EA9F3CEE" sap:content-version="1">

@@ -91,6 +91,8 @@
 <Property Name="erzet" Type="Edm.TimeOfDay" Nullable="false"/>
 <Property Name="vbeln" Type="Edm.String" Nullable="false" MaxLength="10"/>
 <Property Name="kdmat" Type="Edm.String" Nullable="false" MaxLength="35"/>
+<Property Name="sgt_scat" Type="Edm.String" Nullable="false" MaxLength="40"/>
+<Property Name="sgt_rcat" Type="Edm.String" Nullable="false" MaxLength="40"/>
 <Property Name="__EntityControl" Type="com.sap.gateway.srvd.zmpf_sd_delivery_create.v0001.EntityControl"/>
 <NavigationProperty Name="parent" Type="com.sap.gateway.srvd.zmpf_sd_delivery_create.v0001.CreateDelHType" Nullable="false" Partner="DeliveryItems">
 <ReferentialConstraint Property="vstel" ReferencedProperty="vstel"/>
@@ -294,6 +296,15 @@
 <Annotation Term="SAP__common.Label" String="Materiale cliente"/>
 <Annotation Term="SAP__common.Heading" String="Materiale del cliente"/>
 <Annotation Term="SAP__common.QuickInfo" String="Materiale del cliente"/>
+</Annotations>
+<Annotations Target="SAP__self.CreateDelIType/sgt_scat">
+<Annotation Term="SAP__common.IsUpperCase"/>
+<Annotation Term="SAP__common.Label" String="Segmento di stock"/>
+<Annotation Term="SAP__common.Heading" String="Segmento stock"/>
+</Annotations>
+<Annotations Target="SAP__self.CreateDelIType/sgt_rcat">
+<Annotation Term="SAP__common.IsUpperCase"/>
+<Annotation Term="SAP__common.Label" String="Segmento fabbisogno"/>
 </Annotations>
 <Annotations Target="SAP__self.CreateDelIType/__EntityControl">
 <Annotation Term="SAP__core.Computed"/>

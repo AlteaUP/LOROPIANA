@@ -340,11 +340,19 @@ sap.ui.define(
                                 dataToSendObject.AvaibilityQtyDefaultStorage = (this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].AvaibilityQtyDefaultStorage).toString()
                             }
                             dataToSendObject.Kdmat = dataToSendObject.CprodOrd
+                            // modifica DL - 03/06/2025 - aggiungo campi segmentation
+                            dataToSendObject.SgtScat = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].StockSegment
+                            dataToSendObject.SgtRcaT = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].RequirementSegment
+                            // modifica DL - 03/06/2025 - aggiungo campi segmentation - FINE
                             dataToSend.push(dataToSendObject)
                             // modifica DL - 28/05/2025 - se quantità da sperdire supera disponibilità, allora appendo nuovo record
                             if(Number(this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].QtyToIssue) > Number(this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].QtyToIssueOriginal)){
                                 dataToSendObject = {}
                                 dataToSendObject.Kdmat = ""
+                                // modifica DL - 03/06/2025 - aggiungo campi segmentation
+                                dataToSendObject.SgtScat = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].StockSegment
+                                dataToSendObject.SgtRcaT = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].RequirementSegment
+                                // modifica DL - 03/06/2025 - aggiungo campi segmentation - FINE
                                 dataToSendObject.Material = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].Material
                                 dataToSendObject.Batch = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].Batch
                                 dataToSendObject.Stock = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].StockMaterial

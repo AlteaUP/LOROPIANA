@@ -20,6 +20,8 @@ type MaterialRecord : {
     AvaibilityQtyDefaultStorage : String;
     AvaibilityQtyProdStorage    : String;
     Kdmat           : String;
+    SgtScat         : String;
+    SgtRcaT         : String;
 }
 
 type MaterialCreateDocument : {

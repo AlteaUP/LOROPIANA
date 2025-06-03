@@ -643,6 +643,10 @@ module.exports = cds.service.impl(async function (srv) {
                 documentItemObject.kdmat = DocumentsBySupplier[y][z].Kdmat //DocumentsBySupplier[y][z].CprodOrd
                 documentItemObject.charg = DocumentsBySupplier[y][z].Batch
                 documentItemObject.wadat_ist = postingDate
+                // modifica DL - 03/06/2025 - aggiungo campi segmentation
+                documentItemObject.sgt_scat = DocumentsBySupplier[y][z].SgtScat
+                documentItemObject.sgt_rcat = DocumentsBySupplier[y][z].SgtRcaT
+                // modifica DL - 03/06/2025 - aggiungo campi segmentation - FINE
                 /*if(DocumentsBySupplier[y][z].Wadak !== undefined && DocumentsBySupplier[y][z].Wadak !== null && DocumentsBySupplier[y][z].Wadak !== ""){
                     var goodMovDate = DocumentsBySupplier[y][z].Wadak
                     var goodMovDateSplit = goodMovDate.split("/")

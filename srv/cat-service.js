@@ -642,7 +642,8 @@ module.exports = cds.service.impl(async function (srv) {
                 //documentItemObject.lifex = DocumentsBySupplier[y][z].CprodOrd
                 documentItemObject.kdmat = DocumentsBySupplier[y][z].Kdmat //DocumentsBySupplier[y][z].CprodOrd
                 documentItemObject.charg = DocumentsBySupplier[y][z].Batch
-                documentItemObject.wadat_ist = postingDate
+                // modifica DL - 04/06/2025 - commento wadat_ist come richiesto da Amedeo in chat di gruppo teams
+                //documentItemObject.wadat_ist = postingDate
                 // modifica DL - 03/06/2025 - aggiungo campi segmentation
                 documentItemObject.sgt_scat = DocumentsBySupplier[y][z].SgtScat
                 documentItemObject.sgt_rcat = DocumentsBySupplier[y][z].SgtRcaT

@@ -302,7 +302,12 @@ sap.ui.define(
                             dataToSendObject.Material = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].Material
                             dataToSendObject.Batch = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].Batch
                             dataToSendObject.Stock = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].StockMaterial
-                            dataToSendObject.Quantity = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].QtyToIssue
+                            dataToSendObject.Quantity = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].QtyToIssue                            
+                            // modifica DL - 10/06/2025 - problema decimali
+                            if((dataToSendObject.Quantity).indexOf(",") > -1){
+                                dataToSendObject.Quantity = dataToSendObject.Quantity.replace(",",".")
+                            }
+                            // modifica DL - 10/06/2025 - problema decimali - FINE
                             dataToSendObject.CprodOrd = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].CprodOrd
                             dataToSendObject.CprodOrd = oController.zeroPad(dataToSendObject.CprodOrd, 12)
                             dataToSendObject.UnitMeasure = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].EntryUnit
@@ -357,6 +362,11 @@ sap.ui.define(
                                 dataToSendObject.Batch = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].Batch
                                 dataToSendObject.Stock = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].StockMaterial
                                 dataToSendObject.Quantity = (this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].QtyToIssue - this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].QtyToIssueOriginal).toString()
+                                // modifica DL - 10/06/2025 - problema decimali
+                                if((dataToSendObject.Quantity).indexOf(",") > -1){
+                                    dataToSendObject.Quantity = dataToSendObject.Quantity.replace(",",".")
+                                }
+                                // modifica DL - 10/06/2025 - problema decimali - FINE
                                 dataToSendObject.CprodOrd = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].CprodOrd
                                 dataToSendObject.CprodOrd = oController.zeroPad(dataToSendObject.CprodOrd, 12)
                                 dataToSendObject.UnitMeasure = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].EntryUnit
@@ -395,9 +405,19 @@ sap.ui.define(
                                 var lengthDataToSend = dataToSend.length
                                 if(this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].QtyToIssueOriginal !== undefined && this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].QtyToIssueOriginal !== null && this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].QtyToIssueOriginal !== ""){
                                     dataToSend[lengthDataToSend-1].Quantity = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].QtyToIssueOriginal
+                                    // modifica DL - 10/06/2025 - problema decimali
+                                    if((dataToSend[lengthDataToSend-1].Quantity).indexOf(",") > -1){
+                                        dataToSend[lengthDataToSend-1].Quantity = (dataToSend[lengthDataToSend-1].Quantity).replace(",",".")
+                                    }
+                                    // modifica DL - 10/06/2025 - problema decimali - FINE
                                 } else {
                                     dataToSend[lengthDataToSend-1].Quantity = "0"
-                                }                                
+                                }   
+                                // modifica DL - 10/06/2025 - richiesta di Caterina
+                                if(Number(dataToSend[lengthDataToSend-1].Quantity) === 0){
+                                    dataToSend.splice(lengthDataToSend-1, 1)
+                                }
+                                // modifica DL - 10/06/2025 - richiesta di Caterina - FINE                             
                                 dataToSend.push(dataToSendObject)                                
                             }
                             // modifica DL - 28/05/2025 - se quantità da sperdire supera disponibilità, allora appendo nuovo record - FINE

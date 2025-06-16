@@ -62,6 +62,10 @@ sap.ui.define(
                 //delete mBindingParams.collectionBindingInfo.parameters.$$getKeepAliveContext
             },
 
+            clearFields: function(oEvent){
+                oController.byId("shippingPointID").setValue();
+            },
+
             onCreateMaterialDocuments: function(oEvent) {
 
                 if(oController.pManualNumberingDialog === null || oController.pManualNumberingDialog === undefined){
@@ -131,13 +135,13 @@ sap.ui.define(
             },
 
             parseAndFormatNumber: function(input) {
-                if (typeof input !== "string") return "";
+                //if (typeof input !== "string") return "";
             
                 // Rimuove i punti usati come separatori delle migliaia
-                const cleaned = input.replace(/\,/g, '');
+                const cleaned = input.toString().replace(/\,/g, '');
             
                 // Sostituisce la virgola decimale con il punto
-                const normalized = cleaned.replace(',', '.');
+                const normalized = cleaned.toString().replace(',', '.');
             
                 // Converte in numero
                 const num = parseFloat(normalized);
@@ -323,6 +327,7 @@ sap.ui.define(
                             dataToSendObject.Supplier = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].Supplier
                             if(this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].requirementtype === "BB"){
                                 dataToSendObject.Bwart = "541"
+                                // Set the delivery type for the material document to "LB" (which typically indicates a delivery type for goods movements)
                                 dataToSendObject.Lfart = "LB"
                                 dataToSendObject.Customer = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].Customer
                                 dataToSendObject.Supplier = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].Supplier
@@ -480,6 +485,7 @@ sap.ui.define(
                             //alert("Material Document Created!")
                             oController.openDialogMessageText("", "I");
                             oController.byId("TableOrderId").getModel().refresh()
+                            
                         }).catch((oError) => {
                             oBusyDialog.close();
                             // TODO - gestione errore
@@ -545,6 +551,7 @@ sap.ui.define(
                                         oController.byId("TableOrderId").getModel().refresh()
                                     }
                                 } else {
+                                    // Display an error message dialog with the value from the context object
                                     oController.openDialogMessageText(oContext.getObject().value, "E");
                                 }
                             }).catch((oError) => {

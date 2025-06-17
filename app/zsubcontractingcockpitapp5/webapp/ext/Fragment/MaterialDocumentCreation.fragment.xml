@@ -6,6 +6,7 @@
       id="ManualAccountingDialog"
       contentHeight="60%"
       contentWidth="90%"
+      beforeOpen=".clearFields"
       resizable="false"
       type="Message"
       state="None"

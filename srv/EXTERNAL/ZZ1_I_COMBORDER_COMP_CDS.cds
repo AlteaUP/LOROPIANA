@@ -1,4 +1,4 @@
-/* checksum : f1ea509c63171b2f0c0af2a90dac6c2d */
+/* checksum : 12d64ae54c4ef80e93884e36785d371d */
 @cds.external : true
 @m.IsDefaultEntityContainer : 'true'
 @sap.message.scope.supported : 'true'
@@ -1601,13 +1601,19 @@ entity ZZ1_I_COMBORDER_COMP_CDS.ZZ1_I_COMBORDER_COMP {
   @sap.quickinfo : 'Tipo di stock inventario speciale'
   InventorySpecialStockType : String(1);
   @sap.aggregation.role : 'dimension'
+  @sap.display.format : 'UpperCase'
   @sap.required.in.filter : 'false'
   @sap.label : 'StockSegment'
-  StockSegment : String(1);
+  @sap.quickinfo : 'Segmento di stock'
+  StockSegment : String(40);
   @sap.aggregation.role : 'dimension'
   @sap.required.in.filter : 'false'
   @sap.label : 'RequirementSegment'
-  RequirementSegment : String(1);
+  RequirementSegment : String(20);
+  @sap.aggregation.role : 'dimension'
+  @sap.required.in.filter : 'false'
+  @sap.label : 'ParentStockSegment'
+  ParentStockSegment : String(20);
   @sap.aggregation.role : 'dimension'
   @sap.display.format : 'Date'
   @sap.required.in.filter : 'false'

@@ -327,8 +327,32 @@ sap.ui.define(
                             dataToSendObject.Supplier = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].Supplier
                             if(this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].requirementtype === "BB"){
                                 dataToSendObject.Bwart = "541"
+                                // modifica DL - 16/06/2025 - cambio LFART in base al segment Stock
+                                if(this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].ParentStockSegment === ""){
+                                    dataToSendObject.Lfart = "LB"
+                                } else {
+                                    let parentStockSegment = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].ParentStockSegment
+                                    switch (parentStockSegment) {
+                                        case "CAM":
+                                          dataToSendObject.Lfart = "ZCAE"
+                                          break;
+                                        case "ESS":
+                                          dataToSendObject.Lfart = "ZESE"
+                                          break;
+                                        case "MTO":
+                                          dataToSendObject.Lfart = "ZMTE"
+                                          break;
+                                        case "PRO":
+                                          dataToSendObject.Lfart = "ZPRE"
+                                          break;
+                                        case "REG":
+                                          dataToSendObject.Lfart = "ZREE"
+                                          break;
+                                      }
+                                }
                                 // Set the delivery type for the material document to "LB" (which typically indicates a delivery type for goods movements)
-                                dataToSendObject.Lfart = "LB"
+                                //dataToSendObject.Lfart = "LB"
+                                // modifica DL - 16/06/2025 - cambio LFART in base al segment Stock
                                 dataToSendObject.Customer = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].Customer
                                 dataToSendObject.Supplier = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].Supplier
                             } else {
@@ -338,7 +362,31 @@ sap.ui.define(
                                     // pulsante Factory
                                     dataToSendObject.Bwart = "311"
                                 }
-                                dataToSendObject.Lfart = "ZHOD"
+                                // modifica DL - 16/06/2025 - cambio LFART in base al segment Stock
+                                if(this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].ParentStockSegment === ""){
+                                    dataToSendObject.Lfart = "ZHOD"
+                                } else {
+                                    let parentStockSegment = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].ParentStockSegment
+                                    switch (parentStockSegment) {
+                                        case "CAM":
+                                          dataToSendObject.Lfart = "ZCAM"
+                                          break;
+                                        case "ESS":
+                                          dataToSendObject.Lfart = "ZESS"
+                                          break;
+                                        case "MTO":
+                                          dataToSendObject.Lfart = "ZMTO"
+                                          break;
+                                        case "PRO":
+                                          dataToSendObject.Lfart = "ZPRO"
+                                          break;
+                                        case "REG":
+                                          dataToSendObject.Lfart = "ZREG"
+                                          break;
+                                      }
+                                }
+                                //dataToSendObject.Lfart = "ZHOD"
+                                // modifica DL - 16/06/2025 - cambio LFART in base al segment Stock                                
                             }
                             dataToSendObject.Wadak = this.byId("WadakID").getValue()
                             dataToSendObject.StorageLocation = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].StorageLocation
@@ -386,7 +434,32 @@ sap.ui.define(
                                 dataToSendObject.Supplier = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].Supplier
                                 if(this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].requirementtype === "BB"){
                                     dataToSendObject.Bwart = "541"
-                                    dataToSendObject.Lfart = "LB"
+                                     // modifica DL - 16/06/2025 - cambio LFART in base al segment Stock
+                                    if(this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].ParentStockSegment === ""){
+                                        dataToSendObject.Lfart = "LB"
+                                    } else {
+                                        let parentStockSegment = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].ParentStockSegment
+                                        switch (parentStockSegment) {
+                                            case "CAM":
+                                            dataToSendObject.Lfart = "ZCAE"
+                                            break;
+                                            case "ESS":
+                                            dataToSendObject.Lfart = "ZESE"
+                                            break;
+                                            case "MTO":
+                                            dataToSendObject.Lfart = "ZMTE"
+                                            break;
+                                            case "PRO":
+                                            dataToSendObject.Lfart = "ZPRE"
+                                            break;
+                                            case "REG":
+                                            dataToSendObject.Lfart = "ZREE"
+                                            break;
+                                        }
+                                    }
+                                    // Set the delivery type for the material document to "LB" (which typically indicates a delivery type for goods movements)
+                                    //dataToSendObject.Lfart = "LB"
+                                    // modifica DL - 16/06/2025 - cambio LFART in base al segment Stock
                                     dataToSendObject.Customer = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].Customer
                                     dataToSendObject.Supplier = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].Supplier
                                 } else {
@@ -396,7 +469,31 @@ sap.ui.define(
                                         // pulsante Factory
                                         dataToSendObject.Bwart = "311"
                                     }
-                                    dataToSendObject.Lfart = "ZHOD"
+                                    // modifica DL - 16/06/2025 - cambio LFART in base al segment Stock
+                                    if(this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].ParentStockSegment === ""){
+                                        dataToSendObject.Lfart = "ZHOD"
+                                    } else {
+                                        let parentStockSegment = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].ParentStockSegment
+                                        switch (parentStockSegment) {
+                                            case "CAM":
+                                            dataToSendObject.Lfart = "ZCAM"
+                                            break;
+                                            case "ESS":
+                                            dataToSendObject.Lfart = "ZESS"
+                                            break;
+                                            case "MTO":
+                                            dataToSendObject.Lfart = "ZMTO"
+                                            break;
+                                            case "PRO":
+                                            dataToSendObject.Lfart = "ZPRO"
+                                            break;
+                                            case "REG":
+                                            dataToSendObject.Lfart = "ZREG"
+                                            break;
+                                        }
+                                    }
+                                    //dataToSendObject.Lfart = "ZHOD"
+                                    // modifica DL - 16/06/2025 - cambio LFART in base al segment Stock 
                                 }
                                 dataToSendObject.Wadak = this.byId("WadakID").getValue()
                                 dataToSendObject.StorageLocation = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].StorageLocation

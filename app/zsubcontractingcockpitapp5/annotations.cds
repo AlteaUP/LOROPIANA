@@ -251,6 +251,11 @@ annotate CatalogService.MainCds with @(
             ![@HTML5.CssDefaults] : {
                 width : '5rem',
             },
+        },
+        {
+            $Type: 'UI.DataField',
+            Value: ParentStockSegment,
+            Label: '{i18n>parentStockSegment}'
         }
     ]
 );

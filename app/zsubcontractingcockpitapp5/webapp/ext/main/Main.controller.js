@@ -348,6 +348,9 @@ sap.ui.define(
                                         case "REG":
                                           dataToSendObject.Lfart = "ZREE"
                                           break;
+                                        case "BUY":
+                                          dataToSendObject.Lfart = "ZBUY"
+                                          break;
                                       }
                                 }
                                 // Set the delivery type for the material document to "LB" (which typically indicates a delivery type for goods movements)
@@ -383,6 +386,9 @@ sap.ui.define(
                                         case "REG":
                                           dataToSendObject.Lfart = "ZREG"
                                           break;
+                                        case "BUY":
+                                        dataToSendObject.Lfart = "ZBUY"
+                                        break;
                                       }
                                 }
                                 //dataToSendObject.Lfart = "ZHOD"
@@ -441,20 +447,23 @@ sap.ui.define(
                                         let parentStockSegment = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].ParentStockSegment
                                         switch (parentStockSegment) {
                                             case "CAM":
-                                            dataToSendObject.Lfart = "ZCAE"
-                                            break;
+                                                dataToSendObject.Lfart = "ZCAE"
+                                                break;
                                             case "ESS":
-                                            dataToSendObject.Lfart = "ZESE"
-                                            break;
+                                                dataToSendObject.Lfart = "ZESE"
+                                                break;
                                             case "MTO":
-                                            dataToSendObject.Lfart = "ZMTE"
-                                            break;
+                                                dataToSendObject.Lfart = "ZMTE"
+                                                break;
                                             case "PRO":
-                                            dataToSendObject.Lfart = "ZPRE"
-                                            break;
+                                                dataToSendObject.Lfart = "ZPRE"
+                                                break;
                                             case "REG":
-                                            dataToSendObject.Lfart = "ZREE"
-                                            break;
+                                                dataToSendObject.Lfart = "ZREE"
+                                                break;
+                                            case "BUY":
+                                                dataToSendObject.Lfart = "ZBUY"
+                                                break;
                                         }
                                     }
                                     // Set the delivery type for the material document to "LB" (which typically indicates a delivery type for goods movements)
@@ -476,20 +485,23 @@ sap.ui.define(
                                         let parentStockSegment = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].ParentStockSegment
                                         switch (parentStockSegment) {
                                             case "CAM":
-                                            dataToSendObject.Lfart = "ZCAM"
-                                            break;
+                                                dataToSendObject.Lfart = "ZCAM"
+                                                break;
                                             case "ESS":
-                                            dataToSendObject.Lfart = "ZESS"
-                                            break;
+                                                dataToSendObject.Lfart = "ZESS"
+                                                break;
                                             case "MTO":
-                                            dataToSendObject.Lfart = "ZMTO"
-                                            break;
+                                                dataToSendObject.Lfart = "ZMTO"
+                                                break;
                                             case "PRO":
-                                            dataToSendObject.Lfart = "ZPRO"
-                                            break;
+                                                dataToSendObject.Lfart = "ZPRO"
+                                                break;
                                             case "REG":
-                                            dataToSendObject.Lfart = "ZREG"
-                                            break;
+                                                dataToSendObject.Lfart = "ZREG"
+                                                break;
+                                            case "BUY":
+                                                dataToSendObject.Lfart = "ZBUY"
+                                                break;
                                         }
                                     }
                                     //dataToSendObject.Lfart = "ZHOD"

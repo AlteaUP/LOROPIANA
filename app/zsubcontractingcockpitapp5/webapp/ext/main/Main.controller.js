@@ -328,10 +328,10 @@ sap.ui.define(
                             if(this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].requirementtype === "BB"){
                                 dataToSendObject.Bwart = "541"
                                 // modifica DL - 16/06/2025 - cambio LFART in base al segment Stock
-                                if(this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].ParentStockSegment === ""){
+                                let parentStockSegment = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].ParentStockSegment
+                                if(parentStockSegment === "" || parentStockSegment === null || parentStockSegment === undefined){
                                     dataToSendObject.Lfart = "LB"
-                                } else {
-                                    let parentStockSegment = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].ParentStockSegment
+                                } else {                                    
                                     switch (parentStockSegment) {
                                         case "CAM":
                                           dataToSendObject.Lfart = "ZCAE"
@@ -366,10 +366,10 @@ sap.ui.define(
                                     dataToSendObject.Bwart = "311"
                                 }
                                 // modifica DL - 16/06/2025 - cambio LFART in base al segment Stock
-                                if(this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].ParentStockSegment === ""){
+                                let parentStockSegment = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].ParentStockSegment
+                                if(parentStockSegment === "" || parentStockSegment === null || parentStockSegment === undefined){
                                     dataToSendObject.Lfart = "ZHOD"
-                                } else {
-                                    let parentStockSegment = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].ParentStockSegment
+                                } else {                
                                     switch (parentStockSegment) {
                                         case "CAM":
                                           dataToSendObject.Lfart = "ZCAM"
@@ -441,10 +441,10 @@ sap.ui.define(
                                 if(this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].requirementtype === "BB"){
                                     dataToSendObject.Bwart = "541"
                                      // modifica DL - 16/06/2025 - cambio LFART in base al segment Stock
-                                    if(this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].ParentStockSegment === ""){
+                                     let parentStockSegment = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].ParentStockSegment
+                                    if(parentStockSegment === "" || parentStockSegment === null || parentStockSegment === undefined){
                                         dataToSendObject.Lfart = "LB"
-                                    } else {
-                                        let parentStockSegment = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].ParentStockSegment
+                                    } else {                                        
                                         switch (parentStockSegment) {
                                             case "CAM":
                                                 dataToSendObject.Lfart = "ZCAE"
@@ -479,10 +479,10 @@ sap.ui.define(
                                         dataToSendObject.Bwart = "311"
                                     }
                                     // modifica DL - 16/06/2025 - cambio LFART in base al segment Stock
-                                    if(this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].ParentStockSegment === ""){
+                                    let parentStockSegment = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].ParentStockSegment
+                                    if(parentStockSegment === "" || parentStockSegment === null || parentStockSegment === undefined){
                                         dataToSendObject.Lfart = "ZHOD"
                                     } else {
-                                        let parentStockSegment = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].ParentStockSegment
                                         switch (parentStockSegment) {
                                             case "CAM":
                                                 dataToSendObject.Lfart = "ZCAM"

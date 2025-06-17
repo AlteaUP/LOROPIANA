@@ -101,6 +101,7 @@ service CatalogService {
         TotalDefaultAllocQty : Decimal,
         TotalAllocQty : Decimal,
         TotalProdAllocQty : Decimal,
+        ParentStockSegment : String,
         *,
         null as StockMaterial : Decimal,
         null as StockMaterialUnitMeasure : String,

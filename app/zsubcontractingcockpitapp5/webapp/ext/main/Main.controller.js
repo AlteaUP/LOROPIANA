@@ -351,6 +351,18 @@ sap.ui.define(
                                         case "BUY":
                                           dataToSendObject.Lfart = "ZBUY"
                                           break;
+                                        case "BUY US":
+                                          dataToSendObject.Lfart = "ZBUE"
+                                          break;
+                                        case "TRU":
+                                          dataToSendObject.Lfart = "ZTRE"
+                                          break;
+                                        case "ESS US":
+                                          dataToSendObject.Lfart = "ZESE"
+                                          break;
+                                        case "BES":
+                                          dataToSendObject.Lfart = "ZBEE"
+                                          break;
                                       }
                                 }
                                 // Set the delivery type for the material document to "LB" (which typically indicates a delivery type for goods movements)
@@ -387,8 +399,20 @@ sap.ui.define(
                                           dataToSendObject.Lfart = "ZREG"
                                           break;
                                         case "BUY":
-                                        dataToSendObject.Lfart = "ZBUY"
-                                        break;
+                                          dataToSendObject.Lfart = "ZBUY"
+                                          break;
+                                        case "BUY US":
+                                          dataToSendObject.Lfart = "ZBUE"
+                                          break;
+                                        case "TRU":
+                                          dataToSendObject.Lfart = "ZTRE"
+                                          break;
+                                        case "ESS US":
+                                          dataToSendObject.Lfart = "ZESE"
+                                          break;
+                                        case "BES":
+                                          dataToSendObject.Lfart = "ZBEE"
+                                          break;
                                       }
                                 }
                                 //dataToSendObject.Lfart = "ZHOD"
@@ -464,6 +488,18 @@ sap.ui.define(
                                             case "BUY":
                                                 dataToSendObject.Lfart = "ZBUY"
                                                 break;
+                                            case "BUY US":
+                                                dataToSendObject.Lfart = "ZBUY"
+                                                break;
+                                            case "TRU":
+                                                dataToSendObject.Lfart = "ZTRU"
+                                                break;
+                                            case "ESS US":
+                                                dataToSendObject.Lfart = "ZESS"
+                                                break;
+                                            case "BES":
+                                                dataToSendObject.Lfart = "ZBES"
+                                                break;
                                         }
                                     }
                                     // Set the delivery type for the material document to "LB" (which typically indicates a delivery type for goods movements)
@@ -501,6 +537,18 @@ sap.ui.define(
                                                 break;
                                             case "BUY":
                                                 dataToSendObject.Lfart = "ZBUY"
+                                                break;
+                                            case "BUY US":
+                                                dataToSendObject.Lfart = "ZBUY"
+                                                break;
+                                            case "TRU":
+                                                dataToSendObject.Lfart = "ZTRU"
+                                                break;
+                                            case "ESS US":
+                                                dataToSendObject.Lfart = "ZESS"
+                                                break;
+                                            case "BES":
+                                                dataToSendObject.Lfart = "ZBES"
                                                 break;
                                         }
                                     }

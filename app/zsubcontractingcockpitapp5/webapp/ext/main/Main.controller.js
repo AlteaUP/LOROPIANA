@@ -660,8 +660,28 @@ sap.ui.define(
                                         oController.byId("TableOrderId").getModel().refresh()
                                     }
                                 } else {
-                                    // Display an error message dialog with the value from the context object
-                                    oController.openDialogMessageText(oContext.getObject().value, "E");
+                                    // modifica DL - 18/06/2025 - gestione messaggi creazione multipla
+                                    if(oContext.getObject().value.indexOf(";") > -1){
+                                        var messageArray = oContext.getObject().value.split(";")
+                                        var message = ""
+                                        for(var p=0; p<messageArray.length; p++){
+                                            if(messageArray[p] !== ""){
+                                                if(messageArray[p].indexOf("Errore") > -1){
+                                                    oController.openDialogMessageText(messageArray[p], "E");
+                                                } else {
+                                                    if(message === ""){
+                                                        message = messageArray[p]
+                                                    } else {
+                                                        message = message + ", " +messageArray[p]
+                                                    }                                                    
+                                                }
+                                            }
+                                        }
+                                        oController.openDialogMessageText(oController.getResourceBundle().getText("delivery") + " " + message + " " + oController.getResourceBundle().getText("created"), "I");
+                                    } else {
+                                        oController.openDialogMessageText(oContext.getObject().value, "E");
+                                    }
+                                    oController.byId("TableOrderId").getModel().refresh()
                                 }
                             }).catch((oError) => {
                                 oBusyDialog.close();

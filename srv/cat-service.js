@@ -585,11 +585,32 @@ module.exports = cds.service.impl(async function (srv) {
             return acc;
         }, {}))
 
+        // modifica DL - 17/06/2025 split per lfart diversi
+        var multipleDelivery = false
+        if(DocumentsBySupplier[0].length > 1){
+            // raggruppo per lfart
+            const groupedMap = DocumentsBySupplier[0].reduce((map, item) => {
+                if (!map.has(item.Lfart)) {
+                    map.set(item.Lfart, []);
+                }
+                map.get(item.Lfart).push(item);
+                return map;
+            }, new Map());
+            // controllo che esistano lfart diversi tra di loro
+            if(groupedMap.size > 1){
+                multipleDelivery = true
+                DocumentsBySupplier = [...groupedMap.values()];
+            }
+        }
+        // modifica DL - 17/06/2025 split per lfart diversi - FINE
+
         var documentItemArray = []
         var documentItemObject = {}
         var vstel = ""
         var lfdat = ""
         var lfdatFormatted = ""
+        var response = ""
+        var error = ""
         for (var y = 0; y < DocumentsBySupplier.length; y++) {
             documentItemArray = []
             for (var z = 0; z < DocumentsBySupplier[y].length; z++) {
@@ -648,23 +669,6 @@ module.exports = cds.service.impl(async function (srv) {
                 documentItemObject.sgt_scat = DocumentsBySupplier[y][z].SgtScat
                 documentItemObject.sgt_rcat = DocumentsBySupplier[y][z].SgtRcaT
                 // modifica DL - 03/06/2025 - aggiungo campi segmentation - FINE
-                /*if(DocumentsBySupplier[y][z].Wadak !== undefined && DocumentsBySupplier[y][z].Wadak !== null && DocumentsBySupplier[y][z].Wadak !== ""){
-                    var goodMovDate = DocumentsBySupplier[y][z].Wadak
-                    var goodMovDateSplit = goodMovDate.split("/")
-
-                    var yearGM = "20" + goodMovDateSplit[2]
-                    var monthGM = goodMovDateSplit[1]
-                    if(Number(monthGM) < 10){
-                        monthGM = '0' + Number(monthGM)
-                    }
-                    var dayGM = goodMovDateSplit[0]
-                    if(Number(dayGM) < 10){
-                        dayGM = '0' + Number(dayGM)
-                    }        
-                    goodMovDate = yearGM.toString() + '-' + monthGM.toString() + '-' + dayGM.toString()
-
-                    documentItemObject.wadat_ist = goodMovDate
-                }*/
                 documentItemArray.push(documentItemObject)
             }
 
@@ -677,113 +681,40 @@ module.exports = cds.service.impl(async function (srv) {
 
                 let callCreate = await createDeliverySD.tx(req).post("/CreateDelH", payload)
                 console.log("Risultato chiamata " + JSON.stringify(callCreate))
-                return callCreate
+                if(multipleDelivery){
+                    var error = JSON.parse(JSON.stringify(callCreate)).DeliveryItems[0].FlErr
+                    if(error){
+                        response = response + "; " + "Errore: " + JSON.parse(JSON.stringify(callCreate)).DeliveryItems[0].LogMess
+                    } else {
+                        response = response + "; " + JSON.parse(JSON.stringify(callCreate)).DeliveryItems[0].vbeln
+                    }
+                } else {
+                    return callCreate
+                }
 
             } catch (error) {
 
                 console.log(error.message)
-                return error.message
+                
+                if(multipleDelivery){
+                    response = response + "|| " + error.message
+                } else {
+                    return error.message
+                }                
             }
         }
+        
+        if(multipleDelivery){
+            return response   
+        } else {
+            return
+        }
 
-        return
-
-        /*var documentItemArray = []
-        var documentItemObject = {}
-        var vstel = ""
-        for(var i=0; i<Documents.length; i++){
-            vstel = Documents[0].Vstel
-            documentItemObject = {}
-            documentItemObject.rfbel = "1"
-            documentItemObject.rfpos = i.toString()
-            documentItemObject.vstel = Documents[i].Vstel
-            documentItemObject.vkorg = "ITM1"
-            documentItemObject.vtweg = "M1"
-            documentItemObject.spart = "01"
-            documentItemObject.lfart = Documents[i].Lfart
-            documentItemObject.matnr = Documents[i].Material
-            documentItemObject.werks = Documents[i].Plant
-            documentItemObject.wadat = postingDate
-            documentItemObject.lfdat = postingDate
-            documentItemObject.lfimg = Number(Documents[i].Quantity)
-            documentItemObject.vrkme = Documents[i].UnitMeasure
-            documentItemObject.meins = Documents[i].UnitMeasure
-            documentItemObject.lgort = Documents[i].Lgort            
-            documentItemObject.bwart = Documents[i].Bwart
-            documentItemObject.rblvs = Documents[i].Bwart
-            if(Documents[i].Bwart === '313' || Documents[i].Bwart === '311'){
-                documentItemObject.shkzg_um = "1"
-                documentItemObject.ummat = Documents[i].Material
-                documentItemObject.umwrk = Documents[i].Plant
-                documentItemObject.umlgo = "K1RP" // da SOSTITUIRE con StorageLocation
-                if(Documents[i].Bwart === '313'){
-                    documentItemObject.fobwa = "315"
-                }              
-                documentItemObject.fo_dlvtp = "ID"
-                documentItemObject.kzuml = "X"
-                documentItemObject.dlvtp = "OD"
-                documentItemObject.umcha = Documents[i].Batch
-                documentItemObject.kunwe = Documents[i].Plant
-                documentItemObject.lifnr = Documents[i].Plant
-            } else {
-                // 541
-                documentItemObject.kunwe = Documents[i].Customer
-                documentItemObject.lifnr = Documents[i].Supplier
-                
-            }
-            documentItemObject.lifex = Documents[i].CprodOrd
-            documentItemObject.charg = Documents[i].Batch
-            documentItemObject.wadat_ist = postingDate
-            documentItemArray.push(documentItemObject)
-        }*/
-
-        /*var payload = {"vstel": "101S", "DeliveryItems":
-            [{"vstel": "101S",
-            "vkorg": "ITM1",
-            "vtweg": "M1",
-            "spart": "01",
-            "lfart": "ZHOD",
-            "dlvtp": "OD",
-            "kunwe": "PF10", 
-            "matnr": "MAI4168H06H",
-            "werks": "PF10",
-            "wadat": "2025-04-01",
-            "lfdat": "2025-04-01",
-            "lfimg": 1.123,
-            "vrkme": "KG",
-            "meins": "KG",
-            "lgort": "H1RP",
-            "lifnr": "PF10",
-            "bwart": "313",
-            "rblvs": "311",
-            "shkzg_um": "1",
-            "ummat": "MAI4168H06H",
-            "umwrk": "PF10",
-            "umlgo": "K1RP",
-            "wadat_ist": "2025-04-01",
-            "fobwa": "315",
-            "fo_dlvtp": "ID",
-            "kzuml": "X"}]
-        }*/
-        /*
-         var payload = {
-             "vstel": vstel,
-             "DeliveryItems": documentItemArray
-         }
- 
-         try {
-                       
-             return createDeliverySD.tx(req).post("/CreateDelH", payload)         
- 
-         } catch (error) {
- 
-             console.log(error.message)
-             return error.message
-         }*/
     })
 
     this.on("GetMaterialStock", async (req) => {
 
+        // Connect to the material stock service using the CDS framework
         const apiStock = await cds.connect.to('API_MATERIAL_STOCK_SRV');
         const { A_MaterialStock } = apiStock.entities;
 

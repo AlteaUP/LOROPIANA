@@ -256,6 +256,11 @@ annotate CatalogService.MainCds with @(
             $Type: 'UI.DataField',
             Value: ParentStockSegment,
             Label: '{i18n>parentStockSegment}'
+        },
+        {
+            $Type: 'UI.DataField',
+            Value: RequirementSegment,
+            Label: '{i18n>RequirementSegment}'
         }
     ]
 );

@@ -304,10 +304,10 @@ module.exports = cds.service.impl(async function (srv) {
                         objectDataQtyBdbsLgort2 = arrayDataQtyBdbs.find((o) => o.Material === data[z].Material && o.Batch === data[z].Batch && o.StorageLocation === data[z].Lgort2);
                         objectDataSumQtyDeliveryLgort1 = arrayDataSumQtyDelivery.find((o) => o.Material === data[z].Material && o.Batch === data[z].Batch && o.StorageLocation === data[z].Lgort1);
                         objectDataSumQtyDeliveryLgort2 = arrayDataSumQtyDelivery.find((o) => o.Material === data[z].Material && o.Batch === data[z].Batch && o.StorageLocation === data[z].Lgort2);
-                        objectDataQtyStock = arrayDataStock.find((o) => o.Material === data[z].Material && o.Batch === data[z].Batch && atpRulesArray.includes(obj.RequirementSegment));
-                        objectDataQtyStockAvaibility = arrayDataStock.find((o) => o.Material === data[z].Material && o.Batch === data[z].Batch && o.Plant === data[z].Plant && o.StorageLocation === data[z].Lgort1 && atpRulesArray.includes(obj.RequirementSegment));
-                        objectDataQtyStockAvaibilityLgort2 = arrayDataStock.find((o) => o.Material === data[z].Material && o.Batch === data[z].Batch && o.Plant === data[z].Plant && o.StorageLocation === data[z].Lgort2 && atpRulesArray.includes(obj.RequirementSegment));
-                        objectDataQtyStockAvaibilityStockO = arrayDataStock.find((o) => o.Material === data[z].Material && o.Batch === data[z].Batch && o.Plant === data[z].Plant && o.Supplier === data[z].Supplier && o.InventorySpecialStockType === 'O' && atpRulesArray.includes(obj.RequirementSegment));
+                        objectDataQtyStock = arrayDataStock.find((o) => o.Material === data[z].Material && o.Batch === data[z].Batch && atpRulesArray.includes(o.StockSegment));
+                        objectDataQtyStockAvaibility = arrayDataStock.find((o) => o.Material === data[z].Material && o.Batch === data[z].Batch && o.Plant === data[z].Plant && o.StorageLocation === data[z].Lgort1 && atpRulesArray.includes(o.StockSegment));
+                        objectDataQtyStockAvaibilityLgort2 = arrayDataStock.find((o) => o.Material === data[z].Material && o.Batch === data[z].Batch && o.Plant === data[z].Plant && o.StorageLocation === data[z].Lgort2 && atpRulesArray.includes(o.StockSegment));
+                        objectDataQtyStockAvaibilityStockO = arrayDataStock.find((o) => o.Material === data[z].Material && o.Batch === data[z].Batch && o.Plant === data[z].Plant && o.Supplier === data[z].Supplier && o.InventorySpecialStockType === 'O' && atpRulesArray.includes(o.StockSegment));
                         if (objectDataQtyBdbs !== undefined && objectDataQtyStockAvaibility !== undefined) {
                             if (objectDataQtyStock !== null && objectDataQtyStock !== undefined) {
                                 data[z].StockMaterial = Number(objectDataQtyStock.MatlWrhsStkQtyInMatlBaseUnit) - Number(objectDataQtyBdbs.TotalAllocQty) + Number(data[z].TotalDefaultAllocQty)
@@ -374,10 +374,10 @@ module.exports = cds.service.impl(async function (srv) {
                         objectDataQtyBdbsLgort2 = arrayDataQtyBdbs.find((o) => o.Material === data[z].Material && o.StorageLocation === data[z].Lgort2);
                         objectDataSumQtyDeliveryLgort1 = arrayDataSumQtyDelivery.find((o) => o.Material === data[z].Material && o.StorageLocation === data[z].Lgort1);
                         objectDataSumQtyDeliveryLgort2 = arrayDataSumQtyDelivery.find((o) => o.Material === data[z].Material && o.StorageLocation === data[z].Lgort2);
-                        arrayStockOrderWithoutBatch = arrayDataStock.filter(obj => obj.Material === data[z].Material && atpRulesArray.includes(obj.RequirementSegment ))
-                        arrayStockOrderWithoutBatchAvaibility = arrayDataStock.filter(obj => obj.Material === data[z].Material && obj.Plant === data[z].Plant && obj.StorageLocation === data[z].Lgort1 && atpRulesArray.includes(obj.RequirementSegment ))
-                        arrayStockOrderWithoutBatchAvaibilityLgort2 = arrayDataStock.filter(obj => obj.Material === data[z].Material && obj.Plant === data[z].Plant && obj.StorageLocation === data[z].Lgort2 && atpRulesArray.includes(obj.RequirementSegment ))
-                        arrayStockOrderWithoutBatchAvaibilityStockO = arrayDataStock.filter(obj => obj.Material === data[z].Material && obj.Plant === data[z].Plant && obj.Supplier === data[z].Supplier && obj.InventorySpecialStockType === 'O' && atpRulesArray.includes(obj.RequirementSegment ))
+                        arrayStockOrderWithoutBatch = arrayDataStock.filter(obj => obj.Material === data[z].Material && atpRulesArray.includes(obj.StockSegment ))
+                        arrayStockOrderWithoutBatchAvaibility = arrayDataStock.filter(obj => obj.Material === data[z].Material && obj.Plant === data[z].Plant && obj.StorageLocation === data[z].Lgort1 && atpRulesArray.includes(obj.StockSegment ))
+                        arrayStockOrderWithoutBatchAvaibilityLgort2 = arrayDataStock.filter(obj => obj.Material === data[z].Material && obj.Plant === data[z].Plant && obj.StorageLocation === data[z].Lgort2 && atpRulesArray.includes(obj.StockSegment ))
+                        arrayStockOrderWithoutBatchAvaibilityStockO = arrayDataStock.filter(obj => obj.Material === data[z].Material && obj.Plant === data[z].Plant && obj.Supplier === data[z].Supplier && obj.InventorySpecialStockType === 'O' && atpRulesArray.includes(obj.StockSegment ))
                         if (arrayStockOrderWithoutBatch.length > 0) {
                             for (var t = 0; t < arrayStockOrderWithoutBatch.length; t++) {
                                 sumStock = Number(sumStock) + Number(arrayStockOrderWithoutBatch[t].MatlWrhsStkQtyInMatlBaseUnit)

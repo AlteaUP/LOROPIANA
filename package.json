@@ -14,7 +14,8 @@
     "@sap/xssec": "^4",
     "axios": "^1.8.1",
     "express": "^4",
-    "@cap-js/sqlite": "^1"
+    "@cap-js/sqlite": "^1",
+    "@sap-cloud-sdk/connectivity": "^3"
   },
   "devDependencies": {
     "@cap-js/cds-types": "^0.9.0",
@@ -27,7 +28,7 @@
     "globals": "^16.0.0",
     "rimraf": "^6.0.1",
     "simple-git": "^3.27.0",
-    "mbt": "^1.2.34"      
+    "mbt": "^1.2.34"
   },
   "scripts": {
     "start": "cds-serve",
@@ -37,6 +38,7 @@
     "cf-apps": "cf apps",
     "cf-html5-list-approuter-url": "cf html5-list -a zsubcontracting_cockpit -u",
     "cf-login": "cf login -a https://api.cf.eu30.hana.ondemand.com -o 'Loro Piana S.p.A._btp-development-loro-piana-82xq0cpc' -s 'DEV-SPACE-MANUFACTURING' --sso",
+    "cf-login_dfr": "cf login -a https://api.cf.eu10-004.hana.ondemand.com -o 'alteaup-fashion' -s 'dev' --sso",
     "__comment_deploy": "Per il deploy eseguire il comando mta-build, mta-deploy, poi solo per la prima volta update-route",
     "wpremta-build": "node scripts/check-git-status.js",
     "build": "rimraf resources mta_archives && mbt build --mtar archive -m verbose",
@@ -64,7 +66,7 @@
     "clear-cache": "npm cache clean --force",
     "install-DefaultEnv": "cf install-plugin https://github.com/SAP/cf-cli-defaultenv-plugin/releases/download/v1.1.1/DefaultEnv.linux64",
     "install-html5-plugin": "cf install-plugin -r CF-Community 'html5-plugin'",
-   "watch-zsubcontractingcockpitapp5": "cds watch --open zsubcontractingcockpitapp5/webapp/index.html?sap-ui-xx-viewCache=false"    
+    "watch-zsubcontractingcockpitapp5": "cds watch --open zsubcontractingcockpitapp5/webapp/index.html?sap-ui-xx-viewCache=false"
   },
   "cds": {
     "requires": {
@@ -86,60 +88,60 @@
         "model": "srv/EXTERNAL/ZZ1_I_SHIPPINGPOINT_CDS",
         "forwardAuthToken": true,
         "csrf": true,
-        "csrfInBatch": true,   
+        "csrfInBatch": true,
         "[hybrid]": {
           "credentials": {
             "requestTimeout": 300000,
-            "destination": "S4HANA",            
-            "path": "/sap/opu/odata/sap/ZZ1_I_SHIPPINGPOINT_CDS"  
+            "destination": "S4HANA",
+            "path": "/sap/opu/odata/sap/ZZ1_I_SHIPPINGPOINT_CDS"
           }
-        },             
-       "[production]": {
+        },
+        "[production]": {
           "credentials": {
             "requestTimeout": 300000,
-            "destination": "S4HANA",            
+            "destination": "S4HANA",
             "path": "/sap/opu/odata/sap/ZZ1_I_SHIPPINGPOINT_CDS"
           }
         }
-      },    
+      },
       "ZZ1_I_WORKCENTERTXT_CDS": {
         "kind": "odata",
         "model": "srv/EXTERNAL/ZZ1_I_WORKCENTERTXT_CDS",
         "forwardAuthToken": true,
         "csrf": true,
-        "csrfInBatch": true,   
+        "csrfInBatch": true,
         "[hybrid]": {
           "credentials": {
             "requestTimeout": 300000,
-            "destination": "S4HANA",            
-            "path": "/sap/opu/odata/sap/ZZ1_I_WORKCENTERTXT_CDS"  
+            "destination": "S4HANA",
+            "path": "/sap/opu/odata/sap/ZZ1_I_WORKCENTERTXT_CDS"
           }
-        },             
-       "[production]": {
+        },
+        "[production]": {
           "credentials": {
             "requestTimeout": 300000,
-            "destination": "S4HANA",            
+            "destination": "S4HANA",
             "path": "/sap/opu/odata/sap/ZZ1_I_WORKCENTERTXT_CDS"
           }
         }
-      },  
+      },
       "ZZ1_I_PLANTTXT_CDS": {
         "kind": "odata",
         "model": "srv/EXTERNAL/ZZ1_I_PLANTTXT_CDS",
         "forwardAuthToken": true,
         "csrf": true,
-        "csrfInBatch": true,   
+        "csrfInBatch": true,
         "[hybrid]": {
           "credentials": {
             "requestTimeout": 300000,
-            "destination": "S4HANA",            
-            "path": "/sap/opu/odata/sap/ZZ1_I_PLANTTXT_CDS"  
+            "destination": "S4HANA",
+            "path": "/sap/opu/odata/sap/ZZ1_I_PLANTTXT_CDS"
           }
-        },             
-       "[production]": {
+        },
+        "[production]": {
           "credentials": {
             "requestTimeout": 300000,
-            "destination": "S4HANA",            
+            "destination": "S4HANA",
             "path": "/sap/opu/odata/sap/ZZ1_I_PLANTTXT_CDS"
           }
         }
@@ -149,18 +151,18 @@
         "model": "srv/EXTERNAL/ZZ1_I_COMBORDMATCHCODE_CDS",
         "forwardAuthToken": true,
         "csrf": true,
-        "csrfInBatch": true,   
+        "csrfInBatch": true,
         "[hybrid]": {
           "credentials": {
             "requestTimeout": 300000,
-            "destination": "S4HANA",            
-            "path": "/sap/opu/odata/sap/ZZ1_I_COMBORDMATCHCODE_CDS"  
+            "destination": "S4HANA",
+            "path": "/sap/opu/odata/sap/ZZ1_I_COMBORDMATCHCODE_CDS"
           }
-        },             
-       "[production]": {
+        },
+        "[production]": {
           "credentials": {
             "requestTimeout": 300000,
-            "destination": "S4HANA",            
+            "destination": "S4HANA",
             "path": "/sap/opu/odata/sap/ZZ1_I_COMBORDMATCHCODE_CDS"
           }
         }
@@ -170,18 +172,18 @@
         "model": "srv/EXTERNAL/ZZ1_I_PRODTYPEMATCHCOD_CDS",
         "forwardAuthToken": true,
         "csrf": true,
-        "csrfInBatch": true,   
+        "csrfInBatch": true,
         "[hybrid]": {
           "credentials": {
             "requestTimeout": 300000,
-            "destination": "S4HANA",            
-            "path": "/sap/opu/odata/sap/ZZ1_I_PRODTYPEMATCHCOD_CDS"  
+            "destination": "S4HANA",
+            "path": "/sap/opu/odata/sap/ZZ1_I_PRODTYPEMATCHCOD_CDS"
           }
-        },             
-       "[production]": {
+        },
+        "[production]": {
           "credentials": {
             "requestTimeout": 300000,
-            "destination": "S4HANA",            
+            "destination": "S4HANA",
             "path": "/sap/opu/odata/sap/ZZ1_I_PRODTYPEMATCHCOD_CDS"
           }
         }
@@ -194,14 +196,14 @@
         "[hybrid]": {
           "credentials": {
             "requestTimeout": 300000,
-            "destination": "S4HANA",            
+            "destination": "S4HANA",
             "path": "/sap/opu/odata/sap/MM_PUR_SUBCONTRACTING_COCKPIT_SRV"
           }
         },
         "[production]": {
           "credentials": {
             "requestTimeout": 300000,
-            "destination": "S4HANA",            
+            "destination": "S4HANA",
             "path": "/sap/opu/odata/sap/MM_PUR_SUBCONTRACTING_COCKPIT_SRV"
           }
         }
@@ -214,14 +216,14 @@
         "[hybrid]": {
           "credentials": {
             "requestTimeout": 300000,
-            "destination": "S4HANA",            
+            "destination": "S4HANA",
             "path": "/sap/opu/odata/sap/ZZ1_ZZ1_ZZ1_I_UNION_API_CDS"
           }
         },
         "[production]": {
           "credentials": {
             "requestTimeout": 300000,
-            "destination": "S4HANA",            
+            "destination": "S4HANA",
             "path": "/sap/opu/odata/sap/ZZ1_ZZ1_ZZ1_I_UNION_API_CDS"
           }
         }
@@ -234,14 +236,14 @@
         "[hybrid]": {
           "credentials": {
             "requestTimeout": 300000,
-            "destination": "S4HANA",            
+            "destination": "S4HANA",
             "path": "/sap/opu/odata/sap/ZZ1_I_COMBORDER_COMP_CDS"
           }
         },
         "[production]": {
           "credentials": {
             "requestTimeout": 300000,
-            "destination": "S4HANA",            
+            "destination": "S4HANA",
             "path": "/sap/opu/odata/sap/ZZ1_I_COMBORDER_COMP_CDS"
           }
         }
@@ -254,14 +256,14 @@
         "[hybrid]": {
           "credentials": {
             "requestTimeout": 300000,
-            "destination": "S4HANA",            
+            "destination": "S4HANA",
             "path": "/sap/opu/odata/sap/ZZ1_I_ARUN_BDBSSUMQTY_CDS_CDS"
           }
         },
         "[production]": {
           "credentials": {
             "requestTimeout": 300000,
-            "destination": "S4HANA",            
+            "destination": "S4HANA",
             "path": "/sap/opu/odata/sap/ZZ1_I_ARUN_BDBSSUMQTY_CDS_CDS"
           }
         }
@@ -274,17 +276,17 @@
         "[hybrid]": {
           "credentials": {
             "requestTimeout": 300000,
-            "destination": "S4HANA",            
+            "destination": "S4HANA",
             "path": "/sap/opu/odata/sap/OP_API_MATERIAL_DOCUMENT_SRV"
           }
-        }, 
+        },
         "[production]": {
           "credentials": {
             "requestTimeout": 300000,
-            "destination": "S4HANA",            
+            "destination": "S4HANA",
             "path": "/sap/opu/odata/sap/OP_API_MATERIAL_DOCUMENT_SRV"
           }
-        } 
+        }
       },
       "ZZ1_I_UNION_SUBCONCTR_COMP_CDS": {
         "kind": "odata-v2",
@@ -294,18 +296,18 @@
         "[hybrid]": {
           "credentials": {
             "requestTimeout": 300000,
-            "destination": "S4HANA",            
+            "destination": "S4HANA",
             "path": "/sap/opu/odata/sap/ZZ1_I_UNION_SUBCONCTR_COMP_CDS"
           }
-        }, 
+        },
         "[production]": {
           "credentials": {
             "requestTimeout": 300000,
-            "destination": "S4HANA",            
+            "destination": "S4HANA",
             "path": "/sap/opu/odata/sap/ZZ1_I_UNION_SUBCONCTR_COMP_CDS"
           }
-        } 
-      },            
+        }
+      },
       "OP_API_MATERIAL_DOCUMENT_SRV": {
         "kind": "odata-v2",
         "model": "srv/EXTERNAL/OP_API_MATERIAL_DOCUMENT_SRV",
@@ -314,17 +316,17 @@
         "[hybrid]": {
           "credentials": {
             "requestTimeout": 300000,
-            "destination": "S4HANA",            
+            "destination": "S4HANA",
             "path": "/sap/opu/odata/sap/OP_API_MATERIAL_DOCUMENT_SRV"
           }
-        },  
+        },
         "[production]": {
           "credentials": {
             "requestTimeout": 300000,
-            "destination": "S4HANA",            
+            "destination": "S4HANA",
             "path": "/sap/opu/odata/sap/OP_API_MATERIAL_DOCUMENT_SRV"
           }
-        }        
+        }
       },
       "API_MATERIAL_STOCK_SRV": {
         "kind": "odata-v2",
@@ -334,14 +336,14 @@
         "[hybrid]": {
           "credentials": {
             "requestTimeout": 300000,
-            "destination": "S4HANA",            
+            "destination": "S4HANA",
             "path": "/sap/opu/odata/sap/API_MATERIAL_STOCK_SRV"
           }
         },
         "[production]": {
           "credentials": {
             "requestTimeout": 300000,
-            "destination": "S4HANA",            
+            "destination": "S4HANA",
             "path": "/sap/opu/odata/sap/API_MATERIAL_STOCK_SRV"
           }
         }
@@ -354,19 +356,19 @@
         "[hybrid]": {
           "credentials": {
             "requestTimeout": 300000,
-            "destination": "S4HANA",            
+            "destination": "S4HANA",
             "path": "/sap/opu/odata/sap/API_MATERIAL_DOCUMENT_SRV"
           }
         },
         "[production]": {
           "credentials": {
             "requestTimeout": 300000,
-            "destination": "S4HANA",            
+            "destination": "S4HANA",
             "path": "/sap/opu/odata/sap/API_MATERIAL_DOCUMENT_SRV"
           }
         }
       },
-     "ZMPF_SD_CREATE_DELIVERY": {
+      "ZMPF_SD_CREATE_DELIVERY": {
         "kind": "odata-v4",
         "model": "srv/EXTERNAL/ZMPF_SD_CREATE_DELIVERY",
         "csrf": true,
@@ -374,21 +376,61 @@
         "[hybrid]": {
           "credentials": {
             "requestTimeout": 300000,
-            "destination": "S4HANA",            
+            "destination": "S4HANA",
             "path": "/sap/opu/odata4/sap/zmpf_sb_delivery_create/srvd/sap/zmpf_sd_delivery_create/0001"
           }
-        },        
+        },
         "[production]": {
           "credentials": {
             "requestTimeout": 300000,
-            "destination": "S4HANA",            
+            "destination": "S4HANA",
             "path": "/sap/opu/odata4/sap/zmpf_sb_delivery_create/srvd/sap/zmpf_sd_delivery_create/0001"
           }
         }
-      }   
-  }
-},
+      },
+      "ZZ1_I_PRDCORD_ATP_RULES_CDS": {
+        "kind": "odata-v2",
+        "model": "srv/EXTERNAL/ZZ1_I_PRDCORD_ATP_RULES_CDS",
+        "csrf": true,
+        "csrfInBatch": true,
+        "[hybrid]": {
+          "credentials": {
+            "requestTimeout": 300000,
+            "destination": "S4HANA",
+            "path": "/sap/opu/odata/sap/ZZ1_I_PRDCORD_ATP_RULES_CDS"
+          }
+        },
+        "[production]": {
+          "credentials": {
+            "requestTimeout": 300000,
+            "destination": "S4HANA",
+            "path": "/sap/opu/odata/sap/ZZ1_I_PRDCORD_ATP_RULES_CDS"
+          }
+        }
+      },
+      "ZZ1_I_COMB_COMPSTOCK_CDS": {
+        "kind": "odata-v2",
+        "model": "srv/EXTERNAL/ZZ1_I_COMB_COMPSTOCK_CDS",
+        "csrf": true,
+        "csrfInBatch": true,
+        "[hybrid]": {
+          "credentials": {
+            "requestTimeout": 300000,
+            "destination": "S4HANA",
+            "path": "/sap/opu/odata/sap/ZZ1_I_COMB_COMPSTOCK_CDS"
+          }
+        },
+        "[production]": {
+          "credentials": {
+            "requestTimeout": 300000,
+            "destination": "S4HANA",
+            "path": "/sap/opu/odata/sap/ZZ1_I_COMB_COMPSTOCK_CDS"
+          }
+        }
+      }
+    }
+  },
   "sapux": [
-    "app/zsubcontractingcockpitapp5"    
+    "app/zsubcontractingcockpitapp5"
   ]
 }

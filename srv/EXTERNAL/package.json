@@ -68,6 +68,14 @@
       "ZZ1_I_PRODTYPEMATCHCOD_CDS": {
         "kind": "odata-v2",
         "model": "srv/external/ZZ1_I_PRODTYPEMATCHCOD_CDS"
+      },
+      "ZZ1_I_PRDCORD_ATP_RULES_CDS": {
+        "kind": "odata-v2",
+        "model": "srv/external/ZZ1_I_PRDCORD_ATP_RULES_CDS"
+      },
+      "ZZ1_I_COMB_COMPSTOCK_CDS": {
+        "kind": "odata-v2",
+        "model": "srv/external/ZZ1_I_COMB_COMPSTOCK_CDS"
       }
     }
   },

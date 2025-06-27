@@ -26,6 +26,8 @@ module.exports = cds.service.impl(async function (srv) {
     const cdsCombOrder = await cds.connect.to('ZZ1_I_COMBORDMATCHCODE_CDS');
     const cdsOrderType = await cds.connect.to('ZZ1_I_PRODTYPEMATCHCOD_CDS');
     const componentsPoint = await cds.connect.to('ZZ1_I_UNION_SUBCONCTR_COMP_CDS');
+    const cdsAtpRules = await cds.connect.to('ZZ1_I_PRDCORD_ATP_RULES_CDS');
+    const cdsStock = await cds.connect.to('ZZ1_I_COMB_COMPSTOCK_CDS');
 
     this.on('READ', "MainCds", async request => {
 
@@ -111,10 +113,19 @@ module.exports = cds.service.impl(async function (srv) {
                 const { A_MaterialStock } = apiStock.entities;
                 const { ZZ1_I_ARUN_BDBSSUMQTY_CDS } = cdsMaterialQtyDbdsSum.entities;
                 const { ZZ1_I_SUMQTYDELIVERY_T } = cdsSumQtyDelivery.entities;
+                const { ZZ1_I_COMB_COMPSTOCK } = cdsStock.entities;
 
                 console.log("TEST tempi -> inizio select stock API " + new Date())
 
+                // modifica DL - 24/06/2025 - nuova CDS per lo stock
                 try {
+                    arrayDataStock = await cdsStock.run(SELECT(ZZ1_I_COMB_COMPSTOCK).where({ Material: { in: dataMaterial } }).limit(1000));
+                } catch (error) {
+                    console.log(error)
+                }
+                // modifica DL - 24/06/2025 - nuova CDS per lo stock - FINE
+
+                /*try {
                     var dataStock = await apiStock.run(SELECT(A_MaterialStock, material => {
                         material.to_MatlStkInAcctMod((to_MatlStkInAcctMod) => {
                             to_MatlStkInAcctMod('*')
@@ -136,7 +147,7 @@ module.exports = cds.service.impl(async function (srv) {
                     console.log("Lunghezza arrayDataStock " + arrayDataStock.length)
 
                     console.log("TEST tempi -> fine select stock API " + new Date())
-                }
+                }*/
 
                 //console.log("Multiple Stock "+JSON.stringify(dataStock))
 
@@ -255,6 +266,27 @@ module.exports = cds.service.impl(async function (srv) {
                 var sumStockAvaibilityLgort2 = 0
                 var sumStockAvaibilityStockO = 0
                 for (var z = 0; z < data.length; z++) {
+
+                    // modifica DL - 24/06/2025 - recupero stock segment associati
+                    const atpRulesPromise = cdsAtpRules.run(
+                        SELECT.from('ZZ1_I_PRDCORD_ATP_RULES')
+                          .where({
+                            CprodOrd: data[z].CprodOrd,
+                            Material: data[z].Material,
+                            Plant: data[z].Plant,
+                            //StorageLocation: data[z].StorageLocation,
+                            Batch: data[z].Batch,
+                            BillOfMaterialItemNumber_2: data[z].BillOfMaterialItemNumber_2
+                        })
+                    );
+
+                    const [atpRulesData] = await Promise.all([atpRulesPromise]);
+
+                    if(atpRulesData.length > 0){
+                        var atpRulesArray = JSON.parse(atpRulesData[0].atp)
+                    }
+                    // modifica DL - 24/06/2025 - recupero stock segment associati - FINE
+
                     objectDataQtyBdbs = {}
                     objectDataQtyBdbsLgort1 = {}
                     objectDataQtyBdbsLgort2 = {}
@@ -272,10 +304,10 @@ module.exports = cds.service.impl(async function (srv) {
                         objectDataQtyBdbsLgort2 = arrayDataQtyBdbs.find((o) => o.Material === data[z].Material && o.Batch === data[z].Batch && o.StorageLocation === data[z].Lgort2);
                         objectDataSumQtyDeliveryLgort1 = arrayDataSumQtyDelivery.find((o) => o.Material === data[z].Material && o.Batch === data[z].Batch && o.StorageLocation === data[z].Lgort1);
                         objectDataSumQtyDeliveryLgort2 = arrayDataSumQtyDelivery.find((o) => o.Material === data[z].Material && o.Batch === data[z].Batch && o.StorageLocation === data[z].Lgort2);
-                        objectDataQtyStock = arrayDataStock.find((o) => o.Material === data[z].Material && o.Batch === data[z].Batch);
-                        objectDataQtyStockAvaibility = arrayDataStock.find((o) => o.Material === data[z].Material && o.Batch === data[z].Batch && o.Plant === data[z].Plant && o.StorageLocation === data[z].Lgort1);
-                        objectDataQtyStockAvaibilityLgort2 = arrayDataStock.find((o) => o.Material === data[z].Material && o.Batch === data[z].Batch && o.Plant === data[z].Plant && o.StorageLocation === data[z].Lgort2);
-                        objectDataQtyStockAvaibilityStockO = arrayDataStock.find((o) => o.Material === data[z].Material && o.Batch === data[z].Batch && o.Plant && o.Supplier === data[z].Supplier && o.InventorySpecialStockType === 'O');
+                        objectDataQtyStock = arrayDataStock.find((o) => o.Material === data[z].Material && o.Batch === data[z].Batch && atpRulesArray.includes(obj.RequirementSegment));
+                        objectDataQtyStockAvaibility = arrayDataStock.find((o) => o.Material === data[z].Material && o.Batch === data[z].Batch && o.Plant === data[z].Plant && o.StorageLocation === data[z].Lgort1 && atpRulesArray.includes(obj.RequirementSegment));
+                        objectDataQtyStockAvaibilityLgort2 = arrayDataStock.find((o) => o.Material === data[z].Material && o.Batch === data[z].Batch && o.Plant === data[z].Plant && o.StorageLocation === data[z].Lgort2 && atpRulesArray.includes(obj.RequirementSegment));
+                        objectDataQtyStockAvaibilityStockO = arrayDataStock.find((o) => o.Material === data[z].Material && o.Batch === data[z].Batch && o.Plant === data[z].Plant && o.Supplier === data[z].Supplier && o.InventorySpecialStockType === 'O' && atpRulesArray.includes(obj.RequirementSegment));
                         if (objectDataQtyBdbs !== undefined && objectDataQtyStockAvaibility !== undefined) {
                             if (objectDataQtyStock !== null && objectDataQtyStock !== undefined) {
                                 data[z].StockMaterial = Number(objectDataQtyStock.MatlWrhsStkQtyInMatlBaseUnit) - Number(objectDataQtyBdbs.TotalAllocQty) + Number(data[z].TotalDefaultAllocQty)
@@ -342,10 +374,10 @@ module.exports = cds.service.impl(async function (srv) {
                         objectDataQtyBdbsLgort2 = arrayDataQtyBdbs.find((o) => o.Material === data[z].Material && o.StorageLocation === data[z].Lgort2);
                         objectDataSumQtyDeliveryLgort1 = arrayDataSumQtyDelivery.find((o) => o.Material === data[z].Material && o.StorageLocation === data[z].Lgort1);
                         objectDataSumQtyDeliveryLgort2 = arrayDataSumQtyDelivery.find((o) => o.Material === data[z].Material && o.StorageLocation === data[z].Lgort2);
-                        arrayStockOrderWithoutBatch = arrayDataStock.filter(obj => obj.Material === data[z].Material)
-                        arrayStockOrderWithoutBatchAvaibility = arrayDataStock.filter(obj => obj.Material === data[z].Material && obj.Plant === data[z].Plant && obj.StorageLocation === data[z].Lgort1)
-                        arrayStockOrderWithoutBatchAvaibilityLgort2 = arrayDataStock.filter(obj => obj.Material === data[z].Material && obj.Plant === data[z].Plant && obj.StorageLocation === data[z].Lgort2)
-                        arrayStockOrderWithoutBatchAvaibilityStockO = arrayDataStock.filter(obj => obj.Material === data[z].Material && obj.Plant === data[z].Plant && obj.Supplier === data[z].Supplier && obj.InventorySpecialStockType === 'O');
+                        arrayStockOrderWithoutBatch = arrayDataStock.filter(obj => obj.Material === data[z].Material && atpRulesArray.includes(obj.RequirementSegment ))
+                        arrayStockOrderWithoutBatchAvaibility = arrayDataStock.filter(obj => obj.Material === data[z].Material && obj.Plant === data[z].Plant && obj.StorageLocation === data[z].Lgort1 && atpRulesArray.includes(obj.RequirementSegment ))
+                        arrayStockOrderWithoutBatchAvaibilityLgort2 = arrayDataStock.filter(obj => obj.Material === data[z].Material && obj.Plant === data[z].Plant && obj.StorageLocation === data[z].Lgort2 && atpRulesArray.includes(obj.RequirementSegment ))
+                        arrayStockOrderWithoutBatchAvaibilityStockO = arrayDataStock.filter(obj => obj.Material === data[z].Material && obj.Plant === data[z].Plant && obj.Supplier === data[z].Supplier && obj.InventorySpecialStockType === 'O' && atpRulesArray.includes(obj.RequirementSegment ))
                         if (arrayStockOrderWithoutBatch.length > 0) {
                             for (var t = 0; t < arrayStockOrderWithoutBatch.length; t++) {
                                 sumStock = Number(sumStock) + Number(arrayStockOrderWithoutBatch[t].MatlWrhsStkQtyInMatlBaseUnit)
@@ -407,7 +439,9 @@ module.exports = cds.service.impl(async function (srv) {
                             data[z].StockMaterialUnitMeasure = data[z].BaseUnit
                         }
                     }
-                    data[z].StockMaterial = data[z].StockMaterial.toFixed(3)
+                    if(data[z].StockMaterial !== undefined && data[z].StockMaterial !== null){
+                        data[z].StockMaterial = data[z].StockMaterial.toFixed(3)
+                    }
                     // DL - 29/04/2025: modifico campo Prod Storage con fornitore in caso di lavorazione esterna
                     if (data[z].requirementtype === 'BB') {
                         data[z].Lgort2 = data[z].Supplier
@@ -783,5 +817,18 @@ module.exports = cds.service.impl(async function (srv) {
 
         return "No data found.";*/
     })
+
+    this.on('READ', "ZZ1_I_PRDCORD_ATP_RULES", async request => {
+        request.query.SELECT.count = false
+        var data = await cdsAtpRules.tx(request).run(request.query);
+
+        return data;
+    });
+
+    this.on('READ', "ZZ1_I_COMB_COMPSTOCK", async request => {
+        var data = await cdsStock.tx(request).run(request.query);
+
+        return data;
+    });
 
 });

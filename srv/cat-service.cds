@@ -15,6 +15,8 @@ using { ZZ1_I_WORKCENTERTXT_CDS as WorkCenterCDS } from './EXTERNAL/ZZ1_I_WORKCE
 using { ZZ1_I_PLANTTXT_CDS as PlantCDS } from './EXTERNAL/ZZ1_I_PLANTTXT_CDS';
 using { ZZ1_I_PRODTYPEMATCHCOD_CDS as ProdTypeCDS } from './EXTERNAL/ZZ1_I_PRODTYPEMATCHCOD_CDS';
 using { ZZ1_I_COMBORDMATCHCODE_CDS as CombOrderCDS } from './EXTERNAL/ZZ1_I_COMBORDMATCHCODE_CDS';
+using { ZZ1_I_PRDCORD_ATP_RULES_CDS } from './EXTERNAL/ZZ1_I_PRDCORD_ATP_RULES_CDS';
+using { ZZ1_I_COMB_COMPSTOCK_CDS } from './EXTERNAL/ZZ1_I_COMB_COMPSTOCK_CDS';
 
 @cds.query.limit.default: 500
 @cds.query.limit.max: 500
@@ -148,7 +150,11 @@ service CatalogService {
 
     @readonly entity ZZ1_I_COMBORDMATCHCODE as projection on CombOrderCDS.ZZ1_I_COMBORDMATCHCODE;
 
-    @readonly entity ZZ1_I_UNION_SUBCONCTR_COMP as projection on ComponentCDS.ZZ1_I_UNION_SUBCONCTR_COMP;
+    @readonly entity ZZ1_I_UNION_SUBCONCTR_COMP as projection on ComponentCDS.ZZ1_I_UNION_SUBCONCTR_COMP;   
+
+    @readonly entity ZZ1_I_PRDCORD_ATP_RULES as projection on ZZ1_I_PRDCORD_ATP_RULES_CDS.ZZ1_I_PRDCORD_ATP_RULES; 
+
+    @readonly entity ZZ1_I_COMB_COMPSTOCK as projection on ZZ1_I_COMB_COMPSTOCK_CDS.ZZ1_I_COMB_COMPSTOCK;
 
     action CreateDelivery(Record: many TYPES.MaterialRecord) returns String;
 

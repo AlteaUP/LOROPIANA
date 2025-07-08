@@ -363,6 +363,9 @@ sap.ui.define(
                                         case "BES":
                                           dataToSendObject.Lfart = "ZBEE"
                                           break;
+                                        case "":
+                                          dataToSendObject.Lfart = "ZHOD"
+                                          break;
                                       }
                                 }
                                 // Set the delivery type for the material document to "LB" (which typically indicates a delivery type for goods movements)
@@ -412,6 +415,9 @@ sap.ui.define(
                                           break;
                                         case "BES":
                                           dataToSendObject.Lfart = "ZBEE"
+                                          break;
+                                        case "":
+                                          dataToSendObject.Lfart = "ZHOD"
                                           break;
                                       }
                                 }
@@ -500,6 +506,9 @@ sap.ui.define(
                                             case "BES":
                                                 dataToSendObject.Lfart = "ZBES"
                                                 break;
+                                            case "":
+                                                dataToSendObject.Lfart = "ZHOD"
+                                                break;
                                         }
                                     }
                                     // Set the delivery type for the material document to "LB" (which typically indicates a delivery type for goods movements)
@@ -549,6 +558,9 @@ sap.ui.define(
                                                 break;
                                             case "BES":
                                                 dataToSendObject.Lfart = "ZBES"
+                                                break;
+                                            case "":
+                                                dataToSendObject.Lfart = "ZHOD"
                                                 break;
                                         }
                                     }

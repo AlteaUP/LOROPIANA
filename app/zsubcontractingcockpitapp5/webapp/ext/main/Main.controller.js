@@ -103,6 +103,15 @@ sap.ui.define(
                         if(Number(selectedMaterialArray[i].QtyToIssue) > Number(selectedMaterialArray[i].AvaibilityQtyProdStorage)){
                             selectedMaterialArray[i].QtyToIssue = selectedMaterialArray[i].AvaibilityQtyProdStorage
                         }
+                        if(Number(selectedMaterialArray[i].QtyToIssue) > Number(selectedMaterialArray[i].AvaibilityQtyProdStorage)){
+                            selectedMaterialArray[i].TotalWithdrawnQuantity = selectedMaterialArray[i].AvaibilityQtyProdStorage
+                        } else {
+                            selectedMaterialArray[i].TotalWithdrawnQuantity = selectedMaterialArray[i].QtyToIssue
+                        }
+                        selectedMaterialArray[i].QtyToIssue =  Number(selectedMaterialArray[i].QtyToIssue) - Number(selectedMaterialArray[i].AvaibilityQtyProdStorage)
+                        if(selectedMaterialArray[i].QtyToIssue < 0){
+                            selectedMaterialArray[i].QtyToIssue = 0
+                        }
                     } else if(oController.byId("TableOrderId").getSelectedContexts()[i].getObject().requirementtype === "BB" && oController.byId("ManualAccountingDialog").data("buttonPressed") === "HUB"){
                         if(Number(selectedMaterialArray[i].QtyToIssue) > Number(selectedMaterialArray[i].AvaibilityQtyProdStorage)){
                             selectedMaterialArray[i].TotalWithdrawnQuantity = selectedMaterialArray[i].AvaibilityQtyProdStorage

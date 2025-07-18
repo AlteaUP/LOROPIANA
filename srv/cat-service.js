@@ -282,7 +282,11 @@ module.exports = cds.service.impl(async function (srv) {
 
                     const [atpRulesData] = await Promise.all([atpRulesPromise]);
 
+                    console.log("Ordine ATP "+data[z].CprodOrd)
+                    console.log("Materiale ATP "+data[z].Material)
+
                     if(atpRulesData.length > 0){
+                        console.log(JSON.stringify(atpRulesData[0].atp))
                         var atpRulesArray = JSON.parse(atpRulesData[0].atp)
                     }
                     // modifica DL - 24/06/2025 - recupero stock segment associati - FINE

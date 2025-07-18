@@ -44,6 +44,6 @@ entity ZZ1_I_PRDCORD_ATP_RULES_CDS.ZZ1_I_PRDCORD_ATP_RULES {
   SegmentationStrategy : String(8);
   @sap.sortable : 'false'
   @sap.filterable : 'false'
-  atp : String(40);
+  atp : String(1000);
 };
 

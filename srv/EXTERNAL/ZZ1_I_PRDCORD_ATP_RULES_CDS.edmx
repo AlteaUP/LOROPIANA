@@ -49,7 +49,7 @@
 <Property Name="StockSegment" Type="Edm.String" MaxLength="40" sap:display-format="UpperCase" sap:label="Segmento di stock"/>
 <Property Name="RequirementSegment" Type="Edm.String" MaxLength="20"/>
 <Property Name="SegmentationStrategy" Type="Edm.String" MaxLength="8" sap:display-format="UpperCase" sap:label="Strategia segm." sap:quickinfo="Strategia di segmentazione"/>
-<Property Name="atp" Type="Edm.String" MaxLength="40" sap:sortable="false" sap:filterable="false"/>
+<Property Name="atp" Type="Edm.String" MaxLength="1000" sap:sortable="false" sap:filterable="false"/>
 </EntityType>
 <EntityContainer Name="ZZ1_I_PRDCORD_ATP_RULES_CDS_Entities" m:IsDefaultEntityContainer="true" sap:message-scope-supported="true" sap:supported-formats="atom json xlsx">
 <EntitySet Name="ZZ1_I_PRDCORD_ATP_RULES" EntityType="ZZ1_I_PRDCORD_ATP_RULES_CDS.ZZ1_I_PRDCORD_ATP_RULESType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1"/>

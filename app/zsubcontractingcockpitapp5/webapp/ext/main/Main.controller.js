@@ -100,11 +100,11 @@ sap.ui.define(
                     }
                     selectedMaterialArray.push(oController.byId("TableOrderId").getSelectedContexts()[i].getObject())
                     if(oController.byId("TableOrderId").getSelectedContexts()[i].getObject().requirementtype === "BB" && oController.byId("ManualAccountingDialog").data("buttonPressed") === "factory"){
-                        if(selectedMaterialArray[i].QtyToIssue > selectedMaterialArray[i].AvaibilityQtyProdStorage){
+                        if(Number(selectedMaterialArray[i].QtyToIssue) > Number(selectedMaterialArray[i].AvaibilityQtyProdStorage)){
                             selectedMaterialArray[i].QtyToIssue = selectedMaterialArray[i].AvaibilityQtyProdStorage
                         }
                     } else if(oController.byId("TableOrderId").getSelectedContexts()[i].getObject().requirementtype === "BB" && oController.byId("ManualAccountingDialog").data("buttonPressed") === "HUB"){
-                        if(selectedMaterialArray[i].QtyToIssue > selectedMaterialArray[i].AvaibilityQtyProdStorage){
+                        if(Number(selectedMaterialArray[i].QtyToIssue) > Number(selectedMaterialArray[i].AvaibilityQtyProdStorage)){
                             selectedMaterialArray[i].TotalWithdrawnQuantity = selectedMaterialArray[i].AvaibilityQtyProdStorage
                         } else {
                             selectedMaterialArray[i].TotalWithdrawnQuantity = selectedMaterialArray[i].QtyToIssue

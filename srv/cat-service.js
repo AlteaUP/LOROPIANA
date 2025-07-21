@@ -468,13 +468,10 @@ module.exports = cds.service.impl(async function (srv) {
                     // modifica DL - 21/07/2025 - valorizzo fornitore con Plant se vuoto
                     if(data[z].Supplier === null || data[z].Supplier === undefined || data[z].Supplier === ""){
                         data[z].Supplier = data[z].Plant
-                    }
-                    // modifica DL - 21/07/2025 - valorizzo fornitore con Plant se vuoto - FINE
-                    // modifica DL - 21/07/2025 - valorizzo fornitoreDescrizone Plant + testo fisso se vuoto
-                    if(data[z].SupplierWithDescription === null || data[z].SupplierWithDescription === undefined || data[z].SuppSupplierWithDescriptionlier === ""){
                         data[z].SupplierWithDescription = data[z].Plant + ' - Prod. Interna'
                     }
                     // modifica DL - 21/07/2025 - valorizzo fornitore con Plant se vuoto - FINE
+                    
                 }
 
                 console.log("TEST tempi -> fine calcolo colonne " + new Date())

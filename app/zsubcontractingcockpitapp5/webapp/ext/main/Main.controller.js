@@ -674,6 +674,7 @@ sap.ui.define(
                         if(found543){ 
                             //MessageToast.show(oController.getResourceBundle().getText("noDataToSendforMaterialDocument"))
                             oController.openDialogMessageText(oController.getResourceBundle().getText("noDataToSendforMaterialDocument"), "E");
+                            oBusyDialog.close();
                         }
                     }
 
@@ -762,6 +763,7 @@ sap.ui.define(
                             });
                         } else {
                            oController.openDialogMessageText(oController.getResourceBundle().getText("noStockNoDelivery"), "E"); 
+                           oBusyDialog.close();
                         }
                     } else {
                         //MessageToast.show(oController.getResourceBundle().getText("noDataToSend"))

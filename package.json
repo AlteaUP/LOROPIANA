@@ -278,14 +278,14 @@
           "credentials": {
             "requestTimeout": 300000,
             "destination": "S4HANA",
-            "path": "/sap/opu/odata/sap/OP_API_MATERIAL_DOCUMENT_SRV"
+            "path": "/sap/opu/odata/sap/ZZ1_I_SUMQTYDELIVERY_T_CDS"
           }
         },
         "[production]": {
           "credentials": {
             "requestTimeout": 300000,
             "destination": "S4HANA",
-            "path": "/sap/opu/odata/sap/OP_API_MATERIAL_DOCUMENT_SRV"
+            "path": "/sap/opu/odata/sap/ZZ1_I_SUMQTYDELIVERY_T_CDS"
           }
         }
       },

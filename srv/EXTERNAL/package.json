@@ -76,6 +76,10 @@
       "ZZ1_I_COMB_COMPSTOCK_CDS": {
         "kind": "odata-v2",
         "model": "srv/external/ZZ1_I_COMB_COMPSTOCK_CDS"
+      },
+      "ZZ1_C_MFG_USERPARAMS_CDS": {
+        "kind": "odata-v2",
+        "model": "srv/external/ZZ1_C_MFG_USERPARAMS_CDS"
       }
     }
   },

@@ -428,6 +428,26 @@
             "path": "/sap/opu/odata/sap/ZZ1_I_COMB_COMPSTOCK_CDS"
           }
         }
+      },
+      "ZZ1_C_MFG_USERPARAMS_CDS": {
+        "kind": "odata-v2",
+        "model": "srv/EXTERNAL/ZZ1_C_MFG_USERPARAMS_CDS",
+        "csrf": true,
+        "csrfInBatch": true,
+        "[hybrid]": {
+          "credentials": {
+            "requestTimeout": 300000,
+            "destination": "S4HANA",
+            "path": "/sap/opu/odata/sap/ZZ1_C_MFG_USERPARAMS_CDS"
+          }
+        },
+        "[production]": {
+          "credentials": {
+            "requestTimeout": 300000,
+            "destination": "S4HANA",
+            "path": "/sap/opu/odata/sap/ZZ1_C_MFG_USERPARAMS_CDS"
+          }
+        }
       }
     }
   },

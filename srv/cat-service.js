@@ -664,6 +664,13 @@ module.exports = cds.service.impl(async function (srv) {
         }
         // modifica DL - 17/06/2025 split per lfart diversi - FINE
 
+        // modifica DL - 24/07/2025 - leggo parametri utenti
+        const cdsUserParams = await cds.connect.to('ZZ1_C_MFG_USERPARAMS_CDS');
+        var resultUserParams = await cdsUserParams.run(
+            SELECT.from('ZZ1_C_MFG_USERPARAMS_CDS.ZZ1_C_MFG_USERPARAMS')
+          );
+        // modifica DL - 24/07/2025 - leggo parametri utenti - FINE
+
         var documentItemArray = []
         var documentItemObject = {}
         var vstel = ""
@@ -680,9 +687,9 @@ module.exports = cds.service.impl(async function (srv) {
                 documentItemObject.rfbel = "1"
                 documentItemObject.rfpos = z.toString()
                 documentItemObject.vstel = DocumentsBySupplier[y][z].Vstel
-                documentItemObject.vkorg = "ITM1"
-                documentItemObject.vtweg = "M1"
-                documentItemObject.spart = "01"
+                documentItemObject.vkorg = (resultUserParams.find(p => p.UserParameter === 'VKO')).UserParameterValue //"ITM1" //VKO
+                documentItemObject.vtweg = (resultUserParams.find(p => p.UserParameter === 'VTW')).UserParameterValue //"M1" //VTW
+                documentItemObject.spart = (resultUserParams.find(p => p.UserParameter === 'SPA')).UserParameterValue //"01" //SPA
                 documentItemObject.lfart = DocumentsBySupplier[y][z].Lfart
                 documentItemObject.matnr = DocumentsBySupplier[y][z].Material
                 documentItemObject.werks = DocumentsBySupplier[y][z].Plant

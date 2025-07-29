@@ -302,8 +302,7 @@ sap.ui.define(
                                     }                                    
                                 }
 
-                                console.log("finito di creare array")
-
+                                console.log("finito di creare array")                                
                                 
                             }).catch((oError) => {
                                 oBusyDialog.close();
@@ -339,7 +338,7 @@ sap.ui.define(
                                 // modifica DL - 16/06/2025 - cambio LFART in base al segment Stock
                                 let parentStockSegment = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].ParentStockSegment
                                 if(parentStockSegment === "" || parentStockSegment === null || parentStockSegment === undefined){
-                                    dataToSendObject.Lfart = "LB"
+                                    dataToSendObject.Lfart = "ZHOD"
                                 } else {                                    
                                     switch (parentStockSegment) {
                                         case "CAM":
@@ -391,44 +390,88 @@ sap.ui.define(
                                 }
                                 // modifica DL - 16/06/2025 - cambio LFART in base al segment Stock
                                 let parentStockSegment = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].ParentStockSegment
-                                if(parentStockSegment === "" || parentStockSegment === null || parentStockSegment === undefined){
-                                    dataToSendObject.Lfart = "ZHOD"
-                                } else {                
-                                    switch (parentStockSegment) {
-                                        case "CAM":
-                                          dataToSendObject.Lfart = "ZCAM"
-                                          break;
-                                        case "ESS":
-                                          dataToSendObject.Lfart = "ZESS"
-                                          break;
-                                        case "MTO":
-                                          dataToSendObject.Lfart = "ZMTO"
-                                          break;
-                                        case "PRO":
-                                          dataToSendObject.Lfart = "ZPRO"
-                                          break;
-                                        case "REG":
-                                          dataToSendObject.Lfart = "ZREG"
-                                          break;
-                                        case "BUY":
-                                          dataToSendObject.Lfart = "ZBUY"
-                                          break;
-                                        case "BUY US":
-                                          dataToSendObject.Lfart = "ZBUE"
-                                          break;
-                                        case "TRU":
-                                          dataToSendObject.Lfart = "ZTRE"
-                                          break;
-                                        case "ESS US":
-                                          dataToSendObject.Lfart = "ZESE"
-                                          break;
-                                        case "BES":
-                                          dataToSendObject.Lfart = "ZBEE"
-                                          break;
-                                        case "":
-                                          dataToSendObject.Lfart = "ZHOD"
-                                          break;
-                                      }
+                                if(this.byId("ManualAccountingDialog").data("buttonPressed") === "HUB"){
+                                    if(parentStockSegment === "" || parentStockSegment === null || parentStockSegment === undefined){
+                                        dataToSendObject.Lfart = "ZHOD"
+                                    } else {                
+                                        switch (parentStockSegment) {
+                                            case "CAM":
+                                            dataToSendObject.Lfart = "ZCAM"
+                                            break;
+                                            case "ESS":
+                                            dataToSendObject.Lfart = "ZESS"
+                                            break;
+                                            case "MTO":
+                                            dataToSendObject.Lfart = "ZMTO"
+                                            break;
+                                            case "PRO":
+                                            dataToSendObject.Lfart = "ZPRO"
+                                            break;
+                                            case "REG":
+                                            dataToSendObject.Lfart = "ZREG"
+                                            break;
+                                            case "BUY":
+                                            dataToSendObject.Lfart = "ZBUY"
+                                            break;
+                                            case "BUY US":
+                                            dataToSendObject.Lfart = "ZBUE"
+                                            break;
+                                            case "TRU":
+                                            dataToSendObject.Lfart = "ZTRE"
+                                            break;
+                                            case "ESS US":
+                                            dataToSendObject.Lfart = "ZESE"
+                                            break;
+                                            case "BES":
+                                            dataToSendObject.Lfart = "ZBEE"
+                                            break;
+                                            case "":
+                                            dataToSendObject.Lfart = "ZHOD"
+                                            break;
+                                        }
+                                    }
+                                } else {
+                                    // modifica DL - 24/07/2025 - valorizzo lfart
+                                    if(parentStockSegment === "" || parentStockSegment === null || parentStockSegment === undefined){
+                                        dataToSendObject.Lfart = "DTR"
+                                    } else {                                    
+                                        switch (parentStockSegment) {
+                                            case "CAM":
+                                            dataToSendObject.Lfart = "ZCAF"
+                                            break;
+                                            case "ESS":
+                                            dataToSendObject.Lfart = "ZESF"
+                                            break;
+                                            case "MTO":
+                                            dataToSendObject.Lfart = "ZMTF"
+                                            break;
+                                            case "PRO":
+                                            dataToSendObject.Lfart = "ZPRF"
+                                            break;
+                                            case "REG":
+                                            dataToSendObject.Lfart = "ZREF"
+                                            break;
+                                            case "BUY":
+                                            dataToSendObject.Lfart = "ZBUF"
+                                            break;
+                                            case "BUY US":
+                                            dataToSendObject.Lfart = "ZBUF"
+                                            break;
+                                            case "TRU":
+                                            dataToSendObject.Lfart = "ZTRF"
+                                            break;
+                                            case "ESS US":
+                                            dataToSendObject.Lfart = "ZESF"
+                                            break;
+                                            case "BES":
+                                            dataToSendObject.Lfart = "ZBEF"
+                                            break;
+                                            case "":
+                                            dataToSendObject.Lfart = "DTR"
+                                            break;
+                                        }
+                                    }                                    
+                                // modifica DL - 24/07/2025 - valorizzo lfart - FINE
                                 }
                                 //dataToSendObject.Lfart = "ZHOD"
                                 // modifica DL - 16/06/2025 - cambio LFART in base al segment Stock                                
@@ -447,6 +490,9 @@ sap.ui.define(
                             dataToSendObject.SgtScat = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].StockSegment
                             dataToSendObject.SgtRcaT = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].RequirementSegment
                             // modifica DL - 03/06/2025 - aggiungo campi segmentation - FINE
+                            // modifica DL - 29/07/2025 aggiungo tipo bottone selezionato    
+                            dataToSendObject.ButtonType = this.byId("ManualAccountingDialog").data("buttonPressed")
+                            // modifica DL - 29/07/2025 aggiungo tipo bottone selezionato - FINE 
                             dataToSend.push(dataToSendObject)
                             // modifica DL - 28/05/2025 - se quantità da sperdire supera disponibilità, allora appendo nuovo record
                             if(Number(this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].QtyToIssue) > Number(this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].QtyToIssueOriginal)){
@@ -481,44 +527,88 @@ sap.ui.define(
                                     dataToSendObject.Bwart = "541"
                                      // modifica DL - 16/06/2025 - cambio LFART in base al segment Stock
                                      let parentStockSegment = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].ParentStockSegment
-                                    if(parentStockSegment === "" || parentStockSegment === null || parentStockSegment === undefined){
-                                        dataToSendObject.Lfart = "LB"
-                                    } else {                                        
-                                        switch (parentStockSegment) {
-                                            case "CAM":
-                                                dataToSendObject.Lfart = "ZCAE"
-                                                break;
-                                            case "ESS":
-                                                dataToSendObject.Lfart = "ZESE"
-                                                break;
-                                            case "MTO":
-                                                dataToSendObject.Lfart = "ZMTE"
-                                                break;
-                                            case "PRO":
-                                                dataToSendObject.Lfart = "ZPRE"
-                                                break;
-                                            case "REG":
-                                                dataToSendObject.Lfart = "ZREE"
-                                                break;
-                                            case "BUY":
-                                                dataToSendObject.Lfart = "ZBUY"
-                                                break;
-                                            case "BUY US":
-                                                dataToSendObject.Lfart = "ZBUY"
-                                                break;
-                                            case "TRU":
-                                                dataToSendObject.Lfart = "ZTRU"
-                                                break;
-                                            case "ESS US":
-                                                dataToSendObject.Lfart = "ZESS"
-                                                break;
-                                            case "BES":
-                                                dataToSendObject.Lfart = "ZBES"
-                                                break;
-                                            case "":
-                                                dataToSendObject.Lfart = "ZHOD"
-                                                break;
+                                     if(this.byId("ManualAccountingDialog").data("buttonPressed") === "HUB"){
+                                        if(parentStockSegment === "" || parentStockSegment === null || parentStockSegment === undefined){
+                                            dataToSendObject.Lfart = "ZHOD"
+                                        } else {                                        
+                                            switch (parentStockSegment) {
+                                                case "CAM":
+                                                    dataToSendObject.Lfart = "ZCAE"
+                                                    break;
+                                                case "ESS":
+                                                    dataToSendObject.Lfart = "ZESE"
+                                                    break;
+                                                case "MTO":
+                                                    dataToSendObject.Lfart = "ZMTE"
+                                                    break;
+                                                case "PRO":
+                                                    dataToSendObject.Lfart = "ZPRE"
+                                                    break;
+                                                case "REG":
+                                                    dataToSendObject.Lfart = "ZREE"
+                                                    break;
+                                                case "BUY":
+                                                    dataToSendObject.Lfart = "ZBUY"
+                                                    break;
+                                                case "BUY US":
+                                                    dataToSendObject.Lfart = "ZBUY"
+                                                    break;
+                                                case "TRU":
+                                                    dataToSendObject.Lfart = "ZTRU"
+                                                    break;
+                                                case "ESS US":
+                                                    dataToSendObject.Lfart = "ZESS"
+                                                    break;
+                                                case "BES":
+                                                    dataToSendObject.Lfart = "ZBES"
+                                                    break;
+                                                case "":
+                                                    dataToSendObject.Lfart = "ZHOD"
+                                                    break;
+                                            }
                                         }
+                                     } else {
+                                    // modifica DL - 24/07/2025 - valorizzo lfart
+                                        if(parentStockSegment === "" || parentStockSegment === null || parentStockSegment === undefined){
+                                            dataToSendObject.Lfart = "DTR"
+                                        } else {                                    
+                                            switch (parentStockSegment) {
+                                                case "CAM":
+                                                dataToSendObject.Lfart = "ZCAF"
+                                                break;
+                                                case "ESS":
+                                                dataToSendObject.Lfart = "ZESF"
+                                                break;
+                                                case "MTO":
+                                                dataToSendObject.Lfart = "ZMTF"
+                                                break;
+                                                case "PRO":
+                                                dataToSendObject.Lfart = "ZPRF"
+                                                break;
+                                                case "REG":
+                                                dataToSendObject.Lfart = "ZREF"
+                                                break;
+                                                case "BUY":
+                                                dataToSendObject.Lfart = "ZBUF"
+                                                break;
+                                                case "BUY US":
+                                                dataToSendObject.Lfart = "ZBUF"
+                                                break;
+                                                case "TRU":
+                                                dataToSendObject.Lfart = "ZTRF"
+                                                break;
+                                                case "ESS US":
+                                                dataToSendObject.Lfart = "ZESF"
+                                                break;
+                                                case "BES":
+                                                dataToSendObject.Lfart = "ZBEF"
+                                                break;
+                                                case "":
+                                                dataToSendObject.Lfart = "DTR"
+                                                break;
+                                            }
+                                        }                                    
+                                    // modifica DL - 24/07/2025 - valorizzo lfart - FINE
                                     }
                                     // Set the delivery type for the material document to "LB" (which typically indicates a delivery type for goods movements)
                                     //dataToSendObject.Lfart = "LB"
@@ -534,44 +624,88 @@ sap.ui.define(
                                     }
                                     // modifica DL - 16/06/2025 - cambio LFART in base al segment Stock
                                     let parentStockSegment = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].ParentStockSegment
-                                    if(parentStockSegment === "" || parentStockSegment === null || parentStockSegment === undefined){
-                                        dataToSendObject.Lfart = "ZHOD"
-                                    } else {
-                                        switch (parentStockSegment) {
-                                            case "CAM":
-                                                dataToSendObject.Lfart = "ZCAM"
-                                                break;
-                                            case "ESS":
-                                                dataToSendObject.Lfart = "ZESS"
-                                                break;
-                                            case "MTO":
-                                                dataToSendObject.Lfart = "ZMTO"
-                                                break;
-                                            case "PRO":
-                                                dataToSendObject.Lfart = "ZPRO"
-                                                break;
-                                            case "REG":
-                                                dataToSendObject.Lfart = "ZREG"
-                                                break;
-                                            case "BUY":
-                                                dataToSendObject.Lfart = "ZBUY"
-                                                break;
-                                            case "BUY US":
-                                                dataToSendObject.Lfart = "ZBUY"
-                                                break;
-                                            case "TRU":
-                                                dataToSendObject.Lfart = "ZTRU"
-                                                break;
-                                            case "ESS US":
-                                                dataToSendObject.Lfart = "ZESS"
-                                                break;
-                                            case "BES":
-                                                dataToSendObject.Lfart = "ZBES"
-                                                break;
-                                            case "":
-                                                dataToSendObject.Lfart = "ZHOD"
-                                                break;
+                                    if(this.byId("ManualAccountingDialog").data("buttonPressed") === "HUB"){
+                                        if(parentStockSegment === "" || parentStockSegment === null || parentStockSegment === undefined){
+                                            dataToSendObject.Lfart = "ZHOD"
+                                        } else {
+                                            switch (parentStockSegment) {
+                                                case "CAM":
+                                                    dataToSendObject.Lfart = "ZCAM"
+                                                    break;
+                                                case "ESS":
+                                                    dataToSendObject.Lfart = "ZESS"
+                                                    break;
+                                                case "MTO":
+                                                    dataToSendObject.Lfart = "ZMTO"
+                                                    break;
+                                                case "PRO":
+                                                    dataToSendObject.Lfart = "ZPRO"
+                                                    break;
+                                                case "REG":
+                                                    dataToSendObject.Lfart = "ZREG"
+                                                    break;
+                                                case "BUY":
+                                                    dataToSendObject.Lfart = "ZBUY"
+                                                    break;
+                                                case "BUY US":
+                                                    dataToSendObject.Lfart = "ZBUY"
+                                                    break;
+                                                case "TRU":
+                                                    dataToSendObject.Lfart = "ZTRU"
+                                                    break;
+                                                case "ESS US":
+                                                    dataToSendObject.Lfart = "ZESS"
+                                                    break;
+                                                case "BES":
+                                                    dataToSendObject.Lfart = "ZBES"
+                                                    break;
+                                                case "":
+                                                    dataToSendObject.Lfart = "ZHOD"
+                                                    break;
+                                            }
                                         }
+                                    } else {
+                                        // modifica DL - 24/07/2025 - valorizzo lfart
+                                        if(parentStockSegment === "" || parentStockSegment === null || parentStockSegment === undefined){
+                                            dataToSendObject.Lfart = "DTR"
+                                        } else {                                    
+                                            switch (parentStockSegment) {
+                                                case "CAM":
+                                                dataToSendObject.Lfart = "ZCAF"
+                                                break;
+                                                case "ESS":
+                                                dataToSendObject.Lfart = "ZESF"
+                                                break;
+                                                case "MTO":
+                                                dataToSendObject.Lfart = "ZMTF"
+                                                break;
+                                                case "PRO":
+                                                dataToSendObject.Lfart = "ZPRF"
+                                                break;
+                                                case "REG":
+                                                dataToSendObject.Lfart = "ZREF"
+                                                break;
+                                                case "BUY":
+                                                dataToSendObject.Lfart = "ZBUF"
+                                                break;
+                                                case "BUY US":
+                                                dataToSendObject.Lfart = "ZBUF"
+                                                break;
+                                                case "TRU":
+                                                dataToSendObject.Lfart = "ZTRF"
+                                                break;
+                                                case "ESS US":
+                                                dataToSendObject.Lfart = "ZESF"
+                                                break;
+                                                case "BES":
+                                                dataToSendObject.Lfart = "ZBEF"
+                                                break;
+                                                case "":
+                                                dataToSendObject.Lfart = "DTR"
+                                                break;
+                                            }
+                                        }                                    
+                                    // modifica DL - 24/07/2025 - valorizzo lfart - FINE
                                     }
                                     //dataToSendObject.Lfart = "ZHOD"
                                     // modifica DL - 16/06/2025 - cambio LFART in base al segment Stock 
@@ -600,7 +734,10 @@ sap.ui.define(
                                 if(Number(dataToSend[lengthDataToSend-1].Quantity) === 0){
                                     dataToSend.splice(lengthDataToSend-1, 1)
                                 }
-                                // modifica DL - 10/06/2025 - richiesta di Caterina - FINE                             
+                                // modifica DL - 10/06/2025 - richiesta di Caterina - FINE            
+                                // modifica DL - 29/07/2025 aggiungo tipo bottone selezionato    
+                                dataToSendObject.ButtonType = this.byId("ManualAccountingDialog").data("buttonPressed")
+                                // modifica DL - 29/07/2025 aggiungo tipo bottone selezionato - FINE                                             
                                 dataToSend.push(dataToSendObject)                                
                             }
                             // modifica DL - 28/05/2025 - se quantità da sperdire supera disponibilità, allora appendo nuovo record - FINE

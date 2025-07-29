@@ -715,9 +715,14 @@ module.exports = cds.service.impl(async function (srv) {
                     if (DocumentsBySupplier[y][z].Bwart === '313') {
                         documentItemObject.fobwa = "315"
                     }
-                    documentItemObject.fo_dlvtp = "ID"
-                    documentItemObject.kzuml = "X"
-                    documentItemObject.dlvtp = "OD"
+                    if(DocumentsBySupplier[y][z].ButtonType === 'factory'){
+                        documentItemObject.dlvtp = "TP"
+                        documentItemObject.fo_dlvtp = ""
+                    } else {
+                        documentItemObject.dlvtp = "OD"
+                        documentItemObject.fo_dlvtp = "ID"
+                    }                    
+                    documentItemObject.kzuml = "X"                    
                     documentItemObject.umcha = DocumentsBySupplier[y][z].Batch
                     documentItemObject.kunwe = DocumentsBySupplier[y][z].Plant
                     documentItemObject.lifnr = DocumentsBySupplier[y][z].Plant

@@ -22,6 +22,7 @@ type MaterialRecord : {
     Kdmat           : String;
     SgtScat         : String;
     SgtRcaT         : String;
+    ButtonType      : String;
 }
 
 type MaterialCreateDocument : {

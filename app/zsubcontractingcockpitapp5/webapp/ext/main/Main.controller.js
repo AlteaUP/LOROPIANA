@@ -570,7 +570,7 @@ sap.ui.define(
                                      } else {
                                     // modifica DL - 24/07/2025 - valorizzo lfart
                                         if(parentStockSegment === "" || parentStockSegment === null || parentStockSegment === undefined){
-                                            dataToSendObject.Lfart = "DTR"
+                                            dataToSendObject.Lfart = "ZTRK"
                                         } else {                                    
                                             switch (parentStockSegment) {
                                                 case "CAM":
@@ -604,7 +604,7 @@ sap.ui.define(
                                                 dataToSendObject.Lfart = "ZBEF"
                                                 break;
                                                 case "":
-                                                dataToSendObject.Lfart = "DTR"
+                                                dataToSendObject.Lfart = "ZTRK"
                                                 break;
                                             }
                                         }                                    
@@ -667,7 +667,7 @@ sap.ui.define(
                                     } else {
                                         // modifica DL - 24/07/2025 - valorizzo lfart
                                         if(parentStockSegment === "" || parentStockSegment === null || parentStockSegment === undefined){
-                                            dataToSendObject.Lfart = "DTR"
+                                            dataToSendObject.Lfart = "ZTRK"
                                         } else {                                    
                                             switch (parentStockSegment) {
                                                 case "CAM":
@@ -701,7 +701,7 @@ sap.ui.define(
                                                 dataToSendObject.Lfart = "ZBEF"
                                                 break;
                                                 case "":
-                                                dataToSendObject.Lfart = "DTR"
+                                                dataToSendObject.Lfart = "ZTRK"
                                                 break;
                                             }
                                         }                                    

@@ -548,19 +548,19 @@ sap.ui.define(
                                                     dataToSendObject.Lfart = "ZREE"
                                                     break;
                                                 case "BUY":
-                                                    dataToSendObject.Lfart = "ZBUY"
+                                                    dataToSendObject.Lfart = "ZBUE"
                                                     break;
                                                 case "BUY US":
-                                                    dataToSendObject.Lfart = "ZBUY"
+                                                    dataToSendObject.Lfart = "ZBUE"
                                                     break;
                                                 case "TRU":
-                                                    dataToSendObject.Lfart = "ZTRU"
+                                                    dataToSendObject.Lfart = "ZTRE"
                                                     break;
                                                 case "ESS US":
-                                                    dataToSendObject.Lfart = "ZESS"
+                                                    dataToSendObject.Lfart = "ZESE"
                                                     break;
                                                 case "BES":
-                                                    dataToSendObject.Lfart = "ZBES"
+                                                    dataToSendObject.Lfart = "ZBEE"
                                                     break;
                                                 case "":
                                                     dataToSendObject.Lfart = "ZHOD"

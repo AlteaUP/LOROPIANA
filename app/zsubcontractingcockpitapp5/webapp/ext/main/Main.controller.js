@@ -799,11 +799,16 @@ sap.ui.define(
 
                     if(arrayToCreateMaterialDocument.length > 0){
                         oBindingContext2.execute().then((oResult) => {
+                            var oContext = oBindingContext2.getBoundContext(); 
                             oBusyDialog.close();
-                            // TODO - gestione errore
-                            //alert("Material Document Created!")
-                            oController.openDialogMessageText("", "I");
-                            oController.byId("TableOrderId").getModel().refresh()
+                            //if(oContext.getObject().value.indexOf("Error") > -1){
+                            if(oContext.getObject().value.MaterialDocument === undefined){
+                                oController.openDialogMessageText(oContext.getObject().value, "E");
+                            } else {                                
+                                oController.openDialogMessageText(oController.getResourceBundle().getText("materialDocument") + " " + oContext.getObject().value.MaterialDocument + " " + oController.getResourceBundle().getText("created2"), "I");
+                                oController.byId("TableOrderId").getModel().refresh()
+                            }                            
+                            
                             
                         }).catch((oError) => {
                             oBusyDialog.close();
@@ -907,8 +912,10 @@ sap.ui.define(
                            oBusyDialog.close();
                         }
                     } else {
-                        //MessageToast.show(oController.getResourceBundle().getText("noDataToSend"))
-                        oController.openDialogMessageText(oController.getResourceBundle().getText("noDataToSend"), "E");
+                        //MessageToast.show(oController.getResourceBundle().getText("noDataToSend")) 
+                        if((this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[0].QtyToIssue) > 0){
+                            oController.openDialogMessageText(oController.getResourceBundle().getText("noDataToSend"), "E");
+                        }
                         oBusyDialog.close();
                     }
 

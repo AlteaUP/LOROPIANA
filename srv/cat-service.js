@@ -606,14 +606,17 @@ module.exports = cds.service.impl(async function (srv) {
 
             console.log("SUCCESSO!")
 
-            let callCreate = apiMaterialDocumentCreate.tx(req).post("/A_MaterialDocumentHeader", payload)
+            let callCreate = await apiMaterialDocumentCreate.tx(req).post("/A_MaterialDocumentHeader", payload)
+            console.log("RITORNO chiamata " + callCreate) 
             console.log("Risultato chiamata " + JSON.stringify(callCreate))
+
+            return callCreate
 
             //return apiMaterialDocumentCreate.tx(req).post("/A_MaterialDocumentHeader", payload)                 
 
         } catch (error) {
 
-            console.log(error.message)
+            console.log("MESSAGGIO ERRORE "+error.message)
             return error.message
         }
     })

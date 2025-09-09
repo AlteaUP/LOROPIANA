@@ -711,11 +711,7 @@ sap.ui.define(
                                     // modifica DL - 16/06/2025 - cambio LFART in base al segment Stock 
                                 }
                                 dataToSendObject.Wadak = this.byId("WadakID").getValue()
-                                if(oController.byId("TableOrderId").getSelectedContexts()[i].getObject().requirementtype === "BB"){
-                                    dataToSendObject.StorageLocation = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].StorageLocation
-                                } else {
-                                    dataToSendObject.StorageLocation = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].Lgort2
-                                }                                
+                                dataToSendObject.StorageLocation = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].StorageLocation                                
                                 if(this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].AvaibilityQtyProdStorage !== null && this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].AvaibilityQtyProdStorage !== undefined){
                                     dataToSendObject.AvaibilityQtyProdStorage = (this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].AvaibilityQtyProdStorage).toString()
                                 }

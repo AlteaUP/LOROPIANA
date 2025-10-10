@@ -225,14 +225,15 @@ sap.ui.define(
                                 // calcolo array da passare all'API di creazione documento materiale
                                 //let objectToCreateMaterialDocument = {}
                                 //let arrayToCreateMaterialDocument = []
+                                qtyInserted = parseFloat(qtyInserted.replace(',', '.'))
                                 var totalQty = 0
                                 var remainingQty = qtyInserted
                                 for(var y=0; y<arrayComponents.length; y++){
-                                    if(totalQty <= Number(qtyInserted)){
+                                    if(totalQty <= qtyInserted){
                                         let qty = Number(arrayComponents[y].RequiredQuantity - arrayComponents[y].WithdrawnQuantity)
                                         for(var z=0; z<arrayStock.length; z++){    
-                                            if(qty > 0 && totalQty <= Number(qtyInserted) && Number(remainingQty) > 0){                                    
-                                                if(qty < Number(arrayStock[z].MatlWrhsStkQtyInMatlBaseUnit) && qty < Number(qtyInserted)){
+                                            if(qty > 0 && totalQty <= qtyInserted && remainingQty > 0){                                    
+                                                if(qty < Number(arrayStock[z].MatlWrhsStkQtyInMatlBaseUnit) && qty < qtyInserted){
                                                     objectToCreateMaterialDocument = {}
                                                     //objectToCreateMaterialDocument.Reservation = arrayComponents[y].Reservation
                                                     //objectToCreateMaterialDocument.ReservationItem = arrayComponents[y].ReservationItem
@@ -256,7 +257,7 @@ sap.ui.define(
                                                     arrayStock[z].MatlWrhsStkQtyInMatlBaseUnit = arrayStock[z].MatlWrhsStkQtyInMatlBaseUnit - qty
                                                     qty = qty - objectToCreateMaterialDocument.Quantity
                                                     totalQty = Number(totalQty) + Number(objectToCreateMaterialDocument.Quantity)
-                                                    remainingQty = Number(qtyInserted) - totalQty
+                                                    remainingQty = qtyInserted - totalQty
                                                 } else {
                                                     if(arrayStock[z].MatlWrhsStkQtyInMatlBaseUnit > 0){
                                                         objectToCreateMaterialDocument = {}
@@ -268,7 +269,7 @@ sap.ui.define(
                                                         } else {
                                                             objectToCreateMaterialDocument.Batch = arrayStock[z].Batch
                                                         }
-                                                        if(Number(qtyInserted) <= Number(arrayStock[z].MatlWrhsStkQtyInMatlBaseUnit)){
+                                                        if(qtyInserted <= Number(arrayStock[z].MatlWrhsStkQtyInMatlBaseUnit)){
                                                             objectToCreateMaterialDocument.Quantity = qtyInserted
                                                         } else if(totalQty >= Number(arrayStock[z].MatlWrhsStkQtyInMatlBaseUnit)){
                                                             objectToCreateMaterialDocument.Quantity = remainingQty                                                            
@@ -288,11 +289,11 @@ sap.ui.define(
                                                         qty = qty - arrayStock[z].MatlWrhsStkQtyInMatlBaseUnit
                                                         arrayStock[z].MatlWrhsStkQtyInMatlBaseUnit = arrayStock[z].MatlWrhsStkQtyInMatlBaseUnit - objectToCreateMaterialDocument.Quantity
                                                         totalQty = Number(totalQty) + Number(objectToCreateMaterialDocument.Quantity)
-                                                        remainingQty = Number(qtyInserted) - totalQty
+                                                        remainingQty = qtyInserted - totalQty
                                                     }
                                                 }
                                                 // modifica DL - 07/05/2025, aggiungo controllo su array con almeno 1 elemento
-                                                if(Number(remainingQty) === 0 && arrayToCreateMaterialDocument.length > 0){
+                                                if(remainingQty === 0 && arrayToCreateMaterialDocument.length > 0){
                                                     break
                                                 }
                                             }

@@ -29,6 +29,7 @@ module.exports = cds.service.impl(async function (srv) {
     const cdsAtpRules = await cds.connect.to('ZZ1_I_PRDCORD_ATP_RULES_CDS');
     const cdsStock = await cds.connect.to('ZZ1_I_COMB_COMPSTOCK_CDS');
     const cdsUserParams = await cds.connect.to('ZZ1_C_MFG_USERPARAMS_CDS');
+    const cdsCustomParams = await cds.connect.to('ZZ1_MFI_LUOGOSPED_TIPOCONS_CDS');
 
     this.on('READ', "MainCds", async request => {
 
@@ -874,6 +875,12 @@ module.exports = cds.service.impl(async function (srv) {
 
     this.on('READ', "ZZ1_C_MFG_USERPARAMS", async request => {
         var data = await cdsUserParams.tx(request).run(request.query);
+
+        return data;
+    });
+
+    this.on('READ', "ZZ1_MFI_LUOGOSPED_TIPOCONS", async request => {
+        var data = await cdsCustomParams.tx(request).run(request.query);
 
         return data;
     });

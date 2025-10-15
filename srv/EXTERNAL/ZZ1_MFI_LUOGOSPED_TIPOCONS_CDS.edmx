@@ -1,0 +1,75 @@
+<edmx:Edmx xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:sap="http://www.sap.com/Protocols/SAPData" Version="1.0">
+<edmx:Reference xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Uri="http://lpapps20.lp.corp:8000/sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_AGGREGATION',Version='0001',SAP__Origin='')/$value">
+<edmx:Include Namespace="Org.OData.Aggregation.V1" Alias="Aggregation"/>
+</edmx:Reference>
+<edmx:Reference xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Uri="http://lpapps20.lp.corp:8000/sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_ANALYTICS',Version='0001',SAP__Origin='')/$value">
+<edmx:Include Namespace="com.sap.vocabularies.Analytics.v1" Alias="Analytics"/>
+</edmx:Reference>
+<edmx:Reference xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Uri="http://lpapps20.lp.corp:8000/sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_CAPABILITIES',Version='0001',SAP__Origin='')/$value">
+<edmx:Include Namespace="Org.OData.Capabilities.V1" Alias="Capabilities"/>
+</edmx:Reference>
+<edmx:Reference xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Uri="http://lpapps20.lp.corp:8000/sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_CODELIST',Version='0001',SAP__Origin='')/$value">
+<edmx:Include Namespace="com.sap.vocabularies.CodeList.v1" Alias="SAP__CodeList"/>
+</edmx:Reference>
+<edmx:Reference xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Uri="http://lpapps20.lp.corp:8000/sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_COMMON',Version='0001',SAP__Origin='')/$value">
+<edmx:Include Namespace="com.sap.vocabularies.Common.v1" Alias="Common"/>
+</edmx:Reference>
+<edmx:Reference xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Uri="http://lpapps20.lp.corp:8000/sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_COMMUNICATION',Version='0001',SAP__Origin='')/$value">
+<edmx:Include Namespace="com.sap.vocabularies.Communication.v1" Alias="Communication"/>
+</edmx:Reference>
+<edmx:Reference xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Uri="http://lpapps20.lp.corp:8000/sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_MEASURES',Version='0001',SAP__Origin='')/$value">
+<edmx:Include Namespace="Org.OData.Measures.V1" Alias="Measures"/>
+</edmx:Reference>
+<edmx:Reference xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Uri="http://lpapps20.lp.corp:8000/sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_PERSONALDATA',Version='0001',SAP__Origin='')/$value">
+<edmx:Include Namespace="com.sap.vocabularies.PersonalData.v1" Alias="PersonalData"/>
+</edmx:Reference>
+<edmx:Reference xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Uri="http://lpapps20.lp.corp:8000/sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_UI',Version='0001',SAP__Origin='')/$value">
+<edmx:Include Namespace="com.sap.vocabularies.UI.v1" Alias="UI"/>
+</edmx:Reference>
+<edmx:Reference xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Uri="http://lpapps20.lp.corp:8000/sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_VALIDATION',Version='0001',SAP__Origin='')/$value">
+<edmx:Include Namespace="Org.OData.Validation.V1" Alias="Validation"/>
+</edmx:Reference>
+<edmx:DataServices m:DataServiceVersion="2.0">
+<Schema xmlns="http://schemas.microsoft.com/ado/2008/09/edm" Namespace="ZZ1_MFI_LUOGOSPED_TIPOCONS_CDS" xml:lang="it" sap:schema-version="1">
+<EntityType Name="ZZ1_MFI_LUOGOSPED_TIPOCONSType" sap:label="MFI_LUOGOSPED_TIPOCONS" sap:content-version="1">
+<Key>
+<PropertyRef Name="SAP_UUID"/>
+</Key>
+<Property Name="SAP_UUID" Type="Edm.Guid" Nullable="false" sap:label="UUID" sap:quickinfo="16 Byte UUID in 16 Bytes (Raw Format)"/>
+<Property Name="WERKS" Type="Edm.String" MaxLength="4" sap:label="PLANT"/>
+<Property Name="SGT_SCAT" Type="Edm.String" MaxLength="40" sap:label="PARENTSTOCKSEGMENT"/>
+<Property Name="VSTEL" Type="Edm.String" MaxLength="4" sap:label="SHIPPINGLOCATION"/>
+<Property Name="LFART" Type="Edm.String" MaxLength="4" sap:label="DELIVERYTYPE"/>
+<Property Name="BDART" Type="Edm.String" MaxLength="2" sap:label="REQUIREMENTTYPE"/>
+<Property Name="FACTORY" Type="Edm.Boolean" sap:label="FACTORY"/>
+</EntityType>
+<EntityContainer Name="ZZ1_MFI_LUOGOSPED_TIPOCONS_CDS_Entities" m:IsDefaultEntityContainer="true" sap:message-scope-supported="true" sap:supported-formats="atom json xlsx">
+<EntitySet Name="ZZ1_MFI_LUOGOSPED_TIPOCONS" EntityType="ZZ1_MFI_LUOGOSPED_TIPOCONS_CDS.ZZ1_MFI_LUOGOSPED_TIPOCONSType" sap:searchable="true" sap:content-version="1"/>
+<FunctionImport Name="ZZ1_MFI_LUOGOSPED_TIPOCONSSap_upsert" ReturnType="ZZ1_MFI_LUOGOSPED_TIPOCONS_CDS.ZZ1_MFI_LUOGOSPED_TIPOCONSType" EntitySet="ZZ1_MFI_LUOGOSPED_TIPOCONS" m:HttpMethod="POST">
+<Parameter Name="WERKS" Type="Edm.String" Mode="In" MaxLength="4" sap:label="Testo di lunghezza 4"/>
+<Parameter Name="SGT_SCAT" Type="Edm.String" Mode="In" MaxLength="40" sap:label="Testo di lungh. 40"/>
+<Parameter Name="VSTEL" Type="Edm.String" Mode="In" MaxLength="4" sap:label="Testo di lunghezza 4"/>
+<Parameter Name="LFART" Type="Edm.String" Mode="In" MaxLength="4" sap:label="Testo di lunghezza 4"/>
+<Parameter Name="BDART" Type="Edm.String" Mode="In" MaxLength="2" sap:label="Testo di lunghezza 2"/>
+<Parameter Name="FACTORY" Type="Edm.Boolean" Mode="In" sap:label="VERO"/>
+</FunctionImport>
+</EntityContainer>
+<Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Core.SchemaVersion" String="1.0.0"/>
+<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="ZZ1_MFI_LUOGOSPED_TIPOCONS_CDS.ZZ1_MFI_LUOGOSPED_TIPOCONS_CDS_Entities">
+<Annotation Term="Common.ApplyMultiUnitBehaviorForSortingAndFiltering" Bool="true"/>
+</Annotations>
+<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="ZZ1_MFI_LUOGOSPED_TIPOCONS_CDS.ZZ1_MFI_LUOGOSPED_TIPOCONSType/WERKS">
+<Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
+</Annotations>
+<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="ZZ1_MFI_LUOGOSPED_TIPOCONS_CDS.ZZ1_MFI_LUOGOSPED_TIPOCONSType">
+<Annotation Term="Common.SemanticKey">
+<Collection>
+<PropertyPath>WERKS</PropertyPath>
+</Collection>
+</Annotation>
+</Annotations>
+<atom:link xmlns:atom="http://www.w3.org/2005/Atom" rel="self" href="http://lpapps20.lp.corp:8000/sap/opu/odata/sap/ZZ1_MFI_LUOGOSPED_TIPOCONS_CDS/$metadata"/>
+<atom:link xmlns:atom="http://www.w3.org/2005/Atom" rel="latest-version" href="http://lpapps20.lp.corp:8000/sap/opu/odata/sap/ZZ1_MFI_LUOGOSPED_TIPOCONS_CDS/$metadata"/>
+</Schema>
+</edmx:DataServices>
+</edmx:Edmx>

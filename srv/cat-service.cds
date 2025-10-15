@@ -18,6 +18,8 @@ using { ZZ1_I_COMBORDMATCHCODE_CDS as CombOrderCDS } from './EXTERNAL/ZZ1_I_COMB
 using { ZZ1_I_PRDCORD_ATP_RULES_CDS } from './EXTERNAL/ZZ1_I_PRDCORD_ATP_RULES_CDS';
 using { ZZ1_I_COMB_COMPSTOCK_CDS } from './EXTERNAL/ZZ1_I_COMB_COMPSTOCK_CDS';
 using { ZZ1_C_MFG_USERPARAMS_CDS } from './EXTERNAL/ZZ1_C_MFG_USERPARAMS_CDS';
+using { ZZ1_MFI_LUOGOSPED_TIPOCONS_CDS } from './EXTERNAL/ZZ1_MFI_LUOGOSPED_TIPOCONS_CDS';
+
 
 @cds.query.limit.default: 500
 @cds.query.limit.max: 500
@@ -159,6 +161,8 @@ service CatalogService {
     @readonly entity ZZ1_I_COMB_COMPSTOCK as projection on ZZ1_I_COMB_COMPSTOCK_CDS.ZZ1_I_COMB_COMPSTOCK;
 
     @readonly entity ZZ1_C_MFG_USERPARAMS as projection on ZZ1_C_MFG_USERPARAMS_CDS.ZZ1_C_MFG_USERPARAMS;
+
+    @readonly entity ZZ1_MFI_LUOGOSPED_TIPOCONS as projection on ZZ1_MFI_LUOGOSPED_TIPOCONS_CDS.ZZ1_MFI_LUOGOSPED_TIPOCONS;
 
     action CreateDelivery(Record: many TYPES.MaterialRecord) returns String;
 

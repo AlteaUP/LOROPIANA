@@ -40,6 +40,7 @@
     "cf-html5-list-approuter-url": "cf html5-list -a zsubcontracting_cockpit -u",
     "cf-login": "cf login -a https://api.cf.eu30.hana.ondemand.com -o 'Loro Piana S.p.A._btp-development-loro-piana-82xq0cpc' -s 'DEV-SPACE-MANUFACTURING' --sso",
     "cf-login_dfr": "cf login -a https://api.cf.eu10-004.hana.ondemand.com -o 'alteaup-fashion' -s 'dev' --sso",
+    "cf-login_betty_blue": "cf login -a https://api.cf.ap10.hana.ondemand.com -o 'BETTY_BLUE SPA_8hng-hxvng0r8fzq' -s 'dev' --sso",
     "__comment_deploy": "Per il deploy eseguire il comando mta-build, mta-deploy, poi solo per la prima volta update-route",
     "wpremta-build": "node scripts/check-git-status.js",
     "build": "rimraf resources mta_archives && mbt build --mtar archive -m verbose",
@@ -446,6 +447,26 @@
             "requestTimeout": 300000,
             "destination": "S4HANA",
             "path": "/sap/opu/odata/sap/ZZ1_C_MFG_USERPARAMS_CDS"
+          }
+        }
+      },
+      "ZZ1_MFI_LUOGOSPED_TIPOCONS_CDS": {
+        "kind": "odata-v2",
+        "model": "srv/EXTERNAL/ZZ1_MFI_LUOGOSPED_TIPOCONS_CDS",
+        "csrf": true,
+        "csrfInBatch": true,
+        "[hybrid]": {
+          "credentials": {
+            "requestTimeout": 300000,
+            "destination": "S4HANA",
+            "path": "/sap/opu/odata/sap/ZZ1_MFI_LUOGOSPED_TIPOCONS_CDS"
+          }
+        },
+        "[production]": {
+          "credentials": {
+            "requestTimeout": 300000,
+            "destination": "S4HANA",
+            "path": "/sap/opu/odata/sap/ZZ1_MFI_LUOGOSPED_TIPOCONS_CDS"
           }
         }
       }

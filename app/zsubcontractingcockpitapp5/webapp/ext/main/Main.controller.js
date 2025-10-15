@@ -9,6 +9,7 @@ sap.ui.define(
         'use strict';
 
         var oController;
+        var customParams = []
 
         return PageController.extend('zsubcontractingcockpitapp5.ext.main.Main', {
             /**
@@ -18,7 +19,7 @@ sap.ui.define(
              */
             onInit: function () {
                 oController = this;
-                PageController.prototype.onInit.apply(this, arguments); // needs to be called to properly initialize the page controller                
+                PageController.prototype.onInit.apply(this, arguments); // needs to be called to properly initialize the page controller                 
             },
 
             /**
@@ -37,6 +38,17 @@ sap.ui.define(
              */
             onAfterRendering: function() {
                 oController._mainService = oController.getOwnerComponent().getModel();
+                // modifica DL - 15/10/2025 - recupero parametri da CBO
+                var oModel = this.getView().getModel(); // OData V4 Model
+                var oListBinding = oModel.bindList("/ZZ1_MFI_LUOGOSPED_TIPOCONS");
+
+                oListBinding.requestContexts().then(aContexts => {
+                    oController.customParams = aContexts.map(oContext => oContext.getObject());
+                    console.log("Dati letti:", customParams);                    
+                }).catch(err => {
+                    console.error("Errore nella chiamata OData:", err);
+                });
+                // modifica DL - 15/10/2025 - recupero parametri da CBO
             },
     
             closeCreateMaterialDocumentsDialog: function() {
@@ -139,7 +151,12 @@ sap.ui.define(
                     
                 var oModel = new JSONModel();
                 oModel.setData({ SelectedMaterial: selectedMaterialArray})
-                oTable.setModel(oModel);                
+                oTable.setModel(oModel);       
+                
+                // modifica DL - 15/10/2025 - recupero parametri da CBO
+                var result = oController.customParams.find(p => p.WERKS === selectedMaterialArray[0].Plant)
+                oController.byId("shippingPointID").setValue(result.VSTEL)
+                // modifica DL - 15/10/2025 - recupero parametri da CBO
                 
             },
 
@@ -340,8 +357,10 @@ sap.ui.define(
                                 let parentStockSegment = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].ParentStockSegment
                                 if(parentStockSegment === "" || parentStockSegment === null || parentStockSegment === undefined){
                                     dataToSendObject.Lfart = "ZHOD"
-                                } else {                                    
-                                    switch (parentStockSegment) {
+                                } else {      
+                                    var result = oController.customParams.find(p => p.WERKS === this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].Plant && p.BDART === 'BB' && p.SGT_SCAT === parentStockSegment && p.FACTORY === false)                              
+                                    dataToSendObject.Lfart = result.LFART
+                                    /*switch (parentStockSegment) {
                                         case "CAM":
                                           dataToSendObject.Lfart = "ZCAE"
                                           break;
@@ -375,7 +394,7 @@ sap.ui.define(
                                         case "":
                                           dataToSendObject.Lfart = "ZHOD"
                                           break;
-                                      }
+                                      }*/
                                 }
                                 // Set the delivery type for the material document to "LB" (which typically indicates a delivery type for goods movements)
                                 //dataToSendObject.Lfart = "LB"
@@ -394,8 +413,10 @@ sap.ui.define(
                                 if(this.byId("ManualAccountingDialog").data("buttonPressed") === "HUB"){
                                     if(parentStockSegment === "" || parentStockSegment === null || parentStockSegment === undefined){
                                         dataToSendObject.Lfart = "ZHOD"
-                                    } else {                
-                                        switch (parentStockSegment) {
+                                    } else {              
+                                        var result = oController.customParams.find(p => p.WERKS === this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].Plant && p.BDART === 'AR' && p.SGT_SCAT === parentStockSegment && p.FACTORY === false)                              
+                                        dataToSendObject.Lfart = result.LFART  
+                                        /*switch (parentStockSegment) {
                                             case "CAM":
                                             dataToSendObject.Lfart = "ZCAM"
                                             break;
@@ -429,14 +450,16 @@ sap.ui.define(
                                             case "":
                                             dataToSendObject.Lfart = "ZHOD"
                                             break;
-                                        }
+                                        }*/
                                     }
                                 } else {
                                     // modifica DL - 24/07/2025 - valorizzo lfart
                                     if(parentStockSegment === "" || parentStockSegment === null || parentStockSegment === undefined){
                                         dataToSendObject.Lfart = "ZTRK"
-                                    } else {                                    
-                                        switch (parentStockSegment) {
+                                    } else {  
+                                        var result = oController.customParams.find(p => p.WERKS === this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].Plant && p.BDART === 'AR' && p.SGT_SCAT === parentStockSegment && p.FACTORY === true)                              
+                                        dataToSendObject.Lfart = result.LFART                                   
+                                        /*switch (parentStockSegment) {
                                             case "CAM":
                                             dataToSendObject.Lfart = "ZCAF"
                                             break;
@@ -470,7 +493,7 @@ sap.ui.define(
                                             case "":
                                             dataToSendObject.Lfart = "ZTRK"
                                             break;
-                                        }
+                                        }*/
                                     }                                    
                                 // modifica DL - 24/07/2025 - valorizzo lfart - FINE
                                 }
@@ -531,8 +554,10 @@ sap.ui.define(
                                      if(this.byId("ManualAccountingDialog").data("buttonPressed") === "HUB"){
                                         if(parentStockSegment === "" || parentStockSegment === null || parentStockSegment === undefined){
                                             dataToSendObject.Lfart = "ZHOD"
-                                        } else {                                        
-                                            switch (parentStockSegment) {
+                                        } else {     
+                                            var result = oController.customParams.find(p => p.WERKS === this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].Plant && p.BDART === 'BB' && p.SGT_SCAT === parentStockSegment && p.FACTORY === false)                              
+                                            dataToSendObject.Lfart = result.LFART                                    
+                                            /*switch (parentStockSegment) {
                                                 case "CAM":
                                                     dataToSendObject.Lfart = "ZCAE"
                                                     break;
@@ -566,14 +591,16 @@ sap.ui.define(
                                                 case "":
                                                     dataToSendObject.Lfart = "ZHOD"
                                                     break;
-                                            }
+                                            }*/
                                         }
                                      } else {
                                     // modifica DL - 24/07/2025 - valorizzo lfart
                                         if(parentStockSegment === "" || parentStockSegment === null || parentStockSegment === undefined){
                                             dataToSendObject.Lfart = "ZTRK"
-                                        } else {                                    
-                                            switch (parentStockSegment) {
+                                        } else {   
+                                            var result = oController.customParams.find(p => p.WERKS === this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].Plant && p.BDART === 'BB' && p.SGT_SCAT === parentStockSegment && p.FACTORY === true)                              
+                                            dataToSendObject.Lfart = result.LFART                                  
+                                            /*switch (parentStockSegment) {
                                                 case "CAM":
                                                 dataToSendObject.Lfart = "ZCAF"
                                                 break;
@@ -607,7 +634,7 @@ sap.ui.define(
                                                 case "":
                                                 dataToSendObject.Lfart = "ZTRK"
                                                 break;
-                                            }
+                                            }*/
                                         }                                    
                                     // modifica DL - 24/07/2025 - valorizzo lfart - FINE
                                     }
@@ -629,7 +656,9 @@ sap.ui.define(
                                         if(parentStockSegment === "" || parentStockSegment === null || parentStockSegment === undefined){
                                             dataToSendObject.Lfart = "ZHOD"
                                         } else {
-                                            switch (parentStockSegment) {
+                                            var result = oController.customParams.find(p => p.WERKS === this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].Plant && p.BDART === 'AR' && p.SGT_SCAT === parentStockSegment && p.FACTORY === false)                              
+                                            dataToSendObject.Lfart = result.LFART 
+                                            /*switch (parentStockSegment) {
                                                 case "CAM":
                                                     dataToSendObject.Lfart = "ZCAM"
                                                     break;
@@ -663,14 +692,16 @@ sap.ui.define(
                                                 case "":
                                                     dataToSendObject.Lfart = "ZHOD"
                                                     break;
-                                            }
+                                            }*/
                                         }
                                     } else {
                                         // modifica DL - 24/07/2025 - valorizzo lfart
                                         if(parentStockSegment === "" || parentStockSegment === null || parentStockSegment === undefined){
                                             dataToSendObject.Lfart = "ZTRK"
-                                        } else {                                    
-                                            switch (parentStockSegment) {
+                                        } else {    
+                                            var result = oController.customParams.find(p => p.WERKS === this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].Plant && p.BDART === 'AR' && p.SGT_SCAT === parentStockSegment && p.FACTORY === true)                              
+                                            dataToSendObject.Lfart = result.LFART                                 
+                                            /*switch (parentStockSegment) {
                                                 case "CAM":
                                                 dataToSendObject.Lfart = "ZCAF"
                                                 break;
@@ -704,7 +735,7 @@ sap.ui.define(
                                                 case "":
                                                 dataToSendObject.Lfart = "ZTRK"
                                                 break;
-                                            }
+                                            }*/
                                         }                                    
                                     // modifica DL - 24/07/2025 - valorizzo lfart - FINE
                                     }

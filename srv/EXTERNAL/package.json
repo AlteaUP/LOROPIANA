@@ -80,6 +80,10 @@
       "ZZ1_C_MFG_USERPARAMS_CDS": {
         "kind": "odata-v2",
         "model": "srv/external/ZZ1_C_MFG_USERPARAMS_CDS"
+      },
+      "ZZ1_MFI_LUOGOSPED_TIPOCONS_CDS": {
+        "kind": "odata-v2",
+        "model": "srv/external/ZZ1_MFI_LUOGOSPED_TIPOCONS_CDS"
       }
     }
   },

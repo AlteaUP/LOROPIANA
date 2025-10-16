@@ -30,12 +30,13 @@
 <edmx:Include Namespace="Org.OData.Validation.V1" Alias="Validation"/>
 </edmx:Reference>
 <edmx:DataServices m:DataServiceVersion="2.0">
-<Schema xmlns="http://schemas.microsoft.com/ado/2008/09/edm" Namespace="ZZ1_MFI_LUOGOSPED_TIPOCONS_CDS" xml:lang="it" sap:schema-version="1">
+<Schema xmlns="http://schemas.microsoft.com/ado/2008/09/edm" Namespace="ZZ1_MFI_LUOGOSPED_TIPOCONS_CDS" xml:lang="en" sap:schema-version="1">
 <EntityType Name="ZZ1_MFI_LUOGOSPED_TIPOCONSType" sap:label="MFI_LUOGOSPED_TIPOCONS" sap:content-version="1">
 <Key>
 <PropertyRef Name="SAP_UUID"/>
 </Key>
 <Property Name="SAP_UUID" Type="Edm.Guid" Nullable="false" sap:label="UUID" sap:quickinfo="16 Byte UUID in 16 Bytes (Raw Format)"/>
+<Property Name="COUNTER" Type="Edm.String" MaxLength="10" sap:display-format="NonNegative" sap:label="COUNTER"/>
 <Property Name="WERKS" Type="Edm.String" MaxLength="4" sap:label="PLANT"/>
 <Property Name="SGT_SCAT" Type="Edm.String" MaxLength="40" sap:label="PARENTSTOCKSEGMENT"/>
 <Property Name="VSTEL" Type="Edm.String" MaxLength="4" sap:label="SHIPPINGLOCATION"/>
@@ -46,25 +47,26 @@
 <EntityContainer Name="ZZ1_MFI_LUOGOSPED_TIPOCONS_CDS_Entities" m:IsDefaultEntityContainer="true" sap:message-scope-supported="true" sap:supported-formats="atom json xlsx">
 <EntitySet Name="ZZ1_MFI_LUOGOSPED_TIPOCONS" EntityType="ZZ1_MFI_LUOGOSPED_TIPOCONS_CDS.ZZ1_MFI_LUOGOSPED_TIPOCONSType" sap:searchable="true" sap:content-version="1"/>
 <FunctionImport Name="ZZ1_MFI_LUOGOSPED_TIPOCONSSap_upsert" ReturnType="ZZ1_MFI_LUOGOSPED_TIPOCONS_CDS.ZZ1_MFI_LUOGOSPED_TIPOCONSType" EntitySet="ZZ1_MFI_LUOGOSPED_TIPOCONS" m:HttpMethod="POST">
-<Parameter Name="WERKS" Type="Edm.String" Mode="In" MaxLength="4" sap:label="Testo di lunghezza 4"/>
-<Parameter Name="SGT_SCAT" Type="Edm.String" Mode="In" MaxLength="40" sap:label="Testo di lungh. 40"/>
-<Parameter Name="VSTEL" Type="Edm.String" Mode="In" MaxLength="4" sap:label="Testo di lunghezza 4"/>
-<Parameter Name="LFART" Type="Edm.String" Mode="In" MaxLength="4" sap:label="Testo di lunghezza 4"/>
-<Parameter Name="BDART" Type="Edm.String" Mode="In" MaxLength="2" sap:label="Testo di lunghezza 2"/>
-<Parameter Name="FACTORY" Type="Edm.Boolean" Mode="In" sap:label="VERO"/>
+<Parameter Name="COUNTER" Type="Edm.String" Mode="In" MaxLength="10" sap:label="Numeric length 10"/>
+<Parameter Name="WERKS" Type="Edm.String" Mode="In" MaxLength="4" sap:label="Text of length 4"/>
+<Parameter Name="SGT_SCAT" Type="Edm.String" Mode="In" MaxLength="40" sap:label="Text of length 40"/>
+<Parameter Name="VSTEL" Type="Edm.String" Mode="In" MaxLength="4" sap:label="Text of length 4"/>
+<Parameter Name="LFART" Type="Edm.String" Mode="In" MaxLength="4" sap:label="Text of length 4"/>
+<Parameter Name="BDART" Type="Edm.String" Mode="In" MaxLength="2" sap:label="Text of length 2"/>
+<Parameter Name="FACTORY" Type="Edm.Boolean" Mode="In" sap:label="TRUE"/>
 </FunctionImport>
 </EntityContainer>
 <Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Core.SchemaVersion" String="1.0.0"/>
 <Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="ZZ1_MFI_LUOGOSPED_TIPOCONS_CDS.ZZ1_MFI_LUOGOSPED_TIPOCONS_CDS_Entities">
 <Annotation Term="Common.ApplyMultiUnitBehaviorForSortingAndFiltering" Bool="true"/>
 </Annotations>
-<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="ZZ1_MFI_LUOGOSPED_TIPOCONS_CDS.ZZ1_MFI_LUOGOSPED_TIPOCONSType/WERKS">
+<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="ZZ1_MFI_LUOGOSPED_TIPOCONS_CDS.ZZ1_MFI_LUOGOSPED_TIPOCONSType/COUNTER">
 <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
 </Annotations>
 <Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="ZZ1_MFI_LUOGOSPED_TIPOCONS_CDS.ZZ1_MFI_LUOGOSPED_TIPOCONSType">
 <Annotation Term="Common.SemanticKey">
 <Collection>
-<PropertyPath>WERKS</PropertyPath>
+<PropertyPath>COUNTER</PropertyPath>
 </Collection>
 </Annotation>
 </Annotations>

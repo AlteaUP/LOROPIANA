@@ -154,7 +154,14 @@ sap.ui.define(
                 oTable.setModel(oModel);       
                 
                 // modifica DL - 15/10/2025 - recupero parametri da CBO
-                var result = oController.customParams.find(p => p.WERKS === selectedMaterialArray[0].Plant)
+                var typeButtonPressed
+                if(this.byId("ManualAccountingDialog").data("buttonPressed") === "HUB"){
+                    typeButtonPressed = false
+                } else {
+                    typeButtonPressed = true
+                }
+
+                var result = oController.customParams.find(p => p.WERKS === selectedMaterialArray[0].Plant && p.BDART === selectedMaterialArray[0].requirementtype  && p.SGT_SCAT === selectedMaterialArray[0].ParentStockSegment && p.FACTORY === typeButtonPressed)
                 oController.byId("shippingPointID").setValue(result.VSTEL)
                 // modifica DL - 15/10/2025 - recupero parametri da CBO
                 
@@ -327,7 +334,7 @@ sap.ui.define(
                                 // TODO - gestione errore
                             });
 
-                        } else {
+                        } //else {
                             dataToSendObject = {}
                             dataToSendObject.Material = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].Material
                             dataToSendObject.Batch = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].Batch
@@ -773,7 +780,7 @@ sap.ui.define(
                                 dataToSend.push(dataToSendObject)                                
                             }
                             // modifica DL - 28/05/2025 - se quantità da sperdire supera disponibilità, allora appendo nuovo record - FINE
-                        }
+                        //}
                     }
 
                     var URL = oController._mainService.sServiceUrl;

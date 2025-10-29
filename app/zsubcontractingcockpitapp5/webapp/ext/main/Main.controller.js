@@ -78,6 +78,10 @@ sap.ui.define(
                                     oRow.removeStyleClass("partialDelivery");
 
                                     var context = oRow.getBindingContext()
+                                    if(context === undefined){
+                                        return
+                                    }
+
                                     if(context.getProperty('StatusDelivery') === 'completed'){
                                         oRow.addStyleClass("completedDelivery"); 
                                     } else if(context.getProperty('StatusDelivery') === 'partial') {

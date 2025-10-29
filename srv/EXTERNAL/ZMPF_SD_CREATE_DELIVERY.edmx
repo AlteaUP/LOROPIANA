@@ -93,6 +93,7 @@
 <Property Name="kdmat" Type="Edm.String" Nullable="false" MaxLength="35"/>
 <Property Name="sgt_scat" Type="Edm.String" Nullable="false" MaxLength="40"/>
 <Property Name="sgt_rcat" Type="Edm.String" Nullable="false" MaxLength="40"/>
+<Property Name="lprio" Type="Edm.String" Nullable="false" MaxLength="2"/>
 <Property Name="__EntityControl" Type="com.sap.gateway.srvd.zmpf_sd_delivery_create.v0001.EntityControl"/>
 <NavigationProperty Name="parent" Type="com.sap.gateway.srvd.zmpf_sd_delivery_create.v0001.CreateDelHType" Nullable="false" Partner="DeliveryItems">
 <ReferentialConstraint Property="vstel" ReferencedProperty="vstel"/>
@@ -305,6 +306,12 @@
 <Annotations Target="SAP__self.CreateDelIType/sgt_rcat">
 <Annotation Term="SAP__common.IsUpperCase"/>
 <Annotation Term="SAP__common.Label" String="Segmento fabbisogno"/>
+</Annotations>
+<Annotations Target="SAP__self.CreateDelIType/lprio">
+<Annotation Term="SAP__common.IsDigitSequence"/>
+<Annotation Term="SAP__common.Label" String="Priorità consegna"/>
+<Annotation Term="SAP__common.Heading" String="Pr.Cn"/>
+<Annotation Term="SAP__common.QuickInfo" String="Priorità di consegna"/>
 </Annotations>
 <Annotations Target="SAP__self.CreateDelIType/__EntityControl">
 <Annotation Term="SAP__core.Computed"/>

@@ -63,19 +63,46 @@ sap.ui.define(
                 mBindingParams.collectionBindingInfo.events = {
                     "dataReceived" : function(oEvent){
                         var aReceivedData = oEvent.getParameter('data');
+
+                        // modifica DL - 29/10/2025 - colore righe in base a stato della spedizione
+                        // verde -> già spedito, arancione spedizione parziale
+                        var oMDCTable = oController.byId("TableOrderId").getMDCTable();
+
+                        var intervalId = setInterval(function() {
+                            var aRows = oMDCTable._oTable.getItems();
+                            if (aRows.length > 0) {
+                                // Cella pronta, applica editMode
+                                aRows.forEach(function(oRow) {
+                                    // rimuovo classi precedenti
+                                    oRow.removeStyleClass("completedDelivery");
+                                    oRow.removeStyleClass("partialDelivery");
+
+                                    var context = oRow.getBindingContext()
+                                    if(context.getProperty('StatusDelivery') === 'completed'){
+                                        oRow.addStyleClass("completedDelivery"); 
+                                    } else if(context.getProperty('StatusDelivery') === 'partial') {
+                                        oRow.addStyleClass("partialDelivery"); 
+                                    }                     
+                                });
+                                clearInterval(intervalId); // ferma il polling
+                            }
+                        }, 100); 
+                        // modifica DL - 29/10/2025 - colore righe in base a stato della spedizione - FINE
+
                         // gestione errore
                         if(oEvent.mParameters.error !== undefined && oEvent.mParameters.error !== null){
                             oController.openDialogMessageText(oEvent.mParameters.error.message , "E");
                         }
                         },
                         //More event handling can be done here
-                };
+                };                
 
                 //delete mBindingParams.collectionBindingInfo.parameters.$$getKeepAliveContext
             },
 
             clearFields: function(oEvent){
                 oController.byId("shippingPointID").setValue();
+                oController.byId("priorityID").setValue();
             },
 
             onCreateMaterialDocuments: function(oEvent) {
@@ -357,6 +384,7 @@ sap.ui.define(
                                 dataToSendObject.Lgort = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].Lgort2
                             }                    
                             dataToSendObject.Vstel = this.byId("shippingPointID").getValue()
+                            dataToSendObject.Lprio = this.byId("priorityID").getValue()
                             dataToSendObject.Supplier = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].Supplier
                             if(this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].requirementtype === "BB"){
                                 dataToSendObject.Bwart = "541"
@@ -553,6 +581,7 @@ sap.ui.define(
                                     dataToSendObject.Lgort = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].Lgort2
                                 }                    
                                 dataToSendObject.Vstel = this.byId("shippingPointID").getValue()
+                                dataToSendObject.Lprio = this.byId("priorityID").getValue()
                                 dataToSendObject.Supplier = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].Supplier
                                 if(this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].requirementtype === "BB"){
                                     dataToSendObject.Bwart = "541"
@@ -1037,7 +1066,17 @@ sap.ui.define(
 			    var oFilter = new Filter("Name", FilterOperator.Contains, sValue);
 
 			    oEvent.getSource().getBinding("items").filter([oFilter]);
-            }   
+            },
+
+            onPriorityChange: function(oEvent) {
+                const oInput = oEvent.getSource();
+                let sValue = oInput.getValue();
+
+                if (sValue.length > 2) {
+                    sValue = sValue.substring(0, 2);
+                    oInput.setValue(sValue);
+                }
+            }
 
             /**
              * Called when the Controller is destroyed. Use this one to free resources and finalize activities.

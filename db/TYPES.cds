@@ -23,6 +23,7 @@ type MaterialRecord : {
     SgtScat         : String;
     SgtRcaT         : String;
     ButtonType      : String;
+    Lprio           : String;
 }
 
 type MaterialCreateDocument : {

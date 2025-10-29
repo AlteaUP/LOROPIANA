@@ -1,3 +1,11 @@
 .sapSuiteRMCOutsideLabel.sapSuiteRMCFont.sapSuiteRMCTextColorError {
     visibility: hidden;
 }
+
+.completedDelivery {
+    background-color: #53e732 !important;
+}
+
+.partialDelivery {
+    background-color: #eba327 !important;
+}

@@ -473,7 +473,6 @@ module.exports = cds.service.impl(async function (srv) {
                         data[z].SupplierWithDescription = data[z].Plant + ' - Prod. Interna'
                     }
                     // modifica DL - 21/07/2025 - valorizzo fornitore con Plant se vuoto - FINE
-                    
                 }
 
                 console.log("TEST tempi -> fine calcolo colonne " + new Date())
@@ -494,6 +493,18 @@ module.exports = cds.service.impl(async function (srv) {
 
                     data[u].QtyToIssue = Number(data[u].TotalConfdQtyForATPInBaseUoM) - Number(data[u].TotalAllocQty) - Number(data[u].TotalDeliveryQty) - Number(data[u].TotalWithdrawnQuantity)
                     data[u].QtyToIssue = Number(data[u].QtyToIssue).toFixed(3)
+
+                    // modifica DL - 29/10/2025 - setto stato delivery per colore riga tabella
+                    console.log("data[u].TotalDeliveryQty "+parseFloat(data[u].TotalDeliveryQty))
+                    console.log("data[u].QtyToIssue "+parseFloat(data[u].QtyToIssue))
+                    if(parseFloat(data[u].TotalDeliveryQty) >= parseFloat(data[u].QtyToIssue)){
+                        data[u].StatusDelivery = 'completed'
+                    } else if(parseFloat(data[u].TotalDeliveryQty) > 0 && parseFloat(data[u].TotalDeliveryQty) < parseFloat(data[u].QtyToIssue)) {
+                        data[u].StatusDelivery = 'partial'
+                    } else {
+                        data[u].StatusDelivery = ''
+                    }                
+                    // modifica DL - 29/10/2025 - setto stato delivery per colore riga tabella - FINE
                 }
 
                 console.log("dati stock " + arrayDataStock.length)
@@ -678,6 +689,7 @@ module.exports = cds.service.impl(async function (srv) {
         var documentItemArray = []
         var documentItemObject = {}
         var vstel = ""
+        var lprio = ""
         var lfdat = ""
         var lfdatFormatted = ""
         var response = ""
@@ -686,6 +698,7 @@ module.exports = cds.service.impl(async function (srv) {
             documentItemArray = []
             for (var z = 0; z < DocumentsBySupplier[y].length; z++) {
                 vstel = DocumentsBySupplier[0][0].Vstel
+                lprio = DocumentsBySupplier[0][0].Lprio
                 lfdat = DocumentsBySupplier[0][0].Wadak
                 documentItemObject = {}
                 documentItemObject.rfbel = "1"
@@ -745,6 +758,9 @@ module.exports = cds.service.impl(async function (srv) {
                 documentItemObject.sgt_scat = DocumentsBySupplier[y][z].SgtScat
                 documentItemObject.sgt_rcat = DocumentsBySupplier[y][z].SgtRcaT
                 // modifica DL - 03/06/2025 - aggiungo campi segmentation - FINE
+                // modifica DL - 29/10/2025 - aggiungo campo priorità
+                documentItemObject.lprio = DocumentsBySupplier[y][z].Lprio
+                // modifica DL - 29/10/2025 - aggiungo campo priorità - FINE
                 documentItemArray.push(documentItemObject)
             }
 

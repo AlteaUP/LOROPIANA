@@ -497,9 +497,9 @@ module.exports = cds.service.impl(async function (srv) {
                     // modifica DL - 29/10/2025 - setto stato delivery per colore riga tabella
                     console.log("data[u].TotalDeliveryQty "+parseFloat(data[u].TotalDeliveryQty))
                     console.log("data[u].QtyToIssue "+parseFloat(data[u].QtyToIssue))
-                    if(parseFloat(data[u].TotalDeliveryQty) >= parseFloat(data[u].QtyToIssue)){
+                    if(parseFloat(data[u].TotalDeliveryQty) > 0 && parseFloat(data[u].QtyToIssue) === 0){
                         data[u].StatusDelivery = 'completed'
-                    } else if(parseFloat(data[u].TotalDeliveryQty) > 0 && parseFloat(data[u].TotalDeliveryQty) < parseFloat(data[u].QtyToIssue)) {
+                    } else if(parseFloat(data[u].TotalDeliveryQty) > 0 && parseFloat(data[u].QtyToIssue) > 0) {
                         data[u].StatusDelivery = 'partial'
                     } else {
                         data[u].StatusDelivery = ''

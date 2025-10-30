@@ -513,6 +513,28 @@ module.exports = cds.service.impl(async function (srv) {
             }
         }
 
+        // modifica DL - 30/10/2025 - sorto i risultati 
+        // Criterio: a parità di combined order visualizzare per ultime le righe per i materiali spediti completamente, 
+        // successivamente le righe per i materili parzialmente spediti, 
+        // per i materiali non spediti visualizzare prima i materiali senza assegnazione partita 
+        // e successivamente quelle con assegnazione partita
+        data.sort((a, b) => {
+        if (a.CprodOrd < b.CprodOrd) return -1;
+        if (a.CprodOrd > b.CprodOrd) return 1;
+
+        const priority = (item) => {
+            if (item.StatusDelivery === '' && item.Batch === '') return 1;
+            if (item.StatusDelivery === '' && item.Batch !== '') return 2;
+            if (item.StatusDelivery === 'partial') return 3;
+            if (item.StatusDelivery === 'completed') return 4;
+            return 5;
+        };
+        // modifica DL - 30/10/2025 - sorto i risultati - FINE
+
+
+  return priority(a) - priority(b);
+});
+
         console.log("dati finali length " + data.length)
 
         return data

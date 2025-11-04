@@ -49,6 +49,7 @@ sap.ui.define(
                     console.error("Errore nella chiamata OData:", err);
                 });
                 // modifica DL - 15/10/2025 - recupero parametri da CBO
+                oController.byId("TableOrderId").getMDCTable()._oTable.setGrowing(false)
             },
     
             closeCreateMaterialDocumentsDialog: function() {

@@ -219,7 +219,7 @@ sap.ui.define(
                 // modifica DL - 15/10/2025 - recupero parametri da CBO
 
                 // modifica DL - 04/11/2025 - recupero parametri per determinare data prelievo
-                var resultPickingDate = oController.pickingDateParams.find(p => p.werks === selectedMaterialArray[0].Plant && p.stk_seg === selectedMaterialArray[0].RequirementSegment)
+                var resultPickingDate = oController.pickingDateParams.find(p => p.werks === selectedMaterialArray[0].Plant && p.stk_seg === selectedMaterialArray[0].ParentStockSegment)
                 if(resultPickingDate !== null && resultPickingDate !== undefined && resultPickingDate !== ""){
                     let today = new Date();
                     today.setDate(today.getDate() + Number(resultPickingDate.predays));

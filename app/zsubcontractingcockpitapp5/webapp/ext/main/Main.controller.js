@@ -9,7 +9,8 @@ sap.ui.define(
         'use strict';
 
         var oController;
-        var customParams = []
+        var customParams = [];
+        var pickingDateParams = []
 
         return PageController.extend('zsubcontractingcockpitapp5.ext.main.Main', {
             /**
@@ -44,12 +45,24 @@ sap.ui.define(
 
                 oListBinding.requestContexts().then(aContexts => {
                     oController.customParams = aContexts.map(oContext => oContext.getObject());
-                    console.log("Dati letti:", customParams);                    
+                    console.log("Dati ZZ1_MFI_LUOGOSPED_TIPOCONS letti:", customParams);                    
                 }).catch(err => {
-                    console.error("Errore nella chiamata OData:", err);
+                    console.error("Errore nella chiamata OData ZZ1_MFI_LUOGOSPED_TIPOCONS: ", err);
                 });
-                // modifica DL - 15/10/2025 - recupero parametri da CBO
+                // modifica DL - 15/10/2025 - recupero parametri da CBO - FINE
+
                 oController.byId("TableOrderId").getMDCTable()._oTable.setGrowing(false)
+
+                // modifica DL - 04/11/2025 - recupero parametri per determinare data prelievo
+                var oTablePickingDate = oModel.bindList("/ZZ1_ZMFI_DATAPRELIEVO");
+
+                oTablePickingDate.requestContexts().then(aContexts => {
+                    oController.pickingDateParams = aContexts.map(oContext => oContext.getObject());
+                    console.log("Dati ZZ1_ZMFI_DATAPRELIEVO letti:", pickingDateParams);                    
+                }).catch(err => {
+                    console.error("Errore nella chiamata OData ZZ1_ZMFI_DATAPRELIEVO: ", err);
+                });
+                // modifica DL - 04/11/2025 - recupero parametri per determinare data prelievo - FINE
             },
     
             closeCreateMaterialDocumentsDialog: function() {
@@ -111,6 +124,13 @@ sap.ui.define(
             },
 
             onCreateMaterialDocuments: function(oEvent) {
+
+                var oDialogModel = new sap.ui.model.json.JSONModel({
+                    Vstel: "", // shipping point
+                    Wadak: "",
+                    Lprio: ""
+                });
+                this.getView().setModel(oDialogModel, "dialog");
 
                 if(oController.pManualNumberingDialog === null || oController.pManualNumberingDialog === undefined){
                     oController.pManualNumberingDialog = sap.ui.xmlfragment(this.getView().getId(), "zsubcontractingcockpitapp5.ext.Fragment.MaterialDocumentCreation",
@@ -194,9 +214,18 @@ sap.ui.define(
                 }
 
                 var result = oController.customParams.find(p => p.WERKS === selectedMaterialArray[0].Plant && p.BDART === selectedMaterialArray[0].requirementtype  && p.SGT_SCAT === selectedMaterialArray[0].ParentStockSegment && p.FACTORY === typeButtonPressed)
-                oController.byId("shippingPointID").setValue(result.VSTEL)
+                //oController.byId("shippingPointID").setValue(result.VSTEL)
+                oController.getView().getModel("dialog").setProperty("/Vstel", result.VSTEL);
                 // modifica DL - 15/10/2025 - recupero parametri da CBO
-                
+
+                // modifica DL - 04/11/2025 - recupero parametri per determinare data prelievo
+                var resultPickingDate = oController.pickingDateParams.find(p => p.werks === selectedMaterialArray[0].Plant && p.stk_seg === selectedMaterialArray[0].RequirementSegment)
+                if(resultPickingDate !== null && resultPickingDate !== undefined && resultPickingDate !== ""){
+                    let today = new Date();
+                    today.setDate(today.getDate() + Number(resultPickingDate.predays));
+                    oController.getView().getModel("dialog").setProperty("/Wadak", today.toLocaleDateString("it-IT"));
+                }
+                // modifica DL - 04/11/2025 - recupero parametri per determinare data prelievo - FINE
             },
 
             parseAndFormatNumber: function(input) {
@@ -540,7 +569,7 @@ sap.ui.define(
                                 //dataToSendObject.Lfart = "ZHOD"
                                 // modifica DL - 16/06/2025 - cambio LFART in base al segment Stock                                
                             }
-                            dataToSendObject.Wadak = this.byId("WadakID").getValue()
+                            dataToSendObject.Wadak = oController.formatDateToSap(this.byId("WadakID").getValue())
                             dataToSendObject.StorageLocation = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].StorageLocation
                             if(this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].AvaibilityQtyProdStorage !== null && this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].AvaibilityQtyProdStorage !== undefined){
                             // and is not undefined (using the variable 'u' to represent undefined).
@@ -783,7 +812,7 @@ sap.ui.define(
                                     //dataToSendObject.Lfart = "ZHOD"
                                     // modifica DL - 16/06/2025 - cambio LFART in base al segment Stock 
                                 }
-                                dataToSendObject.Wadak = this.byId("WadakID").getValue()
+                                dataToSendObject.Wadak = oController.formatDateToSap(this.byId("WadakID").getValue())
                                 dataToSendObject.StorageLocation = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].StorageLocation                                
                                 if(this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].AvaibilityQtyProdStorage !== null && this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].AvaibilityQtyProdStorage !== undefined){
                                     dataToSendObject.AvaibilityQtyProdStorage = (this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].AvaibilityQtyProdStorage).toString()
@@ -993,6 +1022,18 @@ sap.ui.define(
                     MessageToast.show(oController.getResourceBundle().getText("vstelMandatory"))
                 }
             
+            },
+
+            formatDateToSap: function(date){
+                let result = ""
+                if(date !== null && date !== undefined && date !== ""){
+                    let parts = date.split("/");      
+                    let shortYear = parts[2].slice(-2); 
+                    result = `${parts[0]}/${parts[1]}/${shortYear}`;
+                }
+
+                return result
+                
             },
 
             onCloseMaterialDocumentCreationDialog: function() {

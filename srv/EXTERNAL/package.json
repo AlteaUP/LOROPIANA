@@ -84,6 +84,10 @@
       "ZZ1_MFI_LUOGOSPED_TIPOCONS_CDS": {
         "kind": "odata-v2",
         "model": "srv/external/ZZ1_MFI_LUOGOSPED_TIPOCONS_CDS"
+      },
+      "ZZ1_ZMFI_DATAPRELIEVO_CDS": {
+        "kind": "odata-v2",
+        "model": "srv/external/ZZ1_ZMFI_DATAPRELIEVO_CDS"
       }
     }
   },

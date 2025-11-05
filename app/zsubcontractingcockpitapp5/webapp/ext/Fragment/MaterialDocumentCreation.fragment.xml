@@ -31,11 +31,11 @@
           singleContainerFullSize="false" >
           <f:content>
             <Label text="{i18n>vstel}" />
-            <Input id="shippingPointID" value="{Vstel}" required="true" showValueHelp="true" valueHelpRequest=".onValueHelpRequestShippingPoint" />
+            <Input id="shippingPointID" value="{dialog>/Vstel}" required="true" showValueHelp="true" valueHelpRequest=".onValueHelpRequestShippingPoint" />
             <Label text="{i18n>plannedGoodsMovDate}" />
-            <DatePicker id="WadakID" value="{Wadak}" />
+            <DatePicker id="WadakID" value="{dialog>/Wadak}" />
             <Label text="{i18n>priority}" />
-            <Input id="priorityID" value="{Lprio}" type="Number" width="20%" liveChange=".onPriorityChange" />
+            <Input id="priorityID" value="{dialog>/Lprio}" type="Number" width="20%" liveChange=".onPriorityChange" />
           </f:content>
         </f:SimpleForm>
       	<Table id="selectedMaterialTableId"

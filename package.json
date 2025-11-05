@@ -469,6 +469,26 @@
             "path": "/sap/opu/odata/sap/ZZ1_MFI_LUOGOSPED_TIPOCONS_CDS"
           }
         }
+      },
+      "ZZ1_ZMFI_DATAPRELIEVO_CDS": {
+        "kind": "odata-v2",
+        "model": "srv/EXTERNAL/ZZ1_ZMFI_DATAPRELIEVO_CDS",
+        "csrf": true,
+        "csrfInBatch": true,
+        "[hybrid]": {
+          "credentials": {
+            "requestTimeout": 300000,
+            "destination": "S4HANA",
+            "path": "/sap/opu/odata/sap/ZZ1_ZMFI_DATAPRELIEVO_CDS"
+          }
+        },
+        "[production]": {
+          "credentials": {
+            "requestTimeout": 300000,
+            "destination": "S4HANA",
+            "path": "/sap/opu/odata/sap/ZZ1_ZMFI_DATAPRELIEVO_CDS"
+          }
+        }
       }
     }
   },

@@ -24,6 +24,8 @@ type MaterialRecord : {
     SgtRcaT         : String;
     ButtonType      : String;
     Lprio           : String;
+    commenti_interni: String;
+    commenti_ddt    : String;
 }
 
 type MaterialCreateDocument : {

@@ -88,6 +88,10 @@
       "ZZ1_ZMFI_DATAPRELIEVO_CDS": {
         "kind": "odata-v2",
         "model": "srv/external/ZZ1_ZMFI_DATAPRELIEVO_CDS"
+      },
+      "ZZ1_ZMFG_C_OUTBOUNDDELIVER_CDS": {
+        "kind": "odata-v2",
+        "model": "srv/external/ZZ1_ZMFG_C_OUTBOUNDDELIVER_CDS"
       }
     }
   },

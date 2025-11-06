@@ -1,0 +1,52 @@
+<core:FragmentDefinition
+   xmlns="sap.m"
+	 xmlns:f="sap.ui.layout.form"
+   xmlns:core="sap.ui.core">
+   <Dialog
+      id="DDTListDialog"
+      contentHeight="70%"
+      contentWidth="90%"
+      resizable="false"
+      type="Message"
+      state="None"
+      icon="sap-icon://it-host"
+      title="{i18n>DDTList}">
+      <content>
+      	<Table id="DDTTableId"
+          items="{DDT_model>/DDTListSet}">
+          <columns>
+                <Column>
+                    <Text text="{i18n>material}"/>
+                </Column>
+                <Column>
+                    <Text text="{i18n>delivery}"/>
+                </Column>
+                <Column>
+                    <Text text="{i18n>date}"/>
+                </Column>
+            </columns>
+          <items>
+            <ColumnListItem vAlign="Middle">
+              <cells>
+              <Text 
+                  text="{DDT_model>Material}" />
+                <Text 
+                  text="{DDT_model>OutboundDelivery}"/>
+                <Text 
+                  text="{DDT_model>CreationDate}"  />
+              </cells>
+            </ColumnListItem>
+          </items>
+        </Table>
+      </content>
+      <endButton>
+        <Button 
+          id="CloseDDTDialogButton" 
+          type="Accept"
+          width="47.5%"
+          icon="sap-icon://accept"
+          press=".onCloseDDTDialog"
+          text="{i18n>Close}"/>
+      </endButton>
+      </Dialog>
+</core:FragmentDefinition>

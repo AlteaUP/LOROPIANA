@@ -31,6 +31,7 @@ module.exports = cds.service.impl(async function (srv) {
     const cdsUserParams = await cds.connect.to('ZZ1_C_MFG_USERPARAMS_CDS');
     const cdsCustomParams = await cds.connect.to('ZZ1_MFI_LUOGOSPED_TIPOCONS_CDS');
     const cdsPickingDate = await cds.connect.to('ZZ1_ZMFI_DATAPRELIEVO_CDS');
+    const cdsListDDT = await cds.connect.to("ZZ1_ZMFG_C_OUTBOUNDDELIVER_CDS");
 
     this.on('READ', "MainCds", async request => {
 
@@ -714,6 +715,8 @@ module.exports = cds.service.impl(async function (srv) {
         var vstel = ""
         var lprio = ""
         var lfdat = ""
+        var commenti_ddt = ""
+        var commenti_interni = ""       
         var lfdatFormatted = ""
         var response = ""
         var error = ""
@@ -723,6 +726,8 @@ module.exports = cds.service.impl(async function (srv) {
                 vstel = DocumentsBySupplier[0][0].Vstel
                 lprio = DocumentsBySupplier[0][0].Lprio
                 lfdat = DocumentsBySupplier[0][0].Wadak
+                commenti_ddt = DocumentsBySupplier[0][0].commenti_ddt
+                commenti_interni = DocumentsBySupplier[0][0].commenti_interni
                 documentItemObject = {}
                 documentItemObject.rfbel = "1"
                 documentItemObject.rfpos = z.toString()
@@ -784,6 +789,10 @@ module.exports = cds.service.impl(async function (srv) {
                 // modifica DL - 29/10/2025 - aggiungo campo priorità
                 documentItemObject.lprio = DocumentsBySupplier[y][z].Lprio
                 // modifica DL - 29/10/2025 - aggiungo campo priorità - FINE
+                // modifica DL - 06/11/2025 - aggiungo campo note interne e note ddt
+                documentItemObject.commenti_interni = DocumentsBySupplier[y][z].commenti_interni
+                documentItemObject.commenti_ddt = DocumentsBySupplier[y][z].commenti_ddt
+                // modifica DL - 06/11/2025 - aggiungo campo note interne e note ddt - FINE
                 documentItemArray.push(documentItemObject)
             }
 
@@ -926,6 +935,12 @@ module.exports = cds.service.impl(async function (srv) {
 
     this.on('READ', "ZZ1_ZMFI_DATAPRELIEVO", async request => {
         var data = await cdsPickingDate.tx(request).run(request.query);
+
+        return data;
+    });
+
+    this.on('READ', "ZZ1_ZMFG_C_OUTBOUNDDELIVER", async request => {
+        var data = await cdsListDDT.tx(request).run(request.query);
 
         return data;
     });

@@ -489,6 +489,26 @@
             "path": "/sap/opu/odata/sap/ZZ1_ZMFI_DATAPRELIEVO_CDS"
           }
         }
+      },
+      "ZZ1_ZMFG_C_OUTBOUNDDELIVER_CDS": {
+        "kind": "odata-v2",
+        "model": "srv/EXTERNAL/ZZ1_ZMFG_C_OUTBOUNDDELIVER_CDS",
+        "csrf": true,
+        "csrfInBatch": true,
+        "[hybrid]": {
+          "credentials": {
+            "requestTimeout": 300000,
+            "destination": "S4HANA",
+            "path": "/sap/opu/odata/sap/ZZ1_ZMFG_C_OUTBOUNDDELIVER_CDS"
+          }
+        },
+        "[production]": {
+          "credentials": {
+            "requestTimeout": 300000,
+            "destination": "S4HANA",
+            "path": "/sap/opu/odata/sap/ZZ1_ZMFG_C_OUTBOUNDDELIVER_CDS"
+          }
+        }
       }
     }
   },

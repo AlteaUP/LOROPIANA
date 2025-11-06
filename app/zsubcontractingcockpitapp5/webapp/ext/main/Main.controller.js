@@ -20,7 +20,13 @@ sap.ui.define(
              */
             onInit: function () {
                 oController = this;
-                PageController.prototype.onInit.apply(this, arguments); // needs to be called to properly initialize the page controller                 
+                PageController.prototype.onInit.apply(this, arguments); // needs to be called to properly initialize the page controller     
+                
+                var DDTModel = new JSONModel({
+                    DDTListSet: []
+                });
+                DDTModel.setDefaultBindingMode("TwoWay");
+                oController.setModel(DDTModel, "DDT_model");
             },
 
             /**
@@ -63,6 +69,89 @@ sap.ui.define(
                     console.error("Errore nella chiamata OData ZZ1_ZMFI_DATAPRELIEVO: ", err);
                 });
                 // modifica DL - 04/11/2025 - recupero parametri per determinare data prelievo - FINE
+                oController.addCustomColumnButtonDetail()
+
+            },
+
+            addCustomColumnButtonDetail: function () {
+                const oMacroTable = this.byId("TableOrderId");
+                if (!oMacroTable || !oMacroTable.getMDCTable) return;
+
+                const oMDCTable = oMacroTable.getMDCTable();
+                if (!oMDCTable) return;
+
+                const aColumns = oMDCTable.getColumns?.() || [];
+                const bExists = aColumns.some(c => c.getId && c.getId().includes("ButtonDetail"));
+                if (bExists) {
+                    return;
+                }
+
+                const oCustomColumn = new sap.ui.mdc.table.Column(this.createId("ButtonDetail"), {
+                    header: "DDT",
+                    width: "50px",
+                    template: new sap.m.Button({
+                        icon: "sap-icon://display",
+                        press: function (oEvent) {
+                            oController.openListDDT(oEvent);
+                        }
+                    })
+                });
+
+                oMDCTable.addColumn(oCustomColumn);
+            },
+
+            openListDDT: function(oEvent){
+
+                if(oController.pDDTDialog === null || oController.pDDTDialog === undefined){
+                    oController.pDDTDialog = sap.ui.xmlfragment(this.getView().getId(), "zsubcontractingcockpitapp5.ext.Fragment.DDTList",
+                    oController);
+                    oController.getView().addDependent(oController.pDDTDialog);
+                }
+
+                oController.pDDTDialog.open();
+
+                // recupero dati
+                var oModel = oController.getView().getModel();
+                var sMaterial = oEvent.getSource().getBindingContext().getProperty('Material'); // valore del materiale per cui filtrare
+                var sOrder = oEvent.getSource().getBindingContext().getProperty('CprodOrd'); // valore del materiale per cui filtrare
+
+                // 🔹 Definizione filtri
+                var aFilters = [
+                    new sap.ui.model.Filter("Material", sap.ui.model.FilterOperator.EQ, sMaterial),
+                    new sap.ui.model.Filter("MaterialByCustomer", sap.ui.model.FilterOperator.EQ, sOrder.toString().padStart(12, "0"))
+                ];
+
+                // 🔹 Combino i filtri con AND logico
+                var oCombinedFilter = new sap.ui.model.Filter({
+                    filters: aFilters,
+                    and: true
+                });
+
+                // 🔹 Creo il binding con i filtri
+                var oListBinding = oModel.bindList("/ZZ1_ZMFG_C_OUTBOUNDDELIVER", null, null, [oCombinedFilter]);
+
+                oListBinding.requestContexts().then(aContexts => {
+                    const aResults = aContexts.map(oContext => oContext.getObject());
+                    console.log("Dati filtrati per materiale", sMaterial, ":", aResults); 
+                    
+                    if(aResults.length > 0){
+                        aResults.forEach(obj => {
+                            if (obj.CreationDate) {
+                                const [year, month, day] = obj.CreationDate.split("-");
+                                obj.CreationDate = `${day}/${month}/${year}`; // sovrascrive con stringa ISO
+                            }
+                        });
+                    }
+
+                    oController.getView().getModel("DDT_model").setProperty("/DDTListSet", aResults);
+
+                }).catch(err => {
+                    console.error("Errore nella chiamata OData:", err);
+                });
+            },
+
+            onCloseDDTDialog: function() {
+                oController.pDDTDialog.close();
             },
     
             closeCreateMaterialDocumentsDialog: function() {
@@ -128,7 +217,9 @@ sap.ui.define(
                 var oDialogModel = new sap.ui.model.json.JSONModel({
                     Vstel: "", // shipping point
                     Wadak: "",
-                    Lprio: ""
+                    Lprio: "",
+                    commenti_interni: "",
+                    commenti_ddt: ""
                 });
                 this.getView().setModel(oDialogModel, "dialog");
 
@@ -419,6 +510,8 @@ sap.ui.define(
                             }                    
                             dataToSendObject.Vstel = this.byId("shippingPointID").getValue()
                             dataToSendObject.Lprio = this.byId("priorityID").getValue()
+                            dataToSendObject.commenti_interni = this.byId("noteInternalNoteID").getValue()
+                            dataToSendObject.commenti_ddt = this.byId("noteDDTID").getValue()
                             dataToSendObject.Supplier = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].Supplier
                             if(this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].requirementtype === "BB"){
                                 dataToSendObject.Bwart = "541"
@@ -616,6 +709,8 @@ sap.ui.define(
                                 }                    
                                 dataToSendObject.Vstel = this.byId("shippingPointID").getValue()
                                 dataToSendObject.Lprio = this.byId("priorityID").getValue()
+                                dataToSendObject.commenti_interni = this.byId("noteInternalNoteID").getValue()
+                                dataToSendObject.commenti_ddt = this.byId("noteDDTID").getValue()
                                 dataToSendObject.Supplier = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].Supplier
                                 if(this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].requirementtype === "BB"){
                                     dataToSendObject.Bwart = "541"

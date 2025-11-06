@@ -715,8 +715,8 @@ module.exports = cds.service.impl(async function (srv) {
         var vstel = ""
         var lprio = ""
         var lfdat = ""
-        var commenti_ddt = ""
-        var commenti_interni = ""       
+        //var commenti_ddt = ""
+        //var commenti_interni = ""       
         var lfdatFormatted = ""
         var response = ""
         var error = ""
@@ -726,8 +726,8 @@ module.exports = cds.service.impl(async function (srv) {
                 vstel = DocumentsBySupplier[0][0].Vstel
                 lprio = DocumentsBySupplier[0][0].Lprio
                 lfdat = DocumentsBySupplier[0][0].Wadak
-                commenti_ddt = DocumentsBySupplier[0][0].commenti_ddt
-                commenti_interni = DocumentsBySupplier[0][0].commenti_interni
+                //commenti_ddt = DocumentsBySupplier[0][0].commenti_ddt
+                //commenti_interni = DocumentsBySupplier[0][0].commenti_interni
                 documentItemObject = {}
                 documentItemObject.rfbel = "1"
                 documentItemObject.rfpos = z.toString()
@@ -790,8 +790,8 @@ module.exports = cds.service.impl(async function (srv) {
                 documentItemObject.lprio = DocumentsBySupplier[y][z].Lprio
                 // modifica DL - 29/10/2025 - aggiungo campo priorità - FINE
                 // modifica DL - 06/11/2025 - aggiungo campo note interne e note ddt
-                documentItemObject.commenti_interni = DocumentsBySupplier[y][z].commenti_interni
-                documentItemObject.commenti_ddt = DocumentsBySupplier[y][z].commenti_ddt
+                //documentItemObject.commenti_interni = DocumentsBySupplier[y][z].commenti_interni
+                //documentItemObject.commenti_ddt = DocumentsBySupplier[y][z].commenti_ddt
                 // modifica DL - 06/11/2025 - aggiungo campo note interne e note ddt - FINE
                 documentItemArray.push(documentItemObject)
             }

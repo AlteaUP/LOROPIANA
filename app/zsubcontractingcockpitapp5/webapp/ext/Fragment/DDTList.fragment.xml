@@ -9,6 +9,7 @@
       resizable="false"
       type="Message"
       state="None"
+      afterClose="removeItemsFromListDialog"
       icon="sap-icon://it-host"
       title="{i18n>DDTList}">
       <content>

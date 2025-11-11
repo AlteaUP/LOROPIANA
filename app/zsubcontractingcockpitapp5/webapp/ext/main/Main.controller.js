@@ -108,8 +108,6 @@ sap.ui.define(
                     oController.getView().addDependent(oController.pDDTDialog);
                 }
 
-                oController.pDDTDialog.open();
-
                 // recupero dati
                 var oModel = oController.getView().getModel();
                 var sMaterial = oEvent.getSource().getBindingContext().getProperty('Material'); // valore del materiale per cui filtrare
@@ -144,6 +142,7 @@ sap.ui.define(
                     }
 
                     oController.getView().getModel("DDT_model").setProperty("/DDTListSet", aResults);
+                    oController.pDDTDialog.open();
 
                 }).catch(err => {
                     console.error("Errore nella chiamata OData:", err);
@@ -1217,6 +1216,10 @@ sap.ui.define(
                     sValue = sValue.substring(0, 2);
                     oInput.setValue(sValue);
                 }
+            },
+
+            removeItemsFromListDialog: function(oEvent){
+                oController.getView().getModel("DDT_model").setProperty("/DDTListSet", []);
             }
 
             /**

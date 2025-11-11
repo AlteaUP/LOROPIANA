@@ -1,4 +1,4 @@
-/* checksum : ae51145543d049fbe2e434d8885619cb */
+/* checksum : a15453f0cae1162f63be9b7140b41718 */
 @cds.external : true
 @m.IsDefaultEntityContainer : 'true'
 @sap.message.scope.supported : 'true'
@@ -17,6 +17,11 @@ entity ZZ1_ZMFG_C_OUTBOUNDDELIVER_CDS.ZZ1_ZMFG_C_OUTBOUNDDELIVER {
   @sap.required.in.filter : 'false'
   @sap.label : 'Consegna in uscita'
   key OutboundDelivery : String(10) not null;
+  @sap.display.format : 'NonNegative'
+  @sap.required.in.filter : 'false'
+  @sap.label : 'Pos. cons. in uscita'
+  @sap.quickinfo : 'Posizione consegna in uscita'
+  key OutboundDeliveryItem : String(6) not null;
   @sap.display.format : 'Date'
   @sap.required.in.filter : 'false'
   @sap.label : 'Data creazione'

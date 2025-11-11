@@ -34,8 +34,10 @@
 <EntityType Name="ZZ1_ZMFG_C_OUTBOUNDDELIVERType" sap:label="ZZ1_ZMFG_C_OUTBOUNDDELIVER" sap:content-version="1">
 <Key>
 <PropertyRef Name="OutboundDelivery"/>
+<PropertyRef Name="OutboundDeliveryItem"/>
 </Key>
 <Property Name="OutboundDelivery" Type="Edm.String" Nullable="false" MaxLength="10" sap:display-format="UpperCase" sap:required-in-filter="false" sap:label="Consegna in uscita"/>
+<Property Name="OutboundDeliveryItem" Type="Edm.String" Nullable="false" MaxLength="6" sap:display-format="NonNegative" sap:required-in-filter="false" sap:label="Pos. cons. in uscita" sap:quickinfo="Posizione consegna in uscita"/>
 <Property Name="CreationDate" Type="Edm.DateTime" Precision="0" sap:display-format="Date" sap:required-in-filter="false" sap:label="Data creazione" sap:quickinfo="Data di creazione del record"/>
 <Property Name="Batch" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:required-in-filter="false" sap:label="Partita" sap:quickinfo="Numero partita"/>
 <Property Name="Material" Type="Edm.String" MaxLength="40" sap:display-format="UpperCase" sap:required-in-filter="false" sap:label="Materiale" sap:quickinfo="Codice materiale"/>

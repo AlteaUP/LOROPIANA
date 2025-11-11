@@ -533,6 +533,22 @@
      "@Common.Heading": "Pr.Cn",
      "@Common.QuickInfo": "Priorità di consegna"
     },
+    "commenti_interni": {
+     "type": "cds.String",
+     "length": 1024,
+     "notNull": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Str.",
+     "@Common.QuickInfo": "Campo carattere (1024)"
+    },
+    "commenti_ddt": {
+     "type": "cds.String",
+     "length": 1024,
+     "notNull": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Str.",
+     "@Common.QuickInfo": "Campo carattere (1024)"
+    },
     "__EntityControl": {
      "type": "ZMPF_SD_CREATE_DELIVERY.EntityControl",
      "@Core.Computed": true,

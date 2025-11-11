@@ -94,6 +94,8 @@
 <Property Name="sgt_scat" Type="Edm.String" Nullable="false" MaxLength="40"/>
 <Property Name="sgt_rcat" Type="Edm.String" Nullable="false" MaxLength="40"/>
 <Property Name="lprio" Type="Edm.String" Nullable="false" MaxLength="2"/>
+<Property Name="commenti_interni" Type="Edm.String" Nullable="false" MaxLength="1024"/>
+<Property Name="commenti_ddt" Type="Edm.String" Nullable="false" MaxLength="1024"/>
 <Property Name="__EntityControl" Type="com.sap.gateway.srvd.zmpf_sd_delivery_create.v0001.EntityControl"/>
 <NavigationProperty Name="parent" Type="com.sap.gateway.srvd.zmpf_sd_delivery_create.v0001.CreateDelHType" Nullable="false" Partner="DeliveryItems">
 <ReferentialConstraint Property="vstel" ReferencedProperty="vstel"/>
@@ -312,6 +314,16 @@
 <Annotation Term="SAP__common.Label" String="Priorità consegna"/>
 <Annotation Term="SAP__common.Heading" String="Pr.Cn"/>
 <Annotation Term="SAP__common.QuickInfo" String="Priorità di consegna"/>
+</Annotations>
+<Annotations Target="SAP__self.CreateDelIType/commenti_interni">
+<Annotation Term="SAP__common.IsUpperCase"/>
+<Annotation Term="SAP__common.Label" String="Str."/>
+<Annotation Term="SAP__common.QuickInfo" String="Campo carattere (1024)"/>
+</Annotations>
+<Annotations Target="SAP__self.CreateDelIType/commenti_ddt">
+<Annotation Term="SAP__common.IsUpperCase"/>
+<Annotation Term="SAP__common.Label" String="Str."/>
+<Annotation Term="SAP__common.QuickInfo" String="Campo carattere (1024)"/>
 </Annotations>
 <Annotations Target="SAP__self.CreateDelIType/__EntityControl">
 <Annotation Term="SAP__core.Computed"/>

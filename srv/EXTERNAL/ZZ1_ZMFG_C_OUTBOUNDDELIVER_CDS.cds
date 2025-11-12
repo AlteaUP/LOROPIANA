@@ -1,4 +1,4 @@
-/* checksum : 89b8c88259b77e85616132ea57a8ff9b */
+/* checksum : 77bd95c198c47897666c427ab650a1e7 */
 @cds.external : true
 @m.IsDefaultEntityContainer : 'true'
 @sap.message.scope.supported : 'true'
@@ -17,26 +17,16 @@ entity ZZ1_ZMFG_C_OUTBOUNDDELIVER_CDS.ZZ1_ZMFG_C_OUTBOUNDDELIVER {
   @sap.required.in.filter : 'false'
   @sap.label : 'Consegna in uscita'
   key OutboundDelivery : String(10) not null;
-  @sap.display.format : 'NonNegative'
+  @sap.display.format : 'UpperCase'
   @sap.required.in.filter : 'false'
-  @sap.label : 'Pos. cons. in uscita'
-  @sap.quickinfo : 'Posizione consegna in uscita'
-  key OutboundDeliveryItem : String(6) not null;
+  @sap.label : 'Materiale'
+  @sap.quickinfo : 'Codice materiale'
+  key Material : String(40) not null;
   @sap.display.format : 'Date'
   @sap.required.in.filter : 'false'
   @sap.label : 'Data creazione'
   @sap.quickinfo : 'Data di creazione del record'
   CreationDate : Date;
-  @sap.display.format : 'UpperCase'
-  @sap.required.in.filter : 'false'
-  @sap.label : 'Partita'
-  @sap.quickinfo : 'Numero partita'
-  Batch : String(10);
-  @sap.display.format : 'UpperCase'
-  @sap.required.in.filter : 'false'
-  @sap.label : 'Materiale'
-  @sap.quickinfo : 'Codice materiale'
-  Material : String(40);
   @sap.display.format : 'UpperCase'
   @sap.required.in.filter : 'false'
   @sap.label : 'Materiale cliente'

@@ -30,30 +30,23 @@
 <edmx:Include Namespace="Org.OData.Validation.V1" Alias="Validation"/>
 </edmx:Reference>
 <edmx:DataServices m:DataServiceVersion="2.0">
-<Schema xmlns="http://schemas.microsoft.com/ado/2008/09/edm" Namespace="ZZ1_ZMFG_C_OUTBOUNDDELIVER_CDS" xml:lang="it" sap:schema-version="1">
-<EntityType Name="ZZ1_ZMFG_C_OUTBOUNDDELIVERType" sap:label="ZZ1_ZMFG_C_OUTBOUNDDELIVER" sap:content-version="1">
+<Schema xmlns="http://schemas.microsoft.com/ado/2008/09/edm" Namespace="ZZ1_MFG_C_SUPPLIER_F4_CDS" xml:lang="it" sap:schema-version="1">
+<EntityType Name="ZZ1_MFG_C_SUPPLIER_F4Type" sap:label="ZZ1_MFG_C_SUPPLIER_F4" sap:content-version="1">
 <Key>
-<PropertyRef Name="OutboundDelivery"/>
-<PropertyRef Name="OutboundDeliveryItem"/>
+<PropertyRef Name="Supplier"/>
 </Key>
-<Property Name="OutboundDelivery" Type="Edm.String" Nullable="false" MaxLength="10" sap:display-format="UpperCase" sap:required-in-filter="false" sap:label="Consegna in uscita"/>
-<Property Name="OutboundDeliveryItem" Type="Edm.String" Nullable="false" MaxLength="6" sap:display-format="NonNegative" sap:required-in-filter="false" sap:label="Pos. cons. in uscita" sap:quickinfo="Posizione consegna in uscita"/>
-<Property Name="CreationDate" Type="Edm.DateTime" Precision="0" sap:display-format="Date" sap:required-in-filter="false" sap:label="Data creazione" sap:quickinfo="Data di creazione del record"/>
-<Property Name="Batch" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:required-in-filter="false" sap:label="Partita" sap:quickinfo="Numero partita"/>
-<Property Name="Material" Type="Edm.String" MaxLength="40" sap:display-format="UpperCase" sap:required-in-filter="false" sap:label="Materiale" sap:quickinfo="Codice materiale"/>
-<Property Name="MaterialByCustomer" Type="Edm.String" MaxLength="35" sap:display-format="UpperCase" sap:required-in-filter="false" sap:label="Materiale cliente" sap:quickinfo="Materiale del cliente"/>
-<Property Name="ActualGoodsMovementDate" Type="Edm.DateTime" Precision="0" sap:display-format="Date" sap:required-in-filter="false" sap:label="Data eff. mov. merci" sap:quickinfo="Data movimento merci effettiva"/>
-<Property Name="PlannedGoodsIssueDate" Type="Edm.DateTime" Precision="0" sap:display-format="Date" sap:required-in-filter="false" sap:label="Data mov.merci pian." sap:quickinfo="Data del movimento merci pianificato"/>
+<Property Name="Supplier" Type="Edm.String" Nullable="false" MaxLength="10" sap:display-format="UpperCase" sap:required-in-filter="false" sap:label="Fornitore" sap:quickinfo="Numero conto del fornitore"/>
+<Property Name="SupplierName" Type="Edm.String" MaxLength="80" sap:required-in-filter="false" sap:label="Nome del fornitore"/>
 </EntityType>
-<EntityContainer Name="ZZ1_ZMFG_C_OUTBOUNDDELIVER_CDS_Entities" m:IsDefaultEntityContainer="true" sap:message-scope-supported="true" sap:supported-formats="atom json xlsx">
-<EntitySet Name="ZZ1_ZMFG_C_OUTBOUNDDELIVER" EntityType="ZZ1_ZMFG_C_OUTBOUNDDELIVER_CDS.ZZ1_ZMFG_C_OUTBOUNDDELIVERType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1"/>
+<EntityContainer Name="ZZ1_MFG_C_SUPPLIER_F4_CDS_Entities" m:IsDefaultEntityContainer="true" sap:message-scope-supported="true" sap:supported-formats="atom json xlsx">
+<EntitySet Name="ZZ1_MFG_C_SUPPLIER_F4" EntityType="ZZ1_MFG_C_SUPPLIER_F4_CDS.ZZ1_MFG_C_SUPPLIER_F4Type" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1"/>
 </EntityContainer>
 <Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Core.SchemaVersion" String="1.0.0"/>
-<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="ZZ1_ZMFG_C_OUTBOUNDDELIVER_CDS.ZZ1_ZMFG_C_OUTBOUNDDELIVER_CDS_Entities">
+<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="ZZ1_MFG_C_SUPPLIER_F4_CDS.ZZ1_MFG_C_SUPPLIER_F4_CDS_Entities">
 <Annotation Term="Common.ApplyMultiUnitBehaviorForSortingAndFiltering" Bool="true"/>
 </Annotations>
-<atom:link xmlns:atom="http://www.w3.org/2005/Atom" rel="self" href="http://lpapps20.lp.corp:8000/sap/opu/odata/sap/ZZ1_ZMFG_C_OUTBOUNDDELIVER_CDS/$metadata"/>
-<atom:link xmlns:atom="http://www.w3.org/2005/Atom" rel="latest-version" href="http://lpapps20.lp.corp:8000/sap/opu/odata/sap/ZZ1_ZMFG_C_OUTBOUNDDELIVER_CDS/$metadata"/>
+<atom:link xmlns:atom="http://www.w3.org/2005/Atom" rel="self" href="http://lpapps20.lp.corp:8000/sap/opu/odata/sap/ZZ1_MFG_C_SUPPLIER_F4_CDS/$metadata"/>
+<atom:link xmlns:atom="http://www.w3.org/2005/Atom" rel="latest-version" href="http://lpapps20.lp.corp:8000/sap/opu/odata/sap/ZZ1_MFG_C_SUPPLIER_F4_CDS/$metadata"/>
 </Schema>
 </edmx:DataServices>
 </edmx:Edmx>

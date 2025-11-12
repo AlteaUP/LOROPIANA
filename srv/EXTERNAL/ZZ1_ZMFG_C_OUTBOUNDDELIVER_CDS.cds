@@ -1,4 +1,4 @@
-/* checksum : a15453f0cae1162f63be9b7140b41718 */
+/* checksum : 89b8c88259b77e85616132ea57a8ff9b */
 @cds.external : true
 @m.IsDefaultEntityContainer : 'true'
 @sap.message.scope.supported : 'true'
@@ -42,5 +42,15 @@ entity ZZ1_ZMFG_C_OUTBOUNDDELIVER_CDS.ZZ1_ZMFG_C_OUTBOUNDDELIVER {
   @sap.label : 'Materiale cliente'
   @sap.quickinfo : 'Materiale del cliente'
   MaterialByCustomer : String(35);
+  @sap.display.format : 'Date'
+  @sap.required.in.filter : 'false'
+  @sap.label : 'Data eff. mov. merci'
+  @sap.quickinfo : 'Data movimento merci effettiva'
+  ActualGoodsMovementDate : Date;
+  @sap.display.format : 'Date'
+  @sap.required.in.filter : 'false'
+  @sap.label : 'Data mov.merci pian.'
+  @sap.quickinfo : 'Data del movimento merci pianificato'
+  PlannedGoodsIssueDate : Date;
 };
 

@@ -112,7 +112,7 @@
                 <Input 
                   value="{Lgort2}" editable="false" />
                 <Input 
-                  value="{Supplier}" editable="true" />
+                  value="{Supplier}" editable="true" showValueHelp="true" valueHelpRequest="openAddressList" />
               </cells>
             </ColumnListItem>
           </items>

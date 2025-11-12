@@ -23,7 +23,10 @@
                     <Text text="{i18n>delivery}"/>
                 </Column>
                 <Column>
-                    <Text text="{i18n>date}"/>
+                    <Text text="{i18n>ActualGoodsMovementDate}"/>
+                </Column>
+                <Column>
+                    <Text text="{i18n>ActualGoodsMovementDate}"/>
                 </Column>
             </columns>
           <items>
@@ -34,7 +37,9 @@
                 <Text 
                   text="{DDT_model>OutboundDelivery}"/>
                 <Text 
-                  text="{DDT_model>CreationDate}"  />
+                  text="{DDT_model>ActualGoodsMovementDate}"  />
+                <Text 
+                  text="{DDT_model>PlannedGoodsIssueDate}"  />
               </cells>
             </ColumnListItem>
           </items>

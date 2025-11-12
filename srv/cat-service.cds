@@ -13,6 +13,9 @@ using { ZZ1_I_SHIPPINGPOINT_CDS as ShippingPointCDS} from './EXTERNAL/ZZ1_I_SHIP
 using { ZZ1_I_UNION_SUBCONCTR_COMP_CDS as ComponentCDS } from './EXTERNAL/ZZ1_I_UNION_SUBCONCTR_COMP_CDS';
 using { ZZ1_I_WORKCENTERTXT_CDS as WorkCenterCDS } from './EXTERNAL/ZZ1_I_WORKCENTERTXT_CDS';
 using { ZZ1_I_PLANTTXT_CDS as PlantCDS } from './EXTERNAL/ZZ1_I_PLANTTXT_CDS';
+using { ZZ1_MRPCONTROLLER_F4_CDS as MRPControllerCDS } from './EXTERNAL/ZZ1_MRPCONTROLLER_F4_CDS';
+using { ZZ1_MFG_C_SUPPLIER_F4_CDS as SupplierCDS } from './EXTERNAL/ZZ1_MFG_C_SUPPLIER_F4_CDS';
+using { ZZ1_ZMFG_C_PRODUCT_F4_CDS as ProductCDS } from './EXTERNAL/ZZ1_ZMFG_C_PRODUCT_F4_CDS';
 using { ZZ1_I_PRODTYPEMATCHCOD_CDS as ProdTypeCDS } from './EXTERNAL/ZZ1_I_PRODTYPEMATCHCOD_CDS';
 using { ZZ1_I_COMBORDMATCHCODE_CDS as CombOrderCDS } from './EXTERNAL/ZZ1_I_COMBORDMATCHCODE_CDS';
 using { ZZ1_I_PRDCORD_ATP_RULES_CDS } from './EXTERNAL/ZZ1_I_PRDCORD_ATP_RULES_CDS';
@@ -71,6 +74,7 @@ service CatalogService {
         key BOMItemText2,
         key IsMarkedForDeletion,
         key ComponentIsMissing,
+        @Common.Label: '{i18n>product}'  
         key Product,
         key ProductionUnit,
         key ProductSeasonYear,
@@ -84,6 +88,7 @@ service CatalogService {
         @Common.Label: '{i18n>manufacturingOrderType}'
         key ManufacturingOrderType,
         key ProductionInvtryManagedLoc,
+        @Common.Label: '{i18n>supplier}'  
         key Supplier,   
         @Common.Label: '{i18n>workCenter}'     
         key WorkCenter,
@@ -109,6 +114,8 @@ service CatalogService {
         TotalProdAllocQty : Decimal,
         ParentStockSegment : String,
         RequirementSegment : String,
+        @Common.Label: '{i18n>RequirementDate}'
+        minRequirementDate : Date,
         *,
         null as StockMaterial : Decimal,
         null as StockMaterialUnitMeasure : String,
@@ -125,6 +132,8 @@ service CatalogService {
         @Common.Label: '{i18n>supplier}'
         null as SupplierWithDescription: String,
         null as StatusDelivery: String,
+        @Common.Label: '{i18n>onlyOpenRecord}'  
+        null as isOpened: Boolean,
         to_ZZ1_C_PRODUCT : Association to ZZ1_C_PRODUCT on Material = to_ZZ1_C_PRODUCT.Product,
     }
 
@@ -151,6 +160,12 @@ service CatalogService {
     @readonly entity ZZ1_I_WORKCENTERTXT as projection on WorkCenterCDS.ZZ1_I_WORKCENTERTXT;
     
     @readonly entity ZZ1_I_PLANTTXT as projection on PlantCDS.ZZ1_I_PLANTTXT;
+
+    @readonly entity ZZ1_ZMFG_C_PRODUCT_F4 as projection on ProductCDS.ZZ1_ZMFG_C_PRODUCT_F4;
+
+    @readonly entity ZZ1_MRPCONTROLLER_F4 as projection on MRPControllerCDS.ZZ1_MRPCONTROLLER_F4;
+
+    @readonly entity ZZ1_MFG_C_SUPPLIER_F4 as projection on SupplierCDS.ZZ1_MFG_C_SUPPLIER_F4;
     
     @readonly entity ZZ1_I_PRODTYPEMATCHCOD as projection on ProdTypeCDS.ZZ1_I_PRODTYPEMATCHCOD;
 

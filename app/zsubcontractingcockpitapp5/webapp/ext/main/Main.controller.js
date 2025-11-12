@@ -1194,7 +1194,7 @@ sap.ui.define(
 
                 this.byId("shippingPointID").setValue(oSelectedItem.getTitle());
 
-                oController.pShippingPointDialog.close();
+                //oController.pShippingPointDialog.close();
             },
 
             onValueHelpShippingPointClose: function(oEvent){
@@ -1220,6 +1220,36 @@ sap.ui.define(
 
             removeItemsFromListDialog: function(oEvent){
                 oController.getView().getModel("DDT_model").setProperty("/DDTListSet", []);
+            },
+
+            openAddressList: function(oEvent){
+                if(oController.pAddressListDialog === null || oController.pAddressListDialog === undefined){
+                    oController.pAddressListDialog = sap.ui.xmlfragment(this.getView().getId(), "zsubcontractingcockpitapp5.ext.Fragment.AddressList",
+                    oController);
+                    oController.getView().addDependent(oController.pAddressListDialog);
+                }
+
+                oController.pAddressListDialog.open();
+                oController.selectedRow = oEvent.getSource().getBindingContext().getObject();
+            },
+
+            onValueHelpAddressListClose: function(oEvent){
+                oController.pAddressListDialog.close();
+            },
+
+            onValueHelpAddressListConfirm: function(oEvent){
+                var oSelectedItem = oEvent.getParameter("selectedItem");
+                oEvent.getSource().getBinding("items").filter([]);
+
+                if (!oSelectedItem) {
+                    return;
+                }
+
+
+                oController.selectedRow.Supplier = oSelectedItem.getTitle();
+                oController.byId("selectedMaterialTableId").getModel().refresh()
+
+                //oController.pAddressListDialog.close();
             }
 
             /**

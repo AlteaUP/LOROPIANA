@@ -1,4 +1,4 @@
-/* checksum : 12d64ae54c4ef80e93884e36785d371d */
+/* checksum : 907ccd5214ca604dd83660c4ecac1073 */
 @cds.external : true
 @m.IsDefaultEntityContainer : 'true'
 @sap.message.scope.supported : 'true'
@@ -1607,13 +1607,17 @@ entity ZZ1_I_COMBORDER_COMP_CDS.ZZ1_I_COMBORDER_COMP {
   @sap.quickinfo : 'Segmento di stock'
   StockSegment : String(40);
   @sap.aggregation.role : 'dimension'
+  @sap.display.format : 'UpperCase'
   @sap.required.in.filter : 'false'
   @sap.label : 'RequirementSegment'
-  RequirementSegment : String(20);
+  @sap.quickinfo : 'Segmento fabbisogno'
+  RequirementSegment : String(40);
   @sap.aggregation.role : 'dimension'
+  @sap.display.format : 'UpperCase'
   @sap.required.in.filter : 'false'
   @sap.label : 'ParentStockSegment'
-  ParentStockSegment : String(20);
+  @sap.quickinfo : 'Segmento di stock'
+  ParentStockSegment : String(40);
   @sap.aggregation.role : 'dimension'
   @sap.display.format : 'Date'
   @sap.required.in.filter : 'false'
@@ -1683,6 +1687,14 @@ entity ZZ1_I_COMBORDER_COMP_CDS.ZZ1_I_COMBORDER_COMP {
   @sap.label : 'Product Description'
   @sap.quickinfo : 'Descrizione prodotto'
   ProductDescription_1 : String(40);
+  @sap.aggregation.role : 'dimension'
+  @sap.required.in.filter : 'false'
+  @sap.label : 'MRPController'
+  MRPController : String(1);
+  @sap.aggregation.role : 'dimension'
+  @sap.required.in.filter : 'false'
+  @sap.label : 'isOpened'
+  isOpened : String(1);
   to_ZZ1_C_PRODUCT : Association to many ZZ1_I_COMBORDER_COMP_CDS.ZZ1_C_PRODUCT {  };
 };
 

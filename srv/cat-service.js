@@ -23,6 +23,9 @@ module.exports = cds.service.impl(async function (srv) {
     const cdsShippingPoint = await cds.connect.to('ZZ1_I_SHIPPINGPOINT_CDS');
     const cdsWorkCenter = await cds.connect.to('ZZ1_I_WORKCENTERTXT_CDS');
     const cdsPlant = await cds.connect.to('ZZ1_I_PLANTTXT_CDS');
+    const cdsSupplier = await cds.connect.to('ZZ1_MFG_C_SUPPLIER_F4_CDS');
+    const cdsMRPController = await cds.connect.to('ZZ1_MRPCONTROLLER_F4_CDS');
+    const cdsProduct = await cds.connect.to('ZZ1_ZMFG_C_PRODUCT_F4_CDS');
     const cdsCombOrder = await cds.connect.to('ZZ1_I_COMBORDMATCHCODE_CDS');
     const cdsOrderType = await cds.connect.to('ZZ1_I_PRODTYPEMATCHCOD_CDS');
     const componentsPoint = await cds.connect.to('ZZ1_I_UNION_SUBCONCTR_COMP_CDS');
@@ -51,6 +54,12 @@ module.exports = cds.service.impl(async function (srv) {
                 }
             }
         }
+
+        //request.query.SELECT.where = [{"ref":["isOpened"]},"=",{"val":"true"},"and",{"ref":["Supplier"]},"=",{"val":"3272"}]
+
+        console.log("FILTROOOO "+JSON.stringify(request.query.SELECT.where))
+
+        console.log("FILTROOOO 2 "+JSON.stringify(request.query.SELECT.where))
 
         // modifica DL - 21/05/2025 - elimino record con combined order vuoto
         if(request.query.SELECT.where !== null && request.query.SELECT.where !== undefined){
@@ -83,6 +92,8 @@ module.exports = cds.service.impl(async function (srv) {
         });
 
         console.log("data length " + data.length)
+
+        console.log("data STRINGIFY " + JSON.stringify(data))
 
         if (Object.prototype.toString.call(data) === '[object Array]') {
 
@@ -360,6 +371,12 @@ module.exports = cds.service.impl(async function (srv) {
                         }
                         if (data[z].AvaibilityQtyProdStorage === "" || data[z].AvaibilityQtyProdStorage === null || data[z].AvaibilityQtyProdStorage === undefined) {
                             data[z].AvaibilityQtyProdStorage = 0
+                        } else {
+                            // modifica DL - 12/11/2025 - se qty < 0, allora metto 0
+                            if(data[z].AvaibilityQtyProdStorage < 0){
+                                data[z].AvaibilityQtyProdStorage = 0
+                            }
+                            // modifica DL - 12/11/2025 - se qty < 0, allora metto 0 - FINE
                         }
 
                         if (objectDataSumQtyDeliveryLgort1 !== null && objectDataSumQtyDeliveryLgort1 !== undefined) {
@@ -436,6 +453,12 @@ module.exports = cds.service.impl(async function (srv) {
                             }
                             if (data[z].AvaibilityQtyProdStorage === "" || data[z].AvaibilityQtyProdStorage === null || data[z].AvaibilityQtyProdStorage === undefined) {
                                 data[z].AvaibilityQtyProdStorage = 0
+                            } else {
+                                // modifica DL - 12/11/2025 - se qty < 0, allora metto 0
+                                if(data[z].AvaibilityQtyProdStorage < 0){
+                                    data[z].AvaibilityQtyProdStorage = 0
+                                }
+                                // modifica DL - 12/11/2025 - se qty < 0, allora metto 0 - FINE
                             }
 
                             if (objectDataSumQtyDeliveryLgort1 !== null && objectDataSumQtyDeliveryLgort1 !== undefined) {
@@ -590,6 +613,27 @@ module.exports = cds.service.impl(async function (srv) {
 
     this.on('READ', "ZZ1_C_PRODUCT", async request => {
         var data = await componentsPoint.tx(request).run(request.query);
+
+        return data;
+    });
+
+    this.on('READ', "ZZ1_MFG_C_SUPPLIER_F4", async request => {
+        request.query.SELECT.count = false
+        var data = await cdsSupplier.tx(request).run(request.query);
+
+        return data;
+    });
+
+    this.on('READ', "ZZ1_MRPCONTROLLER_F4", async request => {
+        request.query.SELECT.count = false
+        var data = await cdsMRPController.tx(request).run(request.query);
+
+        return data;
+    });
+
+    this.on('READ', "ZZ1_ZMFG_C_PRODUCT_F4", async request => {
+        request.query.SELECT.count = false
+        var data = await cdsProduct.tx(request).run(request.query);
 
         return data;
     });

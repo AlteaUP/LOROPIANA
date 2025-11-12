@@ -8,7 +8,7 @@ annotate CatalogService.MainCds with @(
     //    Supplier
     //    ]
     //},
-    UI.SelectionFields #SF : [Material, CprodOrd, Plant, WorkCenter, ManufacturingOrderType],
+    UI.SelectionFields #SF : [Material, CprodOrd, Plant, WorkCenter, ManufacturingOrderType, minRequirementDate, Product, Supplier, MRPController, isOpened],
     UI.PresentationVariant : {    
         Visualizations: ['@UI.LineItem#tableMacro']
     },
@@ -261,6 +261,16 @@ annotate CatalogService.MainCds with @(
             $Type: 'UI.DataField',
             Value: RequirementSegment,
             Label: '{i18n>RequirementSegment}'
+        },
+        {
+            $Type: 'UI.DataField',
+            Value: minRequirementDate,
+            Label: '{i18n>minRequirementDate}'
+        },
+        {
+            $Type: 'UI.DataField',
+            Value: isOpened,
+            Label: '{i18n>isOpened}'
         }
     ]
 );
@@ -333,6 +343,83 @@ annotate CatalogService.MainCds with {
                 }
             ],
             Label : '{i18n>cprodOrd}',
+        },
+        Common.ValueListWithFixedValues : false
+)};
+
+annotate CatalogService.MainCds with {
+    isOpened @(
+        UI.SelectionField : { Position : 31 },
+        Common.Label : '{i18n>onlyOpenRecord}',
+        Common.ValueList : {
+            $Type : 'Common.ValueListType',
+            Parameters : [
+                {
+                    $Type : 'Common.ValueListParameterInOut',
+                    LocalDataProperty : isOpened,
+                    ValueListProperty : 'true'
+                }
+            ]
+        }
+    );
+};
+
+annotate CatalogService.MainCds with {
+    Product @(Common.ValueList : {
+            $Type : 'Common.ValueListType',
+            CollectionPath : 'ZZ1_ZMFG_C_PRODUCT_F4',
+            Parameters : [
+                {
+                    $Type : 'Common.ValueListParameterInOut',
+                    LocalDataProperty : Product,
+                    ValueListProperty : 'Product',
+                },
+                {
+                    $Type: 'Common.ValueListParameterDisplayOnly',
+                    ValueListProperty: 'ProductDescription'
+                }
+            ],
+            Label : '{i18n>product}',
+        },
+        Common.ValueListWithFixedValues : false
+)};
+
+annotate CatalogService.MainCds with {
+    Supplier @(Common.ValueList : {
+            $Type : 'Common.ValueListType',
+            CollectionPath : 'ZZ1_MFG_C_SUPPLIER_F4',
+            Parameters : [
+                {
+                    $Type : 'Common.ValueListParameterInOut',
+                    LocalDataProperty : Supplier,
+                    ValueListProperty : 'Supplier',
+                },
+                {
+                    $Type: 'Common.ValueListParameterDisplayOnly',
+                    ValueListProperty: 'SupplierName'
+                }
+            ],
+            Label : '{i18n>supplier}',
+        },
+        Common.ValueListWithFixedValues : false
+)};
+
+annotate CatalogService.MainCds with {
+    MRPController @(Common.ValueList : {
+            $Type : 'Common.ValueListType',
+            CollectionPath : 'ZZ1_MRPCONTROLLER_F4',
+            Parameters : [
+                {
+                    $Type : 'Common.ValueListParameterInOut',
+                    LocalDataProperty : MRPController,
+                    ValueListProperty : 'MRPController',
+                },
+                {
+                    $Type: 'Common.ValueListParameterDisplayOnly',
+                    ValueListProperty: 'MRPControllerName'
+                }
+            ],
+            Label : '{i18n>MRPController}',
         },
         Common.ValueListWithFixedValues : false
 )};

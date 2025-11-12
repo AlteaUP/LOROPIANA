@@ -92,6 +92,18 @@
       "ZZ1_ZMFG_C_OUTBOUNDDELIVER_CDS": {
         "kind": "odata-v2",
         "model": "srv/external/ZZ1_ZMFG_C_OUTBOUNDDELIVER_CDS"
+      },
+      "ZZ1_ZMFG_C_PRODUCT_F4_CDS": {
+        "kind": "odata-v2",
+        "model": "srv/external/ZZ1_ZMFG_C_PRODUCT_F4_CDS"
+      },
+      "ZZ1_MRPCONTROLLER_F4_CDS": {
+        "kind": "odata-v2",
+        "model": "srv/external/ZZ1_MRPCONTROLLER_F4_CDS"
+      },
+      "ZZ1_MFG_C_SUPPLIER_F4_CDS": {
+        "kind": "odata-v2",
+        "model": "srv/external/ZZ1_MFG_C_SUPPLIER_F4_CDS"
       }
     }
   },

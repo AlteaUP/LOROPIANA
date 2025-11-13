@@ -96,6 +96,7 @@
 <Property Name="lprio" Type="Edm.String" Nullable="false" MaxLength="2"/>
 <Property Name="commenti_interni" Type="Edm.String" Nullable="false" MaxLength="1024"/>
 <Property Name="commenti_ddt" Type="Edm.String" Nullable="false" MaxLength="1024"/>
+<Property Name="a_saldo" Type="Edm.Boolean" Nullable="false"/>
 <Property Name="__EntityControl" Type="com.sap.gateway.srvd.zmpf_sd_delivery_create.v0001.EntityControl"/>
 <NavigationProperty Name="parent" Type="com.sap.gateway.srvd.zmpf_sd_delivery_create.v0001.CreateDelHType" Nullable="false" Partner="DeliveryItems">
 <ReferentialConstraint Property="vstel" ReferencedProperty="vstel"/>
@@ -601,6 +602,10 @@
 <Annotations Target="SAP__self.CreateDelIType/erzet">
 <Annotation Term="SAP__common.Label" String="Ora"/>
 <Annotation Term="SAP__common.QuickInfo" String="Ora acquisizione"/>
+</Annotations>
+<Annotations Target="SAP__self.CreateDelIType/a_saldo">
+<Annotation Term="SAP__common.Label" String="Indicatore"/>
+<Annotation Term="SAP__common.QuickInfo" String="Indicatore generale"/>
 </Annotations>
 <Annotations Target="SAP__self.CreateDelIType/__EntityControl/Deletable">
 <Annotation Term="SAP__common.Label" String="Dyn. Method Control"/>

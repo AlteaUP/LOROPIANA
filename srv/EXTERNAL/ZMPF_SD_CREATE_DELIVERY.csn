@@ -549,6 +549,12 @@
      "@Common.Label": "Str.",
      "@Common.QuickInfo": "Campo carattere (1024)"
     },
+    "a_saldo": {
+     "type": "cds.Boolean",
+     "notNull": true,
+     "@Common.Label": "Indicatore",
+     "@Common.QuickInfo": "Indicatore generale"
+    },
     "__EntityControl": {
      "type": "ZMPF_SD_CREATE_DELIVERY.EntityControl",
      "@Core.Computed": true,

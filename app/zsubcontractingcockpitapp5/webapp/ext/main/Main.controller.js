@@ -255,9 +255,6 @@ sap.ui.define(
                     selectedMaterialArray.push(oController.byId("TableOrderId").getSelectedContexts()[i].getObject())
                     if(oController.byId("TableOrderId").getSelectedContexts()[i].getObject().requirementtype === "BB" && oController.byId("ManualAccountingDialog").data("buttonPressed") === "factory"){
                         if(Number(selectedMaterialArray[i].QtyToIssue) > Number(selectedMaterialArray[i].AvaibilityQtyProdStorage)){
-                            selectedMaterialArray[i].QtyToIssue = selectedMaterialArray[i].AvaibilityQtyProdStorage
-                        }
-                        if(Number(selectedMaterialArray[i].QtyToIssue) > Number(selectedMaterialArray[i].AvaibilityQtyProdStorage)){
                             selectedMaterialArray[i].TotalWithdrawnQuantity = selectedMaterialArray[i].AvaibilityQtyProdStorage
                         } else {
                             selectedMaterialArray[i].TotalWithdrawnQuantity = selectedMaterialArray[i].QtyToIssue
@@ -277,7 +274,6 @@ sap.ui.define(
                             selectedMaterialArray[i].QtyToIssue = 0
                         }
                     }
-                    selectedMaterialArray[i].QtyToIssue = this.parseAndFormatNumber(selectedMaterialArray[i].QtyToIssue);
                     selectedMaterialArray[i].TotalConfdQtyForATPInBaseUoM = this.parseAndFormatNumber(selectedMaterialArray[i].TotalConfdQtyForATPInBaseUoM);
                     selectedMaterialArray[i].TotalWithdrawnQuantity = this.parseAndFormatNumber(selectedMaterialArray[i].TotalWithdrawnQuantity);
                     selectedMaterialArray[i].QtyToIssueOriginal = selectedMaterialArray[i].QtyToIssue
@@ -363,11 +359,12 @@ sap.ui.define(
                             //543
                             found543 = true
                             var qtyInserted = ''
-                            if(this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].QtyToIssue !== "" && this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].QtyToIssue !== null && this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].QtyToIssue !== undefined && Number(this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].QtyToIssue > 0)){
+                            /*if(this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].QtyToIssue !== "" && this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].QtyToIssue !== null && this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].QtyToIssue !== undefined && Number(this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].QtyToIssue > 0)){
                                 qtyInserted = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].QtyToIssue
                             } else {
                                 qtyInserted = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].TotalWithdrawnQuantity
-                            }
+                            }*/
+                            qtyInserted = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].TotalWithdrawnQuantity
 
                             // recupero array dei componenti
                             const oModel = oController.getView().getModel();
@@ -492,8 +489,9 @@ sap.ui.define(
                             dataToSendObject.Stock = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].StockMaterial
                             dataToSendObject.Quantity = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].QtyToIssue                            
                             // modifica DL - 10/06/2025 - problema decimali
-                            if((dataToSendObject.Quantity).indexOf(",") > -1){
-                                dataToSendObject.Quantity = dataToSendObject.Quantity.replace(",",".")
+                            if((dataToSendObject.Quantity.toString()).indexOf(",") > -1){
+                                dataToSendObject.Quantity = dataToSendObject.Quantity.toString().replace(",",".")
+                                dataToSendObject.Quantity = Number(dataToSendObject.Quantity)
                             }
                             // modifica DL - 10/06/2025 - problema decimali - FINE
                             dataToSendObject.CprodOrd = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].CprodOrd
@@ -505,7 +503,11 @@ sap.ui.define(
                             if(this.byId("ManualAccountingDialog").data("buttonPressed") === "HUB"){
                                 dataToSendObject.Lgort = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].Lgort1
                             } else {
-                                dataToSendObject.Lgort = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].Lgort2
+                                if(found543){
+                                    dataToSendObject.Lgort = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].Lgort1
+                                } else {
+                                    dataToSendObject.Lgort = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].Lgort2
+                                }
                             }                    
                             dataToSendObject.Vstel = this.byId("shippingPointID").getValue()
                             dataToSendObject.Lprio = this.byId("priorityID").getValue()
@@ -704,7 +706,11 @@ sap.ui.define(
                                 if(this.byId("ManualAccountingDialog").data("buttonPressed") === "HUB"){
                                     dataToSendObject.Lgort = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].Lgort1
                                 } else {
-                                    dataToSendObject.Lgort = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].Lgort2
+                                    if(found543){
+                                        dataToSendObject.Lgort = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].Lgort1
+                                    } else {
+                                        dataToSendObject.Lgort = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].Lgort2
+                                    }
                                 }                    
                                 dataToSendObject.Vstel = this.byId("shippingPointID").getValue()
                                 dataToSendObject.Lprio = this.byId("priorityID").getValue()
@@ -919,8 +925,9 @@ sap.ui.define(
                                 if(this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].QtyToIssueOriginal !== undefined && this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].QtyToIssueOriginal !== null && this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].QtyToIssueOriginal !== ""){
                                     dataToSend[lengthDataToSend-1].Quantity = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].QtyToIssueOriginal
                                     // modifica DL - 10/06/2025 - problema decimali
-                                    if((dataToSend[lengthDataToSend-1].Quantity).indexOf(",") > -1){
-                                        dataToSend[lengthDataToSend-1].Quantity = (dataToSend[lengthDataToSend-1].Quantity).replace(",",".")
+                                    if((dataToSend[lengthDataToSend-1].Quantity.toString()).indexOf(",") > -1){
+                                        dataToSend[lengthDataToSend-1].Quantity = (dataToSend[lengthDataToSend-1].Quantity.toString()).replace(",",".")
+                                        dataToSend[lengthDataToSend-1].Quantity = Number(dataToSend[lengthDataToSend-1].Quantity)
                                     }
                                     // modifica DL - 10/06/2025 - problema decimali - FINE
                                 } else {

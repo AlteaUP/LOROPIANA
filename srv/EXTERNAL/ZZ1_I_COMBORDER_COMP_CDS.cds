@@ -1,4 +1,4 @@
-/* checksum : 907ccd5214ca604dd83660c4ecac1073 */
+/* checksum : 1ae3a47ea6d0e2e305e94944ca711797 */
 @cds.external : true
 @m.IsDefaultEntityContainer : 'true'
 @sap.message.scope.supported : 'true'
@@ -1694,7 +1694,8 @@ entity ZZ1_I_COMBORDER_COMP_CDS.ZZ1_I_COMBORDER_COMP {
   @sap.aggregation.role : 'dimension'
   @sap.required.in.filter : 'false'
   @sap.label : 'isOpened'
-  isOpened : String(1);
+  @sap.quickinfo : 'Elemento dati per dominio BOOLE: TRUE (=''X'') e FALSE (='' '')'
+  isOpened : Boolean;
   to_ZZ1_C_PRODUCT : Association to many ZZ1_I_COMBORDER_COMP_CDS.ZZ1_C_PRODUCT {  };
 };
 

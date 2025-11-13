@@ -54,12 +54,39 @@ module.exports = cds.service.impl(async function (srv) {
                 }
             }
         }
-
-        //request.query.SELECT.where = [{"ref":["isOpened"]},"=",{"val":"true"},"and",{"ref":["Supplier"]},"=",{"val":"3272"}]
-
+        
         console.log("FILTROOOO "+JSON.stringify(request.query.SELECT.where))
 
+        // modifica DL - se viene valorizzato isOpened come filtro, elimino record colorati
+        let arr = request.query.SELECT.where; // prendi solo l'array delle condizioni
+
+        // Se è una stringa JSON, converti in array
+        if (typeof arr === "string") {
+            try {
+                arr = JSON.parse(arr);
+            } catch (e) {
+                console.error("Errore nel parse del JSON:", e);
+            }
+        }
+
+        // Trova e modifica "isOpened"
+        var isOpenedFilter = false
+        if(arr !== null && arr !== undefined && arr !== ""){
+            const index = arr.findIndex(item => item.ref && item.ref.includes("isOpened"));
+            if (index !== -1 &&
+                arr[index + 2] &&
+                arr[index + 2].val === true // <-- solo se è true
+            ) {
+                arr[index + 2].val = false;
+                isOpenedFilter = true;
+            }
+
+            // Aggiorna l'oggetto SELECT
+            request.query.SELECT.where = arr;
+        }
+
         console.log("FILTROOOO 2 "+JSON.stringify(request.query.SELECT.where))
+        // modifica DL - se viene valorizzato isOpened come filtro, elimino record colorati - FINE
 
         // modifica DL - 21/05/2025 - elimino record con combined order vuoto
         if(request.query.SELECT.where !== null && request.query.SELECT.where !== undefined){
@@ -544,21 +571,27 @@ module.exports = cds.service.impl(async function (srv) {
         // per i materiali non spediti visualizzare prima i materiali senza assegnazione partita 
         // e successivamente quelle con assegnazione partita
         data.sort((a, b) => {
-        if (a.CprodOrd < b.CprodOrd) return -1;
-        if (a.CprodOrd > b.CprodOrd) return 1;
+                if (a.CprodOrd < b.CprodOrd) return -1;
+                if (a.CprodOrd > b.CprodOrd) return 1;
 
-        const priority = (item) => {
-            if (item.StatusDelivery === '' && item.Batch === '') return 1;
-            if (item.StatusDelivery === '' && item.Batch !== '') return 2;
-            if (item.StatusDelivery === 'partial') return 3;
-            if (item.StatusDelivery === 'completed') return 4;
-            return 5;
-        };
-        // modifica DL - 30/10/2025 - sorto i risultati - FINE
+                const priority = (item) => {
+                    if (item.StatusDelivery === '' && item.Batch === '') return 1;
+                    if (item.StatusDelivery === '' && item.Batch !== '') return 2;
+                    if (item.StatusDelivery === 'partial') return 3;
+                    if (item.StatusDelivery === 'completed') return 4;
+                    return 5;
+                };
+                // modifica DL - 30/10/2025 - sorto i risultati - FINE
 
 
-  return priority(a) - priority(b);
-});
+        return priority(a) - priority(b);
+        });
+
+        // modifica DL - 12/11/2025 - elimino record chiusi se valorizzata variabile isOpenedFilter
+        if(isOpenedFilter){
+            data = data.filter(item => item.StatusDelivery !== 'completed' && item.StatusDelivery !== 'partial');
+        } 
+        // modifica DL - 12/11/2025 - elimino record chiusi se valorizzata variabile isOpenedFilter - FINE
 
         console.log("dati finali length " + data.length)
 

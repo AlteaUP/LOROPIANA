@@ -35,6 +35,7 @@ module.exports = cds.service.impl(async function (srv) {
     const cdsCustomParams = await cds.connect.to('ZZ1_MFI_LUOGOSPED_TIPOCONS_CDS');
     const cdsPickingDate = await cds.connect.to('ZZ1_ZMFI_DATAPRELIEVO_CDS');
     const cdsListDDT = await cds.connect.to("ZZ1_ZMFG_C_OUTBOUNDDELIVER_CDS");
+    const cdsAddress = await cds.connect.to("ZMFG_I_SUPPLIERPARTNERFUNC_CDS");
 
     this.on('READ', "MainCds", async request => {
 
@@ -870,6 +871,10 @@ module.exports = cds.service.impl(async function (srv) {
                 documentItemObject.commenti_interni = commenti_interni //DocumentsBySupplier[y][z].commenti_interni
                 documentItemObject.commenti_ddt = commenti_ddt //DocumentsBySupplier[y][z].commenti_ddt
                 // modifica DL - 06/11/2025 - aggiungo campo note interne e note ddt - FINE
+                // modifica DL - 18/11/2025 - aggiungo a_saldo e codice indirizzo
+                documentItemObject.a_saldo = DocumentsBySupplier[y][z].a_saldo
+                documentItemObject.adrnr_we = DocumentsBySupplier[y][z].adrnr_we
+                // modifica DL - 18/11/2025 - aggiungo a_saldo e codice indirizzo - FINE
                 documentItemArray.push(documentItemObject)
             }
 
@@ -1020,6 +1025,12 @@ module.exports = cds.service.impl(async function (srv) {
 
     this.on('READ', "ZZ1_ZMFG_C_OUTBOUNDDELIVER", async request => {
         var data = await cdsListDDT.tx(request).run(request.query);
+
+        return data;
+    });
+
+    this.on('READ', "ZMFG_I_SUPPLIERPARTNERFUNC", async request => {
+        var data = await cdsAddress.tx(request).run(request.query);
 
         return data;
     });

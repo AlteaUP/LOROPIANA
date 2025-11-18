@@ -47,7 +47,7 @@
     "deploy": "cf deploy mta_archives/archive.mtar --delete-service-brokers --delete-service-keys --delete-services",
     "mta-build": "rimraf app/html5-deployer/resources && rimraf mta_archives && mbt build -m verbose --mtar zsubcontracting -t mta_archives",
     "wpremta-deploy": "node scripts/check-git-status.js",
-    "mta-deploy": "cf deploy mta_archives/xagalteaup.mtar",
+    "mta-deploy": "cf deploy mta_archives/zsubcontracting.mtar",
     "update-route": "cf map-route xagalteaup-approuter cfapps.eu20-001.hana.ondemand.com --hostname workzone-alteaup-tdd-xagent-dev-xagalteaup-approuter",
     "upgrade-db": "cf run-task xagalteaup-srv --name 'upgrade-all' --command 'cds-mtx upgrade 'eebd84e9-8f09-45e0-a086-d7fb035c335a'' -w",
     "cf-undeploy": "cf undeploy xagalteaup --delete-services --delete-service-keys --delete-service-brokers",
@@ -570,6 +570,26 @@
             "requestTimeout": 300000,
             "destination": "S4HANA",
             "path": "/sap/opu/odata/sap/ZZ1_ZMFG_C_OUTBOUNDDELIVER_CDS"
+          }
+        }
+      },
+      "ZMFG_I_SUPPLIERPARTNERFUNC_CDS": {
+        "kind": "odata-v2",
+        "model": "srv/EXTERNAL/ZMFG_I_SUPPLIERPARTNERFUNC_CDS",
+        "csrf": true,
+        "csrfInBatch": true,
+        "[hybrid]": {
+          "credentials": {
+            "requestTimeout": 300000,
+            "destination": "S4HANA",
+            "path": "/sap/opu/odata/sap/ZMFG_I_SUPPLIERPARTNERFUNC_CDS"
+          }
+        },
+        "[production]": {
+          "credentials": {
+            "requestTimeout": 300000,
+            "destination": "S4HANA",
+            "path": "/sap/opu/odata/sap/ZMFG_I_SUPPLIERPARTNERFUNC_CDS"
           }
         }
       }

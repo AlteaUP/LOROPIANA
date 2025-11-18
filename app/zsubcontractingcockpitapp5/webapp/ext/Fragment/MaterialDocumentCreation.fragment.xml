@@ -13,24 +13,24 @@
       icon="sap-icon://it-host"
       title="{i18n>createMaterialDocument}">
       <content>
-      <HBox justifyContent="Center" alignItems="Center" class="sapUiSmallMargin">
-        <VBox width="40%">
+      <!--<HBox justifyContent="Center" alignItems="Center" class="sapUiSmallMargin">
+        <VBox width="40%">-->
           <f:SimpleForm id="SimpleFormDisplay354"
             editable="true"
             layout="ResponsiveGridLayout"
-            labelSpanXL="2"
-            labelSpanL="2"
-            labelSpanM="2"
+            labelSpanXL="3"
+            labelSpanL="3"
+            labelSpanM="3"
             labelSpanS="12"
             adjustLabelSpan="false"
-            emptySpanXL="0"
-            emptySpanL="0"
-            emptySpanM="0"
+            emptySpanXL="4"
+            emptySpanL="4"
+            emptySpanM="4"
             emptySpanS="0"
             columnsXL="1"
             columnsL="1"
             columnsM="1"
-            singleContainerFullSize="false">
+            singleContainerFullSize="false" >
             <f:content>
               <Label text="{i18n>vstel}" />
               <Input id="shippingPointID" value="{dialog>/Vstel}" required="true" showValueHelp="true" valueHelpRequest=".onValueHelpRequestShippingPoint" />
@@ -42,13 +42,15 @@
               <TextArea id="noteInternalNoteID" value="{dialog>/commenti_interni}" />
               <Label text="{i18n>noteDDT}" />
               <TextArea id="noteDDTID" value="{dialog>/commenti_ddt}"  />
+              <Label id="finalAddressTextID" text="{i18n>finalAddress}" visible="false"/>
+              <Text id="finalAddressValueID" value="" visible="false" />
             </f:content>
           </f:SimpleForm>
-          </VBox>
+          <!--</VBox>
           <VBox alignItems="Start" justifyContent="Center" class="sapUiSmallMarginBegin">
               <Button text="Test" />
           </VBox>
-        </HBox>
+        </HBox>-->
       	<Table id="selectedMaterialTableId"
           items="{
             path: '/SelectedMaterial'

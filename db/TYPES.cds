@@ -25,6 +25,7 @@ type MaterialRecord : {
     ButtonType      : String;
     Lprio           : String;
     a_saldo         : Boolean;
+    adrnr_we        : String;
     commenti_interni: String;
     commenti_ddt    : String;
 }

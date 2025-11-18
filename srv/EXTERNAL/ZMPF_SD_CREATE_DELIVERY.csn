@@ -555,6 +555,15 @@
      "@Common.Label": "Indicatore",
      "@Common.QuickInfo": "Indicatore generale"
     },
+    "adrnr_we": {
+     "type": "cds.String",
+     "length": 10,
+     "notNull": true,
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Ind.dest.merce",
+     "@Common.Heading": "IndDestMer",
+     "@Common.QuickInfo": "Indirizzo del destinatario della merce"
+    },
     "__EntityControl": {
      "type": "ZMPF_SD_CREATE_DELIVERY.EntityControl",
      "@Core.Computed": true,

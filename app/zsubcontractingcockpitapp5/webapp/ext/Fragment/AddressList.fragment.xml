@@ -2,11 +2,12 @@
 	<SelectDialog
 		id="selectAddressListDialog"
 		title="{i18n>addressListTitle}"
-		items="{/ZZ1_I_ShippingPoint}"
+		items="{address_model>/addressListSet}"
 		search=".onValueHelpAddressListSearch"
 		confirm=".onValueHelpAddressListConfirm"
 		cancel=".onValueHelpAddressListClose">
 		<StandardListItem
-			title="{ShippingPoint}"/>
+			title="{address_model>Name1}"
+			description="{address_model>indirizzo}"/>
 	</SelectDialog>
 </core:FragmentDefinition>

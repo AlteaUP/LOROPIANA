@@ -97,6 +97,7 @@
 <Property Name="commenti_interni" Type="Edm.String" Nullable="false" MaxLength="1024"/>
 <Property Name="commenti_ddt" Type="Edm.String" Nullable="false" MaxLength="1024"/>
 <Property Name="a_saldo" Type="Edm.Boolean" Nullable="false"/>
+<Property Name="adrnr_we" Type="Edm.String" Nullable="false" MaxLength="10"/>
 <Property Name="__EntityControl" Type="com.sap.gateway.srvd.zmpf_sd_delivery_create.v0001.EntityControl"/>
 <NavigationProperty Name="parent" Type="com.sap.gateway.srvd.zmpf_sd_delivery_create.v0001.CreateDelHType" Nullable="false" Partner="DeliveryItems">
 <ReferentialConstraint Property="vstel" ReferencedProperty="vstel"/>
@@ -325,6 +326,12 @@
 <Annotation Term="SAP__common.IsUpperCase"/>
 <Annotation Term="SAP__common.Label" String="Str."/>
 <Annotation Term="SAP__common.QuickInfo" String="Campo carattere (1024)"/>
+</Annotations>
+<Annotations Target="SAP__self.CreateDelIType/adrnr_we">
+<Annotation Term="SAP__common.IsUpperCase"/>
+<Annotation Term="SAP__common.Label" String="Ind.dest.merce"/>
+<Annotation Term="SAP__common.Heading" String="IndDestMer"/>
+<Annotation Term="SAP__common.QuickInfo" String="Indirizzo del destinatario della merce"/>
 </Annotations>
 <Annotations Target="SAP__self.CreateDelIType/__EntityControl">
 <Annotation Term="SAP__core.Computed"/>

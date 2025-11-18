@@ -10,6 +10,7 @@ sap.ui.define(
 
         var oController;
         var customParams = [];
+        var addressParams = [];
         var pickingDateParams = []
 
         return PageController.extend('zsubcontractingcockpitapp5.ext.main.Main', {
@@ -27,6 +28,12 @@ sap.ui.define(
                 });
                 DDTModel.setDefaultBindingMode("TwoWay");
                 oController.setModel(DDTModel, "DDT_model");
+
+                var addressModel = new JSONModel({
+                    addressListSet: []
+                });
+                addressModel.setDefaultBindingMode("TwoWay");
+                oController.setModel(addressModel, "address_model");
             },
 
             /**
@@ -69,6 +76,18 @@ sap.ui.define(
                     console.error("Errore nella chiamata OData ZZ1_ZMFI_DATAPRELIEVO: ", err);
                 });
                 // modifica DL - 04/11/2025 - recupero parametri per determinare data prelievo - FINE
+
+                // modifica DL - 18/11/2025 - recupero parametri per indirizzo
+                var oListBindingAddress = oModel.bindList("/ZMFG_I_SUPPLIERPARTNERFUNC");
+
+                oListBindingAddress.requestContexts().then(aContexts => {
+                    oController.addressParams = aContexts.map(oContext => oContext.getObject());
+                    console.log("Dati ZMFG_I_SUPPLIERPARTNERFUNC letti:", addressParams);                    
+                }).catch(err => {
+                    console.error("Errore nella chiamata OData ZMFG_I_SUPPLIERPARTNERFUNC: ", err);
+                });
+                // modifica DL - 04/11/2025 - recupero parametri per indirizzo - FINE
+
                 oController.addCustomColumnButtonDetail()
 
             },
@@ -209,6 +228,8 @@ sap.ui.define(
             clearFields: function(oEvent){
                 oController.byId("shippingPointID").setValue();
                 oController.byId("priorityID").setValue();
+                oController.byId("finalAddressTextID").setVisible(false)
+                oController.byId("finalAddressValueID").setVisible(false)
             },
 
             onCreateMaterialDocuments: function(oEvent) {
@@ -680,6 +701,16 @@ sap.ui.define(
                             // modifica DL - 29/07/2025 aggiungo tipo bottone selezionato    
                             dataToSendObject.ButtonType = this.byId("ManualAccountingDialog").data("buttonPressed")
                             // modifica DL - 29/07/2025 aggiungo tipo bottone selezionato - FINE 
+                            // modifica DL - 18/11/2025 - aggiungo codice indirizzo se valorizzato
+                            if(oController.byId("finalAddressValueID").getText() !== null && oController.byId("finalAddressValueID").getText() !== undefined && oController.byId("finalAddressValueID").getText() !== ""){
+                                var resultAddressList = oController.addressParams.find(p => p.Supplier === dataToSendObject.Supplier)
+                                if(resultAddressList !== null && resultAddressList !== undefined && resultAddressList !== ""){
+                                    dataToSendObject.adrnr_we = resultAddressList.Addrnumber
+                                }
+                            } else {
+                                dataToSendObject.adrnr_we = ""
+                            }
+                            // modifica DL - 18/11/2025 - aggiungo codice indirizzo se valorizzato
                             dataToSend.push(dataToSendObject)
                             // modifica DL - 28/05/2025 - se quantità da sperdire supera disponibilità, allora appendo nuovo record
                             // modifica DL - 18/11/2025 - se c'è flag a saldo, non splitto e non creo seconda riga
@@ -948,7 +979,18 @@ sap.ui.define(
                                         dataToSendObject.a_saldo = true
                                     } else {
                                         dataToSendObject.a_saldo = false
-                                    }                                      
+                                    }           
+                                    // modifica DL - 18/11/2025 - flag a saldo - FINE
+                                    // modifica DL - 18/11/2025 - aggiungo codice indirizzo se valorizzato
+                                    if(oController.byId("finalAddressValueID").getText() !== null && oController.byId("finalAddressValueID").getText() !== undefined && oController.byId("finalAddressValueID").getText() !== ""){
+                                        var resultAddressList = oController.addressParams.find(p => p.Supplier === dataToSendObject.Supplier)
+                                        if(resultAddressList !== null && resultAddressList !== undefined && resultAddressList !== ""){
+                                            dataToSendObject.adrnr_we = resultAddressList.Addrnumber
+                                        }
+                                    } else {
+                                        dataToSendObject.adrnr_we = ""
+                                    }
+                                    // modifica DL - 18/11/2025 - aggiungo codice indirizzo se valorizzato                           
                                     dataToSend.push(dataToSendObject)                                
                                 }
                             }
@@ -1245,6 +1287,13 @@ sap.ui.define(
                     oController.getView().addDependent(oController.pAddressListDialog);
                 }
 
+                var resultAddressList = oController.addressParams.find(p => p.Supplier === oEvent.getSource().getValue())
+                if(resultAddressList !== null && resultAddressList !== undefined && resultAddressList !== ""){
+                    var arrayAddress = []
+                    arrayAddress.push(resultAddressList)
+                    oController.getView().getModel("address_model").setProperty("/addressListSet", arrayAddress);
+                }
+
                 oController.pAddressListDialog.open();
                 oController.selectedRow = oEvent.getSource().getBindingContext().getObject();
             },
@@ -1261,9 +1310,12 @@ sap.ui.define(
                     return;
                 }
 
+                oController.byId("finalAddressTextID").setVisible(true)
+                oController.byId("finalAddressValueID").setVisible(true)
+                oController.byId("finalAddressValueID").setText(oSelectedItem.getDescription())
 
-                oController.selectedRow.Supplier = oSelectedItem.getTitle();
-                oController.byId("selectedMaterialTableId").getModel().refresh()
+                //oController.selectedRow.Supplier = oSelectedItem.getTitle();
+                //oController.byId("selectedMaterialTableId").getModel().refresh()
 
                 //oController.pAddressListDialog.close();
             }

@@ -682,266 +682,275 @@ sap.ui.define(
                             // modifica DL - 29/07/2025 aggiungo tipo bottone selezionato - FINE 
                             dataToSend.push(dataToSendObject)
                             // modifica DL - 28/05/2025 - se quantità da sperdire supera disponibilità, allora appendo nuovo record
-                            if(Number(this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].QtyToIssue) > Number(this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].QtyToIssueOriginal)){
-                                dataToSendObject = {}
-                                dataToSendObject.Kdmat = ""
-                                // modifica DL - 03/06/2025 - aggiungo campi segmentation
-                                dataToSendObject.SgtScat = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].StockSegment
-                                dataToSendObject.SgtRcaT = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].RequirementSegment
-                                // modifica DL - 03/06/2025 - aggiungo campi segmentation - FINE
-                                dataToSendObject.Material = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].Material
-                                dataToSendObject.Batch = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].Batch
-                                dataToSendObject.Stock = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].StockMaterial
-                                dataToSendObject.Quantity = (this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].QtyToIssue - this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].QtyToIssueOriginal).toString()
-                                // modifica DL - 10/06/2025 - problema decimali
-                                if((dataToSendObject.Quantity).indexOf(",") > -1){
-                                    dataToSendObject.Quantity = dataToSendObject.Quantity.replace(",",".")
-                                }
-                                // modifica DL - 10/06/2025 - problema decimali - FINE
-                                dataToSendObject.CprodOrd = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].CprodOrd
-                                dataToSendObject.CprodOrd = oController.zeroPad(dataToSendObject.CprodOrd, 12)
-                                dataToSendObject.UnitMeasure = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].EntryUnit
-                                dataToSendObject.Plant = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].Plant
-                                dataToSendObject.WorkCenterInternalID = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].WorkCenterInternalID
-                                if(this.byId("ManualAccountingDialog").data("buttonPressed") === "HUB"){
-                                    dataToSendObject.Lgort = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].Lgort1
-                                } else {
-                                    if(found543){
-                                        dataToSendObject.Lgort = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].Lgort1
-                                    } else {
-                                        dataToSendObject.Lgort = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].Lgort2
-                                    }
-                                }                    
-                                dataToSendObject.Vstel = this.byId("shippingPointID").getValue()
-                                dataToSendObject.Lprio = this.byId("priorityID").getValue()
-                                dataToSendObject.commenti_interni = this.byId("noteInternalNoteID").getValue()
-                                dataToSendObject.commenti_ddt = this.byId("noteDDTID").getValue()
-                                dataToSendObject.Supplier = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].Supplier
-                                if(this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].requirementtype === "BB"){
-                                    dataToSendObject.Bwart = "541"
-                                     // modifica DL - 16/06/2025 - cambio LFART in base al segment Stock
-                                     let parentStockSegment = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].ParentStockSegment
-                                     if(this.byId("ManualAccountingDialog").data("buttonPressed") === "HUB"){
-                                        if(parentStockSegment === "" || parentStockSegment === null || parentStockSegment === undefined){
-                                            dataToSendObject.Lfart = "ZHOD"
-                                        } else {     
-                                            var result = oController.customParams.find(p => p.WERKS === this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].Plant && p.BDART === 'BB' && p.SGT_SCAT === parentStockSegment && p.FACTORY === false)                              
-                                            dataToSendObject.Lfart = result.LFART                                    
-                                            /*switch (parentStockSegment) {
-                                                case "CAM":
-                                                    dataToSendObject.Lfart = "ZCAE"
-                                                    break;
-                                                case "ESS":
-                                                    dataToSendObject.Lfart = "ZESE"
-                                                    break;
-                                                case "MTO":
-                                                    dataToSendObject.Lfart = "ZMTE"
-                                                    break;
-                                                case "PRO":
-                                                    dataToSendObject.Lfart = "ZPRE"
-                                                    break;
-                                                case "REG":
-                                                    dataToSendObject.Lfart = "ZREE"
-                                                    break;
-                                                case "BUY":
-                                                    dataToSendObject.Lfart = "ZBUE"
-                                                    break;
-                                                case "BUY US":
-                                                    dataToSendObject.Lfart = "ZBUE"
-                                                    break;
-                                                case "TRU":
-                                                    dataToSendObject.Lfart = "ZTRE"
-                                                    break;
-                                                case "ESS US":
-                                                    dataToSendObject.Lfart = "ZESE"
-                                                    break;
-                                                case "BES":
-                                                    dataToSendObject.Lfart = "ZBEE"
-                                                    break;
-                                                case "":
-                                                    dataToSendObject.Lfart = "ZHOD"
-                                                    break;
-                                            }*/
-                                        }
-                                     } else {
-                                    // modifica DL - 24/07/2025 - valorizzo lfart
-                                        if(parentStockSegment === "" || parentStockSegment === null || parentStockSegment === undefined){
-                                            dataToSendObject.Lfart = "ZTRK"
-                                        } else {   
-                                            var result = oController.customParams.find(p => p.WERKS === this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].Plant && p.BDART === 'BB' && p.SGT_SCAT === parentStockSegment && p.FACTORY === true)                              
-                                            dataToSendObject.Lfart = result.LFART                                  
-                                            /*switch (parentStockSegment) {
-                                                case "CAM":
-                                                dataToSendObject.Lfart = "ZCAF"
-                                                break;
-                                                case "ESS":
-                                                dataToSendObject.Lfart = "ZESF"
-                                                break;
-                                                case "MTO":
-                                                dataToSendObject.Lfart = "ZMTF"
-                                                break;
-                                                case "PRO":
-                                                dataToSendObject.Lfart = "ZPRF"
-                                                break;
-                                                case "REG":
-                                                dataToSendObject.Lfart = "ZREF"
-                                                break;
-                                                case "BUY":
-                                                dataToSendObject.Lfart = "ZBUF"
-                                                break;
-                                                case "BUY US":
-                                                dataToSendObject.Lfart = "ZBUF"
-                                                break;
-                                                case "TRU":
-                                                dataToSendObject.Lfart = "ZTRF"
-                                                break;
-                                                case "ESS US":
-                                                dataToSendObject.Lfart = "ZESF"
-                                                break;
-                                                case "BES":
-                                                dataToSendObject.Lfart = "ZBEF"
-                                                break;
-                                                case "":
-                                                dataToSendObject.Lfart = "ZTRK"
-                                                break;
-                                            }*/
-                                        }                                    
-                                    // modifica DL - 24/07/2025 - valorizzo lfart - FINE
-                                    }
-                                    // Set the delivery type for the material document to "LB" (which typically indicates a delivery type for goods movements)
-                                    //dataToSendObject.Lfart = "LB"
-                                    // modifica DL - 16/06/2025 - cambio LFART in base al segment Stock
-                                    dataToSendObject.Customer = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].Customer
-                                    dataToSendObject.Supplier = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].Supplier
-                                } else {
-                                    if(this.byId("ManualAccountingDialog").data("buttonPressed") === "HUB"){
-                                        dataToSendObject.Bwart = "313"
-                                    } else {
-                                        // pulsante Factory
-                                        dataToSendObject.Bwart = "311"
-                                    }
-                                    // modifica DL - 16/06/2025 - cambio LFART in base al segment Stock
-                                    let parentStockSegment = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].ParentStockSegment
-                                    if(this.byId("ManualAccountingDialog").data("buttonPressed") === "HUB"){
-                                        if(parentStockSegment === "" || parentStockSegment === null || parentStockSegment === undefined){
-                                            dataToSendObject.Lfart = "ZHOD"
-                                        } else {
-                                            var result = oController.customParams.find(p => p.WERKS === this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].Plant && p.BDART === 'AR' && p.SGT_SCAT === parentStockSegment && p.FACTORY === false)                              
-                                            dataToSendObject.Lfart = result.LFART 
-                                            /*switch (parentStockSegment) {
-                                                case "CAM":
-                                                    dataToSendObject.Lfart = "ZCAM"
-                                                    break;
-                                                case "ESS":
-                                                    dataToSendObject.Lfart = "ZESS"
-                                                    break;
-                                                case "MTO":
-                                                    dataToSendObject.Lfart = "ZMTO"
-                                                    break;
-                                                case "PRO":
-                                                    dataToSendObject.Lfart = "ZPRO"
-                                                    break;
-                                                case "REG":
-                                                    dataToSendObject.Lfart = "ZREG"
-                                                    break;
-                                                case "BUY":
-                                                    dataToSendObject.Lfart = "ZBUY"
-                                                    break;
-                                                case "BUY US":
-                                                    dataToSendObject.Lfart = "ZBUY"
-                                                    break;
-                                                case "TRU":
-                                                    dataToSendObject.Lfart = "ZTRU"
-                                                    break;
-                                                case "ESS US":
-                                                    dataToSendObject.Lfart = "ZESS"
-                                                    break;
-                                                case "BES":
-                                                    dataToSendObject.Lfart = "ZBES"
-                                                    break;
-                                                case "":
-                                                    dataToSendObject.Lfart = "ZHOD"
-                                                    break;
-                                            }*/
-                                        }
-                                    } else {
-                                        // modifica DL - 24/07/2025 - valorizzo lfart
-                                        if(parentStockSegment === "" || parentStockSegment === null || parentStockSegment === undefined){
-                                            dataToSendObject.Lfart = "ZTRK"
-                                        } else {    
-                                            var result = oController.customParams.find(p => p.WERKS === this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].Plant && p.BDART === 'AR' && p.SGT_SCAT === parentStockSegment && p.FACTORY === true)                              
-                                            dataToSendObject.Lfart = result.LFART                                 
-                                            /*switch (parentStockSegment) {
-                                                case "CAM":
-                                                dataToSendObject.Lfart = "ZCAF"
-                                                break;
-                                                case "ESS":
-                                                dataToSendObject.Lfart = "ZESF"
-                                                break;
-                                                case "MTO":
-                                                dataToSendObject.Lfart = "ZMTF"
-                                                break;
-                                                case "PRO":
-                                                dataToSendObject.Lfart = "ZPRF"
-                                                break;
-                                                case "REG":
-                                                dataToSendObject.Lfart = "ZREF"
-                                                break;
-                                                case "BUY":
-                                                dataToSendObject.Lfart = "ZBUF"
-                                                break;
-                                                case "BUY US":
-                                                dataToSendObject.Lfart = "ZBUF"
-                                                break;
-                                                case "TRU":
-                                                dataToSendObject.Lfart = "ZTRF"
-                                                break;
-                                                case "ESS US":
-                                                dataToSendObject.Lfart = "ZESF"
-                                                break;
-                                                case "BES":
-                                                dataToSendObject.Lfart = "ZBEF"
-                                                break;
-                                                case "":
-                                                dataToSendObject.Lfart = "ZTRK"
-                                                break;
-                                            }*/
-                                        }                                    
-                                    // modifica DL - 24/07/2025 - valorizzo lfart - FINE
-                                    }
-                                    //dataToSendObject.Lfart = "ZHOD"
-                                    // modifica DL - 16/06/2025 - cambio LFART in base al segment Stock 
-                                }
-                                dataToSendObject.Wadak = oController.formatDateToSap(this.byId("WadakID").getValue())
-                                dataToSendObject.StorageLocation = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].StorageLocation                                
-                                if(this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].AvaibilityQtyProdStorage !== null && this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].AvaibilityQtyProdStorage !== undefined){
-                                    dataToSendObject.AvaibilityQtyProdStorage = (this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].AvaibilityQtyProdStorage).toString()
-                                }
-                                if(this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].AvaibilityQtyDefaultStorage !== undefined && this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].AvaibilityQtyDefaultStorage !== null){
-                                    dataToSendObject.AvaibilityQtyDefaultStorage = (this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].AvaibilityQtyDefaultStorage).toString()
-                                }
-                                // aggiorno quantità precedente
-                                var lengthDataToSend = dataToSend.length
-                                if(this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].QtyToIssueOriginal !== undefined && this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].QtyToIssueOriginal !== null && this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].QtyToIssueOriginal !== ""){
-                                    dataToSend[lengthDataToSend-1].Quantity = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].QtyToIssueOriginal
+                            // modifica DL - 18/11/2025 - se c'è flag a saldo, non splitto e non creo seconda riga
+                            if(!oController.byId("selectedMaterialTableId").getItems()[i].getCells()[6].getSelected()){
+                                if(Number(this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].QtyToIssue) > Number(this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].QtyToIssueOriginal)){
+                                    dataToSendObject = {}
+                                    dataToSendObject.Kdmat = ""
+                                    // modifica DL - 03/06/2025 - aggiungo campi segmentation
+                                    dataToSendObject.SgtScat = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].StockSegment
+                                    dataToSendObject.SgtRcaT = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].RequirementSegment
+                                    // modifica DL - 03/06/2025 - aggiungo campi segmentation - FINE
+                                    dataToSendObject.Material = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].Material
+                                    dataToSendObject.Batch = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].Batch
+                                    dataToSendObject.Stock = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].StockMaterial
+                                    dataToSendObject.Quantity = (this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].QtyToIssue - this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].QtyToIssueOriginal).toString()
                                     // modifica DL - 10/06/2025 - problema decimali
-                                    if((dataToSend[lengthDataToSend-1].Quantity.toString()).indexOf(",") > -1){
-                                        dataToSend[lengthDataToSend-1].Quantity = (dataToSend[lengthDataToSend-1].Quantity.toString()).replace(",",".")
-                                        dataToSend[lengthDataToSend-1].Quantity = Number(dataToSend[lengthDataToSend-1].Quantity)
+                                    if((dataToSendObject.Quantity).indexOf(",") > -1){
+                                        dataToSendObject.Quantity = dataToSendObject.Quantity.replace(",",".")
                                     }
                                     // modifica DL - 10/06/2025 - problema decimali - FINE
-                                } else {
-                                    dataToSend[lengthDataToSend-1].Quantity = "0"
-                                }   
-                                // modifica DL - 10/06/2025 - richiesta di Caterina
-                                if(Number(dataToSend[lengthDataToSend-1].Quantity) === 0){
-                                    dataToSend.splice(lengthDataToSend-1, 1)
+                                    dataToSendObject.CprodOrd = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].CprodOrd
+                                    dataToSendObject.CprodOrd = oController.zeroPad(dataToSendObject.CprodOrd, 12)
+                                    dataToSendObject.UnitMeasure = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].EntryUnit
+                                    dataToSendObject.Plant = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].Plant
+                                    dataToSendObject.WorkCenterInternalID = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].WorkCenterInternalID
+                                    if(this.byId("ManualAccountingDialog").data("buttonPressed") === "HUB"){
+                                        dataToSendObject.Lgort = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].Lgort1
+                                    } else {
+                                        if(found543){
+                                            dataToSendObject.Lgort = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].Lgort1
+                                        } else {
+                                            dataToSendObject.Lgort = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].Lgort2
+                                        }
+                                    }                    
+                                    dataToSendObject.Vstel = this.byId("shippingPointID").getValue()
+                                    dataToSendObject.Lprio = this.byId("priorityID").getValue()
+                                    dataToSendObject.commenti_interni = this.byId("noteInternalNoteID").getValue()
+                                    dataToSendObject.commenti_ddt = this.byId("noteDDTID").getValue()
+                                    dataToSendObject.Supplier = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].Supplier
+                                    if(this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].requirementtype === "BB"){
+                                        dataToSendObject.Bwart = "541"
+                                        // modifica DL - 16/06/2025 - cambio LFART in base al segment Stock
+                                        let parentStockSegment = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].ParentStockSegment
+                                        if(this.byId("ManualAccountingDialog").data("buttonPressed") === "HUB"){
+                                            if(parentStockSegment === "" || parentStockSegment === null || parentStockSegment === undefined){
+                                                dataToSendObject.Lfart = "ZHOD"
+                                            } else {     
+                                                var result = oController.customParams.find(p => p.WERKS === this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].Plant && p.BDART === 'BB' && p.SGT_SCAT === parentStockSegment && p.FACTORY === false)                              
+                                                dataToSendObject.Lfart = result.LFART                                    
+                                                /*switch (parentStockSegment) {
+                                                    case "CAM":
+                                                        dataToSendObject.Lfart = "ZCAE"
+                                                        break;
+                                                    case "ESS":
+                                                        dataToSendObject.Lfart = "ZESE"
+                                                        break;
+                                                    case "MTO":
+                                                        dataToSendObject.Lfart = "ZMTE"
+                                                        break;
+                                                    case "PRO":
+                                                        dataToSendObject.Lfart = "ZPRE"
+                                                        break;
+                                                    case "REG":
+                                                        dataToSendObject.Lfart = "ZREE"
+                                                        break;
+                                                    case "BUY":
+                                                        dataToSendObject.Lfart = "ZBUE"
+                                                        break;
+                                                    case "BUY US":
+                                                        dataToSendObject.Lfart = "ZBUE"
+                                                        break;
+                                                    case "TRU":
+                                                        dataToSendObject.Lfart = "ZTRE"
+                                                        break;
+                                                    case "ESS US":
+                                                        dataToSendObject.Lfart = "ZESE"
+                                                        break;
+                                                    case "BES":
+                                                        dataToSendObject.Lfart = "ZBEE"
+                                                        break;
+                                                    case "":
+                                                        dataToSendObject.Lfart = "ZHOD"
+                                                        break;
+                                                }*/
+                                            }
+                                        } else {
+                                        // modifica DL - 24/07/2025 - valorizzo lfart
+                                            if(parentStockSegment === "" || parentStockSegment === null || parentStockSegment === undefined){
+                                                dataToSendObject.Lfart = "ZTRK"
+                                            } else {   
+                                                var result = oController.customParams.find(p => p.WERKS === this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].Plant && p.BDART === 'BB' && p.SGT_SCAT === parentStockSegment && p.FACTORY === true)                              
+                                                dataToSendObject.Lfart = result.LFART                                  
+                                                /*switch (parentStockSegment) {
+                                                    case "CAM":
+                                                    dataToSendObject.Lfart = "ZCAF"
+                                                    break;
+                                                    case "ESS":
+                                                    dataToSendObject.Lfart = "ZESF"
+                                                    break;
+                                                    case "MTO":
+                                                    dataToSendObject.Lfart = "ZMTF"
+                                                    break;
+                                                    case "PRO":
+                                                    dataToSendObject.Lfart = "ZPRF"
+                                                    break;
+                                                    case "REG":
+                                                    dataToSendObject.Lfart = "ZREF"
+                                                    break;
+                                                    case "BUY":
+                                                    dataToSendObject.Lfart = "ZBUF"
+                                                    break;
+                                                    case "BUY US":
+                                                    dataToSendObject.Lfart = "ZBUF"
+                                                    break;
+                                                    case "TRU":
+                                                    dataToSendObject.Lfart = "ZTRF"
+                                                    break;
+                                                    case "ESS US":
+                                                    dataToSendObject.Lfart = "ZESF"
+                                                    break;
+                                                    case "BES":
+                                                    dataToSendObject.Lfart = "ZBEF"
+                                                    break;
+                                                    case "":
+                                                    dataToSendObject.Lfart = "ZTRK"
+                                                    break;
+                                                }*/
+                                            }                                    
+                                        // modifica DL - 24/07/2025 - valorizzo lfart - FINE
+                                        }
+                                        // Set the delivery type for the material document to "LB" (which typically indicates a delivery type for goods movements)
+                                        //dataToSendObject.Lfart = "LB"
+                                        // modifica DL - 16/06/2025 - cambio LFART in base al segment Stock
+                                        dataToSendObject.Customer = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].Customer
+                                        dataToSendObject.Supplier = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].Supplier
+                                    } else {
+                                        if(this.byId("ManualAccountingDialog").data("buttonPressed") === "HUB"){
+                                            dataToSendObject.Bwart = "313"
+                                        } else {
+                                            // pulsante Factory
+                                            dataToSendObject.Bwart = "311"
+                                        }
+                                        // modifica DL - 16/06/2025 - cambio LFART in base al segment Stock
+                                        let parentStockSegment = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].ParentStockSegment
+                                        if(this.byId("ManualAccountingDialog").data("buttonPressed") === "HUB"){
+                                            if(parentStockSegment === "" || parentStockSegment === null || parentStockSegment === undefined){
+                                                dataToSendObject.Lfart = "ZHOD"
+                                            } else {
+                                                var result = oController.customParams.find(p => p.WERKS === this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].Plant && p.BDART === 'AR' && p.SGT_SCAT === parentStockSegment && p.FACTORY === false)                              
+                                                dataToSendObject.Lfart = result.LFART 
+                                                /*switch (parentStockSegment) {
+                                                    case "CAM":
+                                                        dataToSendObject.Lfart = "ZCAM"
+                                                        break;
+                                                    case "ESS":
+                                                        dataToSendObject.Lfart = "ZESS"
+                                                        break;
+                                                    case "MTO":
+                                                        dataToSendObject.Lfart = "ZMTO"
+                                                        break;
+                                                    case "PRO":
+                                                        dataToSendObject.Lfart = "ZPRO"
+                                                        break;
+                                                    case "REG":
+                                                        dataToSendObject.Lfart = "ZREG"
+                                                        break;
+                                                    case "BUY":
+                                                        dataToSendObject.Lfart = "ZBUY"
+                                                        break;
+                                                    case "BUY US":
+                                                        dataToSendObject.Lfart = "ZBUY"
+                                                        break;
+                                                    case "TRU":
+                                                        dataToSendObject.Lfart = "ZTRU"
+                                                        break;
+                                                    case "ESS US":
+                                                        dataToSendObject.Lfart = "ZESS"
+                                                        break;
+                                                    case "BES":
+                                                        dataToSendObject.Lfart = "ZBES"
+                                                        break;
+                                                    case "":
+                                                        dataToSendObject.Lfart = "ZHOD"
+                                                        break;
+                                                }*/
+                                            }
+                                        } else {
+                                            // modifica DL - 24/07/2025 - valorizzo lfart
+                                            if(parentStockSegment === "" || parentStockSegment === null || parentStockSegment === undefined){
+                                                dataToSendObject.Lfart = "ZTRK"
+                                            } else {    
+                                                var result = oController.customParams.find(p => p.WERKS === this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].Plant && p.BDART === 'AR' && p.SGT_SCAT === parentStockSegment && p.FACTORY === true)                              
+                                                dataToSendObject.Lfart = result.LFART                                 
+                                                /*switch (parentStockSegment) {
+                                                    case "CAM":
+                                                    dataToSendObject.Lfart = "ZCAF"
+                                                    break;
+                                                    case "ESS":
+                                                    dataToSendObject.Lfart = "ZESF"
+                                                    break;
+                                                    case "MTO":
+                                                    dataToSendObject.Lfart = "ZMTF"
+                                                    break;
+                                                    case "PRO":
+                                                    dataToSendObject.Lfart = "ZPRF"
+                                                    break;
+                                                    case "REG":
+                                                    dataToSendObject.Lfart = "ZREF"
+                                                    break;
+                                                    case "BUY":
+                                                    dataToSendObject.Lfart = "ZBUF"
+                                                    break;
+                                                    case "BUY US":
+                                                    dataToSendObject.Lfart = "ZBUF"
+                                                    break;
+                                                    case "TRU":
+                                                    dataToSendObject.Lfart = "ZTRF"
+                                                    break;
+                                                    case "ESS US":
+                                                    dataToSendObject.Lfart = "ZESF"
+                                                    break;
+                                                    case "BES":
+                                                    dataToSendObject.Lfart = "ZBEF"
+                                                    break;
+                                                    case "":
+                                                    dataToSendObject.Lfart = "ZTRK"
+                                                    break;
+                                                }*/
+                                            }                                    
+                                        // modifica DL - 24/07/2025 - valorizzo lfart - FINE
+                                        }
+                                        //dataToSendObject.Lfart = "ZHOD"
+                                        // modifica DL - 16/06/2025 - cambio LFART in base al segment Stock 
+                                    }
+                                    dataToSendObject.Wadak = oController.formatDateToSap(this.byId("WadakID").getValue())
+                                    dataToSendObject.StorageLocation = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].StorageLocation                                
+                                    if(this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].AvaibilityQtyProdStorage !== null && this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].AvaibilityQtyProdStorage !== undefined){
+                                        dataToSendObject.AvaibilityQtyProdStorage = (this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].AvaibilityQtyProdStorage).toString()
+                                    }
+                                    if(this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].AvaibilityQtyDefaultStorage !== undefined && this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].AvaibilityQtyDefaultStorage !== null){
+                                        dataToSendObject.AvaibilityQtyDefaultStorage = (this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].AvaibilityQtyDefaultStorage).toString()
+                                    }
+                                    // aggiorno quantità precedente
+                                    var lengthDataToSend = dataToSend.length
+                                    if(this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].QtyToIssueOriginal !== undefined && this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].QtyToIssueOriginal !== null && this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].QtyToIssueOriginal !== ""){
+                                        dataToSend[lengthDataToSend-1].Quantity = this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].QtyToIssueOriginal
+                                        // modifica DL - 10/06/2025 - problema decimali
+                                        if((dataToSend[lengthDataToSend-1].Quantity.toString()).indexOf(",") > -1){
+                                            dataToSend[lengthDataToSend-1].Quantity = (dataToSend[lengthDataToSend-1].Quantity.toString()).replace(",",".")
+                                            dataToSend[lengthDataToSend-1].Quantity = Number(dataToSend[lengthDataToSend-1].Quantity)
+                                        }
+                                        // modifica DL - 10/06/2025 - problema decimali - FINE
+                                    } else {
+                                        dataToSend[lengthDataToSend-1].Quantity = "0"
+                                    }   
+                                    // modifica DL - 10/06/2025 - richiesta di Caterina
+                                    if(Number(dataToSend[lengthDataToSend-1].Quantity) === 0){
+                                        dataToSend.splice(lengthDataToSend-1, 1)
+                                    }
+                                    // modifica DL - 10/06/2025 - richiesta di Caterina - FINE            
+                                    // modifica DL - 29/07/2025 aggiungo tipo bottone selezionato    
+                                    dataToSendObject.ButtonType = this.byId("ManualAccountingDialog").data("buttonPressed")
+                                    // modifica DL - 29/07/2025 aggiungo tipo bottone selezionato - FINE    
+                                    // modifica DL - 18/11/2025 - flag a saldo
+                                    if(oController.byId("selectedMaterialTableId").getItems()[i].getCells()[6].getSelected()){
+                                        dataToSendObject.a_saldo = true
+                                    } else {
+                                        dataToSendObject.a_saldo = false
+                                    }                                      
+                                    dataToSend.push(dataToSendObject)                                
                                 }
-                                // modifica DL - 10/06/2025 - richiesta di Caterina - FINE            
-                                // modifica DL - 29/07/2025 aggiungo tipo bottone selezionato    
-                                dataToSendObject.ButtonType = this.byId("ManualAccountingDialog").data("buttonPressed")
-                                // modifica DL - 29/07/2025 aggiungo tipo bottone selezionato - FINE                                             
-                                dataToSend.push(dataToSendObject)                                
                             }
                             // modifica DL - 28/05/2025 - se quantità da sperdire supera disponibilità, allora appendo nuovo record - FINE
                         //}

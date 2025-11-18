@@ -148,6 +148,69 @@
           }
         }
       },
+      "ZZ1_ZMFG_C_PRODUCT_F4_CDS": {
+        "kind": "odata",
+        "model": "srv/EXTERNAL/ZZ1_ZMFG_C_PRODUCT_F4_CDS",
+        "forwardAuthToken": true,
+        "csrf": true,
+        "csrfInBatch": true,
+        "[hybrid]": {
+          "credentials": {
+            "requestTimeout": 300000,
+            "destination": "S4HANA",
+            "path": "/sap/opu/odata/sap/ZZ1_ZMFG_C_PRODUCT_F4_CDS"
+          }
+        },
+        "[production]": {
+          "credentials": {
+            "requestTimeout": 300000,
+            "destination": "S4HANA",
+            "path": "/sap/opu/odata/sap/ZZ1_ZMFG_C_PRODUCT_F4_CDS"
+          }
+        }
+      },
+      "ZZ1_MRPCONTROLLER_F4_CDS": {
+        "kind": "odata",
+        "model": "srv/EXTERNAL/ZZ1_MRPCONTROLLER_F4_CDS",
+        "forwardAuthToken": true,
+        "csrf": true,
+        "csrfInBatch": true,
+        "[hybrid]": {
+          "credentials": {
+            "requestTimeout": 300000,
+            "destination": "S4HANA",
+            "path": "/sap/opu/odata/sap/ZZ1_MRPCONTROLLER_F4_CDS"
+          }
+        },
+        "[production]": {
+          "credentials": {
+            "requestTimeout": 300000,
+            "destination": "S4HANA",
+            "path": "/sap/opu/odata/sap/ZZ1_MRPCONTROLLER_F4_CDS"
+          }
+        }
+      },
+      "ZMFG_I_SUPPLIER_F4_CDS": {
+        "kind": "odata",
+        "model": "srv/EXTERNAL/ZMFG_I_SUPPLIER_F4_CDS",
+        "forwardAuthToken": true,
+        "csrf": true,
+        "csrfInBatch": true,
+        "[hybrid]": {
+          "credentials": {
+            "requestTimeout": 300000,
+            "destination": "S4HANA",
+            "path": "/sap/opu/odata/sap/ZMFG_I_SUPPLIER_F4_CDS"
+          }
+        },
+        "[production]": {
+          "credentials": {
+            "requestTimeout": 300000,
+            "destination": "S4HANA",
+            "path": "/sap/opu/odata/sap/ZMFG_I_SUPPLIER_F4_CDS"
+          }
+        }
+      },
       "ZZ1_I_COMBORDMATCHCODE_CDS": {
         "kind": "odata",
         "model": "srv/EXTERNAL/ZZ1_I_COMBORDMATCHCODE_CDS",

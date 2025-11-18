@@ -104,6 +104,10 @@
       "ZZ1_MFG_C_SUPPLIER_F4_CDS": {
         "kind": "odata-v2",
         "model": "srv/external/ZZ1_MFG_C_SUPPLIER_F4_CDS"
+      },
+      "ZMFG_I_SUPPLIER_F4_CDS": {
+        "kind": "odata-v2",
+        "model": "srv/external/ZMFG_I_SUPPLIER_F4_CDS"
       }
     }
   },

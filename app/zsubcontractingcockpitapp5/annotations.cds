@@ -387,7 +387,7 @@ annotate CatalogService.MainCds with {
 annotate CatalogService.MainCds with {
     Supplier @(Common.ValueList : {
             $Type : 'Common.ValueListType',
-            CollectionPath : 'ZZ1_MFG_C_SUPPLIER_F4',
+            CollectionPath : 'ZMFG_I_SUPPLIER_F4',
             Parameters : [
                 {
                     $Type : 'Common.ValueListParameterInOut',

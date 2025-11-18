@@ -73,6 +73,9 @@
                     <Text text="{i18n>quantityToIssue}" visible="false"/>
                 </Column>
                 <Column>
+                    <Text text="{i18n>saldoCommessa}" visible="true"/>
+                </Column>
+                <Column>
                     <Text text="{i18n>quantity}"/>
                 </Column>
                 <Column>
@@ -103,6 +106,7 @@
                   value="{QtyToIssue}" description="{BaseUnit}" />
                 <Input 
                   value="{QtyToIssueOriginal}" description="{BaseUnit}" visible="false" />
+                <CheckBox id="checkboxSaldoId" selected="{a_saldo}" ></CheckBox>
                 <Input 
                   value="{TotalConfdQtyForATPInBaseUoM}" description="{BaseUnit}" editable="false" />
                 <Input 

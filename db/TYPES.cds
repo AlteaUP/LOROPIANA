@@ -24,6 +24,7 @@ type MaterialRecord : {
     SgtRcaT         : String;
     ButtonType      : String;
     Lprio           : String;
+    a_saldo         : Boolean;
     commenti_interni: String;
     commenti_ddt    : String;
 }

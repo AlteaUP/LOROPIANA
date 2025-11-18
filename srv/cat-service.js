@@ -23,7 +23,7 @@ module.exports = cds.service.impl(async function (srv) {
     const cdsShippingPoint = await cds.connect.to('ZZ1_I_SHIPPINGPOINT_CDS');
     const cdsWorkCenter = await cds.connect.to('ZZ1_I_WORKCENTERTXT_CDS');
     const cdsPlant = await cds.connect.to('ZZ1_I_PLANTTXT_CDS');
-    const cdsSupplier = await cds.connect.to('ZZ1_MFG_C_SUPPLIER_F4_CDS');
+    const cdsSupplier = await cds.connect.to('ZMFG_I_SUPPLIER_F4_CDS');
     const cdsMRPController = await cds.connect.to('ZZ1_MRPCONTROLLER_F4_CDS');
     const cdsProduct = await cds.connect.to('ZZ1_ZMFG_C_PRODUCT_F4_CDS');
     const cdsCombOrder = await cds.connect.to('ZZ1_I_COMBORDMATCHCODE_CDS');
@@ -650,7 +650,7 @@ module.exports = cds.service.impl(async function (srv) {
         return data;
     });
 
-    this.on('READ', "ZZ1_MFG_C_SUPPLIER_F4", async request => {
+    this.on('READ', "ZMFG_I_SUPPLIER_F4", async request => {
         request.query.SELECT.count = false
         var data = await cdsSupplier.tx(request).run(request.query);
 

@@ -550,10 +550,12 @@
      "@Common.QuickInfo": "Campo carattere (1024)"
     },
     "a_saldo": {
-     "type": "cds.Boolean",
+     "type": "cds.String",
+     "length": 1,
      "notNull": true,
-     "@Common.Label": "Indicatore",
-     "@Common.QuickInfo": "Indicatore generale"
+     "@Common.IsUpperCase": true,
+     "@Common.Label": "Lngh. carattere 1",
+     "@Common.QuickInfo": "Campo carattere di lunghezza 1"
     },
     "adrnr_we": {
      "type": "cds.String",

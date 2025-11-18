@@ -711,6 +711,13 @@ sap.ui.define(
                                 dataToSendObject.adrnr_we = ""
                             }
                             // modifica DL - 18/11/2025 - aggiungo codice indirizzo se valorizzato
+                            // modifica DL - 18/11/2025 - flag a saldo
+                            if(oController.byId("selectedMaterialTableId").getItems()[i].getCells()[6].getSelected()){
+                                dataToSendObject.a_saldo = "X"
+                            } else {
+                                dataToSendObject.a_saldo = ""
+                            }           
+                            // modifica DL - 18/11/2025 - flag a saldo - FINE
                             dataToSend.push(dataToSendObject)
                             // modifica DL - 28/05/2025 - se quantità da sperdire supera disponibilità, allora appendo nuovo record
                             // modifica DL - 18/11/2025 - se c'è flag a saldo, non splitto e non creo seconda riga
@@ -976,9 +983,9 @@ sap.ui.define(
                                     // modifica DL - 29/07/2025 aggiungo tipo bottone selezionato - FINE    
                                     // modifica DL - 18/11/2025 - flag a saldo
                                     if(oController.byId("selectedMaterialTableId").getItems()[i].getCells()[6].getSelected()){
-                                        dataToSendObject.a_saldo = true
+                                        dataToSendObject.a_saldo = "X"
                                     } else {
-                                        dataToSendObject.a_saldo = false
+                                        dataToSendObject.a_saldo = ""
                                     }           
                                     // modifica DL - 18/11/2025 - flag a saldo - FINE
                                     // modifica DL - 18/11/2025 - aggiungo codice indirizzo se valorizzato

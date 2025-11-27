@@ -112,6 +112,10 @@
       "ZMFG_I_SUPPLIERPARTNERFUNC_CDS": {
         "kind": "odata-v2",
         "model": "srv/external/ZMFG_I_SUPPLIERPARTNERFUNC_CDS"
+      },
+      "ZMF_IMD_MATERIAL_CDS": {
+        "kind": "odata-v2",
+        "model": "srv/external/ZMF_IMD_MATERIAL_CDS"
       }
     }
   },

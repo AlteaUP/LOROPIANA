@@ -11,6 +11,7 @@ sap.ui.define(
         var oController;
         var customParams = [];
         var addressParams = [];
+        var citesParams = [];
         var pickingDateParams = []
 
         return PageController.extend('zsubcontractingcockpitapp5.ext.main.Main', {
@@ -87,6 +88,17 @@ sap.ui.define(
                     console.error("Errore nella chiamata OData ZMFG_I_SUPPLIERPARTNERFUNC: ", err);
                 });
                 // modifica DL - 04/11/2025 - recupero parametri per indirizzo - FINE
+
+                // modifica DL - 27/11/2025 - recupero parametri per materiali cites
+                var oListBindingCites = oModel.bindList("/ZMF_IMD_MATERIAL");
+
+                oListBindingCites.requestContexts().then(aContexts => {
+                    oController.citesParams = aContexts.map(oContext => oContext.getObject());
+                    console.log("Dati ZMF_IMD_MATERIAL letti:", citesParams);                    
+                }).catch(err => {
+                    console.error("Errore nella chiamata OData ZMF_IMD_MATERIAL: ", err);
+                });
+                // modifica DL - 27/11/2025 - recupero parametri per materiali cites - FINE
 
                 oController.addCustomColumnButtonDetail()
 
@@ -375,6 +387,8 @@ sap.ui.define(
                     var objectToCreateMaterialDocument = {}
                     var arrayToCreateMaterialDocument = []
                     var found543 = false
+                    var citesMaterial = false
+
                     for(var i=0; i<this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial.length; i++){
                         if(this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].requirementtype === "BB" && this.byId("ManualAccountingDialog").data("buttonPressed") === "factory"){ //&& this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].InventorySpecialStockType === 'O'){
                             //543
@@ -415,44 +429,30 @@ sap.ui.define(
                                 var arrayStock = oContext.getObject().value
                                 //oBusyDialog.close();
 
+                                // 27/11/2025 - verifico se materiale è cites
+                                var resultCitesList = oController.citesParams.find(p => p.matnr === this.byId("selectedMaterialTableId").getModel().getData().SelectedMaterial[i].Material)
+                                if(resultCitesList !== null && resultCitesList !== undefined && resultCitesList !== ""){
+                                    if(resultCitesList.zzcites === 'L'){
+                                        citesMaterial = true
+                                    } else {
+                                        citesMaterial = false
+                                    }
+                                }
+                                // 27/11/2025 - verifico se materiale è cites - fine
+
                                 // calcolo array da passare all'API di creazione documento materiale
                                 //let objectToCreateMaterialDocument = {}
                                 //let arrayToCreateMaterialDocument = []
-                                qtyInserted = parseFloat(qtyInserted.replace(',', '.'))
-                                var totalQty = 0
-                                var remainingQty = qtyInserted
-                                for(var y=0; y<arrayComponents.length; y++){
-                                    if(totalQty <= qtyInserted){
-                                        let qty = Number(arrayComponents[y].RequiredQuantity - arrayComponents[y].WithdrawnQuantity)
-                                        for(var z=0; z<arrayStock.length; z++){    
-                                            if(qty > 0 && totalQty <= qtyInserted && remainingQty > 0){                                    
-                                                if(qty < Number(arrayStock[z].MatlWrhsStkQtyInMatlBaseUnit) && qty < qtyInserted){
-                                                    objectToCreateMaterialDocument = {}
-                                                    //objectToCreateMaterialDocument.Reservation = arrayComponents[y].Reservation
-                                                    //objectToCreateMaterialDocument.ReservationItem = arrayComponents[y].ReservationItem
-                                                    objectToCreateMaterialDocument.MasterProductionOrder = arrayComponents[y].MasterProductionOrder
-                                                    if(arrayStock[z].Batch !== undefined && arrayStock[z].Batch !== null && arrayStock[z].Batch !== ""){
-                                                        objectToCreateMaterialDocument.Batch = oController.zeroPad(arrayStock[z].Batch, 10)
-                                                    } else {
-                                                        objectToCreateMaterialDocument.Batch = arrayStock[z].Batch
-                                                    }
-                                                    objectToCreateMaterialDocument.Quantity = qty
-                                                    objectToCreateMaterialDocument.Material = arrayComponents[y].Material
-                                                    objectToCreateMaterialDocument.Plant = arrayComponents[y].Plant
-                                                    objectToCreateMaterialDocument.CprodOrd = arrayComponents[y].CprodOrd
-                                                    objectToCreateMaterialDocument.UnitMeasure = arrayComponents[y].BaseUnit
-                                                    objectToCreateMaterialDocument.PurchaseOrder = arrayComponents[y].PurchaseOrder
-                                                    objectToCreateMaterialDocument.PurchaseOrderItem = arrayComponents[y].PurchaseOrderItem
-                                                    objectToCreateMaterialDocument.Supplier = oController.zeroPad(arrayComponents[y].Supplier, 10)
-                                                    objectToCreateMaterialDocument.ManufacturingOrder = oController.zeroPad(arrayComponents[y].ManufacturingOrder, 12)
-                                                    objectToCreateMaterialDocument.ManufacturingOrderOperation = arrayComponents[y].ManufacturingOrderOperation
-                                                    arrayToCreateMaterialDocument.push(objectToCreateMaterialDocument)
-                                                    arrayStock[z].MatlWrhsStkQtyInMatlBaseUnit = arrayStock[z].MatlWrhsStkQtyInMatlBaseUnit - qty
-                                                    qty = qty - objectToCreateMaterialDocument.Quantity
-                                                    totalQty = Number(totalQty) + Number(objectToCreateMaterialDocument.Quantity)
-                                                    remainingQty = qtyInserted - totalQty
-                                                } else {
-                                                    if(arrayStock[z].MatlWrhsStkQtyInMatlBaseUnit > 0){
+                                if(!citesMaterial){
+                                    qtyInserted = parseFloat(qtyInserted.replace(',', '.'))
+                                    var totalQty = 0
+                                    var remainingQty = qtyInserted
+                                    for(var y=0; y<arrayComponents.length; y++){
+                                        if(totalQty <= qtyInserted){
+                                            let qty = Number(arrayComponents[y].RequiredQuantity - arrayComponents[y].WithdrawnQuantity)
+                                            for(var z=0; z<arrayStock.length; z++){    
+                                                if(qty > 0 && totalQty <= qtyInserted && remainingQty > 0){                                    
+                                                    if(qty < Number(arrayStock[z].MatlWrhsStkQtyInMatlBaseUnit) && qty < qtyInserted){
                                                         objectToCreateMaterialDocument = {}
                                                         //objectToCreateMaterialDocument.Reservation = arrayComponents[y].Reservation
                                                         //objectToCreateMaterialDocument.ReservationItem = arrayComponents[y].ReservationItem
@@ -462,41 +462,68 @@ sap.ui.define(
                                                         } else {
                                                             objectToCreateMaterialDocument.Batch = arrayStock[z].Batch
                                                         }
-                                                        if(qtyInserted <= Number(arrayStock[z].MatlWrhsStkQtyInMatlBaseUnit)){
-                                                            objectToCreateMaterialDocument.Quantity = qtyInserted
-                                                        } else if(totalQty >= Number(arrayStock[z].MatlWrhsStkQtyInMatlBaseUnit)){
-                                                            objectToCreateMaterialDocument.Quantity = remainingQty                                                            
-                                                        } else {
-                                                            objectToCreateMaterialDocument.Quantity = Number(arrayStock[z].MatlWrhsStkQtyInMatlBaseUnit)
-                                                        }                                
-                                                        objectToCreateMaterialDocument.Material = arrayComponents[y].Material                     
+                                                        objectToCreateMaterialDocument.Quantity = qty
+                                                        objectToCreateMaterialDocument.Material = arrayComponents[y].Material
                                                         objectToCreateMaterialDocument.Plant = arrayComponents[y].Plant
                                                         objectToCreateMaterialDocument.CprodOrd = arrayComponents[y].CprodOrd
                                                         objectToCreateMaterialDocument.UnitMeasure = arrayComponents[y].BaseUnit
                                                         objectToCreateMaterialDocument.PurchaseOrder = arrayComponents[y].PurchaseOrder
                                                         objectToCreateMaterialDocument.PurchaseOrderItem = arrayComponents[y].PurchaseOrderItem
-                                                        objectToCreateMaterialDocument.Supplier = oController.zeroPad(arrayComponents[y].Supplier, 10) 
+                                                        objectToCreateMaterialDocument.Supplier = oController.zeroPad(arrayComponents[y].Supplier, 10)
                                                         objectToCreateMaterialDocument.ManufacturingOrder = oController.zeroPad(arrayComponents[y].ManufacturingOrder, 12)
-                                                        objectToCreateMaterialDocument.ManufacturingOrderOperation = arrayComponents[y].ManufacturingOrderOperation  
+                                                        objectToCreateMaterialDocument.ManufacturingOrderOperation = arrayComponents[y].ManufacturingOrderOperation
                                                         arrayToCreateMaterialDocument.push(objectToCreateMaterialDocument)
-                                                        qty = qty - arrayStock[z].MatlWrhsStkQtyInMatlBaseUnit
-                                                        arrayStock[z].MatlWrhsStkQtyInMatlBaseUnit = arrayStock[z].MatlWrhsStkQtyInMatlBaseUnit - objectToCreateMaterialDocument.Quantity
+                                                        arrayStock[z].MatlWrhsStkQtyInMatlBaseUnit = arrayStock[z].MatlWrhsStkQtyInMatlBaseUnit - qty
+                                                        qty = qty - objectToCreateMaterialDocument.Quantity
                                                         totalQty = Number(totalQty) + Number(objectToCreateMaterialDocument.Quantity)
                                                         remainingQty = qtyInserted - totalQty
+                                                    } else {
+                                                        if(arrayStock[z].MatlWrhsStkQtyInMatlBaseUnit > 0){
+                                                            objectToCreateMaterialDocument = {}
+                                                            //objectToCreateMaterialDocument.Reservation = arrayComponents[y].Reservation
+                                                            //objectToCreateMaterialDocument.ReservationItem = arrayComponents[y].ReservationItem
+                                                            objectToCreateMaterialDocument.MasterProductionOrder = arrayComponents[y].MasterProductionOrder
+                                                            if(arrayStock[z].Batch !== undefined && arrayStock[z].Batch !== null && arrayStock[z].Batch !== ""){
+                                                                objectToCreateMaterialDocument.Batch = oController.zeroPad(arrayStock[z].Batch, 10)
+                                                            } else {
+                                                                objectToCreateMaterialDocument.Batch = arrayStock[z].Batch
+                                                            }
+                                                            if(qtyInserted <= Number(arrayStock[z].MatlWrhsStkQtyInMatlBaseUnit)){
+                                                                objectToCreateMaterialDocument.Quantity = qtyInserted
+                                                            } else if(totalQty >= Number(arrayStock[z].MatlWrhsStkQtyInMatlBaseUnit)){
+                                                                objectToCreateMaterialDocument.Quantity = remainingQty                                                            
+                                                            } else {
+                                                                objectToCreateMaterialDocument.Quantity = Number(arrayStock[z].MatlWrhsStkQtyInMatlBaseUnit)
+                                                            }                                
+                                                            objectToCreateMaterialDocument.Material = arrayComponents[y].Material                     
+                                                            objectToCreateMaterialDocument.Plant = arrayComponents[y].Plant
+                                                            objectToCreateMaterialDocument.CprodOrd = arrayComponents[y].CprodOrd
+                                                            objectToCreateMaterialDocument.UnitMeasure = arrayComponents[y].BaseUnit
+                                                            objectToCreateMaterialDocument.PurchaseOrder = arrayComponents[y].PurchaseOrder
+                                                            objectToCreateMaterialDocument.PurchaseOrderItem = arrayComponents[y].PurchaseOrderItem
+                                                            objectToCreateMaterialDocument.Supplier = oController.zeroPad(arrayComponents[y].Supplier, 10) 
+                                                            objectToCreateMaterialDocument.ManufacturingOrder = oController.zeroPad(arrayComponents[y].ManufacturingOrder, 12)
+                                                            objectToCreateMaterialDocument.ManufacturingOrderOperation = arrayComponents[y].ManufacturingOrderOperation  
+                                                            arrayToCreateMaterialDocument.push(objectToCreateMaterialDocument)
+                                                            qty = qty - arrayStock[z].MatlWrhsStkQtyInMatlBaseUnit
+                                                            arrayStock[z].MatlWrhsStkQtyInMatlBaseUnit = arrayStock[z].MatlWrhsStkQtyInMatlBaseUnit - objectToCreateMaterialDocument.Quantity
+                                                            totalQty = Number(totalQty) + Number(objectToCreateMaterialDocument.Quantity)
+                                                            remainingQty = qtyInserted - totalQty
+                                                        }
+                                                    }
+                                                    // modifica DL - 07/05/2025, aggiungo controllo su array con almeno 1 elemento
+                                                    if(remainingQty === 0 && arrayToCreateMaterialDocument.length > 0){
+                                                        break
                                                     }
                                                 }
-                                                // modifica DL - 07/05/2025, aggiungo controllo su array con almeno 1 elemento
-                                                if(remainingQty === 0 && arrayToCreateMaterialDocument.length > 0){
-                                                    break
-                                                }
                                             }
-                                        }
-                                    } else {
-                                        break
-                                    }                                    
-                                }
+                                        } else {
+                                            break
+                                        }                                    
+                                    }
 
-                                console.log("finito di creare array")                                
+                                    console.log("finito di creare array")           
+                                }                     
                                 
                             }).catch((oError) => {
                                 oBusyDialog.close();

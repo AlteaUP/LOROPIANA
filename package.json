@@ -592,6 +592,26 @@
             "path": "/sap/opu/odata/sap/ZMFG_I_SUPPLIERPARTNERFUNC_CDS"
           }
         }
+      },
+      "ZMF_IMD_MATERIAL_CDS": {
+        "kind": "odata-v2",
+        "model": "srv/EXTERNAL/ZMF_IMD_MATERIAL_CDS",
+        "csrf": true,
+        "csrfInBatch": true,
+        "[hybrid]": {
+          "credentials": {
+            "requestTimeout": 300000,
+            "destination": "S4HANA",
+            "path": "/sap/opu/odata/sap/ZMF_IMD_MATERIAL_CDS"
+          }
+        },
+        "[production]": {
+          "credentials": {
+            "requestTimeout": 300000,
+            "destination": "S4HANA",
+            "path": "/sap/opu/odata/sap/ZMF_IMD_MATERIAL_CDS"
+          }
+        }
       }
     }
   },

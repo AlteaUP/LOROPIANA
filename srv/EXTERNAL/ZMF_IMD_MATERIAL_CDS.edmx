@@ -1,0 +1,409 @@
+<edmx:Edmx xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:sap="http://www.sap.com/Protocols/SAPData" Version="1.0">
+<edmx:Reference xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Uri="http://lpapps20.lp.corp:8000/sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_AGGREGATION',Version='0001',SAP__Origin='LOCAL')/$value">
+<edmx:Include Namespace="Org.OData.Aggregation.V1" Alias="Aggregation"/>
+</edmx:Reference>
+<edmx:Reference xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Uri="http://lpapps20.lp.corp:8000/sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_ANALYTICS',Version='0001',SAP__Origin='LOCAL')/$value">
+<edmx:Include Namespace="com.sap.vocabularies.Analytics.v1" Alias="Analytics"/>
+</edmx:Reference>
+<edmx:Reference xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Uri="http://lpapps20.lp.corp:8000/sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_CAPABILITIES',Version='0001',SAP__Origin='LOCAL')/$value">
+<edmx:Include Namespace="Org.OData.Capabilities.V1" Alias="Capabilities"/>
+</edmx:Reference>
+<edmx:Reference xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Uri="http://lpapps20.lp.corp:8000/sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_CODELIST',Version='0001',SAP__Origin='LOCAL')/$value">
+<edmx:Include Namespace="com.sap.vocabularies.CodeList.v1" Alias="SAP__CodeList"/>
+</edmx:Reference>
+<edmx:Reference xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Uri="http://lpapps20.lp.corp:8000/sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_COMMON',Version='0001',SAP__Origin='LOCAL')/$value">
+<edmx:Include Namespace="com.sap.vocabularies.Common.v1" Alias="Common"/>
+</edmx:Reference>
+<edmx:Reference xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Uri="http://lpapps20.lp.corp:8000/sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_COMMUNICATION',Version='0001',SAP__Origin='LOCAL')/$value">
+<edmx:Include Namespace="com.sap.vocabularies.Communication.v1" Alias="Communication"/>
+</edmx:Reference>
+<edmx:Reference xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Uri="http://lpapps20.lp.corp:8000/sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_MEASURES',Version='0001',SAP__Origin='LOCAL')/$value">
+<edmx:Include Namespace="Org.OData.Measures.V1" Alias="Measures"/>
+</edmx:Reference>
+<edmx:Reference xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Uri="http://lpapps20.lp.corp:8000/sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_PERSONALDATA',Version='0001',SAP__Origin='LOCAL')/$value">
+<edmx:Include Namespace="com.sap.vocabularies.PersonalData.v1" Alias="PersonalData"/>
+</edmx:Reference>
+<edmx:Reference xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Uri="http://lpapps20.lp.corp:8000/sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_UI',Version='0001',SAP__Origin='LOCAL')/$value">
+<edmx:Include Namespace="com.sap.vocabularies.UI.v1" Alias="UI"/>
+</edmx:Reference>
+<edmx:Reference xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Uri="http://lpapps20.lp.corp:8000/sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_VALIDATION',Version='0001',SAP__Origin='LOCAL')/$value">
+<edmx:Include Namespace="Org.OData.Validation.V1" Alias="Validation"/>
+</edmx:Reference>
+<edmx:DataServices m:DataServiceVersion="2.0">
+<Schema xmlns="http://schemas.microsoft.com/ado/2008/09/edm" Namespace="ZMF_IMD_MATERIAL_CDS" xml:lang="it" sap:schema-version="1">
+<EntityType Name="ZMF_IMD_MATERIALType" sap:label="MFG - Material Master Data" sap:content-version="1">
+<Key>
+<PropertyRef Name="matnr"/>
+</Key>
+<Property Name="matnr" Type="Edm.String" Nullable="false" MaxLength="40" sap:display-format="UpperCase" sap:label="Materiale" sap:quickinfo="Codice materiale"/>
+<Property Name="ersda" Type="Edm.DateTime" Precision="0" sap:display-format="Date" sap:label="Creato il" sap:quickinfo="Data creazione"/>
+<Property Name="created_at_time" Type="Edm.Time" Precision="0" sap:label="Ora di creazione"/>
+<Property Name="ernam" Type="Edm.String" MaxLength="12" sap:display-format="UpperCase" sap:label="Autore" sap:quickinfo="Nome del responsabile che ha aggiunto l'oggetto"/>
+<Property Name="laeda" Type="Edm.DateTime" Precision="0" sap:display-format="Date" sap:label="Ultima modifica" sap:quickinfo="Data dell'ultima modifica"/>
+<Property Name="aenam" Type="Edm.String" MaxLength="12" sap:display-format="UpperCase" sap:label="Autore modifica" sap:quickinfo="Nome dell'utente autore della modifica oggetto"/>
+<Property Name="vpsta" Type="Edm.String" MaxLength="15" sap:display-format="UpperCase" sap:label="Stato agg. compl." sap:quickinfo="Stato di aggiornamento del materiale completo"/>
+<Property Name="pstat" Type="Edm.String" MaxLength="15" sap:display-format="UpperCase" sap:label="Stato aggiornamento"/>
+<Property Name="lvorm" Type="Edm.Boolean" sap:label="Pred.canc.liv.mand." sap:quickinfo="Predisporre alla canc. mat. a livello di mandante"/>
+<Property Name="mtart" Type="Edm.String" MaxLength="4" sap:display-format="UpperCase" sap:label="Tipo di materiale"/>
+<Property Name="mbrsh" Type="Edm.String" MaxLength="1" sap:display-format="UpperCase" sap:label="Settore industriale"/>
+<Property Name="matkl" Type="Edm.String" MaxLength="9" sap:display-format="UpperCase" sap:label="Gruppo merci"/>
+<Property Name="bismt" Type="Edm.String" MaxLength="40" sap:display-format="UpperCase" sap:label="Codice mat. prec." sap:quickinfo="Codice materiale precedente"/>
+<Property Name="meins" Type="Edm.String" MaxLength="3" sap:label="Unità misura base" sap:quickinfo="Unità di misura di base" sap:semantics="unit-of-measure"/>
+<Property Name="bstme" Type="Edm.String" MaxLength="3" sap:label="UM ordine d'acquisto" sap:quickinfo="UM dell'ordine d'acquisto" sap:semantics="unit-of-measure"/>
+<Property Name="zeinr" Type="Edm.String" MaxLength="22" sap:display-format="UpperCase" sap:label="Documento" sap:quickinfo="Numero documento (senza sistema gestione documenti)"/>
+<Property Name="zeiar" Type="Edm.String" MaxLength="3" sap:display-format="UpperCase" sap:label="Tipo di documento" sap:quickinfo="Tipo documento (senza sistema gestione documenti)"/>
+<Property Name="zeivr" Type="Edm.String" MaxLength="2" sap:display-format="UpperCase" sap:label="Versione documento" sap:quickinfo="Versione del documento (senza sistema gestione documenti)"/>
+<Property Name="zeifo" Type="Edm.String" MaxLength="4" sap:display-format="UpperCase" sap:label="Formato pagina" sap:quickinfo="Formato pag. documento (senza sistema gestione documenti)"/>
+<Property Name="aeszn" Type="Edm.String" MaxLength="6" sap:display-format="UpperCase" sap:label="Numero mod. doc." sap:quickinfo="N. modifica del documento (senza sistema gestione documenti)"/>
+<Property Name="blatt" Type="Edm.String" MaxLength="3" sap:display-format="UpperCase" sap:label="Numero della pagina" sap:quickinfo="N. pagina documento (senza sist. gestione documenti)"/>
+<Property Name="blanz" Type="Edm.String" MaxLength="3" sap:display-format="NonNegative" sap:label="N. di fogli" sap:quickinfo="Numero fogli (senza sistema di gestione documenti)"/>
+<Property Name="ferth" Type="Edm.String" MaxLength="18" sap:display-format="UpperCase" sap:label="Avv. prod./controllo" sap:quickinfo="Avvert. produz./controllo"/>
+<Property Name="formt" Type="Edm.String" MaxLength="4" sap:display-format="UpperCase" sap:label="Formato DIN" sap:quickinfo="Formato DIN istruzioni di produzione"/>
+<Property Name="groes" Type="Edm.String" MaxLength="32" sap:display-format="UpperCase" sap:label="Grandezza/dimensione"/>
+<Property Name="wrkst" Type="Edm.String" MaxLength="48" sap:label="Mat. base"/>
+<Property Name="normt" Type="Edm.String" MaxLength="18" sap:display-format="UpperCase" sap:label="Definizione standard" sap:quickinfo="Definizione standard (es. DIN)"/>
+<Property Name="labor" Type="Edm.String" MaxLength="3" sap:display-format="UpperCase" sap:label="Laboratorio/ufficio" sap:quickinfo="Laboratorio / Uff. progettazione"/>
+<Property Name="ekwsl" Type="Edm.String" MaxLength="4" sap:display-format="UpperCase" sap:label="Ch. valori acquisto" sap:quickinfo="Chiave valori d'acquisto"/>
+<Property Name="brgew" Type="Edm.Decimal" Precision="13" Scale="3" sap:label="Peso lordo"/>
+<Property Name="ntgew" Type="Edm.Decimal" Precision="13" Scale="3" sap:label="Peso netto"/>
+<Property Name="gewei" Type="Edm.String" MaxLength="3" sap:label="Unità di peso" sap:semantics="unit-of-measure"/>
+<Property Name="volum" Type="Edm.Decimal" Precision="13" Scale="3" sap:label="Volume"/>
+<Property Name="voleh" Type="Edm.String" MaxLength="3" sap:label="Unità di volume" sap:semantics="unit-of-measure"/>
+<Property Name="behvo" Type="Edm.String" MaxLength="2" sap:display-format="UpperCase" sap:label="Norma contenitore"/>
+<Property Name="raube" Type="Edm.String" MaxLength="2" sap:display-format="UpperCase" sap:label="Cond. di stoccaggio" sap:quickinfo="Condizioni di stoccaggio"/>
+<Property Name="tempb" Type="Edm.String" MaxLength="2" sap:display-format="UpperCase" sap:label="Cond. temperatura" sap:quickinfo="Codice per condizione temperatura"/>
+<Property Name="disst" Type="Edm.String" MaxLength="3" sap:display-format="UpperCase" sap:label="Livello pianif. MRP" sap:quickinfo="Livello pianificazione MRP"/>
+<Property Name="tragr" Type="Edm.String" MaxLength="4" sap:display-format="UpperCase" sap:label="Gruppo di trasporto"/>
+<Property Name="stoff" Type="Edm.String" MaxLength="40" sap:display-format="UpperCase" sap:label="N.sost.pericolosa" sap:quickinfo="N. sostanza pericolosa"/>
+<Property Name="spart" Type="Edm.String" MaxLength="2" sap:display-format="UpperCase" sap:label="Settore merceologico"/>
+<Property Name="kunnr" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Concorrente"/>
+<Property Name="eannr" Type="Edm.String" MaxLength="13" sap:display-format="UpperCase" sap:label="Codice EAN" sap:quickinfo="Codice EAN - obsoleto!!!!!"/>
+<Property Name="wesch" Type="Edm.Decimal" Precision="13" Scale="3" sap:label="Qtà bolle EM" sap:quickinfo="Qtà: determinazione numero bolle accompagnamento da stampare"/>
+<Property Name="bwvor" Type="Edm.String" MaxLength="1" sap:display-format="UpperCase" sap:label="Regola approvv." sap:quickinfo="Regola approvvigionamento"/>
+<Property Name="bwscl" Type="Edm.String" MaxLength="1" sap:display-format="UpperCase" sap:label="Fonte d'acquisto" sap:quickinfo="Fonte acquisto"/>
+<Property Name="saiso" Type="Edm.String" MaxLength="4" sap:display-format="UpperCase" sap:label="Stagione" sap:quickinfo="Categoria stagione"/>
+<Property Name="etiar" Type="Edm.String" MaxLength="2" sap:display-format="UpperCase" sap:label="Tipo di etichetta"/>
+<Property Name="etifo" Type="Edm.String" MaxLength="2" sap:display-format="UpperCase" sap:label="Modulo etichetta"/>
+<Property Name="entar" Type="Edm.String" MaxLength="1" sap:display-format="UpperCase" sap:label="Campo disattivato" sap:quickinfo="Disatt."/>
+<Property Name="ean11" Type="Edm.String" MaxLength="18" sap:display-format="UpperCase" sap:label="Cd. EAN/UPC" sap:quickinfo="Codice europeo articoli (EAN)"/>
+<Property Name="numtp" Type="Edm.String" MaxLength="2" sap:display-format="UpperCase" sap:label="Tipo EAN" sap:quickinfo="Tipo n. articoli europei"/>
+<Property Name="laeng" Type="Edm.Decimal" Precision="13" Scale="3" sap:label="Lunghezza"/>
+<Property Name="breit" Type="Edm.Decimal" Precision="13" Scale="3" sap:label="Larghezza"/>
+<Property Name="hoehe" Type="Edm.Decimal" Precision="13" Scale="3" sap:label="Altezza"/>
+<Property Name="meabm" Type="Edm.String" MaxLength="3" sap:label="Unità di misura" sap:quickinfo="Unità di misura per lungh./largh./altezza" sap:semantics="unit-of-measure"/>
+<Property Name="prdha" Type="Edm.String" MaxLength="18" sap:display-format="UpperCase" sap:label="Gerarchia prodotti"/>
+<Property Name="aeklk" Type="Edm.Boolean" sap:label="CCST net-change" sap:quickinfo="Trasferimento stock calcolo costi net-change"/>
+<Property Name="cadkz" Type="Edm.Boolean" sap:label="Cd. CAD" sap:quickinfo="Codice CAD"/>
+<Property Name="qmpur" Type="Edm.Boolean" sap:label="QM in approv. attivo" sap:quickinfo="QM attivo nell'approvvigionamento"/>
+<Property Name="ergew" Type="Edm.Decimal" Precision="13" Scale="3" sap:label="Peso imb. amm." sap:quickinfo="Peso di imballaggio ammesso"/>
+<Property Name="ergei" Type="Edm.String" MaxLength="3" sap:label="Unità di peso" sap:quickinfo="Unità di peso (peso imballaggio ammesso)" sap:semantics="unit-of-measure"/>
+<Property Name="ervol" Type="Edm.Decimal" Precision="13" Scale="3" sap:label="Volume ammesso" sap:quickinfo="Volume imballaggio ammesso"/>
+<Property Name="ervoe" Type="Edm.String" MaxLength="3" sap:label="Unità volume" sap:quickinfo="Unità di volume (volume imballaggio ammesso)" sap:semantics="unit-of-measure"/>
+<Property Name="gewto" Type="Edm.Decimal" Precision="3" Scale="1" sap:label="Tolleranza peso ecc." sap:quickinfo="Tolleranza peso eccesso di HU"/>
+<Property Name="volto" Type="Edm.Decimal" Precision="3" Scale="1" sap:label="Toll. volume in ecc." sap:quickinfo="Tolleranza volume in eccesso della Handling Unit"/>
+<Property Name="vabme" Type="Edm.String" MaxLength="1" sap:display-format="UpperCase" sap:label="Utà OdA variab." sap:quickinfo="Unità di misura OdA variabile attiva"/>
+<Property Name="kzrev" Type="Edm.Boolean" sap:label="Liv.revis. assegnato" sap:quickinfo="Cd.: livello revisione assegnato per il mat. in oggetto"/>
+<Property Name="kzkfg" Type="Edm.Boolean" sap:label="Mat. configurabile" sap:quickinfo="Materiale configurabile"/>
+<Property Name="xchpf" Type="Edm.Boolean" sap:label="Gestione partite" sap:quickinfo="Indicatore Obbligo di gestione a partita"/>
+<Property Name="vhart" Type="Edm.String" MaxLength="4" sap:display-format="UpperCase" sap:label="Tipo mat. imb." sap:quickinfo="Tipo materiale di imballaggio"/>
+<Property Name="fuelg" Type="Edm.Decimal" Precision="3" Scale="0" sap:label="Gr. riemp." sap:quickinfo="Grado riempimento (in base al volume)"/>
+<Property Name="stfak" Type="Edm.Int16" sap:label="Fattore impilaggio" sap:quickinfo="Fattore di impilaggio"/>
+<Property Name="magrv" Type="Edm.String" MaxLength="4" sap:display-format="UpperCase" sap:label="Gruppo mat. imb." sap:quickinfo="Gruppo materiali d'imballaggio"/>
+<Property Name="begru" Type="Edm.String" MaxLength="4" sap:display-format="UpperCase" sap:label="Gr. autorizzazioni" sap:quickinfo="Gruppo autorizzazioni"/>
+<Property Name="datab" Type="Edm.DateTime" Precision="0" sap:display-format="Date" sap:label="Inizio validità" sap:quickinfo="Data inizio validità"/>
+<Property Name="liqdt" Type="Edm.DateTime" Precision="0" sap:display-format="Date" sap:label="Fine validità" sap:quickinfo="Data liquidazione"/>
+<Property Name="saisj" Type="Edm.String" MaxLength="4" sap:display-format="UpperCase" sap:label="Esercizio stag."/>
+<Property Name="plgtp" Type="Edm.String" MaxLength="2" sap:display-format="UpperCase" sap:label="Cat. gamma prezzo" sap:quickinfo="CatGammaPrezzo"/>
+<Property Name="mlgut" Type="Edm.Boolean" sap:label="Con dist. base vuoti" sap:quickinfo="Cd.: distinta base vuoti"/>
+<Property Name="extwg" Type="Edm.String" MaxLength="18" sap:display-format="UpperCase" sap:label="Gruppo merci esterno"/>
+<Property Name="satnr" Type="Edm.String" MaxLength="40" sap:display-format="UpperCase" sap:label="Mat. config. gen." sap:quickinfo="Materiale configurabile gen."/>
+<Property Name="attyp" Type="Edm.String" MaxLength="2" sap:display-format="UpperCase" sap:label="Categoria materiale"/>
+<Property Name="kzkup" Type="Edm.Boolean" sap:label="Co-prodotto"/>
+<Property Name="kznfm" Type="Edm.Boolean" sap:label="Materiale sost." sap:quickinfo="Codice: il materiale ha un materiale sostitutivo"/>
+<Property Name="pmata" Type="Edm.String" MaxLength="40" sap:display-format="UpperCase" sap:label="Mat. rif. prezzo"/>
+<Property Name="mstae" Type="Edm.String" MaxLength="2" sap:display-format="UpperCase" sap:label="Stato mat.x div" sap:quickinfo="Stato materiale val. per tutte divisioni"/>
+<Property Name="mstav" Type="Edm.String" MaxLength="2" sap:display-format="UpperCase" sap:label="Stato per cat.distr." sap:quickinfo="Stato materiale valido per tutta la catena di distr."/>
+<Property Name="mstde" Type="Edm.DateTime" Precision="0" sap:display-format="Date" sap:label="Inizio validità" sap:quickinfo="Data inizio validità stato mat. valido per tutte le div."/>
+<Property Name="mstdv" Type="Edm.DateTime" Precision="0" sap:display-format="Date" sap:label="Inizio validità" sap:quickinfo="Data inizio val. stato mat. valido per tutta la cat.distr."/>
+<Property Name="taklv" Type="Edm.String" MaxLength="1" sap:display-format="UpperCase" sap:label="Classific. fiscale" sap:quickinfo="Classificazione fiscale materiale"/>
+<Property Name="rbnrm" Type="Edm.String" MaxLength="9" sap:display-format="UpperCase" sap:label="Prof. catalogo" sap:quickinfo="Profilo catalogo"/>
+<Property Name="mhdrz" Type="Edm.Decimal" Precision="4" Scale="0" sap:label="Durata min. residua"/>
+<Property Name="mhdhb" Type="Edm.Decimal" Precision="4" Scale="0" sap:label="Durata totale"/>
+<Property Name="mhdlp" Type="Edm.Decimal" Precision="3" Scale="0" sap:label="Percentuale mag." sap:quickinfo="Percentuale magazzino"/>
+<Property Name="inhme" Type="Edm.String" MaxLength="3" sap:label="UM contenuto" sap:quickinfo="Unità di misura contenuto" sap:semantics="unit-of-measure"/>
+<Property Name="inhal" Type="Edm.Decimal" Precision="13" Scale="3" sap:label="Cont. netto"/>
+<Property Name="vpreh" Type="Edm.Decimal" Precision="5" Scale="0" sap:label="Unità prz. confronto" sap:quickinfo="Unità del prezzo di confronto"/>
+<Property Name="etiag" Type="Edm.String" MaxLength="18" sap:display-format="UpperCase" sap:label="Gr. materiali etich." sap:quickinfo="Etichettatura sist. retail: gr. materiali (disatt. in 4.0)"/>
+<Property Name="inhbr" Type="Edm.Decimal" Precision="13" Scale="3" sap:label="Contenuti lordi" sap:quickinfo="Contenuto lordo"/>
+<Property Name="cmeth" Type="Edm.String" MaxLength="1" sap:display-format="UpperCase" sap:label="Metodo di convers." sap:quickinfo="Metodo di conversione quantità"/>
+<Property Name="cuobf" Type="Edm.String" MaxLength="18" sap:display-format="NonNegative" sap:label="N. oggetto int."/>
+<Property Name="kzumw" Type="Edm.Boolean" sap:label="Rilev. per l'amb." sap:quickinfo="Codice: rilevante per l'ambiente"/>
+<Property Name="kosch" Type="Edm.String" MaxLength="18" sap:display-format="UpperCase" sap:label="Schema elab. quote" sap:quickinfo="Elaborazione quote: schema di elaborazione quote"/>
+<Property Name="sprof" Type="Edm.String" MaxLength="1" sap:display-format="UpperCase" sap:label="Prof. prezzo" sap:quickinfo="Profilo prezzo per varianti"/>
+<Property Name="nrfhg" Type="Edm.String" MaxLength="1" sap:display-format="UpperCase" sap:label="Sogg. sconto merce" sap:quickinfo="Il materiale è soggetto allo sconto merce"/>
+<Property Name="mfrpn" Type="Edm.String" MaxLength="40" sap:display-format="UpperCase" sap:label="Cod. comp. costr." sap:quickinfo="Codice componente costruttore"/>
+<Property Name="mfrnr" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Costruttore" sap:quickinfo="Numero di un costruttore"/>
+<Property Name="bmatn" Type="Edm.String" MaxLength="40" sap:display-format="UpperCase" sap:label="Codice mat. interno" sap:quickinfo="Codice del materiale interno gestito in base a stock"/>
+<Property Name="mprof" Type="Edm.String" MaxLength="4" sap:display-format="UpperCase" sap:label="ProfCompAssCostr" sap:quickinfo="Prof. compon. ass. costr."/>
+<Property Name="kzwsm" Type="Edm.String" MaxLength="1" sap:display-format="UpperCase" sap:label="Util. unità misura" sap:quickinfo="Utilizzo/tipi di unità di misura"/>
+<Property Name="saity" Type="Edm.String" MaxLength="2" sap:display-format="UpperCase" sap:label="Collezione" sap:quickinfo="Collezione all'interno di una stagione"/>
+<Property Name="profl" Type="Edm.String" MaxLength="3" sap:display-format="UpperCase" sap:label="Profilo codice MP" sap:quickinfo="Profilo per codice merci pericolose"/>
+<Property Name="ihivi" Type="Edm.Boolean" sap:label="Viscosità elevata" sap:quickinfo="Codice: viscosità elevata"/>
+<Property Name="iloos" Type="Edm.Boolean" sap:label="Merce sfusa/liquidi" sap:quickinfo="Codice: merce sfusa/liquidi"/>
+<Property Name="serlv" Type="Edm.String" MaxLength="1" sap:display-format="UpperCase" sap:label="Liv. serializzazione" sap:quickinfo="Livello di univocità del numero di serie"/>
+<Property Name="kzgvh" Type="Edm.Boolean" sap:label="Chiuso" sap:quickinfo="Materiale di imballaggio è un imballaggio chiuso"/>
+<Property Name="xgchp" Type="Edm.Boolean" sap:label="Reg.part.autor.rich." sap:quickinfo="Registro partita autorizzato richiesto"/>
+<Property Name="kzeff" Type="Edm.Boolean" sap:label="Val. validità par." sap:quickinfo="Valutazione con parametro validità / sostituire n. modifica"/>
+<Property Name="compl" Type="Edm.String" MaxLength="2" sap:display-format="NonNegative" sap:label="Liv. appront." sap:quickinfo="Livello approntamento materiale"/>
+<Property Name="iprkz" Type="Edm.String" MaxLength="1" sap:display-format="UpperCase" sap:label="Codice periodo DS" sap:quickinfo="Codice periodo per data scadenza"/>
+<Property Name="rdmhd" Type="Edm.String" MaxLength="1" sap:display-format="UpperCase" sap:label="Regola arrot. DS" sap:quickinfo="Regola arrotondamento per calcolo DS"/>
+<Property Name="przus" Type="Edm.Boolean" sap:label="Composizione prod." sap:quickinfo="Cd.: composizione prodotto indicata su imballaggio"/>
+<Property Name="mtpos_mara" Type="Edm.String" MaxLength="4" sap:display-format="UpperCase" sap:label="Gr. tipi pos. gen." sap:quickinfo="Gruppo di tipi di posizione generale"/>
+<Property Name="bflme" Type="Edm.String" MaxLength="1" sap:display-format="UpperCase" sap:label="Varianti log." sap:quickinfo="Materiale collettivo con varianti logistiche"/>
+<Property Name="matfi" Type="Edm.Boolean" sap:label="Fisso" sap:quickinfo="Il materiale è fisso"/>
+<Property Name="cmrel" Type="Edm.Boolean" sap:label="Rilev. GC" sap:quickinfo="Rilevante per la gestione della configurazione"/>
+<Property Name="bbtyp" Type="Edm.String" MaxLength="1" sap:display-format="UpperCase" sap:label="Tipo lista assort." sap:quickinfo="Tipo lista assortimento"/>
+<Property Name="sled_bbd" Type="Edm.String" MaxLength="1" sap:display-format="UpperCase" sap:label="Data di scad."/>
+<Property Name="gtin_variant" Type="Edm.String" MaxLength="2" sap:display-format="UpperCase" sap:label="Variante EAN" sap:quickinfo="Variante per Global Trade Item Number"/>
+<Property Name="gennr" Type="Edm.String" MaxLength="40" sap:display-format="UpperCase" sap:label="Materiale collettivo" sap:quickinfo="Codice mat. del materiale collettivo nei mat. preconf."/>
+<Property Name="rmatp" Type="Edm.String" MaxLength="40" sap:display-format="UpperCase" sap:label="Mat. rif. norma imb." sap:quickinfo="Materiale di rif. per materiali imballati analogamente"/>
+<Property Name="gds_relevant" Type="Edm.Boolean" sap:label="Rilevante per GDS" sap:quickinfo="Indicatore: rilevante per global data synchronisation"/>
+<Property Name="weora" Type="Edm.Boolean" sap:label="Accettazione forn." sap:quickinfo="Accettazione all'origine"/>
+<Property Name="hutyp_dflt" Type="Edm.String" MaxLength="4" sap:display-format="UpperCase" sap:label="Tipo HU standard"/>
+<Property Name="pilferable" Type="Edm.Boolean" sap:label="A rischio di furto"/>
+<Property Name="whstc" Type="Edm.String" MaxLength="2" sap:display-format="UpperCase" sap:label="Cond. stocc. in mag." sap:quickinfo="Condizione stoccaggio magazzino"/>
+<Property Name="whmatgr" Type="Edm.String" MaxLength="4" sap:display-format="UpperCase" sap:label="Grp. mat. magazzino" sap:quickinfo="Gruppo materiale magazzino"/>
+<Property Name="hndlcode" Type="Edm.String" MaxLength="4" sap:display-format="UpperCase" sap:label="Indicatore handling"/>
+<Property Name="hazmat" Type="Edm.Boolean" sap:label="Rilev. sost. peric." sap:quickinfo="Rilevante per sost. peric."/>
+<Property Name="hutyp" Type="Edm.String" MaxLength="4" sap:display-format="UpperCase" sap:label="Tipo utà moviment." sap:quickinfo="Tipo di unità di movimentazione"/>
+<Property Name="tare_var" Type="Edm.Boolean" sap:label="Peso netto var." sap:quickinfo="Peso netto variabile"/>
+<Property Name="maxc" Type="Edm.Decimal" Precision="15" Scale="3" sap:label="Capacità massima" sap:quickinfo="Capacità massima consentita del mat. d'imballaggio"/>
+<Property Name="maxc_tol" Type="Edm.Decimal" Precision="3" Scale="1" sap:label="Toll. capacità max." sap:quickinfo="Tolleranza capacità max. handling unit"/>
+<Property Name="maxl" Type="Edm.Decimal" Precision="15" Scale="3" sap:label="Lungh. imball. max." sap:quickinfo="Lunghezza imballaggio max. di un mat. d'imballaggio"/>
+<Property Name="maxb" Type="Edm.Decimal" Precision="15" Scale="3" sap:label="Largh. imball. max." sap:quickinfo="Largh. imballaggio max. consentita di mat. d'imballaggio"/>
+<Property Name="maxh" Type="Edm.Decimal" Precision="15" Scale="3" sap:label="Altezza imball. max." sap:quickinfo="Altezza imballaggio max. di mat. d'imballaggio"/>
+<Property Name="maxdim_uom" Type="Edm.String" MaxLength="3" sap:label="Unità di misura" sap:quickinfo="Unità di mis. per lungh. /largh. /altezza max. d'imballaggio" sap:semantics="unit-of-measure"/>
+<Property Name="herkl" Type="Edm.String" MaxLength="3" sap:display-format="UpperCase" sap:label="Paese/Reg. origine" sap:quickinfo="Paese/Regione di origine del materiale (orig. non prefer.)"/>
+<Property Name="mfrgr" Type="Edm.String" MaxLength="8" sap:display-format="UpperCase" sap:label="Gr.nolo mat." sap:quickinfo="Gruppo nolo materiale"/>
+<Property Name="qqtime" Type="Edm.Decimal" Precision="3" Scale="0" sap:label="Per. quarant." sap:quickinfo="Periodo di quarant."/>
+<Property Name="qqtimeuom" Type="Edm.String" MaxLength="3" sap:label="Unità di tempo" sap:quickinfo="Unità di tempo per periodo di quarantena" sap:semantics="unit-of-measure"/>
+<Property Name="qgrp" Type="Edm.String" MaxLength="4" sap:display-format="UpperCase" sap:label="Gruppo ctrl. qualità" sap:quickinfo="Gruppo di controllo qualità"/>
+<Property Name="serial" Type="Edm.String" MaxLength="4" sap:display-format="UpperCase" sap:label="Profilo n.di serie" sap:quickinfo="Profilo numero di serie"/>
+<Property Name="ps_smartform" Type="Edm.String" MaxLength="30" sap:display-format="UpperCase" sap:label="Nome del modulo"/>
+<Property Name="logunit" Type="Edm.String" MaxLength="3" sap:label="UM Logistica" sap:quickinfo="EWM-CW: unità di misura logistica" sap:semantics="unit-of-measure"/>
+<Property Name="cwqrel" Type="Edm.Boolean" sap:label="Ril. CW" sap:quickinfo="CW EWM: il materiale è un materiale Catch Weight"/>
+<Property Name="cwqproc" Type="Edm.String" MaxLength="2" sap:display-format="UpperCase" sap:label="Profilo CW" sap:quickinfo="CW EWM: profilo Catch Weight per inserimento quantità CW"/>
+<Property Name="cwqtolgr" Type="Edm.String" MaxLength="9" sap:display-format="UpperCase" sap:label="Gruppo tolleranza CW" sap:quickinfo="Gruppo di tolleranza Catch Weight"/>
+<Property Name="adprof" Type="Edm.String" MaxLength="3" sap:display-format="UpperCase" sap:label="Profilo adatt." sap:quickinfo="Profilo di adattamento"/>
+<Property Name="ipmipproduct" Type="Edm.String" MaxLength="40" sap:display-format="UpperCase" sap:label="Intell.Property" sap:quickinfo="ID Intellectual Property (prodotto CRM)"/>
+<Property Name="allow_pmat_igno" Type="Edm.Boolean" sap:label="Prezzo var. ammesso" sap:quickinfo="Prezzo variante ammesso (in rifer. a anagrafica articolo)"/>
+<Property Name="medium" Type="Edm.String" MaxLength="6" sap:display-format="UpperCase" sap:label="Mezzo"/>
+<Property Name="commodity" Type="Edm.String" MaxLength="18" sap:display-format="UpperCase" sap:label="Commodity"/>
+<Property Name="animal_origin" Type="Edm.Boolean" sap:label="Origine animale" sap:quickinfo="Ind.: contiene parti non tessili di origine animale"/>
+<Property Name="textile_comp_ind" Type="Edm.String" MaxLength="1" sap:display-format="UpperCase" sap:label="Comp.tess.att." sap:quickinfo="Codice: nuova funzione composizione tessile"/>
+<Property Name="last_changed_time" Type="Edm.Time" Precision="0" sap:label="Ora ultima modifica" sap:quickinfo="Ora dell'ultima modifica"/>
+<Property Name="matnr_external" Type="Edm.String" MaxLength="40" sap:display-format="UpperCase" sap:label="Materiale" sap:quickinfo="Rappresentazione esterna del codice materiale"/>
+<Property Name="chml_cmplnc_rlvnce_ind" Type="Edm.String" MaxLength="20" sap:display-format="UpperCase" sap:label="Indicatore di ril. per conform. chimica"/>
+<Property Name="logistical_mat_category" Type="Edm.String" MaxLength="1" sap:display-format="UpperCase" sap:label="Cat. mat. logistico" sap:quickinfo="Categoria di un materiale logistico"/>
+<Property Name="sales_material" Type="Edm.String" MaxLength="40" sap:display-format="UpperCase" sap:label="N. mat. vendita" sap:quickinfo="Numero di un materiale di vendita"/>
+<Property Name="identification_tag_type" Type="Edm.String" MaxLength="2" sap:display-format="UpperCase" sap:label="Tipo di tag" sap:quickinfo="Tipo tag di identificazione"/>
+<Property Name="productoid" Type="Edm.String" MaxLength="128" sap:label="OID prodotto" sap:quickinfo="Elemento dati per OID di prodotto"/>
+<Property Name="sdm_version" Type="Edm.String" MaxLength="2" sap:display-format="UpperCase" sap:label="Stato migrazione" sap:quickinfo="Stato della migrazione dati automatica da tabella MARA"/>
+<Property Name="sgt_csgr" Type="Edm.String" MaxLength="4" sap:display-format="UpperCase" sap:label="Str. segm." sap:quickinfo="Struttura di segmentazione"/>
+<Property Name="sgt_covsa" Type="Edm.String" MaxLength="8" sap:display-format="UpperCase" sap:label="Strategia segm." sap:quickinfo="Strategia di segmentazione"/>
+<Property Name="sgt_stat" Type="Edm.String" MaxLength="1" sap:display-format="UpperCase" sap:label="Stato segmentazione" sap:quickinfo="Stato anagrafica materiale di segmentazione"/>
+<Property Name="sgt_scope" Type="Edm.String" MaxLength="1" sap:display-format="UpperCase" sap:label="Portata segm." sap:quickinfo="Portata di strategia di segmentazione"/>
+<Property Name="sgt_rel" Type="Edm.String" MaxLength="1" sap:display-format="UpperCase" sap:label="Ril. segm." sap:quickinfo="Rilevante per segm."/>
+<Property Name="zz1_altezzautilepezza_prd" Type="Edm.Decimal" Precision="15" Scale="3" sap:label="Altezza Utile Pezza"/>
+<Property Name="zz1_altezzautilepezza_prdu" Type="Edm.String" MaxLength="3" sap:label="Altezza Ut Pezza UoM" sap:quickinfo="Altezza Utile Pezza (Unit)" sap:semantics="unit-of-measure"/>
+<Property Name="zz1_tipo_pelliccia_prd" Type="Edm.String" MaxLength="1" sap:label="Tipo Pelliccia"/>
+<Property Name="zz1_altezzateoricapezz_prd" Type="Edm.Decimal" Precision="15" Scale="3" sap:label="Altezza Teor Pezza" sap:quickinfo="Altezza Teorica Pezza"/>
+<Property Name="zz1_altezzateoricapezz_prdu" Type="Edm.String" MaxLength="3" sap:label="Altezza Teor Pez UoM" sap:quickinfo="Altezza Teorica Pezza (Unit)" sap:semantics="unit-of-measure"/>
+<Property Name="zz1_gola_prd" Type="Edm.String" MaxLength="18" sap:label="Gola"/>
+<Property Name="zz1_coda_prd" Type="Edm.String" MaxLength="18" sap:label="Coda"/>
+<Property Name="zz1_dimensione_piatto_prd" Type="Edm.String" MaxLength="3" sap:display-format="NonNegative" sap:label="Dimensione Piatto"/>
+<Property Name="zz1_lunghezzateorica_prd" Type="Edm.Decimal" Precision="15" Scale="3" sap:label="Lunghezza Teorica"/>
+<Property Name="zz1_lunghezzateorica_prdu" Type="Edm.String" MaxLength="3" sap:label="Lunghezza Teoric UoM" sap:quickinfo="Lunghezza Teorica (Unit)" sap:semantics="unit-of-measure"/>
+<Property Name="zz1_kit_value_prd" Type="Edm.String" MaxLength="1" sap:label="Kit"/>
+<Property Name="zz1_titolo_filato_prd" Type="Edm.String" MaxLength="3" sap:label="Titolo Filato"/>
+<Property Name="zz1_grammatura_prd" Type="Edm.Decimal" Precision="15" Scale="3" sap:label="Grammatura"/>
+<Property Name="zz1_grammatura_prdu" Type="Edm.String" MaxLength="3" sap:label="Grammatura UoM" sap:quickinfo="Grammatura (Unit)" sap:semantics="unit-of-measure"/>
+<Property Name="zz1_dichiarazione3_prd" Type="Edm.String" MaxLength="3" sap:label="Dichiarazione 3"/>
+<Property Name="zz1_contienepelle_prd" Type="Edm.Boolean" sap:label="Contiene Pelle"/>
+<Property Name="zz1_numerofili_prd" Type="Edm.String" MaxLength="3" sap:display-format="NonNegative" sap:label="Numero di fili"/>
+<Property Name="zz1_piuma_prd" Type="Edm.Boolean" sap:label="Piuma"/>
+<Property Name="zz1_materialecritico_prd" Type="Edm.Boolean" sap:label="Materiale Critico"/>
+<Property Name="zz1_businessline_prd" Type="Edm.String" MaxLength="5" sap:label="Business Line"/>
+<Property Name="zz1_codiceterzistaprod_prd" Type="Edm.String" MaxLength="10" sap:label="Codice Terzista Prod" sap:quickinfo="Codice Terzista Produzione"/>
+<Property Name="zz1_lavorazione_prd" Type="Edm.String" MaxLength="5" sap:label="Lavorazione"/>
+<Property Name="zz1_water_resistant_prd" Type="Edm.String" MaxLength="1" sap:label="Water Resistant"/>
+<Property Name="zz1_spessorepellame_prd" Type="Edm.Decimal" Precision="15" Scale="3" sap:label="Spessore Pellame"/>
+<Property Name="zz1_spessorepellame_prdu" Type="Edm.String" MaxLength="3" sap:label="Spessore Pellame UoM" sap:quickinfo="Spessore Pellame (Unit)" sap:semantics="unit-of-measure"/>
+<Property Name="zz1_terzistacampionari_prd" Type="Edm.String" MaxLength="10" sap:label="Terzista Campionario"/>
+<Property Name="zz1_tipo_gestione_prd" Type="Edm.String" MaxLength="1" sap:label="Tipo Gestione"/>
+<Property Name="zz1_punto_prd" Type="Edm.String" MaxLength="3" sap:label="Punto"/>
+<Property Name="zz1_flag_gest_fiscale_prd" Type="Edm.String" MaxLength="1" sap:label="Flag Gestione Fiscal" sap:quickinfo="Flag Gestione Fiscale"/>
+<Property Name="zz1_numerolavaggio_prd" Type="Edm.String" MaxLength="5" sap:label="Numero Lavaggio"/>
+<Property Name="zz1_contienepelliccia_prd" Type="Edm.String" MaxLength="1" sap:label="Contiene Pelliccia"/>
+<Property Name="zz1_businessunit_prd" Type="Edm.String" MaxLength="5" sap:label="Business Unit"/>
+<Property Name="zz1_tipostruttura_prd" Type="Edm.String" MaxLength="5" sap:label="Tipo Struttura"/>
+<Property Name="zz1_codiceterzistaprot_prd" Type="Edm.String" MaxLength="10" sap:label="Codice Terzista Prot" sap:quickinfo="Codice Terzista Prototipia"/>
+<Property Name="color_atinn" Type="Edm.String" MaxLength="30" sap:display-format="NonNegative" sap:label="Numero caratt. int." sap:quickinfo="Numero caratteristica interna nelle caratt. dei colori"/>
+<Property Name="size1_atinn" Type="Edm.String" MaxLength="30" sap:display-format="NonNegative" sap:label="Numero caratt. int." sap:quickinfo="N. caratt. interna nelle caratt. per le dimens. principali"/>
+<Property Name="size2_atinn" Type="Edm.String" MaxLength="30" sap:display-format="NonNegative" sap:label="Numero caratt. int." sap:quickinfo="N. caratt. interna nelle caratt. delle seconde dimensioni"/>
+<Property Name="color" Type="Edm.String" MaxLength="18" sap:label="Colore" sap:quickinfo="Valore caratteristica per colori in caso di varianti"/>
+<Property Name="size1" Type="Edm.String" MaxLength="18" sap:label="Dimensione princ." sap:quickinfo="Valore caratteristica per la dimens. princ. nelle varianti"/>
+<Property Name="size2" Type="Edm.String" MaxLength="18" sap:label="Seconda dimensione" sap:quickinfo="Valore caratt. per la seconda dimensione nelle varianti"/>
+<Property Name="zzproj" Type="Edm.String" MaxLength="7" sap:display-format="UpperCase" sap:label="Codice Articolo Proj"/>
+<Property Name="zzprojdesc" Type="Edm.String" MaxLength="50" sap:display-format="UpperCase" sap:label="Desc. Articolo Proj" sap:quickinfo="Descrizione Articolo Proj"/>
+<Property Name="zzmacrobusi" Type="Edm.String" MaxLength="1" sap:display-format="UpperCase" sap:label="Macro Business"/>
+<Property Name="zzbusi" Type="Edm.String" MaxLength="2" sap:display-format="UpperCase" sap:label="Business"/>
+<Property Name="zzcategory" Type="Edm.String" MaxLength="2" sap:display-format="UpperCase" sap:label="Category"/>
+<Property Name="zzsubsegm" Type="Edm.String" MaxLength="1" sap:display-format="UpperCase" sap:label="Segmento"/>
+<Property Name="zzcolor" Type="Edm.String" MaxLength="4" sap:display-format="UpperCase" sap:label="Codice Colore"/>
+<Property Name="zzlinea" Type="Edm.String" MaxLength="1" sap:display-format="UpperCase" sap:label="Codice Linea"/>
+<Property Name="zzprodspec" Type="Edm.String" MaxLength="1" sap:display-format="UpperCase" sap:label="Produzioni Speciali"/>
+<Property Name="zzfamiglia" Type="Edm.String" MaxLength="3" sap:display-format="UpperCase" sap:label="Famiglia"/>
+<Property Name="zzclasse" Type="Edm.String" MaxLength="3" sap:display-format="UpperCase" sap:label="Codice Classe"/>
+<Property Name="zzsubclasse" Type="Edm.String" MaxLength="2" sap:display-format="UpperCase" sap:label="Sub Category"/>
+<Property Name="zzmacrotipo" Type="Edm.String" MaxLength="2" sap:display-format="UpperCase" sap:label="Macro Tipo"/>
+<Property Name="zzmodcomm" Type="Edm.String" MaxLength="3" sap:display-format="UpperCase" sap:label="Modello Commerciale"/>
+<Property Name="zztescomm" Type="Edm.String" MaxLength="4" sap:display-format="UpperCase" sap:label="Materiale Commerc." sap:quickinfo="Tessuto Commerciale"/>
+<Property Name="zzcites" Type="Edm.String" MaxLength="1" sap:display-format="UpperCase" sap:label="Cites"/>
+<Property Name="zzdichi" Type="Edm.String" MaxLength="3" sap:display-format="UpperCase" sap:label="Dichiarazioni"/>
+<Property Name="zzmidusa" Type="Edm.String" MaxLength="15" sap:display-format="UpperCase" sap:label="Mid Code Usa"/>
+<Property Name="zzstitching" Type="Edm.String" MaxLength="2" sap:display-format="UpperCase" sap:label="Stitching"/>
+<Property Name="zzpackage" Type="Edm.String" MaxLength="1" sap:display-format="UpperCase" sap:label="Codice Package"/>
+<Property Name="zzgenere" Type="Edm.String" MaxLength="1" sap:display-format="UpperCase" sap:label="Codice Genere"/>
+<Property Name="zzdispo" Type="Edm.String" MaxLength="1" sap:display-format="UpperCase" sap:label="Disposizione"/>
+<Property Name="zztipocomp" Type="Edm.String" MaxLength="3" sap:display-format="UpperCase" sap:label="Composizione Princ." sap:quickinfo="Tipologia Composizione Principale"/>
+<Property Name="zzcodecomp" Type="Edm.String" MaxLength="5" sap:display-format="UpperCase" sap:label="Codice Composizione"/>
+<Property Name="zztaglia" Type="Edm.String" MaxLength="6" sap:display-format="UpperCase" sap:label="Scalarino/TG/Taglia"/>
+<Property Name="zztagliadesc" Type="Edm.String" MaxLength="5" sap:display-format="UpperCase" sap:label="Descrizione Taglia"/>
+<Property Name="zzobsoleto" Type="Edm.String" MaxLength="1" sap:display-format="UpperCase" sap:label="Sale Code"/>
+<Property Name="zzuso" Type="Edm.String" MaxLength="2" sap:display-format="UpperCase" sap:label="Occasione d'uso"/>
+<Property Name="zztopbot" Type="Edm.String" MaxLength="1" sap:display-format="UpperCase" sap:label="Top/Bottom"/>
+<Property Name="zzmatgm" Type="Edm.String" MaxLength="40" sap:display-format="UpperCase" sap:label="Articolo Gemello"/>
+<Property Name="zzcompon01" Type="Edm.String" MaxLength="3" sap:display-format="UpperCase" sap:label="Componente"/>
+<Property Name="zzcompos01" Type="Edm.String" MaxLength="5" sap:display-format="UpperCase" sap:label="Codice Composizione"/>
+<Property Name="zzcompon02" Type="Edm.String" MaxLength="3" sap:display-format="UpperCase" sap:label="Componente"/>
+<Property Name="zzcompos02" Type="Edm.String" MaxLength="5" sap:display-format="UpperCase" sap:label="Codice Composizione"/>
+<Property Name="zzcompon03" Type="Edm.String" MaxLength="3" sap:display-format="UpperCase" sap:label="Componente"/>
+<Property Name="zzcompos03" Type="Edm.String" MaxLength="5" sap:display-format="UpperCase" sap:label="Codice Composizione"/>
+<Property Name="zzcompon04" Type="Edm.String" MaxLength="3" sap:display-format="UpperCase" sap:label="Componente"/>
+<Property Name="zzcompos04" Type="Edm.String" MaxLength="5" sap:display-format="UpperCase" sap:label="Codice Composizione"/>
+<Property Name="zzcompon05" Type="Edm.String" MaxLength="3" sap:display-format="UpperCase" sap:label="Componente"/>
+<Property Name="zzcompos05" Type="Edm.String" MaxLength="5" sap:display-format="UpperCase" sap:label="Codice Composizione"/>
+<Property Name="zzcompon06" Type="Edm.String" MaxLength="3" sap:display-format="UpperCase" sap:label="Componente"/>
+<Property Name="zzcompos06" Type="Edm.String" MaxLength="5" sap:display-format="UpperCase" sap:label="Codice Composizione"/>
+<Property Name="zzcompon07" Type="Edm.String" MaxLength="3" sap:display-format="UpperCase" sap:label="Componente"/>
+<Property Name="zzcompos07" Type="Edm.String" MaxLength="5" sap:display-format="UpperCase" sap:label="Codice Composizione"/>
+<Property Name="zzcompon08" Type="Edm.String" MaxLength="3" sap:display-format="UpperCase" sap:label="Componente"/>
+<Property Name="zzcompos08" Type="Edm.String" MaxLength="5" sap:display-format="UpperCase" sap:label="Codice Composizione"/>
+<Property Name="zzcompon09" Type="Edm.String" MaxLength="3" sap:display-format="UpperCase" sap:label="Componente"/>
+<Property Name="zzcompos09" Type="Edm.String" MaxLength="5" sap:display-format="UpperCase" sap:label="Codice Composizione"/>
+<Property Name="zzcompon10" Type="Edm.String" MaxLength="3" sap:display-format="UpperCase" sap:label="Componente"/>
+<Property Name="zzcompos10" Type="Edm.String" MaxLength="5" sap:display-format="UpperCase" sap:label="Codice Composizione"/>
+<Property Name="zzcompon11" Type="Edm.String" MaxLength="3" sap:display-format="UpperCase" sap:label="Componente"/>
+<Property Name="zzcompos11" Type="Edm.String" MaxLength="5" sap:display-format="UpperCase" sap:label="Codice Composizione"/>
+<Property Name="zzcompon12" Type="Edm.String" MaxLength="3" sap:display-format="UpperCase" sap:label="Componente"/>
+<Property Name="zzcompos12" Type="Edm.String" MaxLength="5" sap:display-format="UpperCase" sap:label="Codice Composizione"/>
+<Property Name="zzcompon13" Type="Edm.String" MaxLength="3" sap:display-format="UpperCase" sap:label="Componente"/>
+<Property Name="zzcompos13" Type="Edm.String" MaxLength="5" sap:display-format="UpperCase" sap:label="Codice Composizione"/>
+<Property Name="zzcompon14" Type="Edm.String" MaxLength="3" sap:display-format="UpperCase" sap:label="Componente"/>
+<Property Name="zzcompos14" Type="Edm.String" MaxLength="5" sap:display-format="UpperCase" sap:label="Codice Composizione"/>
+<Property Name="zzcompon15" Type="Edm.String" MaxLength="3" sap:display-format="UpperCase" sap:label="Componente"/>
+<Property Name="zzcompos15" Type="Edm.String" MaxLength="5" sap:display-format="UpperCase" sap:label="Codice Composizione"/>
+<Property Name="zzop" Type="Edm.String" MaxLength="1" sap:display-format="UpperCase" sap:label="Origine preferenz." sap:quickinfo="Origine preferenziale"/>
+<Property Name="zzdesignflow" Type="Edm.String" MaxLength="1" sap:display-format="UpperCase" sap:label="Design Flow"/>
+<Property Name="zzmacrocategory" Type="Edm.String" MaxLength="2" sap:display-format="UpperCase" sap:label="Macro Category"/>
+<Property Name="zzbirthdate_year" Type="Edm.String" MaxLength="4" sap:display-format="UpperCase" sap:label="Birth Date Year"/>
+<Property Name="zzbirthdate_season" Type="Edm.String" MaxLength="1" sap:display-format="UpperCase" sap:label="Birth Date Season"/>
+<Property Name="zzimpasto" Type="Edm.String" MaxLength="1" sap:display-format="UpperCase" sap:label="Tipo Impasto"/>
+<Property Name="zztipotintura" Type="Edm.String" MaxLength="3" sap:display-format="UpperCase" sap:label="Tipo Tintura"/>
+<Property Name="zzcodice5std" Type="Edm.String" MaxLength="8" sap:display-format="UpperCase" sap:label="Cimossa articolo" sap:quickinfo="Cimossa dell'articolo"/>
+<Property Name="zzpesfinmin" Type="Edm.Decimal" Precision="13" Scale="3" sap:label="Peso Finito Min." sap:quickinfo="Peso Finito Minimo"/>
+<Property Name="zzpesfinmax" Type="Edm.Decimal" Precision="13" Scale="3" sap:label="Peso Fin. Max" sap:quickinfo="Peso Finito Max"/>
+<Property Name="zzpesfinreale" Type="Edm.Decimal" Precision="13" Scale="3" sap:label="Peso Finito Reale"/>
+<Property Name="zzpesfinitogrmq" Type="Edm.Decimal" Precision="13" Scale="3" sap:label="Peso Finito GR/MQ"/>
+<Property Name="zzaltfinmin" Type="Edm.Decimal" Precision="13" Scale="3" sap:label="Altezza Finita MIN"/>
+<Property Name="zzaltfinmax" Type="Edm.Decimal" Precision="13" Scale="3" sap:label="Altezza Finita MAX"/>
+<Property Name="zzaltutile" Type="Edm.Decimal" Precision="13" Scale="3" sap:label="Altezza Utile"/>
+<Property Name="zztipconf" Type="Edm.String" MaxLength="3" sap:label="Tipo Confezione" sap:semantics="unit-of-measure"/>
+<Property Name="zzqtconf" Type="Edm.Decimal" Precision="13" Scale="3" sap:label=" di" sap:quickinfo="Quantità Confezione"/>
+<Property Name="zzfinezzafil" Type="Edm.String" MaxLength="3" sap:display-format="UpperCase" sap:label="Finezza Filati"/>
+<Property Name="zzfinezzafibre" Type="Edm.String" MaxLength="3" sap:display-format="UpperCase" sap:label="Finezza Fibre"/>
+<Property Name="zzclastech1" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Class. Tecnica 1" sap:quickinfo="Classificazione Tecnica 1"/>
+<Property Name="zzclastech2" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Class. Tecnica 2" sap:quickinfo="Classificazione Tecnica 2"/>
+<Property Name="zzclastech3" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Class. Tecnica 3" sap:quickinfo="Classificazione Tecnica 3"/>
+<Property Name="zzclastech4" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Class. Tecnica 4" sap:quickinfo="Classificazione Tecnica 4"/>
+<Property Name="zzclastech5" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Class. Tecnica 5" sap:quickinfo="Classificazione Tecnica 5"/>
+<Property Name="zzclastech6" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Class. Tecnica 6" sap:quickinfo="Classificazione Tecnica 6"/>
+<Property Name="zzclastech7" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Class. Tecnica 7" sap:quickinfo="Classificazione Tecnica 7"/>
+<Property Name="zzclastech8" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Class. 1 per Listino" sap:quickinfo="Classificazione Tecnica 8"/>
+<Property Name="zzclastech9" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Class. Tecnica 9" sap:quickinfo="Classificazione Tecnica 9"/>
+<Property Name="zzclastech10" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Class. Tecnica 10" sap:quickinfo="Classificazione Tecnica 10"/>
+<Property Name="zzclasfattes1" Type="Edm.String" MaxLength="3" sap:display-format="UpperCase" sap:label="Classif. Fatt. 1" sap:quickinfo="Classificazione Fatturazione 1"/>
+<Property Name="zzclasfattes2" Type="Edm.String" MaxLength="3" sap:display-format="UpperCase" sap:label="Classif. Fatt. 2" sap:quickinfo="Classificazione Fatturazione 2"/>
+<Property Name="zzclasfattes3" Type="Edm.String" MaxLength="3" sap:display-format="UpperCase" sap:label="Classif. Fatt. 3" sap:quickinfo="Classificazione Fatturazione 3"/>
+<Property Name="zzmade_loropiana" Type="Edm.Boolean" sap:label="Made in LP" sap:quickinfo="Made in LoroPiana"/>
+<Property Name="zzfamigliasapgenerico" Type="Edm.String" MaxLength="18" sap:display-format="UpperCase" sap:label="Famiglia" sap:quickinfo="Famiglia Prodotto SAP"/>
+<Property Name="zzclascomm1" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Class. Commerciale 1" sap:quickinfo="Classificazione Commerciale 1"/>
+<Property Name="zzclascomm2" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Class. Commerciale 2" sap:quickinfo="Classificazione Commerciale 2"/>
+<Property Name="zzclascomm3" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Class. Commerciale 3" sap:quickinfo="Classificazione Commerciale 3"/>
+<Property Name="zzclascomm4" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Class. Commerciale 4" sap:quickinfo="Classificazione Commerciale 4"/>
+<Property Name="zzclascomm5" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Class. Commerciale 5" sap:quickinfo="Classificazione Commerciale 5"/>
+<Property Name="zzclascomm6" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Class. Commerciale 6" sap:quickinfo="Classificazione Commerciale 6"/>
+<Property Name="zzclascomm7" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Class. Commerciale 7" sap:quickinfo="Classificazione Commerciale 7"/>
+<Property Name="zzclascomm8" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Class. Commerciale 8" sap:quickinfo="Classificazione Commerciale 8"/>
+<Property Name="zzclascomm9" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Class. Commerciale 9" sap:quickinfo="Classificazione Commerciale 9"/>
+<Property Name="zzclascomm10" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Class.Commerciale 10" sap:quickinfo="Classificazione Commerciale 10"/>
+<Property Name="zzimpastoteorico" Type="Edm.String" MaxLength="1" sap:display-format="UpperCase" sap:label="Impasto Teorico"/>
+<Property Name="zzfondo" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Fondo"/>
+<Property Name="zzbunch" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Bunch"/>
+<Property Name="zzpagina" Type="Edm.String" MaxLength="2" sap:display-format="NonNegative" sap:label="Numero Pagina"/>
+<Property Name="zzgradino" Type="Edm.String" MaxLength="2" sap:display-format="UpperCase" sap:label="Gradino"/>
+<Property Name="zzsequenza" Type="Edm.String" MaxLength="3" sap:display-format="NonNegative" sap:label="Sequenza"/>
+<Property Name="zzcolorecosto" Type="Edm.String" MaxLength="50" sap:display-format="UpperCase" sap:label="Colore Costo"/>
+<Property Name="zzstagstato" Type="Edm.String" MaxLength="2" sap:display-format="UpperCase" sap:label="Stagione Stato" sap:quickinfo="Stagione cambio Stato Articolo"/>
+<Property Name="zzutestato" Type="Edm.String" MaxLength="12" sap:display-format="UpperCase" sap:label="Utente Stato" sap:quickinfo="Utente modifica Stato"/>
+<Property Name="zzutevariaz" Type="Edm.String" MaxLength="12" sap:display-format="UpperCase" sap:label="Utente agg. ERP" sap:quickinfo="Utente aggiornamento ERP"/>
+<Property Name="zzdatavariaz" Type="Edm.DateTime" Precision="0" sap:display-format="Date" sap:label="Data agg. ERP" sap:quickinfo="Data aggiornamento ERP"/>
+<Property Name="zzflagmarchio" Type="Edm.Boolean" sap:label="Flag Marchio"/>
+<Property Name="zzclassval1" Type="Edm.String" MaxLength="3" sap:display-format="UpperCase" sap:label="Classe 1 val. Art." sap:quickinfo="Classe 1 valutazione Articolo"/>
+<Property Name="zzclasstech12" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Class. Tecnica 12" sap:quickinfo="Classificazione Tecnica 12"/>
+<Property Name="zzvariantegb" Type="Edm.String" MaxLength="1" sap:display-format="UpperCase" sap:label="Variante GB18401"/>
+<Property Name="zzclasslisvend2" Type="Edm.String" MaxLength="3" sap:display-format="UpperCase" sap:label="2°Class. per Listino" sap:quickinfo="2° Classificazione per Listino"/>
+<Property Name="zzbarcode" Type="Edm.String" MaxLength="10" sap:display-format="NonNegative" sap:label="ID Barcode" sap:quickinfo="BARCODE Articolo"/>
+<Property Name="zzidgeartco" Type="Edm.String" MaxLength="10" sap:display-format="NonNegative" sap:label="ID Art. Comm." sap:quickinfo="ID Interno per Articoli Commerciali"/>
+<Property Name="zzdich2" Type="Edm.String" MaxLength="3" sap:display-format="UpperCase" sap:label="Dichiar. 2" sap:quickinfo="Dichiarazione 2"/>
+<Property Name="zzfur" Type="Edm.Boolean" sap:label="Pelliccia"/>
+<Property Name="zzflammable" Type="Edm.String" MaxLength="1" sap:display-format="UpperCase" sap:label="Infiammabile"/>
+<Property Name="zzownership" Type="Edm.String" MaxLength="3" sap:display-format="UpperCase" sap:label="Ownership"/>
+<Property Name="zzsalescat" Type="Edm.String" MaxLength="3" sap:display-format="UpperCase" sap:label="Categoria di Vendita"/>
+<Property Name="zznrfcol" Type="Edm.String" MaxLength="3" sap:display-format="UpperCase" sap:label="Colore NRF"/>
+<Property Name="zzfamily_col" Type="Edm.String" MaxLength="2" sap:display-format="UpperCase" sap:label="Famiglia Colore"/>
+<Property Name="zzlifecycstatus" Type="Edm.String" MaxLength="1" sap:display-format="UpperCase" sap:label="Stato Ciclo di vita"/>
+<Property Name="zzphisicalstat" Type="Edm.String" MaxLength="1" sap:display-format="UpperCase" sap:label="Stato Fisico"/>
+<Property Name="zzknitted" Type="Edm.String" MaxLength="1" sap:display-format="UpperCase" sap:label="Knitted / Woven"/>
+<Property Name="zzroyalty" Type="Edm.String" MaxLength="2" sap:display-format="UpperCase" sap:label="Royalty"/>
+<Property Name="zzcomm_trat" Type="Edm.String" MaxLength="1" sap:display-format="UpperCase" sap:label="Trattamento" sap:quickinfo="Codice Trattamento Commerciale"/>
+<Property Name="zzendoflife" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="End of Life"/>
+<Property Name="zznrftg" Type="Edm.String" MaxLength="5" sap:label="Codice NRF Taglia" sap:quickinfo="Taglia NRF"/>
+<Property Name="zzesslifecycle" Type="Edm.String" MaxLength="1" sap:display-format="UpperCase" sap:label="C.Vita ESSENZIALI" sap:quickinfo="Ciclo di vita ESSENZIALI"/>
+<Property Name="zzessphase" Type="Edm.String" MaxLength="2" sap:display-format="UpperCase" sap:label="Fase Nasc ESSENZIALI" sap:quickinfo="Fase Nascita ESSENZIALI"/>
+<Property Name="zzknitted_prog" Type="Edm.String" MaxLength="3" sap:display-format="UpperCase" sap:label="Prog. Maglieria" sap:quickinfo="Programma Maglieria"/>
+<Property Name="zzpartsinv" Type="Edm.String" MaxLength="5" sap:display-format="NonNegative" sap:label="N° parti fattura" sap:quickinfo="Numero parti in fattura"/>
+</EntityType>
+<EntityContainer Name="ZMF_IMD_MATERIAL_CDS_Entities" m:IsDefaultEntityContainer="true" sap:message-scope-supported="true" sap:supported-formats="atom json xlsx">
+<EntitySet Name="ZMF_IMD_MATERIAL" EntityType="ZMF_IMD_MATERIAL_CDS.ZMF_IMD_MATERIALType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1"/>
+</EntityContainer>
+<Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Core.SchemaVersion" String="1.0.0"/>
+<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="ZMF_IMD_MATERIAL_CDS.ZMF_IMD_MATERIAL_CDS_Entities">
+<Annotation Term="Common.ApplyMultiUnitBehaviorForSortingAndFiltering" Bool="true"/>
+</Annotations>
+<atom:link xmlns:atom="http://www.w3.org/2005/Atom" rel="self" href="http://lpapps20.lp.corp:8000/sap/opu/odata/sap/ZMF_IMD_MATERIAL_CDS/$metadata"/>
+<atom:link xmlns:atom="http://www.w3.org/2005/Atom" rel="latest-version" href="http://lpapps20.lp.corp:8000/sap/opu/odata/sap/ZMF_IMD_MATERIAL_CDS/$metadata"/>
+</Schema>
+</edmx:DataServices>
+</edmx:Edmx>

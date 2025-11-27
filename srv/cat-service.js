@@ -36,6 +36,7 @@ module.exports = cds.service.impl(async function (srv) {
     const cdsPickingDate = await cds.connect.to('ZZ1_ZMFI_DATAPRELIEVO_CDS');
     const cdsListDDT = await cds.connect.to("ZZ1_ZMFG_C_OUTBOUNDDELIVER_CDS");
     const cdsAddress = await cds.connect.to("ZMFG_I_SUPPLIERPARTNERFUNC_CDS");
+    const cdsImdMaterial = await cds.connect.to("ZMF_IMD_MATERIAL_CDS");
 
     this.on('READ', "MainCds", async request => {
 
@@ -1031,6 +1032,12 @@ module.exports = cds.service.impl(async function (srv) {
 
     this.on('READ', "ZMFG_I_SUPPLIERPARTNERFUNC", async request => {
         var data = await cdsAddress.tx(request).run(request.query);
+
+        return data;
+    });
+
+    this.on('READ', "ZMF_IMD_MATERIAL", async request => {
+        var data = await cdsImdMaterial.tx(request).run(request.query);
 
         return data;
     });

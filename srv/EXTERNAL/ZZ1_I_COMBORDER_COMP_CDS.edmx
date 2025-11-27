@@ -457,6 +457,7 @@
 <Property Name="ProductDescription_1" Type="Edm.String" MaxLength="40" sap:required-in-filter="false" sap:label="Product Description" sap:quickinfo="Descrizione prodotto"/>
 <Property Name="MRPController" Type="Edm.String" MaxLength="1" sap:aggregation-role="dimension" sap:required-in-filter="false" sap:label="MRPController"/>
 <Property Name="isOpened" Type="Edm.Boolean" sap:aggregation-role="dimension" sap:required-in-filter="false" sap:label="isOpened" sap:quickinfo="Elemento dati per dominio BOOLE: TRUE (='X') e FALSE (=' ')"/>
+<Property Name="DeliveryQty" Type="Edm.Decimal" Precision="13" Scale="3" sap:aggregation-role="dimension" sap:required-in-filter="false" sap:unit="EntryUnit" sap:label="DeliveryQty"/>
 <NavigationProperty Name="to_ZZ1_C_PRODUCT" Relationship="ZZ1_I_COMBORDER_COMP_CDS.assoc_6FF85B105E51509E22160A4B6E5B5FF3" FromRole="FromRole_assoc_6FF85B105E51509E22160A4B6E5B5FF3" ToRole="ToRole_assoc_6FF85B105E51509E22160A4B6E5B5FF3"/>
 </EntityType>
 <Association Name="assoc_4DF4949EC9B667ED5EBEFD66EA9F3CEE" sap:content-version="1">

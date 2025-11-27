@@ -94,10 +94,18 @@ annotate CatalogService.MainCds with @(
                 width : '5rem',
             },
         },
-                {
+        {
             $Type : 'UI.DataField',
             Value: TotalDeliveryQty,
             Label: '{i18n>totalDelQty}',
+            ![@HTML5.CssDefaults] : {
+                width : '5rem',
+            },
+        },
+        {
+            $Type : 'UI.DataField',
+            Value: DeliveryQty,
+            Label: '{i18n>delQty}',
             ![@HTML5.CssDefaults] : {
                 width : '5rem',
             },

@@ -23,7 +23,7 @@ module.exports = cds.service.impl(async function (srv) {
     const cdsShippingPoint = await cds.connect.to('ZZ1_I_SHIPPINGPOINT_CDS');
     const cdsWorkCenter = await cds.connect.to('ZZ1_I_WORKCENTERTXT_CDS');
     const cdsPlant = await cds.connect.to('ZZ1_I_PLANTTXT_CDS');
-    const cdsSupplier = await cds.connect.to('ZMFG_I_SUPPLIER_F4_CDS');
+    const cdsSupplier = await cds.connect.to('ZZ1_MFG_C_SUPPLIER_F4_CDS');
     const cdsMRPController = await cds.connect.to('ZZ1_MRPCONTROLLER_F4_CDS');
     const cdsProduct = await cds.connect.to('ZZ1_ZMFG_C_PRODUCT_F4_CDS');
     const cdsCombOrder = await cds.connect.to('ZZ1_I_COMBORDMATCHCODE_CDS');
@@ -527,6 +527,18 @@ module.exports = cds.service.impl(async function (srv) {
                         data[z].SupplierWithDescription = data[z].Plant + ' - Prod. Interna'
                     }
                     // modifica DL - 21/07/2025 - valorizzo fornitore con Plant se vuoto - FINE
+
+                    // modifica DL - 28/11/2025 - StockMaterial < 0 => allora 0
+                    if(data[z].StockMaterial < 0){
+                        data[z].StockMaterial = 0
+                    }
+                    // modifica DL - 28/11/2025 - StockMaterial < 0 => allora 0 - FINE
+
+                    // modifica DL - 28/11/2025 - AvaibilityQtyDefaultStorage < 0 => allora 0
+                    if(data[z].AvaibilityQtyDefaultStorage < 0){
+                        data[z].AvaibilityQtyDefaultStorage = 0
+                    }
+                    // modifica DL - 28/11/2025 - AvaibilityQtyDefaultStorage < 0 => allora 0 - FINE
                 }
 
                 console.log("TEST tempi -> fine calcolo colonne " + new Date())
@@ -545,8 +557,14 @@ module.exports = cds.service.impl(async function (srv) {
                         data[u].QtyTrafficLight = Number(data[u].TotalConfdQtyForATPInBaseUoM) / (Number(data[u].TotalRequiredQuantity) - Number(data[u].TotalWithdrawnQuantity)) * 100
                     }
 
-                    data[u].QtyToIssue = Number(data[u].TotalConfdQtyForATPInBaseUoM) - Number(data[u].TotalAllocQty) - Number(data[u].DeliveryQty) - Number(data[u].TotalWithdrawnQuantity)
+                    data[u].QtyToIssue = Number(data[u].TotalConfdQtyForATPInBaseUoM) - Number(data[u].DeliveryQty) - Number(data[u].TotalWithdrawnQuantity)
                     data[u].QtyToIssue = Number(data[u].QtyToIssue).toFixed(3)
+
+                    // modifica DL - 28/11/2025 - QtyToIssue < 0 => allora 0
+                    if(data[u].QtyToIssue < 0){
+                        data[u].QtyToIssue = 0
+                    }
+                    // modifica DL - 28/11/2025 - QtyToIssue < 0 => allora 0 - FINE
 
                     // modifica DL - 29/10/2025 - setto stato delivery per colore riga tabella
                     console.log("data[u].TotalDeliveryQty "+parseFloat(data[u].TotalDeliveryQty))
@@ -652,7 +670,7 @@ module.exports = cds.service.impl(async function (srv) {
         return data;
     });
 
-    this.on('READ', "ZMFG_I_SUPPLIER_F4", async request => {
+    this.on('READ', "ZZ1_MFG_C_SUPPLIER_F4", async request => {
         request.query.SELECT.count = false
         var data = await cdsSupplier.tx(request).run(request.query);
 

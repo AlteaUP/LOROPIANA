@@ -190,9 +190,9 @@
           }
         }
       },
-      "ZMFG_I_SUPPLIER_F4_CDS": {
+      "ZZ1_MFG_C_SUPPLIER_F4_CDS": {
         "kind": "odata",
-        "model": "srv/EXTERNAL/ZMFG_I_SUPPLIER_F4_CDS",
+        "model": "srv/EXTERNAL/ZZ1_MFG_C_SUPPLIER_F4_CDS",
         "forwardAuthToken": true,
         "csrf": true,
         "csrfInBatch": true,
@@ -200,14 +200,14 @@
           "credentials": {
             "requestTimeout": 300000,
             "destination": "S4HANA",
-            "path": "/sap/opu/odata/sap/ZMFG_I_SUPPLIER_F4_CDS"
+            "path": "/sap/opu/odata/sap/ZZ1_MFG_C_SUPPLIER_F4_CDS"
           }
         },
         "[production]": {
           "credentials": {
             "requestTimeout": 300000,
             "destination": "S4HANA",
-            "path": "/sap/opu/odata/sap/ZMFG_I_SUPPLIER_F4_CDS"
+            "path": "/sap/opu/odata/sap/ZZ1_MFG_C_SUPPLIER_F4_CDS"
           }
         }
       },
@@ -612,6 +612,10 @@
             "path": "/sap/opu/odata/sap/ZMF_IMD_MATERIAL_CDS"
           }
         }
+      },
+      "ZMFG_I_SUPPLIER_F4_CDS": {
+        "kind": "odata-v2",
+        "model": "srv/external/ZMFG_I_SUPPLIER_F4_CDS"
       }
     }
   },

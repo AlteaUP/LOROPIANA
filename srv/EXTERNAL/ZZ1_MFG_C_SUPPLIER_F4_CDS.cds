@@ -1,4 +1,4 @@
-/* checksum : 577cc00efa4c1552044434213aad934f */
+/* checksum : 02247db7f940e7d9a51b9fd220ae7aac */
 @cds.external : true
 @m.IsDefaultEntityContainer : 'true'
 @sap.message.scope.supported : 'true'
@@ -10,6 +10,7 @@ service ZZ1_MFG_C_SUPPLIER_F4_CDS {};
 @sap.creatable : 'false'
 @sap.updatable : 'false'
 @sap.deletable : 'false'
+@sap.searchable : 'true'
 @sap.content.version : '1'
 @sap.label : 'ZZ1_MFG_C_SUPPLIER_F4'
 entity ZZ1_MFG_C_SUPPLIER_F4_CDS.ZZ1_MFG_C_SUPPLIER_F4 {

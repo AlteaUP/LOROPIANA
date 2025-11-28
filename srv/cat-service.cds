@@ -14,7 +14,7 @@ using { ZZ1_I_UNION_SUBCONCTR_COMP_CDS as ComponentCDS } from './EXTERNAL/ZZ1_I_
 using { ZZ1_I_WORKCENTERTXT_CDS as WorkCenterCDS } from './EXTERNAL/ZZ1_I_WORKCENTERTXT_CDS';
 using { ZZ1_I_PLANTTXT_CDS as PlantCDS } from './EXTERNAL/ZZ1_I_PLANTTXT_CDS';
 using { ZZ1_MRPCONTROLLER_F4_CDS as MRPControllerCDS } from './EXTERNAL/ZZ1_MRPCONTROLLER_F4_CDS';
-using { ZMFG_I_SUPPLIER_F4_CDS as SupplierCDS } from './EXTERNAL/ZMFG_I_SUPPLIER_F4_CDS';
+using { ZZ1_MFG_C_SUPPLIER_F4_CDS as SupplierCDS } from './EXTERNAL/ZZ1_MFG_C_SUPPLIER_F4_CDS';
 using { ZZ1_ZMFG_C_PRODUCT_F4_CDS as ProductCDS } from './EXTERNAL/ZZ1_ZMFG_C_PRODUCT_F4_CDS';
 using { ZZ1_I_PRODTYPEMATCHCOD_CDS as ProdTypeCDS } from './EXTERNAL/ZZ1_I_PRODTYPEMATCHCOD_CDS';
 using { ZZ1_I_COMBORDMATCHCODE_CDS as CombOrderCDS } from './EXTERNAL/ZZ1_I_COMBORDMATCHCODE_CDS';
@@ -167,7 +167,7 @@ service CatalogService {
 
     @readonly entity ZZ1_MRPCONTROLLER_F4 as projection on MRPControllerCDS.ZZ1_MRPCONTROLLER_F4;
 
-    @readonly entity ZMFG_I_SUPPLIER_F4 as projection on SupplierCDS.ZMFG_I_SUPPLIER_F4;
+    @readonly entity ZZ1_MFG_C_SUPPLIER_F4 as projection on SupplierCDS.ZZ1_MFG_C_SUPPLIER_F4;
     
     @readonly entity ZZ1_I_PRODTYPEMATCHCOD as projection on ProdTypeCDS.ZZ1_I_PRODTYPEMATCHCOD;
 

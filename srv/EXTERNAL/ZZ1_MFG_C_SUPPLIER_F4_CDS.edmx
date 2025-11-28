@@ -39,7 +39,7 @@
 <Property Name="SupplierName" Type="Edm.String" MaxLength="80" sap:required-in-filter="false" sap:label="Nome del fornitore"/>
 </EntityType>
 <EntityContainer Name="ZZ1_MFG_C_SUPPLIER_F4_CDS_Entities" m:IsDefaultEntityContainer="true" sap:message-scope-supported="true" sap:supported-formats="atom json xlsx">
-<EntitySet Name="ZZ1_MFG_C_SUPPLIER_F4" EntityType="ZZ1_MFG_C_SUPPLIER_F4_CDS.ZZ1_MFG_C_SUPPLIER_F4Type" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1"/>
+<EntitySet Name="ZZ1_MFG_C_SUPPLIER_F4" EntityType="ZZ1_MFG_C_SUPPLIER_F4_CDS.ZZ1_MFG_C_SUPPLIER_F4Type" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:searchable="true" sap:content-version="1"/>
 </EntityContainer>
 <Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Core.SchemaVersion" String="1.0.0"/>
 <Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="ZZ1_MFG_C_SUPPLIER_F4_CDS.ZZ1_MFG_C_SUPPLIER_F4_CDS_Entities">

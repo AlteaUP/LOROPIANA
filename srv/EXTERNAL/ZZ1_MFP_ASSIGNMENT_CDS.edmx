@@ -1,0 +1,579 @@
+<edmx:Edmx xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:sap="http://www.sap.com/Protocols/SAPData" Version="1.0">
+<edmx:Reference xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Uri="http://lpapps20.lp.corp:8000/sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_AGGREGATION',Version='0001',SAP__Origin='LOCAL')/$value">
+<edmx:Include Namespace="Org.OData.Aggregation.V1" Alias="Aggregation"/>
+</edmx:Reference>
+<edmx:Reference xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Uri="http://lpapps20.lp.corp:8000/sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_ANALYTICS',Version='0001',SAP__Origin='LOCAL')/$value">
+<edmx:Include Namespace="com.sap.vocabularies.Analytics.v1" Alias="Analytics"/>
+</edmx:Reference>
+<edmx:Reference xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Uri="http://lpapps20.lp.corp:8000/sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_CAPABILITIES',Version='0001',SAP__Origin='LOCAL')/$value">
+<edmx:Include Namespace="Org.OData.Capabilities.V1" Alias="Capabilities"/>
+</edmx:Reference>
+<edmx:Reference xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Uri="http://lpapps20.lp.corp:8000/sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_CODELIST',Version='0001',SAP__Origin='LOCAL')/$value">
+<edmx:Include Namespace="com.sap.vocabularies.CodeList.v1" Alias="SAP__CodeList"/>
+</edmx:Reference>
+<edmx:Reference xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Uri="http://lpapps20.lp.corp:8000/sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_COMMON',Version='0001',SAP__Origin='LOCAL')/$value">
+<edmx:Include Namespace="com.sap.vocabularies.Common.v1" Alias="Common"/>
+</edmx:Reference>
+<edmx:Reference xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Uri="http://lpapps20.lp.corp:8000/sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_COMMUNICATION',Version='0001',SAP__Origin='LOCAL')/$value">
+<edmx:Include Namespace="com.sap.vocabularies.Communication.v1" Alias="Communication"/>
+</edmx:Reference>
+<edmx:Reference xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Uri="http://lpapps20.lp.corp:8000/sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_MEASURES',Version='0001',SAP__Origin='LOCAL')/$value">
+<edmx:Include Namespace="Org.OData.Measures.V1" Alias="Measures"/>
+</edmx:Reference>
+<edmx:Reference xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Uri="http://lpapps20.lp.corp:8000/sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_PERSONALDATA',Version='0001',SAP__Origin='LOCAL')/$value">
+<edmx:Include Namespace="com.sap.vocabularies.PersonalData.v1" Alias="PersonalData"/>
+</edmx:Reference>
+<edmx:Reference xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Uri="http://lpapps20.lp.corp:8000/sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_UI',Version='0001',SAP__Origin='LOCAL')/$value">
+<edmx:Include Namespace="com.sap.vocabularies.UI.v1" Alias="UI"/>
+</edmx:Reference>
+<edmx:Reference xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Uri="http://lpapps20.lp.corp:8000/sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_VALIDATION',Version='0001',SAP__Origin='LOCAL')/$value">
+<edmx:Include Namespace="Org.OData.Validation.V1" Alias="Validation"/>
+</edmx:Reference>
+<edmx:DataServices m:DataServiceVersion="2.0">
+<Schema xmlns="http://schemas.microsoft.com/ado/2008/09/edm" Namespace="ZZ1_MFP_ASSIGNMENT_CDS" xml:lang="it" sap:schema-version="1">
+<EntityType Name="I_LanguageType" sap:label="Lingua" sap:content-version="1">
+<Key>
+<PropertyRef Name="Language"/>
+</Key>
+<Property Name="Language" Type="Edm.String" Nullable="false" MaxLength="2" sap:text="Language_Text" sap:label="Chiave lingua"/>
+<Property Name="Language_Text" Type="Edm.String" MaxLength="16" sap:label="Denominazione" sap:quickinfo="Definizione lingua" sap:creatable="false" sap:updatable="false"/>
+<Property Name="LanguageISOCode" Type="Edm.String" MaxLength="2" sap:display-format="UpperCase" sap:label="Codice lingua" sap:quickinfo="Codice lingua SAP a due posizioni"/>
+</EntityType>
+<EntityType Name="I_UnitOfMeasureType" sap:label="Unità di misura" sap:content-version="1">
+<Key>
+<PropertyRef Name="UnitOfMeasure"/>
+</Key>
+<Property Name="UnitOfMeasure" Type="Edm.String" Nullable="false" MaxLength="3" sap:text="UnitOfMeasure_Text" sap:label="Unità di misura" sap:semantics="unit-of-measure"/>
+<Property Name="UnitOfMeasure_Text" Type="Edm.String" MaxLength="30" sap:label="Testo UM" sap:quickinfo="Testo unità di misura (massimo 30 posizioni)" sap:creatable="false" sap:updatable="false"/>
+<Property Name="UnitOfMeasureSAPCode" Type="Edm.String" MaxLength="3" sap:label="Codice SAP interno" sap:quickinfo="Unità di misura, codice SAP interno (senza conversione)"/>
+<Property Name="UnitOfMeasureISOCode" Type="Edm.String" MaxLength="3" sap:display-format="UpperCase" sap:text="to_ISOCode/UnitOfMeasureISOCode_Text" sap:label="Cd. ISO" sap:quickinfo="Codice ISO unità di misura" sap:value-list="standard"/>
+<Property Name="IsPrimaryUnitForISOCode" Type="Edm.Boolean" sap:label="Cd. primario" sap:quickinfo="Campo di marcatura per conversione cd. ISO in cd. int."/>
+<Property Name="UnitOfMeasureNumberOfDecimals" Type="Edm.Int16" sap:label="Arrotond. decimali" sap:quickinfo="Numero di decimali da arrotondare"/>
+<Property Name="UnitOfMeasureIsCommercial" Type="Edm.Boolean" sap:label="Utà commerciale" sap:quickinfo="Codice unità di misura commerciale"/>
+<Property Name="UnitOfMeasureDimension" Type="Edm.String" MaxLength="6" sap:display-format="UpperCase" sap:text="to_Dimension/UnitOfMeasureDimension_Text" sap:label="Dimensione" sap:quickinfo="Chiave dimensione" sap:value-list="standard"/>
+<Property Name="SIUnitCnvrsnRateNumerator" Type="Edm.Int32" sap:label="Contatore" sap:quickinfo="Numeratore per la conversione in unità SI"/>
+<Property Name="SIUnitCnvrsnRateDenominator" Type="Edm.Int32" sap:label="Denominatore" sap:quickinfo="Denominatore per la conversione in unità SI"/>
+<Property Name="SIUnitCnvrsnRateExponent" Type="Edm.Int16" sap:label="Esponente" sap:quickinfo="Esponente alla decima per la conversione in unità SI"/>
+<Property Name="SIUnitCnvrsnAdditiveValue" Type="Edm.Decimal" Precision="9" Scale="6" sap:label="Costante aggiuntiva" sap:quickinfo="Costante aggiuntiva per conversione in unità SI"/>
+<Property Name="UnitOfMeasureDspExponent" Type="Edm.Int16" sap:label="Esp. virgola mobile" sap:quickinfo="Esponente alla 10a per rappresentazione virgola mobile"/>
+<Property Name="UnitOfMeasureDspNmbrOfDcmls" Type="Edm.Int16" sap:label="Decimali" sap:quickinfo="Numero di decimali nella rappresentazione numerica"/>
+<Property Name="UnitOfMeasureTemperature" Type="Edm.Double" sap:unit="UnitOfMeasureTemperatureUnit" sap:label="Val. temper." sap:quickinfo="Valore temperatura"/>
+<Property Name="UnitOfMeasureTemperatureUnit" Type="Edm.String" MaxLength="3" sap:label="Unità temperatura" sap:semantics="unit-of-measure"/>
+<Property Name="UnitOfMeasurePressure" Type="Edm.Double" sap:unit="UnitOfMeasurePressureUnit" sap:label="Valore pressione"/>
+<Property Name="UnitOfMeasurePressureUnit" Type="Edm.String" MaxLength="3" sap:label="Unità pressione" sap:semantics="unit-of-measure"/>
+<NavigationProperty Name="to_Dimension" Relationship="ZZ1_MFP_ASSIGNMENT_CDS.assoc_744267C89213C6F0BEAA53E2EB9C8F4F" FromRole="FromRole_assoc_744267C89213C6F0BEAA53E2EB9C8F4F" ToRole="ToRole_assoc_744267C89213C6F0BEAA53E2EB9C8F4F"/>
+<NavigationProperty Name="to_ISOCode" Relationship="ZZ1_MFP_ASSIGNMENT_CDS.assoc_5E18390584266C106B459BC3FD3D3C50" FromRole="FromRole_assoc_5E18390584266C106B459BC3FD3D3C50" ToRole="ToRole_assoc_5E18390584266C106B459BC3FD3D3C50"/>
+</EntityType>
+<EntityType Name="I_UnitOfMeasureDimensionType" sap:label="Dimensione dell'unità di misura" sap:content-version="1">
+<Key>
+<PropertyRef Name="UnitOfMeasureDimension"/>
+</Key>
+<Property Name="UnitOfMeasureDimension" Type="Edm.String" Nullable="false" MaxLength="6" sap:display-format="UpperCase" sap:text="UnitOfMeasureDimension_Text" sap:label="Dimensione" sap:quickinfo="Chiave dimensione"/>
+<Property Name="UnitOfMeasureDimension_Text" Type="Edm.String" MaxLength="20" sap:label="Testo dimensione" sap:creatable="false" sap:updatable="false"/>
+<Property Name="LengthExponent" Type="Edm.Int16" sap:label="Lunghezza" sap:quickinfo="Esponente lunghezza"/>
+<Property Name="MassExponent" Type="Edm.Int16" sap:label="Massa" sap:quickinfo="Esponente massa"/>
+<Property Name="TimeExponent" Type="Edm.Int16" sap:label="Ora" sap:quickinfo="Esponente temporale"/>
+<Property Name="ElectricCurrentExponent" Type="Edm.Int16" sap:label="Amp. elettrico" sap:quickinfo="Esponente per l'amperaggio elettrico"/>
+<Property Name="TemperatureExponent" Type="Edm.Int16" sap:label="Temperatura" sap:quickinfo="Esponente temperatura"/>
+<Property Name="MoleQuantityExponent" Type="Edm.Int16" sap:label="Quantità molecolare" sap:quickinfo="Esponente per la quantità molecolare"/>
+<Property Name="LuminosityExponent" Type="Edm.Int16" sap:label="Intensità luminosa" sap:quickinfo="Esponente intensità luminosa"/>
+<Property Name="UnitOFMeasureSiUnit" Type="Edm.String" MaxLength="3" sap:label="Unità SI" sap:semantics="unit-of-measure"/>
+<Property Name="HasUnitsWithTemperatureSpec" Type="Edm.Boolean" sap:label="Dip. da temperatura" sap:quickinfo="Ind. 'esistono anche unità con indic. temp. per dimensione'"/>
+<Property Name="HasUnitsWithPressureSpec" Type="Edm.Boolean" sap:label="Dipendente da press." sap:quickinfo="Ind. 'per la dimensione esistono unità con valori pressione'"/>
+</EntityType>
+<EntityType Name="I_UnitOfMeasureISOCodeType" sap:label="Unità di misura - codice ISO" sap:content-version="1">
+<Key>
+<PropertyRef Name="UnitOfMeasureISOCode"/>
+</Key>
+<Property Name="UnitOfMeasureISOCode" Type="Edm.String" Nullable="false" MaxLength="3" sap:display-format="UpperCase" sap:text="UnitOfMeasureISOCode_Text" sap:label="Cd. ISO" sap:quickinfo="Codice ISO unità di misura"/>
+<Property Name="UnitOfMeasureISOCode_Text" Type="Edm.String" MaxLength="25" sap:label="Cd. ISO" sap:quickinfo="Codici ISO definizione unità di misura" sap:creatable="false" sap:updatable="false"/>
+</EntityType>
+<EntityType Name="I_UnitOfMeasureTextType" sap:label="Testo unità di misura" sap:content-version="1">
+<Key>
+<PropertyRef Name="Language"/>
+<PropertyRef Name="UnitOfMeasure"/>
+</Key>
+<Property Name="Language" Type="Edm.String" Nullable="false" MaxLength="2" sap:text="to_Language/Language_Text" sap:label="Chiave lingua" sap:value-list="standard"/>
+<Property Name="UnitOfMeasure" Type="Edm.String" Nullable="false" MaxLength="3" sap:text="to_UnitOfMeasure/UnitOfMeasure_Text" sap:label="Unità misura interna" sap:quickinfo="Unità di misura" sap:value-list="standard" sap:semantics="unit-of-measure"/>
+<Property Name="UnitOfMeasureLongName" Type="Edm.String" MaxLength="30" sap:label="Testo UM" sap:quickinfo="Testo unità di misura (massimo 30 posizioni)"/>
+<Property Name="UnitOfMeasureName" Type="Edm.String" MaxLength="10" sap:label="Testo UM" sap:quickinfo="Testo unità di misura (massimo 10 posizioni)"/>
+<Property Name="UnitOfMeasureTechnicalName" Type="Edm.String" MaxLength="6" sap:label="Tecn." sap:quickinfo="Unità di misura tecnica a 6 posizioni"/>
+<Property Name="UnitOfMeasure_E" Type="Edm.String" MaxLength="3" sap:label="Commerciale" sap:quickinfo="Unità di misura esterna - rappr. commerciale a 3 posizioni"/>
+<Property Name="UnitOfMeasureCommercialName" Type="Edm.String" MaxLength="3" sap:label="Commerciale" sap:quickinfo="Unità di misura esterna - rappr. commerciale a 3 posizioni"/>
+<NavigationProperty Name="to_Language" Relationship="ZZ1_MFP_ASSIGNMENT_CDS.assoc_75B1DB854C2712DFD34CE2A48D0D7317" FromRole="FromRole_assoc_75B1DB854C2712DFD34CE2A48D0D7317" ToRole="ToRole_assoc_75B1DB854C2712DFD34CE2A48D0D7317"/>
+<NavigationProperty Name="to_UnitOfMeasure" Relationship="ZZ1_MFP_ASSIGNMENT_CDS.assoc_1278BB73BB2872FCD47A1D378622590C" FromRole="FromRole_assoc_1278BB73BB2872FCD47A1D378622590C" ToRole="ToRole_assoc_1278BB73BB2872FCD47A1D378622590C"/>
+</EntityType>
+<EntityType Name="P_Scbo_UserType" sap:label="User" sap:content-version="1">
+<Key>
+<PropertyRef Name="name"/>
+</Key>
+<Property Name="name" Type="Edm.String" Nullable="false" MaxLength="12" sap:display-format="UpperCase" sap:label="Utente" sap:quickinfo="Nome riportato nell'anagrafica utente"/>
+<Property Name="description" Type="Edm.String" MaxLength="80" sap:label="Descrizione" sap:quickinfo="Descrizione del conto utente tecnico"/>
+</EntityType>
+<EntityType Name="ZZ1_MFP_ASSIGNMENTType" sap:label="MFP_ASSIGNMENT" sap:content-version="1">
+<Key>
+<PropertyRef Name="SAP_UUID"/>
+</Key>
+<Property Name="SAP_UUID" Type="Edm.Guid" Nullable="false" sap:label="UUID" sap:quickinfo="16 Byte UUID in 16 Bytes (Raw Format)"/>
+<Property Name="WERKS" Type="Edm.String" MaxLength="4" sap:label="Plant"/>
+<Property Name="LGORT" Type="Edm.String" MaxLength="20" sap:label="StorageLocation"/>
+<Property Name="FSH_MPLO_ORD" Type="Edm.String" MaxLength="12" sap:label="Ordine pianificato combinato principale"/>
+<Property Name="BAGNI" Type="Edm.String" MaxLength="45" sap:label="Bagni"/>
+<Property Name="MATNR" Type="Edm.String" MaxLength="40" sap:label="Materiale"/>
+<Property Name="CHARG" Type="Edm.String" MaxLength="10" sap:label="Batch"/>
+<Property Name="Bagno" Type="Edm.String" MaxLength="45" sap:label="Bagno"/>
+<Property Name="QTA_ASS_V" Type="Edm.Decimal" Precision="15" Scale="3" sap:unit="QTA_ASS_U" sap:label="Qtà ASSIGNMENT"/>
+<Property Name="QTA_ASS_U" Type="Edm.String" MaxLength="3" sap:text="QTA_ASS_U_Text" sap:label="Qtà ASSIGNMENT" sap:value-list="standard" sap:semantics="unit-of-measure"/>
+<Property Name="QTA_ASS_U_Text" Type="Edm.String" MaxLength="30" sap:label="Testo UM" sap:quickinfo="Testo unità di misura (massimo 30 posizioni)" sap:creatable="false" sap:updatable="false"/>
+<Property Name="FABB_TOT_V" Type="Edm.Decimal" Precision="15" Scale="3" sap:unit="FABB_TOT_U" sap:label="Fabbisogno Tot."/>
+<Property Name="FABB_TOT_U" Type="Edm.String" MaxLength="3" sap:text="FABB_TOT_U_Text" sap:label="Fabbisogno Tot." sap:value-list="standard" sap:semantics="unit-of-measure"/>
+<Property Name="FABB_TOT_U_Text" Type="Edm.String" MaxLength="30" sap:label="Testo UM" sap:quickinfo="Testo unità di misura (massimo 30 posizioni)" sap:creatable="false" sap:updatable="false"/>
+<Property Name="COPERTURA" Type="Edm.Decimal" Precision="10" Scale="0" sap:label="% Copertura"/>
+<Property Name="SORT" Type="Edm.Decimal" Precision="10" Scale="0" sap:label="SORT"/>
+<Property Name="SAP_CreatedDateTime" Type="Edm.DateTimeOffset" Precision="7" sap:label="Data creazione" sap:creatable="false" sap:updatable="false"/>
+<Property Name="SAP_CreatedByUser" Type="Edm.String" MaxLength="12" sap:display-format="UpperCase" sap:text="SAP_CreatedByUser_Text" sap:label="Autore creazione" sap:creatable="false" sap:updatable="false"/>
+<Property Name="SAP_CreatedByUser_Text" Type="Edm.String" MaxLength="80" sap:label="Descrizione" sap:quickinfo="Descrizione del conto utente tecnico" sap:creatable="false" sap:updatable="false"/>
+<Property Name="SAP_LastChangedDateTime" Type="Edm.DateTimeOffset" Precision="7" sap:label="Data dell'ultima modifica" sap:creatable="false" sap:updatable="false"/>
+<Property Name="SAP_LastChangedByUser" Type="Edm.String" MaxLength="12" sap:display-format="UpperCase" sap:text="SAP_LastChangedByUser_Text" sap:label="Autore dell'ultima modifica" sap:creatable="false" sap:updatable="false"/>
+<Property Name="SAP_LastChangedByUser_Text" Type="Edm.String" MaxLength="80" sap:label="Descrizione" sap:quickinfo="Descrizione del conto utente tecnico" sap:creatable="false" sap:updatable="false"/>
+<Property Name="SpecialStock" Type="Edm.String" MaxLength="1" sap:label="Special Stock"/>
+<Property Name="StockSegment" Type="Edm.String" MaxLength="40" sap:label="Stock Segment"/>
+<Property Name="SaldoScorta" Type="Edm.Boolean" sap:label="Saldo/Scorta"/>
+<Property Name="BatchBySupplier" Type="Edm.String" MaxLength="20" sap:label="Supplier Batch"/>
+<Property Name="Scorta" Type="Edm.String" MaxLength="20" sap:label="Scorta"/>
+<NavigationProperty Name="to_FABB_TOT" Relationship="ZZ1_MFP_ASSIGNMENT_CDS.assoc_E20258E24465D911745E1DB58CAC64DC" FromRole="FromRole_assoc_E20258E24465D911745E1DB58CAC64DC" ToRole="ToRole_assoc_E20258E24465D911745E1DB58CAC64DC"/>
+<NavigationProperty Name="to_QTA_ASS" Relationship="ZZ1_MFP_ASSIGNMENT_CDS.assoc_BB583683F3CE68F994076C292CE08C23" FromRole="FromRole_assoc_BB583683F3CE68F994076C292CE08C23" ToRole="ToRole_assoc_BB583683F3CE68F994076C292CE08C23"/>
+<NavigationProperty Name="to_SAPSysAdminDataChangeUser" Relationship="ZZ1_MFP_ASSIGNMENT_CDS.assoc_CC7536DFFEEEC83D5720B79715CF24D5" FromRole="FromRole_assoc_CC7536DFFEEEC83D5720B79715CF24D5" ToRole="ToRole_assoc_CC7536DFFEEEC83D5720B79715CF24D5"/>
+<NavigationProperty Name="to_SAPSysAdminDataCreateUser" Relationship="ZZ1_MFP_ASSIGNMENT_CDS.assoc_8A2E9AB6D2E8A65CBBC6BC50D7060DED" FromRole="FromRole_assoc_8A2E9AB6D2E8A65CBBC6BC50D7060DED" ToRole="ToRole_assoc_8A2E9AB6D2E8A65CBBC6BC50D7060DED"/>
+<NavigationProperty Name="to__FABB_TOT" Relationship="ZZ1_MFP_ASSIGNMENT_CDS.assoc_C39056B42E855A8CD56CF39A315CAB83" FromRole="FromRole_assoc_C39056B42E855A8CD56CF39A315CAB83" ToRole="ToRole_assoc_C39056B42E855A8CD56CF39A315CAB83"/>
+<NavigationProperty Name="to__QTA_ASS" Relationship="ZZ1_MFP_ASSIGNMENT_CDS.assoc_9CF05B19B22C64CD2D8DF33A66DAF4F4" FromRole="FromRole_assoc_9CF05B19B22C64CD2D8DF33A66DAF4F4" ToRole="ToRole_assoc_9CF05B19B22C64CD2D8DF33A66DAF4F4"/>
+</EntityType>
+<Association Name="assoc_5E18390584266C106B459BC3FD3D3C50" sap:content-version="1">
+<End Type="ZZ1_MFP_ASSIGNMENT_CDS.I_UnitOfMeasureType" Multiplicity="1" Role="FromRole_assoc_5E18390584266C106B459BC3FD3D3C50"/>
+<End Type="ZZ1_MFP_ASSIGNMENT_CDS.I_UnitOfMeasureISOCodeType" Multiplicity="0..1" Role="ToRole_assoc_5E18390584266C106B459BC3FD3D3C50"/>
+<ReferentialConstraint>
+<Principal Role="ToRole_assoc_5E18390584266C106B459BC3FD3D3C50">
+<PropertyRef Name="UnitOfMeasureISOCode"/>
+</Principal>
+<Dependent Role="FromRole_assoc_5E18390584266C106B459BC3FD3D3C50">
+<PropertyRef Name="UnitOfMeasureISOCode"/>
+</Dependent>
+</ReferentialConstraint>
+</Association>
+<Association Name="assoc_744267C89213C6F0BEAA53E2EB9C8F4F" sap:content-version="1">
+<End Type="ZZ1_MFP_ASSIGNMENT_CDS.I_UnitOfMeasureType" Multiplicity="1" Role="FromRole_assoc_744267C89213C6F0BEAA53E2EB9C8F4F"/>
+<End Type="ZZ1_MFP_ASSIGNMENT_CDS.I_UnitOfMeasureDimensionType" Multiplicity="0..1" Role="ToRole_assoc_744267C89213C6F0BEAA53E2EB9C8F4F"/>
+<ReferentialConstraint>
+<Principal Role="ToRole_assoc_744267C89213C6F0BEAA53E2EB9C8F4F">
+<PropertyRef Name="UnitOfMeasureDimension"/>
+</Principal>
+<Dependent Role="FromRole_assoc_744267C89213C6F0BEAA53E2EB9C8F4F">
+<PropertyRef Name="UnitOfMeasureDimension"/>
+</Dependent>
+</ReferentialConstraint>
+</Association>
+<Association Name="assoc_E20258E24465D911745E1DB58CAC64DC" sap:content-version="1">
+<End Type="ZZ1_MFP_ASSIGNMENT_CDS.ZZ1_MFP_ASSIGNMENTType" Multiplicity="1" Role="FromRole_assoc_E20258E24465D911745E1DB58CAC64DC"/>
+<End Type="ZZ1_MFP_ASSIGNMENT_CDS.I_UnitOfMeasureType" Multiplicity="0..1" Role="ToRole_assoc_E20258E24465D911745E1DB58CAC64DC"/>
+<ReferentialConstraint>
+<Principal Role="ToRole_assoc_E20258E24465D911745E1DB58CAC64DC">
+<PropertyRef Name="UnitOfMeasure"/>
+</Principal>
+<Dependent Role="FromRole_assoc_E20258E24465D911745E1DB58CAC64DC">
+<PropertyRef Name="FABB_TOT_U"/>
+</Dependent>
+</ReferentialConstraint>
+</Association>
+<Association Name="assoc_BB583683F3CE68F994076C292CE08C23" sap:content-version="1">
+<End Type="ZZ1_MFP_ASSIGNMENT_CDS.ZZ1_MFP_ASSIGNMENTType" Multiplicity="1" Role="FromRole_assoc_BB583683F3CE68F994076C292CE08C23"/>
+<End Type="ZZ1_MFP_ASSIGNMENT_CDS.I_UnitOfMeasureType" Multiplicity="0..1" Role="ToRole_assoc_BB583683F3CE68F994076C292CE08C23"/>
+<ReferentialConstraint>
+<Principal Role="ToRole_assoc_BB583683F3CE68F994076C292CE08C23">
+<PropertyRef Name="UnitOfMeasure"/>
+</Principal>
+<Dependent Role="FromRole_assoc_BB583683F3CE68F994076C292CE08C23">
+<PropertyRef Name="QTA_ASS_U"/>
+</Dependent>
+</ReferentialConstraint>
+</Association>
+<Association Name="assoc_CC7536DFFEEEC83D5720B79715CF24D5" sap:content-version="1">
+<End Type="ZZ1_MFP_ASSIGNMENT_CDS.ZZ1_MFP_ASSIGNMENTType" Multiplicity="1" Role="FromRole_assoc_CC7536DFFEEEC83D5720B79715CF24D5"/>
+<End Type="ZZ1_MFP_ASSIGNMENT_CDS.P_Scbo_UserType" Multiplicity="0..1" Role="ToRole_assoc_CC7536DFFEEEC83D5720B79715CF24D5"/>
+</Association>
+<Association Name="assoc_8A2E9AB6D2E8A65CBBC6BC50D7060DED" sap:content-version="1">
+<End Type="ZZ1_MFP_ASSIGNMENT_CDS.ZZ1_MFP_ASSIGNMENTType" Multiplicity="1" Role="FromRole_assoc_8A2E9AB6D2E8A65CBBC6BC50D7060DED"/>
+<End Type="ZZ1_MFP_ASSIGNMENT_CDS.P_Scbo_UserType" Multiplicity="0..1" Role="ToRole_assoc_8A2E9AB6D2E8A65CBBC6BC50D7060DED"/>
+</Association>
+<Association Name="assoc_C39056B42E855A8CD56CF39A315CAB83" sap:content-version="1">
+<End Type="ZZ1_MFP_ASSIGNMENT_CDS.ZZ1_MFP_ASSIGNMENTType" Multiplicity="1" Role="FromRole_assoc_C39056B42E855A8CD56CF39A315CAB83"/>
+<End Type="ZZ1_MFP_ASSIGNMENT_CDS.I_UnitOfMeasureTextType" Multiplicity="*" Role="ToRole_assoc_C39056B42E855A8CD56CF39A315CAB83"/>
+</Association>
+<Association Name="assoc_9CF05B19B22C64CD2D8DF33A66DAF4F4" sap:content-version="1">
+<End Type="ZZ1_MFP_ASSIGNMENT_CDS.ZZ1_MFP_ASSIGNMENTType" Multiplicity="1" Role="FromRole_assoc_9CF05B19B22C64CD2D8DF33A66DAF4F4"/>
+<End Type="ZZ1_MFP_ASSIGNMENT_CDS.I_UnitOfMeasureTextType" Multiplicity="*" Role="ToRole_assoc_9CF05B19B22C64CD2D8DF33A66DAF4F4"/>
+</Association>
+<Association Name="assoc_75B1DB854C2712DFD34CE2A48D0D7317" sap:content-version="1">
+<End Type="ZZ1_MFP_ASSIGNMENT_CDS.I_UnitOfMeasureTextType" Multiplicity="1" Role="FromRole_assoc_75B1DB854C2712DFD34CE2A48D0D7317"/>
+<End Type="ZZ1_MFP_ASSIGNMENT_CDS.I_LanguageType" Multiplicity="0..1" Role="ToRole_assoc_75B1DB854C2712DFD34CE2A48D0D7317"/>
+<ReferentialConstraint>
+<Principal Role="ToRole_assoc_75B1DB854C2712DFD34CE2A48D0D7317">
+<PropertyRef Name="Language"/>
+</Principal>
+<Dependent Role="FromRole_assoc_75B1DB854C2712DFD34CE2A48D0D7317">
+<PropertyRef Name="Language"/>
+</Dependent>
+</ReferentialConstraint>
+</Association>
+<Association Name="assoc_1278BB73BB2872FCD47A1D378622590C" sap:content-version="1">
+<End Type="ZZ1_MFP_ASSIGNMENT_CDS.I_UnitOfMeasureTextType" Multiplicity="1" Role="FromRole_assoc_1278BB73BB2872FCD47A1D378622590C"/>
+<End Type="ZZ1_MFP_ASSIGNMENT_CDS.I_UnitOfMeasureType" Multiplicity="0..1" Role="ToRole_assoc_1278BB73BB2872FCD47A1D378622590C"/>
+<ReferentialConstraint>
+<Principal Role="ToRole_assoc_1278BB73BB2872FCD47A1D378622590C">
+<PropertyRef Name="UnitOfMeasure"/>
+</Principal>
+<Dependent Role="FromRole_assoc_1278BB73BB2872FCD47A1D378622590C">
+<PropertyRef Name="UnitOfMeasure"/>
+</Dependent>
+</ReferentialConstraint>
+</Association>
+<EntityContainer Name="ZZ1_MFP_ASSIGNMENT_CDS_Entities" m:IsDefaultEntityContainer="true" sap:message-scope-supported="true" sap:supported-formats="atom json xlsx">
+<EntitySet Name="I_Language" EntityType="ZZ1_MFP_ASSIGNMENT_CDS.I_LanguageType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:searchable="true" sap:content-version="1"/>
+<EntitySet Name="I_UnitOfMeasure" EntityType="ZZ1_MFP_ASSIGNMENT_CDS.I_UnitOfMeasureType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:searchable="true" sap:content-version="1"/>
+<EntitySet Name="I_UnitOfMeasureDimension" EntityType="ZZ1_MFP_ASSIGNMENT_CDS.I_UnitOfMeasureDimensionType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1"/>
+<EntitySet Name="I_UnitOfMeasureISOCode" EntityType="ZZ1_MFP_ASSIGNMENT_CDS.I_UnitOfMeasureISOCodeType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1"/>
+<EntitySet Name="I_UnitOfMeasureText" EntityType="ZZ1_MFP_ASSIGNMENT_CDS.I_UnitOfMeasureTextType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:searchable="true" sap:content-version="1"/>
+<EntitySet Name="P_Scbo_User" EntityType="ZZ1_MFP_ASSIGNMENT_CDS.P_Scbo_UserType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:addressable="false" sap:content-version="1"/>
+<EntitySet Name="ZZ1_MFP_ASSIGNMENT" EntityType="ZZ1_MFP_ASSIGNMENT_CDS.ZZ1_MFP_ASSIGNMENTType" sap:searchable="true" sap:content-version="1"/>
+<AssociationSet Name="assoc_C39056B42E855A8CD56CF39A315CAB83" Association="ZZ1_MFP_ASSIGNMENT_CDS.assoc_C39056B42E855A8CD56CF39A315CAB83" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+<End EntitySet="ZZ1_MFP_ASSIGNMENT" Role="FromRole_assoc_C39056B42E855A8CD56CF39A315CAB83"/>
+<End EntitySet="I_UnitOfMeasureText" Role="ToRole_assoc_C39056B42E855A8CD56CF39A315CAB83"/>
+</AssociationSet>
+<AssociationSet Name="assoc_9CF05B19B22C64CD2D8DF33A66DAF4F4" Association="ZZ1_MFP_ASSIGNMENT_CDS.assoc_9CF05B19B22C64CD2D8DF33A66DAF4F4" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+<End EntitySet="ZZ1_MFP_ASSIGNMENT" Role="FromRole_assoc_9CF05B19B22C64CD2D8DF33A66DAF4F4"/>
+<End EntitySet="I_UnitOfMeasureText" Role="ToRole_assoc_9CF05B19B22C64CD2D8DF33A66DAF4F4"/>
+</AssociationSet>
+<AssociationSet Name="assoc_5E18390584266C106B459BC3FD3D3C50" Association="ZZ1_MFP_ASSIGNMENT_CDS.assoc_5E18390584266C106B459BC3FD3D3C50" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+<End EntitySet="I_UnitOfMeasure" Role="FromRole_assoc_5E18390584266C106B459BC3FD3D3C50"/>
+<End EntitySet="I_UnitOfMeasureISOCode" Role="ToRole_assoc_5E18390584266C106B459BC3FD3D3C50"/>
+</AssociationSet>
+<AssociationSet Name="assoc_1278BB73BB2872FCD47A1D378622590C" Association="ZZ1_MFP_ASSIGNMENT_CDS.assoc_1278BB73BB2872FCD47A1D378622590C" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+<End EntitySet="I_UnitOfMeasureText" Role="FromRole_assoc_1278BB73BB2872FCD47A1D378622590C"/>
+<End EntitySet="I_UnitOfMeasure" Role="ToRole_assoc_1278BB73BB2872FCD47A1D378622590C"/>
+</AssociationSet>
+<AssociationSet Name="assoc_CC7536DFFEEEC83D5720B79715CF24D5" Association="ZZ1_MFP_ASSIGNMENT_CDS.assoc_CC7536DFFEEEC83D5720B79715CF24D5" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+<End EntitySet="ZZ1_MFP_ASSIGNMENT" Role="FromRole_assoc_CC7536DFFEEEC83D5720B79715CF24D5"/>
+<End EntitySet="P_Scbo_User" Role="ToRole_assoc_CC7536DFFEEEC83D5720B79715CF24D5"/>
+</AssociationSet>
+<AssociationSet Name="assoc_E20258E24465D911745E1DB58CAC64DC" Association="ZZ1_MFP_ASSIGNMENT_CDS.assoc_E20258E24465D911745E1DB58CAC64DC" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+<End EntitySet="ZZ1_MFP_ASSIGNMENT" Role="FromRole_assoc_E20258E24465D911745E1DB58CAC64DC"/>
+<End EntitySet="I_UnitOfMeasure" Role="ToRole_assoc_E20258E24465D911745E1DB58CAC64DC"/>
+</AssociationSet>
+<AssociationSet Name="assoc_75B1DB854C2712DFD34CE2A48D0D7317" Association="ZZ1_MFP_ASSIGNMENT_CDS.assoc_75B1DB854C2712DFD34CE2A48D0D7317" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+<End EntitySet="I_UnitOfMeasureText" Role="FromRole_assoc_75B1DB854C2712DFD34CE2A48D0D7317"/>
+<End EntitySet="I_Language" Role="ToRole_assoc_75B1DB854C2712DFD34CE2A48D0D7317"/>
+</AssociationSet>
+<AssociationSet Name="assoc_8A2E9AB6D2E8A65CBBC6BC50D7060DED" Association="ZZ1_MFP_ASSIGNMENT_CDS.assoc_8A2E9AB6D2E8A65CBBC6BC50D7060DED" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+<End EntitySet="ZZ1_MFP_ASSIGNMENT" Role="FromRole_assoc_8A2E9AB6D2E8A65CBBC6BC50D7060DED"/>
+<End EntitySet="P_Scbo_User" Role="ToRole_assoc_8A2E9AB6D2E8A65CBBC6BC50D7060DED"/>
+</AssociationSet>
+<AssociationSet Name="assoc_744267C89213C6F0BEAA53E2EB9C8F4F" Association="ZZ1_MFP_ASSIGNMENT_CDS.assoc_744267C89213C6F0BEAA53E2EB9C8F4F" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+<End EntitySet="I_UnitOfMeasure" Role="FromRole_assoc_744267C89213C6F0BEAA53E2EB9C8F4F"/>
+<End EntitySet="I_UnitOfMeasureDimension" Role="ToRole_assoc_744267C89213C6F0BEAA53E2EB9C8F4F"/>
+</AssociationSet>
+<AssociationSet Name="assoc_BB583683F3CE68F994076C292CE08C23" Association="ZZ1_MFP_ASSIGNMENT_CDS.assoc_BB583683F3CE68F994076C292CE08C23" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+<End EntitySet="ZZ1_MFP_ASSIGNMENT" Role="FromRole_assoc_BB583683F3CE68F994076C292CE08C23"/>
+<End EntitySet="I_UnitOfMeasure" Role="ToRole_assoc_BB583683F3CE68F994076C292CE08C23"/>
+</AssociationSet>
+<FunctionImport Name="ZZ1_MFP_ASSIGNMENTSap_upsert" ReturnType="ZZ1_MFP_ASSIGNMENT_CDS.ZZ1_MFP_ASSIGNMENTType" EntitySet="ZZ1_MFP_ASSIGNMENT" m:HttpMethod="POST">
+<Parameter Name="WERKS" Type="Edm.String" Mode="In" MaxLength="4" sap:label="Testo di lunghezza 4"/>
+<Parameter Name="LGORT" Type="Edm.String" Mode="In" MaxLength="20" sap:label="Testo di lungh. 20"/>
+<Parameter Name="FSH_MPLO_ORD" Type="Edm.String" Mode="In" MaxLength="12" sap:label="Testo di lungh. 12"/>
+<Parameter Name="BAGNI" Type="Edm.String" Mode="In" MaxLength="45" sap:label="Testo lunghezza 45"/>
+<Parameter Name="MATNR" Type="Edm.String" Mode="In" MaxLength="40" sap:label="Testo di lungh. 40"/>
+<Parameter Name="CHARG" Type="Edm.String" Mode="In" MaxLength="10" sap:label="Testo di lungh. 10"/>
+<Parameter Name="Bagno" Type="Edm.String" Mode="In" MaxLength="45" sap:label="Testo lunghezza 45"/>
+<Parameter Name="QTA_ASS_V" Type="Edm.Decimal" Mode="In" Precision="15" Scale="3" sap:label="Qtà ASSIGNMENT"/>
+<Parameter Name="QTA_ASS_U" Type="Edm.String" Mode="In" MaxLength="3" sap:label="Qtà ASSIGNMENT"/>
+<Parameter Name="FABB_TOT_V" Type="Edm.Decimal" Mode="In" Precision="15" Scale="3" sap:label="Fabbisogno Tot."/>
+<Parameter Name="FABB_TOT_U" Type="Edm.String" Mode="In" MaxLength="3" sap:label="Fabbisogno Tot."/>
+<Parameter Name="COPERTURA" Type="Edm.Decimal" Mode="In" Precision="10" Scale="0" sap:label="% Copertura"/>
+<Parameter Name="SORT" Type="Edm.Decimal" Mode="In" Precision="10" Scale="0" sap:label="SORT"/>
+<Parameter Name="SpecialStock" Type="Edm.String" Mode="In" MaxLength="1" sap:label="Testo di lunghezza 1"/>
+<Parameter Name="StockSegment" Type="Edm.String" Mode="In" MaxLength="40" sap:label="Testo di lungh. 40"/>
+<Parameter Name="SaldoScorta" Type="Edm.Boolean" Mode="In" sap:label="VERO"/>
+<Parameter Name="BatchBySupplier" Type="Edm.String" Mode="In" MaxLength="20" sap:label="Testo di lungh. 20"/>
+<Parameter Name="Scorta" Type="Edm.String" Mode="In" MaxLength="20" sap:label="Testo di lungh. 20"/>
+</FunctionImport>
+</EntityContainer>
+<Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Core.SchemaVersion" String="1.0.0"/>
+<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="ZZ1_MFP_ASSIGNMENT_CDS.I_UnitOfMeasureType/UnitOfMeasureISOCode">
+<Annotation Term="Common.ValueList">
+<Record>
+<PropertyValue Property="Label" String="Unit of Measure ISO Code"/>
+<PropertyValue Property="CollectionPath" String="I_UnitOfMeasureISOCode"/>
+<PropertyValue Property="SearchSupported" Bool="false"/>
+<PropertyValue Property="Parameters">
+<Collection>
+<Record Type="Common.ValueListParameterInOut">
+<PropertyValue Property="LocalDataProperty" PropertyPath="UnitOfMeasureISOCode"/>
+<PropertyValue Property="ValueListProperty" String="UnitOfMeasureISOCode"/>
+</Record>
+<Record Type="Common.ValueListParameterDisplayOnly">
+<PropertyValue Property="ValueListProperty" String="UnitOfMeasureISOCode_Text"/>
+</Record>
+</Collection>
+</PropertyValue>
+</Record>
+</Annotation>
+</Annotations>
+<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="ZZ1_MFP_ASSIGNMENT_CDS.I_UnitOfMeasureType/UnitOfMeasureDimension">
+<Annotation Term="Common.ValueList">
+<Record>
+<PropertyValue Property="Label" String="Unit of Measure Dimension"/>
+<PropertyValue Property="CollectionPath" String="I_UnitOfMeasureDimension"/>
+<PropertyValue Property="SearchSupported" Bool="false"/>
+<PropertyValue Property="Parameters">
+<Collection>
+<Record Type="Common.ValueListParameterInOut">
+<PropertyValue Property="LocalDataProperty" PropertyPath="UnitOfMeasureDimension"/>
+<PropertyValue Property="ValueListProperty" String="UnitOfMeasureDimension"/>
+</Record>
+<Record Type="Common.ValueListParameterDisplayOnly">
+<PropertyValue Property="ValueListProperty" String="UnitOfMeasureDimension_Text"/>
+</Record>
+</Collection>
+</PropertyValue>
+</Record>
+</Annotation>
+</Annotations>
+<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="ZZ1_MFP_ASSIGNMENT_CDS.I_UnitOfMeasureTextType/Language">
+<Annotation Term="Common.ValueList">
+<Record>
+<PropertyValue Property="Label" String="Language"/>
+<PropertyValue Property="CollectionPath" String="I_Language"/>
+<PropertyValue Property="SearchSupported" Bool="true"/>
+<PropertyValue Property="Parameters">
+<Collection>
+<Record Type="Common.ValueListParameterInOut">
+<PropertyValue Property="LocalDataProperty" PropertyPath="Language"/>
+<PropertyValue Property="ValueListProperty" String="Language"/>
+</Record>
+<Record Type="Common.ValueListParameterDisplayOnly">
+<PropertyValue Property="ValueListProperty" String="Language_Text"/>
+</Record>
+</Collection>
+</PropertyValue>
+</Record>
+</Annotation>
+</Annotations>
+<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="ZZ1_MFP_ASSIGNMENT_CDS.I_UnitOfMeasureTextType/UnitOfMeasure">
+<Annotation Term="Common.ValueList">
+<Record>
+<PropertyValue Property="Label" String="Unit of Measure"/>
+<PropertyValue Property="CollectionPath" String="I_UnitOfMeasure"/>
+<PropertyValue Property="SearchSupported" Bool="true"/>
+<PropertyValue Property="Parameters">
+<Collection>
+<Record Type="Common.ValueListParameterInOut">
+<PropertyValue Property="LocalDataProperty" PropertyPath="UnitOfMeasure"/>
+<PropertyValue Property="ValueListProperty" String="UnitOfMeasure"/>
+</Record>
+<Record Type="Common.ValueListParameterDisplayOnly">
+<PropertyValue Property="ValueListProperty" String="UnitOfMeasure_Text"/>
+</Record>
+</Collection>
+</PropertyValue>
+</Record>
+</Annotation>
+</Annotations>
+<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="ZZ1_MFP_ASSIGNMENT_CDS.ZZ1_MFP_ASSIGNMENTType/QTA_ASS_U">
+<Annotation Term="Common.ValueList">
+<Record>
+<PropertyValue Property="Label" String="Unit of Measure"/>
+<PropertyValue Property="CollectionPath" String="I_UnitOfMeasure"/>
+<PropertyValue Property="SearchSupported" Bool="true"/>
+<PropertyValue Property="Parameters">
+<Collection>
+<Record Type="Common.ValueListParameterInOut">
+<PropertyValue Property="LocalDataProperty" PropertyPath="QTA_ASS_U"/>
+<PropertyValue Property="ValueListProperty" String="UnitOfMeasure"/>
+</Record>
+<Record Type="Common.ValueListParameterDisplayOnly">
+<PropertyValue Property="ValueListProperty" String="UnitOfMeasure_Text"/>
+</Record>
+</Collection>
+</PropertyValue>
+</Record>
+</Annotation>
+</Annotations>
+<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="ZZ1_MFP_ASSIGNMENT_CDS.ZZ1_MFP_ASSIGNMENTType/FABB_TOT_U">
+<Annotation Term="Common.ValueList">
+<Record>
+<PropertyValue Property="Label" String="Unit of Measure"/>
+<PropertyValue Property="CollectionPath" String="I_UnitOfMeasure"/>
+<PropertyValue Property="SearchSupported" Bool="true"/>
+<PropertyValue Property="Parameters">
+<Collection>
+<Record Type="Common.ValueListParameterInOut">
+<PropertyValue Property="LocalDataProperty" PropertyPath="FABB_TOT_U"/>
+<PropertyValue Property="ValueListProperty" String="UnitOfMeasure"/>
+</Record>
+<Record Type="Common.ValueListParameterDisplayOnly">
+<PropertyValue Property="ValueListProperty" String="UnitOfMeasure_Text"/>
+</Record>
+</Collection>
+</PropertyValue>
+</Record>
+</Annotation>
+</Annotations>
+<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="ZZ1_MFP_ASSIGNMENT_CDS.ZZ1_MFP_ASSIGNMENT_CDS_Entities">
+<Annotation Term="Common.ApplyMultiUnitBehaviorForSortingAndFiltering" Bool="true"/>
+</Annotations>
+<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="ZZ1_MFP_ASSIGNMENT_CDS.ZZ1_MFP_ASSIGNMENTType/BAGNI">
+<Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
+</Annotations>
+<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="ZZ1_MFP_ASSIGNMENT_CDS.ZZ1_MFP_ASSIGNMENTType/CHARG">
+<Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
+</Annotations>
+<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="ZZ1_MFP_ASSIGNMENT_CDS.ZZ1_MFP_ASSIGNMENTType/FSH_MPLO_ORD">
+<Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
+</Annotations>
+<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="ZZ1_MFP_ASSIGNMENT_CDS.ZZ1_MFP_ASSIGNMENTType/LGORT">
+<Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
+</Annotations>
+<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="ZZ1_MFP_ASSIGNMENT_CDS.ZZ1_MFP_ASSIGNMENTType/MATNR">
+<Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
+</Annotations>
+<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="ZZ1_MFP_ASSIGNMENT_CDS.ZZ1_MFP_ASSIGNMENTType/WERKS">
+<Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
+</Annotations>
+<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="ZZ1_MFP_ASSIGNMENT_CDS.ZZ1_MFP_ASSIGNMENT_CDS_Entities/I_UnitOfMeasure">
+<Annotation Term="Capabilities.NavigationRestrictions">
+<Record>
+<PropertyValue Property="RestrictedProperties">
+<Collection>
+<Record>
+<PropertyValue Property="NavigationProperty" NavigationPropertyPath="to_Dimension"/>
+<PropertyValue Property="InsertRestrictions">
+<Record>
+<PropertyValue Property="Insertable" Bool="false"/>
+</Record>
+</PropertyValue>
+</Record>
+<Record>
+<PropertyValue Property="NavigationProperty" NavigationPropertyPath="to_ISOCode"/>
+<PropertyValue Property="InsertRestrictions">
+<Record>
+<PropertyValue Property="Insertable" Bool="false"/>
+</Record>
+</PropertyValue>
+</Record>
+</Collection>
+</PropertyValue>
+</Record>
+</Annotation>
+</Annotations>
+<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="ZZ1_MFP_ASSIGNMENT_CDS.ZZ1_MFP_ASSIGNMENT_CDS_Entities/I_UnitOfMeasureText">
+<Annotation Term="Capabilities.NavigationRestrictions">
+<Record>
+<PropertyValue Property="RestrictedProperties">
+<Collection>
+<Record>
+<PropertyValue Property="NavigationProperty" NavigationPropertyPath="to_Language"/>
+<PropertyValue Property="InsertRestrictions">
+<Record>
+<PropertyValue Property="Insertable" Bool="false"/>
+</Record>
+</PropertyValue>
+</Record>
+<Record>
+<PropertyValue Property="NavigationProperty" NavigationPropertyPath="to_UnitOfMeasure"/>
+<PropertyValue Property="InsertRestrictions">
+<Record>
+<PropertyValue Property="Insertable" Bool="false"/>
+</Record>
+</PropertyValue>
+</Record>
+</Collection>
+</PropertyValue>
+</Record>
+</Annotation>
+</Annotations>
+<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="ZZ1_MFP_ASSIGNMENT_CDS.ZZ1_MFP_ASSIGNMENT_CDS_Entities/ZZ1_MFP_ASSIGNMENT">
+<Annotation Term="Capabilities.NavigationRestrictions">
+<Record>
+<PropertyValue Property="RestrictedProperties">
+<Collection>
+<Record>
+<PropertyValue Property="NavigationProperty" NavigationPropertyPath="to_FABB_TOT"/>
+<PropertyValue Property="InsertRestrictions">
+<Record>
+<PropertyValue Property="Insertable" Bool="false"/>
+</Record>
+</PropertyValue>
+</Record>
+<Record>
+<PropertyValue Property="NavigationProperty" NavigationPropertyPath="to_QTA_ASS"/>
+<PropertyValue Property="InsertRestrictions">
+<Record>
+<PropertyValue Property="Insertable" Bool="false"/>
+</Record>
+</PropertyValue>
+</Record>
+<Record>
+<PropertyValue Property="NavigationProperty" NavigationPropertyPath="to_SAPSysAdminDataChangeUser"/>
+<PropertyValue Property="InsertRestrictions">
+<Record>
+<PropertyValue Property="Insertable" Bool="false"/>
+</Record>
+</PropertyValue>
+</Record>
+<Record>
+<PropertyValue Property="NavigationProperty" NavigationPropertyPath="to_SAPSysAdminDataCreateUser"/>
+<PropertyValue Property="InsertRestrictions">
+<Record>
+<PropertyValue Property="Insertable" Bool="false"/>
+</Record>
+</PropertyValue>
+</Record>
+<Record>
+<PropertyValue Property="NavigationProperty" NavigationPropertyPath="to__FABB_TOT"/>
+<PropertyValue Property="InsertRestrictions">
+<Record>
+<PropertyValue Property="Insertable" Bool="false"/>
+</Record>
+</PropertyValue>
+</Record>
+<Record>
+<PropertyValue Property="NavigationProperty" NavigationPropertyPath="to__QTA_ASS"/>
+<PropertyValue Property="InsertRestrictions">
+<Record>
+<PropertyValue Property="Insertable" Bool="false"/>
+</Record>
+</PropertyValue>
+</Record>
+</Collection>
+</PropertyValue>
+</Record>
+</Annotation>
+</Annotations>
+<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="ZZ1_MFP_ASSIGNMENT_CDS.ZZ1_MFP_ASSIGNMENTType">
+<Annotation Term="Common.SemanticKey">
+<Collection>
+<PropertyPath>CHARG</PropertyPath>
+<PropertyPath>MATNR</PropertyPath>
+<PropertyPath>BAGNI</PropertyPath>
+<PropertyPath>FSH_MPLO_ORD</PropertyPath>
+<PropertyPath>LGORT</PropertyPath>
+<PropertyPath>WERKS</PropertyPath>
+</Collection>
+</Annotation>
+</Annotations>
+<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="ZZ1_MFP_ASSIGNMENT_CDS.I_UnitOfMeasureType/UnitOfMeasure">
+<Annotation Term="Common.UnitSpecificScale" Path="UnitOfMeasureDspNmbrOfDcmls"/>
+</Annotations>
+<atom:link xmlns:atom="http://www.w3.org/2005/Atom" rel="self" href="http://lpapps20.lp.corp:8000/sap/opu/odata/sap/ZZ1_MFP_ASSIGNMENT_CDS/$metadata"/>
+<atom:link xmlns:atom="http://www.w3.org/2005/Atom" rel="latest-version" href="http://lpapps20.lp.corp:8000/sap/opu/odata/sap/ZZ1_MFP_ASSIGNMENT_CDS/$metadata"/>
+</Schema>
+</edmx:DataServices>
+</edmx:Edmx>

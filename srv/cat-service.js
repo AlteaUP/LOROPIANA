@@ -37,6 +37,7 @@ module.exports = cds.service.impl(async function (srv) {
     const cdsListDDT = await cds.connect.to("ZZ1_ZMFG_C_OUTBOUNDDELIVER_CDS");
     const cdsAddress = await cds.connect.to("ZMFG_I_SUPPLIERPARTNERFUNC_CDS");
     const cdsImdMaterial = await cds.connect.to("ZMF_IMD_MATERIAL_CDS");
+    const cdsMfpAssignment = await cds.connect.to("ZZ1_MFP_ASSIGNMENT_CDS");
 
     this.on('READ', "MainCds", async request => {
 
@@ -119,6 +120,44 @@ module.exports = cds.service.impl(async function (srv) {
         data = data.filter(item => {
             return !(item.requirementtype === 'BB' && item.Supplier === '');
         });
+
+        // modifica DL - chiama CDS ZZ1_MFP_ASSIGNMENT_CDS e aggiungo record all'estrazione principale
+        // Cerco l'indice dell'oggetto che ha ref: ["CprodOrd"]
+        const index = arr.findIndex(
+            el => typeof el === "object" && el.ref && el.ref[0] === "CprodOrd"
+        );
+
+        // Se trovato, l’elemento successivo contiene il valore
+        let value = null;
+        if (index !== -1 && arr[index + 2] && arr[index + 2].val) {
+            value = arr[index + 2].val; // arr[index+1] è "=", arr[index+2] è {val:"221"}
+        }
+
+        var orderNumber = value + "_O";
+
+        const { ZZ1_MFP_ASSIGNMENT } = cdsMfpAssignment.entities;
+
+        try {            
+            var arrayDataMfpAssignment = await cdsMfpAssignment.run(SELECT(ZZ1_MFP_ASSIGNMENT).where({ FSH_MPLO_ORD: orderNumber }).limit(1000));
+            if(arrayDataMfpAssignment.length > 0){
+                var tempStructure = {}
+                for(var i=0; i<arrayDataMfpAssignment.length; i++){
+                    tempStructure = {}
+                    tempStructure.Material = arrayDataMfpAssignment[i].MATNR
+                    tempStructure.CprodOrd = orderNumber
+                    tempStructure.Plant = arrayDataMfpAssignment[i].WERKS
+                    tempStructure.Batch = arrayDataMfpAssignment[i].CHARG
+                    tempStructure.BillOfMaterialItemNumber_2 = ""
+                    tempStructure.TotalRequiredQuantity = arrayDataMfpAssignment[i].FABB_TOT_V
+                    tempStructure.TotalConfdQtyForATPInBaseUoM = arrayDataMfpAssignment[i].QTA_ASS_V
+                    data.push(tempStructure)
+                }
+            }
+        } catch (error) {
+            console.log(error)
+        }
+        console.log("arrayDataMfpAssignment length " + arrayDataMfpAssignment.length)
+        // modifica DL - chiama CDS ZZ1_MFP_ASSIGNMENT_CDS e aggiungo record all'estrazione principale - FINE
 
         console.log("data length " + data.length)
 
@@ -1056,6 +1095,12 @@ module.exports = cds.service.impl(async function (srv) {
 
     this.on('READ', "ZMF_IMD_MATERIAL", async request => {
         var data = await cdsImdMaterial.tx(request).run(request.query);
+
+        return data;
+    });
+
+    this.on('READ', "ZZ1_MFP_ASSIGNMENT", async request => {
+        var data = await cdsMfpAssignment.tx(request).run(request.query);
 
         return data;
     });

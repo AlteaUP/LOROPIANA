@@ -26,6 +26,7 @@ using { ZZ1_ZMFI_DATAPRELIEVO_CDS } from './EXTERNAL/ZZ1_ZMFI_DATAPRELIEVO_CDS';
 using { ZZ1_ZMFG_C_OUTBOUNDDELIVER_CDS } from './EXTERNAL/ZZ1_ZMFG_C_OUTBOUNDDELIVER_CDS';
 using { ZMFG_I_SUPPLIERPARTNERFUNC_CDS } from './EXTERNAL/ZMFG_I_SUPPLIERPARTNERFUNC_CDS';
 using { ZMF_IMD_MATERIAL_CDS } from './EXTERNAL/ZMF_IMD_MATERIAL_CDS';
+using { ZZ1_MFP_ASSIGNMENT_CDS } from './EXTERNAL/ZZ1_MFP_ASSIGNMENT_CDS';
 
 @cds.query.limit.default: 500
 @cds.query.limit.max: 500
@@ -190,6 +191,8 @@ service CatalogService {
     @readonly entity ZMFG_I_SUPPLIERPARTNERFUNC as projection on ZMFG_I_SUPPLIERPARTNERFUNC_CDS.ZMFG_I_SUPPLIERPARTNERFUNC;
 
     @readonly entity ZMF_IMD_MATERIAL as projection on ZMF_IMD_MATERIAL_CDS.ZMF_IMD_MATERIAL;
+
+    @readonly entity ZZ1_MFP_ASSIGNMENT as projection on ZZ1_MFP_ASSIGNMENT_CDS.ZZ1_MFP_ASSIGNMENT;
 
     action CreateDelivery(Record: many TYPES.MaterialRecord) returns String;
 
